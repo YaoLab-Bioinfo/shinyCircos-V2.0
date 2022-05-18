@@ -33,10 +33,10 @@ sidebar <- bs4DashSidebar(
     bs4SidebarMenuItem("Data Upload",tabName = "dat-upl", icon = icon("upload",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Parameters",tabName = "dat-vie", icon = icon("cogs",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Plot",tabName = "cir-par", icon = icon("image",lib = "font-awesome")),
-    bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("adjust",lib = "font-awesome")),
-    bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
+    bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("adjust",lib = "font-awesome"))
+    # bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
     # bs4SidebarMenuItem("Other Plot",tabName = "other-plot", icon = icon("bong",lib = "font-awesome")),
-    bs4SidebarMenuItem("Test",tabName = "test")
+    # bs4SidebarMenuItem("Test",tabName = "test")
   )
 )
 #******#main body
@@ -831,32 +831,32 @@ body <- bs4DashBody(
          )
        )
      ),
-     bs4TabItem(
-       tabName = "help",
-       includeHTML("README.html")
-       
-     ),
+     # bs4TabItem(
+     #   tabName = "help",
+     #   includeHTML("README.html")
+     #   
+     # ),
      bs4TabItem(
        tabName = "gal",
        includeHTML("www/Gallery.html")
        
-     ),
-     bs4TabItem(
-       tabName = "test",
-       actionBttn(
-         inputId = "testbottom",
-         label = "Update",
-         style = "unite",
-         color = "success"
-       ),
-       #plotOutput("testplot")
-       shinycssloaders::withSpinner(
-         plotOutput("testplot"),
-         type = 8
-         #hide.ui = FALSE
-       )
-       
      )
+     # bs4TabItem(
+     #   tabName = "test",
+     #   actionBttn(
+     #     inputId = "testbottom",
+     #     label = "Update",
+     #     style = "unite",
+     #     color = "success"
+     #   ),
+     #   #plotOutput("testplot")
+     #   shinycssloaders::withSpinner(
+     #     plotOutput("testplot"),
+     #     type = 8
+     #     #hide.ui = FALSE
+     #   )
+     #   
+     # )
    )
 )
 
