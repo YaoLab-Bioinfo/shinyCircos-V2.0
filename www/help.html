@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+    .p{
+        text-indent: 2em;
+    }
+    .a{
+        font-family: 'Times New Roman', Times, serif;
+    }
+</style>
+<title>shinyCircos2.0 help</title>
+</head>
+<body>
+    <h2 class="a">Contents</h2>
+    <a href="#div1">1.Introduction</a>
+    <br>
+    <a href="#div2">2.input data format</a>
+    <br>
+    &emsp;<a href="#div2.1"> 2.1 chromosome data</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.1.1"> 2.1.1 general data</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.1.2"> 2.1.2 cytoband data</a>
+    <br>
+    &emsp;<a href="#div2.2"> 2.2 track data</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.1"> 2.2.1 bar</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.2"> 2.2.2 line</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.3"> 2.2.3 point</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.4"> 2.2.4 ideogram</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.5"> 2.2.5 rect-discrete</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.6"> 2.2.6 rect-gradual</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.7"> 2.2.7 heatmap-discrete</a>
+    <br>
+    &emsp;&emsp;<a href="#div2.2.8"> 2.2.8 heatmap-gradual</a>
+    <br>
+    &emsp;<a href="#div2.3"> 2.3 label data</a>
+    <br>
+    &emsp;<a href="#div2.4"> 2.4 links data</a>
+    <br>
+    
+
+
+
+
+
+    <hr>
+    <div id="div1">
+        <h2 class="a">1.Introduction</h2>
+        <p class="p">
+            shinyCircos2.0 is the latest version of <a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>. We have sorted out the needs of users, 
+            checked the bugs in the old version, added many useful functions, and changed the pages of the old version. Now the new version of the page is concise and efficient.
+        </p>
+        <p style="text-align: center;">
+            <img border="0" src="./helpfigures/1.jpg" width="90%">
+        </p>
+        
+    </div>
+	<div id="div2">
+        <h2 class="a">2.input data format</h2>
+        <p class="p">
+            If you are using shinyCircos2.0 for the first time, 
+            I suggest you to check the data format carefully and organize the data strictly according to the format, otherwise shinyCircos2.0 may not work as usual.
+        </p>
+        <p class="p">
+            We recommend that you upload data in .csv format to shinyCircos2.0,which can avoid many problems.Next I will take a closer look at the data format of the different data.
+        </p>
+        <div id="div2.1">
+            <h3 class="a">2.1 chromosome data</h3>
+                <p class="p">
+                    Chromosome data is a necessary part of drawing, it determines different sectors, without which shinyCircos2.0 will not be able to draw Circos diagram. 
+                    There are two types of chromosome data, general data and cytoband data, and their structures are not the same.
+                </p>
+                <div id="div2.1.1">
+                    <h4 class="a">2.1.1 general data</h4>
+                    <p class="p">
+                        general data contains three columns, chr, start, end.as shown in the following figure:
+                    </p>
+                    <p style="text-align: center;">
+                        <img border="0" src="./helpfigures/2.jpg" width="60%">
+                        <figcaption style="text-align: center;">
+                            <font size="5">general data</font>
+                            <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </figcaption>
+                    </p>
+                </div>
+                
+                <div id="div2.1.2">
+                    <h4 class="a">2.1.2 cytoband data</h4>
+                    <p class="p">
+                        The cytoband data contains five columns, chr, start, end, value1, value2, as shown in the following figure:
+                    </p>
+                    <p style="text-align: center;">
+                        <img border="0" src="./helpfigures/3.jpg" width="60%">
+                        <figcaption style="text-align: center;">
+                            <font size="5">cytoband data</font>
+                            <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </figcaption>
+                    </p>
+                </div>
+                
+        </div>
+        <div id="div2.2">
+            <h3 class="a">2.2 track data</h3>
+            <p class="p">
+                Track data is used to draw different tracks of the Circos diagram. Different types of tracks have different data,
+                 but the first three columns are fixed, namely chr, start, and end. The following will explain different track data.
+            </p>
+            <div id="div2.2.1">
+                <h4 class="a">2.2.1 bar</h4>
+                <p class="p">
+                    The data used to draw the barplot should have at least four columns, namely chr, start, end, and value.
+                     It is worth noting that the value of value can be positive or negative. In addition,
+                      it can also contain a column representing the color category. value, as shown below:
+                </p>
+                <hr>
+                <p class="p">
+                    The minimum value of the bar ordinate drawn by unidirectional data is the minimum value of all values, 
+                    and there is no overlapping intervalThe minimum value of the bar ordinate drawn by unidirectional data is the minimum value of all values, and there is no overlapping interval.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/unidirectional_bar_data.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">Unidirectional barplot data</font>
+                        <a href="./example_data/track/barplot.csv" download="barplot.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    The minimum value of the bar ordinate drawn by unidirectional data is the minimum value of all values, 
+                    and there is no overlapping intervalThe minimum value of the bar ordinate drawn by unidirectional data is the minimum value of all values, and there is no overlapping interval.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/bidirectional_bar_data.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">Bidirectional barplot data</font>
+                        <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    The color column represents the grouping of colors,such as a, b, c
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/bidirectional_bar_data.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">barplot data with color column</font>
+                        <a href="./example_data/track/barplot_color.csv" download="barplot_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+
+            </div>
+
+
+            <div id="div2.2.2">
+                <h4 class="a">2.2.2 line</h4>
+                <p class="p">
+                    The data for drawing a line chart should contain at least four columns, 
+                    on which other informative line charts can be added.
+                </p>
+                <hr>
+                <p class="p">
+                    The standard line data contains four columns, chr, start, end, value1
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/line.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">standards line data</font>
+                        <a href="./example_data/track/line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    In addition to the standard four columns of data, you can also add a color column, or add another column of value to draw multiple polylines.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/line_color.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">line data with color column</font>
+                        <a href="./example_data/track/line_color.csv" download="line_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/line_mul.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">line data with multicolumn</font>
+                        <a href="./example_data/track/line_multicolumn.csv" download="line_multicolumn.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    It is worth noting that the stack data is slightly different from the previous one, please see the following figure for details.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/line_stack.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">line data with stack column</font>
+                        <a href="./example_data/track/stack_line.csv" download="stack_line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+            
+
+            <div id="div2.2.3">
+                <h4 class="a">2.2.3 point</h4>
+                <p class="p">
+                    The data used to draw the point plot is similar to that of a line plot.
+                </p>
+                <hr>
+                <p class="p">
+                    The standard point data contains four columns, chr, start, end, value1
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/line.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">standards point data</font>
+                        <a href="./example_data/track/point.csv" download="point.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    The data can contain a column of data that controls the size of the point
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/point_cex.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with cex column</font>
+                        <a href="./example_data/track/point_cex.csv" download="point_cex.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    Data can also contain color columns.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/point_color.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with color column</font>
+                        <a href="./example_data/track/point_color.csv" download="point_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    You can also add a column to control the style of the points.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/point_pch.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with pch column</font>
+                        <a href="./example_data/track/point_pch.csv" download="point_pch.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    It can also be a variety of combinations, and different columns represent different information.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/point_color_cex.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with mixed data</font>
+                        <a href="./example_data/track/point_color_cex.csv" download="point_color_cex.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/point_color_pch.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with mixed data</font>
+                        <a href="./example_data/track/point_color_pch.csv" download="point_color_pch.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/poi_col_pch_cex.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with mixed data</font>
+                        <a href="./example_data/track/point_color_pch_cex.csv" download="point_color_pch_cex.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/poi_pch_cex.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with mixed data</font>
+                        <a href="./example_data/track/point_pch_cex.csv" download="point_pch_cex.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    It is worth noting that the stack data is slightly different from the previous one, please see the following figure for details.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/poi_stack.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with stack column</font>
+                        <a href="./example_data/track/stack_point.csv" download="stack_point.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+                <p class="p">
+                    You can add another column of value to draw multiple point in same track.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/poi_mul.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">point data with multicolumn</font>
+                        <a href="./example_data/track/point_multicolumn.csv" download="point_multicolumn.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+            
+
+            <div id="div2.2.4">
+                <h4 class="a">2.2.4 ideogram</h4>
+                <p class="p">
+                    The ideogram data is similar to the cytoban data that plots chromosomes.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/ideogram.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">ideogram data</font>
+                        <a href="./example_data/track/chromosome_ideogram.csv" download="chromosome_ideogram.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+            
+
+            <div id="div2.2.5">
+                <h4 class="a">2.2.5 rect-discrete</h4>
+                <p class="p">
+                    rect data contains four columns of data, namely chr, start, end, group, and the group column is character.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/rect_dis.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">rect-discrete data</font>
+                        <a href="./example_data/track/rect_discrete.csv" download="rect_discrete.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+            
+
+            <div id="div2.2.6">
+                <h4 class="a">2.2.6 rect-gradual</h4>
+                <p class="p">
+                    rect data contains four columns of data, namely chr, start, end, value, and the value column is numeric.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/rect_gra.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">rect-gradual data</font>
+                        <a href="./example_data/track/rect_gradual.csv" download="rect_gradual.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+            
+
+            <div id="div2.2.7">
+                <h4 class="a">2.2.7 heatmap-discrete</h4>
+                <p class="p">
+                    The heatmap-discrete data contains three basic columns, namely chr, start, and end. 
+                    In addition, it can also contain several columns of group.All group column is character.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/heat_dis.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">rect-gradual data</font>
+                        <a href="./example_data/track/heatmap_discrete.csv" download="heatmap_discrete.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+
+
+            <div id="div2.2.8">
+                <h4 class="a">2.2.8 heatmap-gradual</h4>
+                <p class="p">
+                    The heatmap-gradual data contains three basic columns, namely chr, start, and end. 
+                    In addition, it can also contain several columns of value.All value column is numeric.
+                </p>
+                <p style="text-align: center;">
+                    <img border="0" src="./helpfigures/heat_gra.jpg" width="60%">
+                    <figcaption style="text-align: center;">
+                        <font size="5">rect-gradual data</font>
+                        <a href="./example_data/track/heatmap_gradual.csv" download="heatmap_gradual.csv"><img src="download.png" height="2%" width="2%" /></a>
+                    </figcaption>
+                </p>
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+        <div id="div2.3">
+            <h3 class="a">2.3 label data</h3>
+            <p class="p">
+                The label data contains four columns, chr, start, end, label, as shown in the following figure:
+            </p>
+            <p style="text-align: center;">
+                <img border="0" src="./helpfigures/label.jpg" width="60%">
+                <figcaption style="text-align: center;">
+                    <font size="5">label data</font>
+                    <a href="./example_data/label/gene_label.csv" download="gene_label.csv"><img src="download.png" height="2%" width="2%" /></a>
+                </figcaption>
+            </p>
+        </div>
+        <div id="div2.4">
+            <h3 class="a">2.4 links data</h3>
+            <p class="p">
+                The link data contains six essential columns, which determine the position of the link respectively. The six columns are chr1, strat1, end1, chr2, start2, end2.
+            </p>
+            
+            <p style="text-align: center;">
+                <img border="0" src="./helpfigures/link.jpg" width="60%">
+                <figcaption style="text-align: center;">
+                    <font size="5">links data</font>
+                    <a href="./example_data/links/links.csv" download="links.csv"><img src="download.png" height="2%" width="2%" /></a>
+                </figcaption>
+            </p>
+            <p class="p">
+                In addition to the most basic six columns, you can also add a column to control the color of links, supporting discrete color values and continuous color values.
+            </p>
+            <p style="text-align: center;">
+                <img border="0" src="./helpfigures/link_discol.jpg" width="60%">
+                <figcaption style="text-align: center;">
+                    <font size="5">links data with discrete color</font>
+                    <a href="./example_data/links/links_discrete_color.csv" download="links_discrete_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                </figcaption>
+            </p>
+            <p style="text-align: center;">
+                <img border="0" src="./helpfigures/link_gracol.jpg" width="60%">
+                <figcaption style="text-align: center;">
+                    <font size="5">links data with gradual color</font>
+                    <a href="./example_data/links/links_gradual_color.csv" download="links_gradual_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                </figcaption>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

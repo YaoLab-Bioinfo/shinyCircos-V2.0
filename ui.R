@@ -14,6 +14,7 @@
 #           tags$style(HTML(".shiny-output-error-validation {color: red;}"))
 # ) 
 useSweetAlert()
+
 #******#headerbar
 header <- bs4DashNavbar(
   
@@ -28,13 +29,13 @@ sidebar <- bs4DashSidebar(
   skin = "light",
   bs4SidebarMenu(
     id = "sidebar",
-    bs4SidebarMenuItem("shinyCircos2.0",tabName = "shi-cir", icon = icon("home",lib = "font-awesome"),selected = TRUE),
+    bs4SidebarMenuItem("shinyCircos-V2.0",tabName = "shi-cir", icon = icon("home",lib = "font-awesome"),selected = TRUE),
     br(),
     bs4SidebarMenuItem("Data Upload",tabName = "dat-upl", icon = icon("upload",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Parameters",tabName = "dat-vie", icon = icon("cogs",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Plot",tabName = "cir-par", icon = icon("image",lib = "font-awesome")),
-    bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("adjust",lib = "font-awesome"))
-    # bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
+    bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("adjust",lib = "font-awesome")),
+    bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome"))
     # bs4SidebarMenuItem("Other Plot",tabName = "other-plot", icon = icon("bong",lib = "font-awesome")),
     # bs4SidebarMenuItem("Test",tabName = "test")
   )
@@ -44,7 +45,7 @@ body <- bs4DashBody(
    bs4TabItems(
      bs4TabItem(
        tabName = "shi-cir",
-       HTML('<p><font size="6">shinyCircos2.0: an R/Shiny application for interactive creation of Circos plot</font></p>'),
+       HTML('<p><font size="6">shinyCircos-V2.0: an R/Shiny application for interactive creation of Circos plot</font></p>'),
        HTML('<p <ul><li style="list-style-type: none; background-image: url(bullet.jpg); padding-left: 18px; background-size:9px 9px; background-repeat: no-repeat; background-position: 0px 50%"><font size="4">Software references</font></li></ul></p>'),
        HTML('<p>1. R Development Core Team. <i><a href="http://www.r-project.org/" target="_blank">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2016) <br>
 				2. RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/" target="_blank">shiny</a>: Web Application Framework for R.</i> R package version 1.0.0 (2016) <br>
@@ -60,14 +61,13 @@ body <- bs4DashBody(
 				12. Dean Attali. <i><a href="https://cran.r-project.org/web/packages/colourpicker/index.html" target="_blank">colourpicker</a>: A colour picker that can be used as an input in Shiny apps</i> R package version 1.1.1 (2021) <br>
 				13. Paul Murrell. <i><a href="https://cran.r-project.org/web/packages/gridBase/index.html" target="_blank">gridBase</a>: Integration of base and grid graphics.</i> R package version 0.4-7 (2014) <br>
 				14. Gu, Z. <i><a href="https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html" target="_blank">ComplexHeatmap</a>:  efficient to visualize associations between different sources of data sets and reveal potential patterns.</i> R package version 2.10.0 (2015) <br>
-				15. R Core Team and contributors worldwide. <i><a href="http://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/00Index.html" target="_blank">grDevices</a>: Graphics devices and support for base and grid graphics.</i> R package version 3.3.3 (2016) <br></p>'),
+				</p>'),
        HTML('<p <ul><li style="list-style-type: none; background-image: url(bullet.jpg); padding-left: 18px; background-size:9px 9px; background-repeat: no-repeat; background-position: 0px 50%"><font size="4">Further references</font></li></ul></p>'),
        h6("This application was created by ", a("Wen Yao", href="https://www.researchgate.net/profile/Wen_Yao", target="_blank"),"and Yazhou Wang",
           ". Please send bugs and feature requests to Wen Yao (ywhzau at gmail.com) or Yazhou Wang (gentelmanwang at gmail.com). This application uses the ", 
           a("shiny package from RStudio", href="http://www.rstudio.com/shiny/", target="_blank"), "."),
        HTML('<p <ul><li style="list-style-type: none; background-image: url(bullet.jpg); padding-left: 18px; background-size:9px 9px; background-repeat: no-repeat; background-position: 0px 50%"><font size="5">Please cite</font></li></ul></p>'),
-       h4("1111")
-       
+       shiny::includeHTML("www/footer.html")
      ),
      bs4TabItem(
        tabName = "dat-upl",
@@ -247,16 +247,6 @@ body <- bs4DashBody(
        conditionalPanel(
          condition = "input.datatype == 'b'&& input.dataup_example_go",
          uiOutput("example_data_ui"),
-         # conditionalPanel(
-         #   condition = "input.dataup_example_go",
-         #   actionBttn(
-         #     inputId = "sam_dat_vie_ok",
-         #     label = "SUBMIT!!",
-         #     style = "unite",
-         #     color = "success",
-         #     icon = icon("forward")
-         #   )
-         # )
          actionBttn(
            inputId = "sam_dat_vie_ok",
            label = "SUBMIT!!",
@@ -417,7 +407,7 @@ body <- bs4DashBody(
                              placement = "bottom"
                            )
                          ),
-                         value="#00EAFF"
+                         value="grey"
                        ),
                        numericInput(
                          inputId = "heightChr",
@@ -636,8 +626,6 @@ body <- bs4DashBody(
              column(
                width = 6,
                fluidRow(
-                 
-                 
                  column(
                    width = 4,
                    bs4Dash::tooltip(
@@ -831,14 +819,14 @@ body <- bs4DashBody(
          )
        )
      ),
-     # bs4TabItem(
-     #   tabName = "help",
-     #   includeHTML("README.html")
-     #   
-     # ),
+     bs4TabItem(
+       tabName = "help",
+       includeHTML("www/help.html")
+
+     ),
      bs4TabItem(
        tabName = "gal",
-       includeHTML("www/Gallery.html")
+       includeHTML("www/gallery.html")
        
      )
      # bs4TabItem(
@@ -862,6 +850,8 @@ body <- bs4DashBody(
 
 
 #bottom bar
-foot <- bs4DashFooter()
+foot <- bs4DashFooter(
+  includeHTML("www/ffooter.html")
+)
 
-ui <- bs4DashPage(header, sidebar, body,foot,controlbar = NULL,scrollToTop = TRUE,dark = NULL,title = "shinyCircos2.0")#,freshTheme = mytheme)
+ui <- bs4DashPage(header, sidebar, body,foot,controlbar = NULL,scrollToTop = TRUE,dark = NULL,title = "shinyCircos-V2.0")#,freshTheme = mytheme)

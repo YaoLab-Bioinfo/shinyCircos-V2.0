@@ -1,66 +1,26 @@
 options(shiny.maxRequestSize=6000*1024^2)
-library(bs4Dash)
-
 
 library(shiny)
 library(circlize)
-library(RColorBrewer)
-library(GenomicRanges)
-library(data.table)
-#library(RLumShiny)
-
-library(shinyWidgets)
-library(shinyBS)
+library(bs4Dash)
 library(DT)
+library(RColorBrewer)
+library(shinyWidgets)
+library(data.table)
+library(shinyBS)
 library(sortable)
-#library(crayon)
 library(shinyjqui)
-#library(tippy)
-
-library(colourpicker)
-
-
-library(gridBase)
-
-#library(IsoriX)
-library(ComplexHeatmap)
-#library(shinycustomloader)
 library(shinycssloaders)
-#library(grDevices)
-#library(bsplus)
+library(colourpicker)
+library(gridBase)
+library(ComplexHeatmap)
+
+
+
+
+library(GenomicRanges)
+
+
 source("plot.R")
 
-
-#observeEvent(input$sam_view_ok,{
-  data_chr_gen <- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-  data_chr_cyt <- data.frame(read.csv("./example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
-  data_lk_lk <- data.frame(read.csv("./example_data/links/links.csv",header = T),stringsAsFactors = F)
-  data_lk_dis <- data.frame(read.csv("./example_data/links/links_discrete_color.csv",header = T),stringsAsFactors = F)
-  data_lk_gra <- data.frame(read.csv("./example_data/links/links_gradual_color.csv",header = T),stringsAsFactors = F)
-  filelist <- list.files("./example_data/track")
-  files <- paste("./example_data/track/",filelist,sep = "")
-  data_trk_bar <- data.frame(read.csv(files[1],header = T),stringsAsFactors = F)
-  data_trk_bar_bid <- data.frame(read.csv(files[2],header = T),stringsAsFactors = F)
-  data_trk_bar_col <- data.frame(read.csv(files[3],header = T),stringsAsFactors = F)
-  data_trk_ide <- data.frame(read.csv(files[4],header = T),stringsAsFactors = F)
-  data_trk_heat_dis <- data.frame(read.csv(files[5],header = T),stringsAsFactors = F)
-  data_trk_heat_gra <- data.frame(read.csv(files[6],header = T),stringsAsFactors = F)
-  data_trk_lin <- data.frame(read.csv(files[7],header = T),stringsAsFactors = F)
-  data_trk_lin_col <- data.frame(read.csv(files[8],header = T),stringsAsFactors = F)
-  data_trk_lin_mul <- data.frame(read.csv(files[9],header = T),stringsAsFactors = F)
-  data_trk_poi <- data.frame(read.csv(files[10],header = T),stringsAsFactors = F)
-  data_trk_poi_cex <- data.frame(read.csv(files[11],header = T),stringsAsFactors = F)
-  data_trk_poi_col <- data.frame(read.csv(files[12],header = T),stringsAsFactors = F)
-  data_trk_poi_col_cex <- data.frame(read.csv(files[13],header = T),stringsAsFactors = F)
-  data_trk_poi_col_pch <- data.frame(read.csv(files[14],header = T),stringsAsFactors = F)
-  data_trk_poi_col_pch_cex <- data.frame(read.csv(files[15],header = T),stringsAsFactors = F)
-  data_trk_poi_mul <- data.frame(read.csv(files[16],header = T),stringsAsFactors = F)
-  data_trk_poi_pch <- data.frame(read.csv(files[17],header = T),stringsAsFactors = F)
-  data_trk_poi_pch_cex <- data.frame(read.csv(files[18],header = T),stringsAsFactors = F)
-  data_trk_rec_dis <- data.frame(read.csv(files[19],header = T),stringsAsFactors = F)
-  data_trk_rec_gra <- data.frame(read.csv(files[20],header = T),stringsAsFactors = F)
-  data_trk_sta_lin <- data.frame(read.csv(files[21],header = T),stringsAsFactors = F)
-  data_trk_sta_poi <- data.frame(read.csv(files[22],header = T),stringsAsFactors = F)
-  data_gen_lab <- data.frame(read.csv("./example_data/label/gene_label.csv",header = T),stringsAsFactors = F)
-#})
 

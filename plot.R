@@ -1,7 +1,7 @@
 source("server.R")
 
 
-legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos){
+legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
   if(tktype == "heatmap-gradual"){
     break1 <- min(as.numeric(as.matrix(data.TT[,-c(1:3)])))
     break2 <- max(as.numeric(as.matrix(data.TT[,-c(1:3)])))
@@ -62,7 +62,8 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos){
           legend_gp = gpar(fill = unique(data.TT[,4])),
           ncol = 4,
           by_row = TRUE,
-          title = paste0("track",i)
+          title = paste0("track",i),
+          direction = "horizontal"
         )
       )
     }
@@ -84,11 +85,32 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos){
           legend_gp = gpar(fill = unique(c(t(data.TT)))),
           ncol = 4,
           by_row = TRUE,
-          title = paste0("track",i)
+          title = paste0("track",i),
+          direction = "horizontal"
         )
       )
     }
     
+  }else if("stack" %in% colnames(data.TT_old)){
+    if(legendpos == "Right"){
+      return(
+        Legend(
+          at = unique(data.TT_old[,4],fromLast = TRUE),
+          legend_gp = gpar(fill = tkcolor),
+          nrow = 6,
+          title = paste0("track",i)
+        )
+      )
+    }else{
+      Legend(
+        at = unique(data.TT_old[,4],fromLast = TRUE),
+        legend_gp = gpar(fill = tkcolor),
+        ncol = 4,
+        by_row = TRUE,
+        title = paste0("track",i),
+        direction = "horizontal"
+      )
+    }
   }else{NULL}
   
 }
@@ -159,7 +181,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
                     tra_rect_rectcol , tra_trct_colrect , tra_rect_rectcoldis , tra_rect_rectcoldiscus , tra_transparency , tra_coltype , tra_colcol ,
                     tra_colorcus , tra_line_fillarea , tra_poipch , tra_colorline , tra_baseline , outAxis , fontSize , outAxis_size , labelChr_size , tra_bar_direction ,
                     tra_bar_Boundary , tra_bar_coldir1 , tra_bar_coldir2 , hltTrack.List , hltdata.List , tra_line_selrea , tra_bar_borderarea , colformatLinks , colorLinks ,
-                    selcolorLinks , transparencyhltLinks , gracolinks , transparencyLinks , legendpos , addlegend , hlt_data , midplot){
+                    selcolorLinks , transparencyhltLinks , gracolinks , transparencyLinks , legendpos , addlegend , hlt_data , midplot , trapos){
   
   
   heilab <- 0
@@ -332,14 +354,16 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         }else{
           lab_inf <- rep(0, times=length(data.T))
         }
-        data.TT <- data.T[[i]]
-        data.TT_old <- data.T[[i]]
+        ordertrapos <- order(trapos)
+        data.TT <- data.T[[ordertrapos[i]]]
+        data.TT_old <- data.T[[ordertrapos[i]]]
         tktype <- tratype[[i]]
         data.TT[,2] <- as.numeric(data.TT[,2])
         data.TT[,3] <- as.numeric(data.TT[,3])
         ## *** The fill color for track ***
-        data.TT$num <- 1:nrow(data.TT)
+        
         if(tktype!="rect-discrete" && tktype!="rect-gradual" && tktype!="heatmap-gradual" && tktype!="heatmap-discrete"  && tktype!="ideogram"){
+          data.TT$num <- 1:nrow(data.TT)
           data.TTC <- NULL
           coltypeTrack <- tra_coltype[[i]]
           if(coltypeTrack == 2){
@@ -347,7 +371,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             tkcolor <- gsub("\\s","",strsplit(tkcolor,",")[[1]])
             tkcolor <- gsub('\\"',"",tkcolor)
             tkcolor <- gsub("0x","#", tkcolor)
-          }else if((coltypeTrack==3 && ("color" %in% colnames(data.TT))) | (coltypeTrack==3 && ncol(data.T[[i]])==4 && colnames(data.TT)[4]=="stack")){
+          }else if((coltypeTrack==3 && ("color" %in% colnames(data.TT))) | (coltypeTrack==3 && ncol(data.TT_old)==4 && colnames(data.TT)[4]=="stack")){
             tkcolor <- tra_colorcus[[i]]
             tkcolor <- unlist(strsplit(tkcolor,";"))
             tkcolor <- data.frame(id=tkcolor,stringsAsFactors=F)
@@ -363,7 +387,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
             data.TTC <- data.TTC[c(colname,"cols")]
             data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
-            tkcolor <- unique(data.TTC$cols)
+            tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
             data.TT <- data.TT[,1:4]
           }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT))){
             selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
@@ -375,7 +399,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
             tkcolor <- unique(data.TTC$cols)
             data.TT <- data.TT[,1:4]
-          }else if(coltypeTrack==1 && ncol(data.T[[i]])==4 && colnames(data.TT)[4]=="stack"){
+          }else if(coltypeTrack==1 && ncol(data.TT_old)==4 && colnames(data.TT)[4]=="stack"){
             selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
             tkcolor <- sample(selcols,length(unique(data.TT$stack)))
             tkcolor <- data.frame(group=unique(data.TT$stack),cols=tkcolor,stringsAsFactors=F)
@@ -387,7 +411,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             data.TT <- data.TT[,1:4]
           }else{
             selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
-            tkcolor <- sample(selcols,ncol(data.T[[i]])-3)
+            tkcolor <- sample(selcols,ncol(data.TT_old)-3)
           }
           if(!is.null(data.TTC)){
             data.TTC <- data.TTC[order(data.TTC$num),]
@@ -434,11 +458,11 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           tklinecolor <- unlist(strsplit(tklinecolor,","))
           tklinecolor <- rep(tklinecolor, length(tklinecoord))[1:length(tklinecoord)]
         }
-        if(ncol(data.T[[i]])==4 && colnames(data.T[[i]])[4]=="stack"){
+        if(ncol(data.TT_old)==4 && colnames(data.TT_old)[4]=="stack"){
           tklinecol <<- gsub('\\"',"",tklinecolor)
           tklinecol <<- gsub("0x","#", tklinecol)
           tklinecol <- unlist(strsplit(tklinecol,","))
-          tklinecol <- rep(tklinecol, length(unique(data.T[[i]][,4])))[1:length(unique(data.T[[i]][,4]))]
+          tklinecol <- rep(tklinecol, length(unique(data.TT_old[,4])))[1:length(unique(data.TT_old[,4]))]
         }
         ## *** Add connection ***
         if(!is.null(tra_hmap_poslines[[i]])){
@@ -497,6 +521,9 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             heat_dis_cols$group <- gsub(" ","",heat_dis_cols$group)
             heat_dis_cols$cols <- gsub(" ","",heat_dis_cols$cols)
             heat_dis_cols[,2] <- as.numeric(as.factor(heat_dis_cols[,2]))
+            if(length(data.TT_hat_dis) == 4){
+              data.TT_hat_dis[,length(data.TT_hat_dis)+1] <- data.TT_hat_dis[,4]
+            }
             data_TT_col <- apply(data.TT_hat_dis[,4:length(data.TT_hat_dis)], MARGIN = c(1,2), function(x){
               if(length(which(heat_dis_cols[,2] == x)) != 0){
                 heat_dis_cols[which(heat_dis_cols[,2] == x),3]
@@ -507,10 +534,14 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           }else{
             cols <- c(brewer.pal(11,'Set3'),brewer.pal(9,'Set1')[c(-1,-3,-6)],brewer.pal(8,'Dark2'),"chartreuse","aquamarine","cornflowerblue","blue","cyan","bisque1","darkorchid2","firebrick1","gold1","magenta1","olivedrab1","navy","maroon1","tan","yellow3","black","bisque4","seagreen3","plum2","yellow1","springgreen","slateblue1","lightsteelblue1","lightseagreen","limegreen")
             selcol <- sample(cols,length(unique(unlist(data.TT_hat_dis[,4:length(data.TT_hat_dis)]))),replace = TRUE)
+            if(length(data.TT_hat_dis) == 4){
+              data.TT_hat_dis[,length(data.TT_hat_dis)+1] <- data.TT_hat_dis[,4]
+            }
             data_ht_col <- data.TT_hat_dis
             for(ki in 4:length(data.TT_hat_dis)){
               data_ht_col[,ki] <- selcol[data.TT_hat_dis[,ki]]
             }
+            
             data_TT_col <- data_ht_col[,4:length(data_ht_col)]
           }
         }
@@ -584,7 +615,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         if((tktype!="rect-gradual" && tktype!="rect-discrete" && tktype!="heatmap-gradual" && tktype!="heatmap-discrete" && tktype!="ideogram") | (tktype=="line" && tra_line_fillarea[[i]]!="add")){
           tkcolor <- adjustcolor(tkcolor, alpha.f = tktransparency)
         }
-        # data.TTT <- data.T[[i]]
+        # data.TTT <- data.TT
         # data.TTT$id <- paste(data.TTT[,1],data.TTT[,2],data.TTT[,3],sep="")
         # data.TTT$num <- 1:nrow(data.TTT)
         ## *** The track border
@@ -601,11 +632,24 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             symboltype <- tra_poipch[[i]]
             if(!is.null(symboltype)){
               symboltype <- as.numeric(unlist(strsplit(symboltype,",")))
-              symboltype <- rep(symboltype, length(unique(data.T[[i]][,4])))[1:length(unique(data.T[[i]][,4]))]
+              symboltype <- rep(symboltype, length(unique(data.TT_old[,4])))[1:length(unique(data.TT_old[,4]))]
             }
           }
         }
         if(tktype == "point" & !("cex" %in% colnames(data.TT))){
+          if(!is.null(tra_poi_poisiz[[i]])){
+            pointsize <- as.numeric(tra_poi_poisiz[[i]])
+          }
+        }
+        if(tktype == "stack-point"){
+          if(!is.null(tra_poipch[[i]])){
+            symboltype <- tra_poipch[[i]]
+            if(!is.null(symboltype)){
+              symboltype <- as.numeric(unlist(strsplit(symboltype,",")))
+              symboltype <- rep(symboltype, length(unique(data.TT_old[,4])))[1:length(unique(data.TT_old[,4]))]
+            }
+            
+          }
           if(!is.null(tra_poi_poisiz[[i]])){
             pointsize <- as.numeric(tra_poi_poisiz[[i]])
           }
@@ -633,27 +677,36 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
             }
           }
-          if(ncol(data.T[[i]])==4 && colnames(data.T[[i]])[4]=="stack"){
-            bed_list <- lapply(unique(data.T[[i]][,4]),function(x){
-              if(coltypeTrack==2){
-                data.TT[data.TT[,4] %in% x,1:3]
+          
+          data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
+          circos.genomicTrackPlotRegion(data.TT, track.height = tkheight, track.margin = c(tkmargin,0) , bg.col = tkbgcol , bg.border = tkborder, panel.fun = function(region,value,...){
+            if(nchar(tklinecolor[1])!=0){
+              xlim <- get.cell.meta.data("xlim")
+              ylim <- get.cell.meta.data("ylim")
+              for(k in 1:length(tklinecoord)){
+                y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+              }
+            }
+            if((coltypeTrack==1 && !("color" %in% colnames(data.TT_old))) | coltypeTrack==2){
+              if(length(columns)==1){
+                tkcolor <- tkcolor[1]
               }else{
-                data.TTC[data.TTC[,4] %in% x,1:3]
+                tkcolor <- c(tkcolor,rep("grey",length(columns)))
+                tkcolor <- tkcolor[1:length(columns)]
               }
-            })
-            circos.genomicTrackPlotRegion(bed_list, stack = TRUE, track.height = tkheight, track.margin = c(tkmargin,0),bg.col = tkbgcol, bg.border = tkborder, panel.fun = function(region, value, ...){
-              ii = getI(...)
-              if(coltypeTrack==1){
-                circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
-              }else if(coltypeTrack==2){
-                circos.genomicLines(region, value, col=tkcolor[1], lty=1, ...)
-              }else if(coltypeTrack==3){
-                circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
+              if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
+                borderset <- adjustcolor(tkcolor,alpha.f = tktransparency)
               }
-            })
-          }else{
-            data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
-            circos.genomicTrackPlotRegion(data.TT, track.height = tkheight, track.margin = c(tkmargin,0) , bg.col = tkbgcol , bg.border = tkborder, panel.fun = function(region,value,...){
+              circos.genomicLines(region, value, numeric.column=columns-3, col=borderset, area=area, border=tkcolor, lwd=lwdnum, lty=1, ...)
+            }
+          })
+          takindx <- get.current.track.index()
+          if(coltypeTrack==3 && ncol(data.TTC)>=6 && ("cols" %in% colnames(data.TTC))){
+            data.TTC$id <- paste(data.TTC[,1],data.TTC[,2],data.TTC[,3],sep="")
+            data.TTC$num <- 1:nrow(data.TTC)
+            lapply(unique(data.TTC[,1]),function(x){
+              circos.updatePlotRegion(sector.index = x, track.index=takindx , bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
               if(nchar(tklinecolor[1])!=0){
                 xlim <- get.cell.meta.data("xlim")
                 ylim <- get.cell.meta.data("ylim")
@@ -662,144 +715,117 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
                   circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
                 }
               }
-              if((coltypeTrack==1 && !("color" %in% colnames(data.T[[i]]))) | coltypeTrack==2){
-                if(length(columns)==1){
-                  tkcolor <- tkcolor[1]
+              dat <- data.TTC[data.TTC[,1] %in% x,]
+              lapply(unique(dat$cols),function(m){
+                datt <- dat[dat$cols %in% m,]
+                ind <- which(data.TTC$id %in% datt$id)
+                datt.fil <- na.omit(unique(data.TTC[ind,]))
+                datt.fil <- datt.fil[datt.fil[,1] %in% x,]
+                rownum <- datt.fil$num
+                rownumdif <- diff(rownum)
+                indx <- which(rownumdif != 1)
+                indx1 <- c(0,indx)
+                rownumdif1 <- c(1,rownumdif)
+                if(length(indx)==0){
+                  rownumdif1 <- 1
                 }else{
-                  tkcolor <- c(tkcolor,rep("grey",length(columns)))
-                  tkcolor <- tkcolor[1:length(columns)]
+                  for(k in 1:length(which(rownumdif!=1))){
+                    rownumdif1[(indx1[k]+1):indx[k]] <- k
+                    if(k==length(which(rownumdif!=1))){
+                      rownumdif1[(indx[k]+1):length(rownumdif1)] <- k+1
+                    }
+                  }
                 }
-                if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
-                  borderset <- adjustcolor(tkcolor,alpha.f = tktransparency)
-                }
-                circos.genomicLines(region, value, numeric.column=columns-3, col=borderset, area=area, border=tkcolor, lwd=lwdnum, lty=1, ...)
-              }
+                datt.fil$indx <- rownumdif1
+                lapply(unique(rownumdif1),function(h){
+                  datt.fill <- datt.fil[datt.fil$indx == h,]
+                  minnum <- min(datt.fill$num)
+                  if(sum(dat$num==(minnum-1)) != 0){
+                    datt.fill <- rbind(datt.fill,as.character(c(dat[dat$num==(minnum-1),],h)))
+                  }
+                  
+                  datt.fill[,2] <- as.numeric(datt.fill[,2])
+                  datt.fill[,3] <- as.numeric(datt.fill[,3])
+                  datt.fill[,4] <- as.numeric(datt.fill[,4])
+                  datt.fill$indx <- as.numeric(datt.fill$indx)
+                  datt.fill <- datt.fill[!is.na(datt.fill[,2]),]
+                  datt.fill <- datt.fill[order(datt.fill[,2],datt.fill[,3]),]
+                  if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
+                    borderset <- adjustcolor(m,alpha.f = tktransparency)
+                  }
+                  circos.lines((datt.fill[,2]+datt.fill[,3])/2,datt.fill[,4], col=borderset, area=area, border=m, lwd=lwdnum, lty=1)
+                })
+              })
             })
-            takindx <- get.current.track.index()
-            if(coltypeTrack==3 && ncol(data.TTC)>=6 && ("cols" %in% colnames(data.TTC))){
-              data.TTC$id <- paste(data.TTC[,1],data.TTC[,2],data.TTC[,3],sep="")
-              data.TTC$num <- 1:nrow(data.TTC)
-              lapply(unique(data.TTC[,1]),function(x){
-                circos.updatePlotRegion(sector.index = x, track.index=takindx , bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                if(nchar(tklinecolor[1])!=0){
-                  xlim <- get.cell.meta.data("xlim")
-                  ylim <- get.cell.meta.data("ylim")
-                  for(k in 1:length(tklinecoord)){
-                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+          }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT_old)) && ("cols" %in% colnames(data.TTC))){
+            data.TTC$id <- paste(data.TTC[,1],data.TTC[,2],data.TTC[,3],sep="")
+            data.TTC$num <- 1:nrow(data.TTC)
+            lapply(unique(data.TTC[,1]),function(x){
+              circos.updatePlotRegion(sector.index = x, track.index = takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+              if(nchar(tklinecolor[1])!=0){
+                xlim <- get.cell.meta.data("xlim")
+                ylim <- get.cell.meta.data("ylim")
+                for(k in 1:length(tklinecoord)){
+                  y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                  circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                }
+              }
+              dat <- data.TTC[data.TTC[,1] %in% x,]
+              lapply(unique(dat$cols),function(m){
+                datt <- dat[dat$cols %in% m,]
+                ind <- which(data.TTC$id %in% datt$id)
+                datt.fil <- na.omit(unique(data.TTC[ind,]))
+                datt.fil <- datt.fil[datt.fil[,1] %in% x,]
+                rownum <- datt.fil$num
+                rownumdif <- diff(rownum)
+                indx <- which(rownumdif != 1)
+                indx1 <- c(0,indx)
+                rownumdif1 <- c(1,rownumdif)
+                if(length(indx)==0){
+                  rownumdif1 <- 1
+                }else{
+                  for(k in 1:length(which(rownumdif!=1))){
+                    rownumdif1[(indx1[k]+1):indx[k]] <- k
+                    if(k==length(which(rownumdif!=1))){
+                      rownumdif1[(indx[k]+1):length(rownumdif1)] <- k+1
+                    }
                   }
                 }
-                dat <- data.TTC[data.TTC[,1] %in% x,]
-                lapply(unique(dat$cols),function(m){
-                  datt <- dat[dat$cols %in% m,]
-                  ind <- which(data.TTC$id %in% datt$id)
-                  datt.fil <- na.omit(unique(data.TTC[ind,]))
-                  datt.fil <- datt.fil[datt.fil[,1] %in% x,]
-                  rownum <- datt.fil$num
-                  rownumdif <- diff(rownum)
-                  indx <- which(rownumdif != 1)
-                  indx1 <- c(0,indx)
-                  rownumdif1 <- c(1,rownumdif)
-                  if(length(indx)==0){
-                    rownumdif1 <- 1
-                  }else{
-                    for(k in 1:length(which(rownumdif!=1))){
-                      rownumdif1[(indx1[k]+1):indx[k]] <- k
-                      if(k==length(which(rownumdif!=1))){
-                        rownumdif1[(indx[k]+1):length(rownumdif1)] <- k+1
-                      }
-                    }
-                  }
-                  datt.fil$indx <- rownumdif1
-                  lapply(unique(rownumdif1),function(h){
-                    datt.fill <- datt.fil[datt.fil$indx == h,]
-                    minnum <- min(datt.fill$num)
-                    if(sum(dat$num==(minnum-1)) != 0){
-                      datt.fill <- rbind(datt.fill,as.character(c(dat[dat$num==(minnum-1),],h)))
-                    }
+                datt.fil$indx <- rownumdif1
+                lapply(unique(rownumdif1),function(h){
+                  datt.fill <- datt.fil[datt.fil$indx == h,]
+                  minnum <- min(datt.fill$num)
+                  if(sum(dat$num==(minnum-1)) != 0){
                     
-                    datt.fill[,2] <- as.numeric(datt.fill[,2])
-                    datt.fill[,3] <- as.numeric(datt.fill[,3])
-                    datt.fill[,4] <- as.numeric(datt.fill[,4])
-                    datt.fill$indx <- as.numeric(datt.fill$indx)
-                    datt.fill <- datt.fill[!is.na(datt.fill[,2]),]
-                    datt.fill <- datt.fill[order(datt.fill[,2],datt.fill[,3]),]
-                    if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
-                      borderset <- adjustcolor(m,alpha.f = tktransparency)
-                    }
-                    circos.lines((datt.fill[,2]+datt.fill[,3])/2,datt.fill[,4], col=borderset, area=area, border=m, lwd=lwdnum, lty=1)
-                  })
+                    datt.fill <- rbind(datt.fill,as.character(c(dat[dat$num==(minnum-1),],h)))
+                    
+                  }
+                  
+                  datt.fill[,2] <- as.numeric(datt.fill[,2])
+                  datt.fill[,3] <- as.numeric(datt.fill[,3])
+                  datt.fill[,4] <- as.numeric(datt.fill[,4])
+                  datt.fill$indx <- as.numeric(datt.fill$indx)
+                  datt.fill <- datt.fill[!is.na(datt.fill[,2]),]
+                  datt.fill <- datt.fill[order(datt.fill[,2],datt.fill[,3]),]
+                  if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
+                    borderset <- adjustcolor(m,alpha.f = tktransparency)
+                  }
+                  circos.lines((datt.fill[,2]+datt.fill[,3])/2,datt.fill[,4], col=borderset, area=area, border=m, lwd=lwdnum, lty=1)
                 })
               })
-            }else if(coltypeTrack==1 && ("color" %in% colnames(data.T[[i]])) && ("cols" %in% colnames(data.TTC))){
-              data.TTC$id <- paste(data.TTC[,1],data.TTC[,2],data.TTC[,3],sep="")
-              data.TTC$num <- 1:nrow(data.TTC)
-              lapply(unique(data.TTC[,1]),function(x){
-                circos.updatePlotRegion(sector.index = x, track.index = takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                if(nchar(tklinecolor[1])!=0){
-                  xlim <- get.cell.meta.data("xlim")
-                  ylim <- get.cell.meta.data("ylim")
-                  for(k in 1:length(tklinecoord)){
-                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                  }
-                }
-                dat <- data.TTC[data.TTC[,1] %in% x,]
-                lapply(unique(dat$cols),function(m){
-                  datt <- dat[dat$cols %in% m,]
-                  ind <- which(data.TTC$id %in% datt$id)
-                  datt.fil <- na.omit(unique(data.TTC[ind,]))
-                  datt.fil <- datt.fil[datt.fil[,1] %in% x,]
-                  rownum <- datt.fil$num
-                  rownumdif <- diff(rownum)
-                  indx <- which(rownumdif != 1)
-                  indx1 <- c(0,indx)
-                  rownumdif1 <- c(1,rownumdif)
-                  if(length(indx)==0){
-                    rownumdif1 <- 1
-                  }else{
-                    for(k in 1:length(which(rownumdif!=1))){
-                      rownumdif1[(indx1[k]+1):indx[k]] <- k
-                      if(k==length(which(rownumdif!=1))){
-                        rownumdif1[(indx[k]+1):length(rownumdif1)] <- k+1
-                      }
-                    }
-                  }
-                  datt.fil$indx <- rownumdif1
-                  lapply(unique(rownumdif1),function(h){
-                    datt.fill <- datt.fil[datt.fil$indx == h,]
-                    minnum <- min(datt.fill$num)
-                    if(sum(dat$num==(minnum-1)) != 0){
-                      
-                      datt.fill <- rbind(datt.fill,as.character(c(dat[dat$num==(minnum-1),],h)))
-                      
-                    }
-                    
-                    datt.fill[,2] <- as.numeric(datt.fill[,2])
-                    datt.fill[,3] <- as.numeric(datt.fill[,3])
-                    datt.fill[,4] <- as.numeric(datt.fill[,4])
-                    datt.fill$indx <- as.numeric(datt.fill$indx)
-                    datt.fill <- datt.fill[!is.na(datt.fill[,2]),]
-                    datt.fill <- datt.fill[order(datt.fill[,2],datt.fill[,3]),]
-                    if(tra_line_selrea[[i]]==1 | tra_line_fillarea[[i]]!="add"){
-                      borderset <- adjustcolor(m,alpha.f = tktransparency)
-                    }
-                    circos.lines((datt.fill[,2]+datt.fill[,3])/2,datt.fill[,4], col=borderset, area=area, border=m, lwd=lwdnum, lty=1)
-                  })
-                })
-              })
-            }
-            if(tra_yaxis[[i]]==1){
-              circos.yaxis(
-                side = "left",
-                tick = TRUE,
-                at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
-                #at = c(as.numeric(sprintf("%0.2f",min(data.TT_old[,4]))),as.numeric(sprintf("%0.2f",max(data.TT_old[,4])))),
-                sector.index = get.all.sector.index()[1],
-                labels.cex = 0.5
-              )
-            }
+            })
           }
+          if(tra_yaxis[[i]]==1){
+            circos.yaxis(
+              side = "left",
+              tick = TRUE,
+              at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
+              #at = c(as.numeric(sprintf("%0.2f",min(data.TT_old[,4]))),as.numeric(sprintf("%0.2f",max(data.TT_old[,4])))),
+              sector.index = get.all.sector.index()[1],
+              labels.cex = 0.5
+            )
+          }
+          
           
           
           
@@ -812,283 +838,304 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
             }
           }
+        }else if(tktype == "stack-line"){
+          if(lab_inf[i]){
+            if(labels_inf[[2]]=="outside"){
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+            }
+          }
+          
+          bed_list <- lapply(unique(data.TT_old[,4],fromLast = TRUE),function(x){
+            if(coltypeTrack==2){
+              data.TT[data.TT[,4] %in% x,1:3]
+            }else{
+              data.TTC[data.TTC[,4] %in% x,1:3]
+            }
+          })
+          circos.genomicTrackPlotRegion(bed_list, stack = TRUE, track.height = tkheight, track.margin = c(tkmargin,0),bg.col = tkbgcol, bg.border = tkborder, panel.fun = function(region, value, ...){
+            ii = getI(...)
+            if(coltypeTrack==1){
+              circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
+            }else if(coltypeTrack==3){
+              circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
+            }
+          })
+          
+          
+          
+          
+          if(lab_inf[i]){
+            if(labels_inf[[2]]=="inside"){
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
+            }
+          }
+        }else if(tktype == "stack-point"){
+          if(lab_inf[i]){
+            if(labels_inf[[2]]=="outside"){
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+            }
+          }
+          bed_list <- lapply(unique(data.TT_old[,4],fromLast = TRUE),function(x){
+            if(coltypeTrack==2){
+              data.TT[data.TT[,4] %in% x,1:3]
+            }else{
+              data.TTC[data.TTC[,4] %in% x,1:3]
+            }
+          })
+          circos.genomicTrackPlotRegion(bed_list, stack = TRUE, track.height = tkheight, track.margin = c(tkmargin,0), bg.col = tkbgcol , bg.border = tkborder, panel.fun = function(region, value, ...){
+            ii = getI(...)
+            if(coltypeTrack==1){
+              circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii])
+              circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
+            }else if(coltypeTrack==3){
+              circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii]) #  "#808080" "#808080"
+              circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
+            }
+          })
+          if(lab_inf[i]){
+            if(labels_inf[[2]]=="inside"){
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
+            }
+          }
         }else if(tktype == "point"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
             }
           }
-          if(ncol(data.T[[i]])==4 && colnames(data.T[[i]])[4]=="stack"){
-            bed_list <- lapply(unique(data.T[[i]][,4]),function(x){
-              if(coltypeTrack==2){
-                data.TT[data.TT[,4] %in% x,1:3]
+          
+          data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
+          circos.genomicTrack(data.TT , track.height = tkheight , track.margin = c(tkmargin,0) , bg.col = tkbgcol , bg.border = tkborder , panel.fun = function(region, value, ...) {
+            if(nchar(tklinecolor[1])!=0){
+              xlim <- get.cell.meta.data("xlim")
+              ylim <- get.cell.meta.data("ylim")
+              for(k in 1:length(tklinecoord)){
+                y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+              }
+            }
+            if(!("cex" %in% colnames(data.TT_old)) && !("pch" %in% colnames(data.TT_old)) && ((coltypeTrack==1 && !("color" %in% colnames(data.TT_old))) | coltypeTrack==2)){
+              if(length(columns)==1){
+                tkcolor <- tkcolor[1]
               }else{
-                data.TTC[data.TTC[,4] %in% x,1:3]
+                tkcolor <- c(tkcolor,rep("grey",length(columns)))
+                tkcolor <- tkcolor[1:length(columns)]
               }
-            })
-            circos.genomicTrackPlotRegion(bed_list, stack = TRUE, track.height = tkheight, track.margin = c(tkmargin,0), bg.col = tkbgcol , bg.border = tkborder, panel.fun = function(region, value, ...){
-              ii = getI(...)
-              if(coltypeTrack==1){
-                circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii])
-                circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
-              }else if(coltypeTrack==2){
-                circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii])
-                circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[1],...)
-              }else if(coltypeTrack==3){
-                circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii]) #  "#808080" "#808080"
-                circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
-              }
-            })
-          }else{
-            data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
-            circos.genomicTrack(data.TT , track.height = tkheight , track.margin = c(tkmargin,0) , bg.col = tkbgcol , bg.border = tkborder , panel.fun = function(region, value, ...) {
-              if(nchar(tklinecolor[1])!=0){
-                xlim <- get.cell.meta.data("xlim")
-                ylim <- get.cell.meta.data("ylim")
-                for(k in 1:length(tklinecoord)){
-                  y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                  circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+              circos.genomicPoints(region, value, numeric.column=columns-3, col= tkcolor, cex= pointsize, pch= symboltype[1], ...)
+            }
+          })
+          takindx <- get.current.track.index()
+          if(!("cex" %in% colnames(data.TT_old))){
+            if(coltypeTrack==3 && ("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                circos.updatePlotRegion(sector.index = x, track.index = takindx , bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
                 }
-              }
-              if(!("cex" %in% colnames(data.T[[i]])) && !("pch" %in% colnames(data.T[[i]])) && ((coltypeTrack==1 && !("color" %in% colnames(data.T[[i]]))) | coltypeTrack==2)){
-                if(length(columns)==1){
-                  tkcolor <- tkcolor[1]
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=dat$pch)
+              })
+            }else if(coltypeTrack==3 && ncol(data.TTC)>=6 && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=16)
+              })
+            }else if(coltypeTrack!=3 && ("pch" %in% colnames(data.TT_old)) && ("color" %in% colnames(data.TT_old))){
+              lapply(unique(data.TT_old[,1]),function(x){
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                if(coltypeTrack==1){
+                  tkcols <- data.TTC$cols[data.TTC[,1] %in% x]
+                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(tkcols,alpha.f = tktransparency), cex=0.6, pch=dat$pch)
                 }else{
-                  tkcolor <- c(tkcolor,rep("grey",length(columns)))
-                  tkcolor <- tkcolor[1:length(columns)]
+                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=0.6, pch=dat$pch)
                 }
-                circos.genomicPoints(region, value, numeric.column=columns-3, col= tkcolor, cex= pointsize, pch= symboltype[1], ...)
-              }
-            })
-            takindx <- get.current.track.index()
-            if(!("cex" %in% colnames(data.T[[i]]))){
-              if(coltypeTrack==3 && ("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  circos.updatePlotRegion(sector.index = x, track.index = takindx , bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
+              })
+            }else if(("pch" %in% colnames(data.TT_old)) && !("color" %in% colnames(data.TT_old))){
+              lapply(unique(data.TT_old[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
                   }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=dat$pch)
-                })
-              }else if(coltypeTrack==3 && ncol(data.TTC)>=6 && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor, cex=0.6, pch=dat$pch)
+              })
+            }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT_old)) && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
                   }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=16)
-                })
-              }else if(coltypeTrack!=3 && ("pch" %in% colnames(data.T[[i]])) && ("color" %in% colnames(data.T[[i]]))){
-                lapply(unique(data.T[[i]][,1]),function(x){
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  if(coltypeTrack==1){
-                    tkcols <- data.TTC$cols[data.TTC[,1] %in% x]
-                    circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(tkcols,alpha.f = tktransparency), cex=0.6, pch=dat$pch)
-                  }else{
-                    circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=0.6, pch=dat$pch)
-                  }
-                })
-              }else if(("pch" %in% colnames(data.T[[i]])) && !("color" %in% colnames(data.T[[i]]))){
-                lapply(unique(data.T[[i]][,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor, cex=0.6, pch=dat$pch)
-                })
-              }else if(coltypeTrack==1 && ("color" %in% colnames(data.T[[i]])) && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=16)
-                })
-              }
-            }else if("cex" %in% colnames(data.T[[i]])){
-              
-              if(coltypeTrack==3 && ("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=dat$pch)
-                })
-              }else if(coltypeTrack==3 && ncol(data.TTC)>=6 && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=16)
-                })
-              }else if(coltypeTrack!=3 && ("pch" %in% colnames(data.T[[i]])) && ("color" %in% colnames(data.T[[i]]))){
-                lapply(unique(data.T[[i]][,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  if(coltypeTrack==1){
-                    tkcols <- data.TTC$cols[data.TTC[,1] %in% x]
-                    circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(tkcols,alpha.f = tktransparency), cex=dat$cex, pch=dat$pch)
-                  }else{
-                    circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=dat$pch)
-                  }
-                })
-              }else if(("pch" %in% colnames(data.T[[i]])) && !("color" %in% colnames(data.T[[i]]))){
-                lapply(unique(data.T[[i]][,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor, cex=dat$cex, pch=dat$pch)
-                })
-              }else if(coltypeTrack==1 && ("color" %in% colnames(data.T[[i]])) && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
-                lapply(unique(data.TTC[,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.TTC[data.TTC[,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=16)
-                })
-              }else if(!("color" %in% colnames(data.T[[i]])) && !("pch" %in% colnames(data.TTC))){
-                lapply(unique(data.T[[i]][,1]),function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=16)
-                })
-              }else if(coltypeTrack==2 && ("color" %in% colnames(data.T[[i]])) && !("pch" %in% colnames(data.T[[i]]))){
-                lapply(data.T[[i]],function(x){
-                  
-                  circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
-                  
-                  if(nchar(tklinecolor[1])!=0){
-                    xlim <- get.cell.meta.data("xlim")
-                    ylim <- get.cell.meta.data("ylim")
-                    for(k in 1:length(tklinecoord)){
-                      y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
-                      circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
-                    }
-                  }
-                  dat <- data.T[[i]][data.T[[i]][,1] %in% x,]
-                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=16)
-                })
-              }
+                }
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=0.6, pch=16)
+              })
             }
-            if(tra_yaxis[[i]]==1){
-              circos.yaxis(
-                side = "left",
-                tick = TRUE,
-                at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
-                #at = c(as.numeric(sprintf("%0.2f",min(data_t[,4]))),as.numeric(sprintf("%0.2f",max(data_t[,4])))),
-                sector.index = get.all.sector.index()[1],
-                labels.cex = 0.5
-              )
+          }else if("cex" %in% colnames(data.TT_old)){
+            
+            if(coltypeTrack==3 && ("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=dat$pch)
+              })
+            }else if(coltypeTrack==3 && ncol(data.TTC)>=6 && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=16)
+              })
+            }else if(coltypeTrack!=3 && ("pch" %in% colnames(data.TT_old)) && ("color" %in% colnames(data.TT_old))){
+              lapply(unique(data.TT_old[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                if(coltypeTrack==1){
+                  tkcols <- data.TTC$cols[data.TTC[,1] %in% x]
+                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(tkcols,alpha.f = tktransparency), cex=dat$cex, pch=dat$pch)
+                }else{
+                  circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=dat$pch)
+                }
+              })
+            }else if(("pch" %in% colnames(data.TT_old)) && !("color" %in% colnames(data.TT_old))){
+              lapply(unique(data.TT_old[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor, cex=dat$cex, pch=dat$pch)
+              })
+            }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT_old)) && !("pch" %in% colnames(data.TTC)) && ("cols" %in% colnames(data.TTC))){
+              lapply(unique(data.TTC[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TTC[data.TTC[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=adjustcolor(dat$cols,alpha.f = tktransparency), cex=dat$cex, pch=16)
+              })
+            }else if(!("color" %in% colnames(data.TT_old)) && !("pch" %in% colnames(data.TTC))){
+              lapply(unique(data.TT_old[,1]),function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=16)
+              })
+            }else if(coltypeTrack==2 && ("color" %in% colnames(data.TT_old)) && !("pch" %in% colnames(data.TT_old))){
+              lapply(data.TT_old,function(x){
+                
+                circos.updatePlotRegion(sector.index = x, track.index=takindx, bg.col = tkbgcol[which(unique(data.C[,1])==x)], bg.border = tkborder)
+                
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                dat <- data.TT_old[data.TT_old[,1] %in% x,]
+                circos.points((dat[,2]+dat[,3])/2,dat[,4], col=tkcolor[1], cex=dat$cex, pch=16)
+              })
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+          }
+          if(tra_yaxis[[i]]==1){
+            circos.yaxis(
+              side = "left",
+              tick = TRUE,
+              at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
+              #at = c(as.numeric(sprintf("%0.2f",min(data_t[,4]))),as.numeric(sprintf("%0.2f",max(data_t[,4])))),
+              sector.index = get.all.sector.index()[1],
+              labels.cex = 0.5
+            )
           }
           if(lab_inf[i]){
             if(labels_inf[[2]]=="inside"){
@@ -1142,21 +1189,21 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           if(is.na(tkbordercol)){ #no cell borders
             if(tra_hmap_poslines[[i]] == "2"){ #no position lines
               circos.genomicHeatmap(
-                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:13 ,  track.margin = c(tkmargin,0) , connection_height = NULL
+                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT) ,  track.margin = c(tkmargin,0) , connection_height = NULL
               )
             }else{
               circos.genomicHeatmap(
-                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:13 ,  track.margin = c(tkmargin,0) , connection_height = heightlines
+                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT) ,  track.margin = c(tkmargin,0) , connection_height = heightlines
               )
             }
           }else{
             if(tra_hmap_poslines[[i]] == "2"){
               circos.genomicHeatmap(
-                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:13 ,  track.margin = c(tkmargin,0) , connection_height = NULL , border = tkbordercol , border_lwd = 0.1
+                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT) ,  track.margin = c(tkmargin,0) , connection_height = NULL , border = tkbordercol , border_lwd = 0.1
               )
             }else{
               circos.genomicHeatmap(
-                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:13 ,  track.margin = c(tkmargin,0) , connection_height = heightlines , border = tkbordercol , border_lwd = 0.1
+                data.TT, col = f, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT) ,  track.margin = c(tkmargin,0) , connection_height = heightlines , border = tkbordercol , border_lwd = 0.1
               )
             }
           }
@@ -1179,23 +1226,11 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL
             )
           }else{
+            print(data_TT_col)
             circos.genomicHeatmap(
               data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines
             )
           }
-          
-          #if(is.na(tkbordercol)){}
-          # else{
-          #   if(tra_hmap_poslines[[i]] == "2"){
-          #     circos.genomicHeatmap(
-          #       data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL , border = tkbordercol , border_lwd = 0.1
-          #     )
-          #   }else{
-          #     circos.genomicHeatmap(
-          #       data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines , border = tkbordercol , border_lwd = 0.1
-          #     )
-          #   }
-          # }
           data.TT <- data_TT_col
           if(lab_inf[i]){
             if(labels_inf[[2]]=="inside"){
@@ -1223,7 +1258,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
           
           circos.genomicTrackPlotRegion(data.TT, track.height = tkheight, track.margin = c(tkmargin,0),bg.col = tkbgcol , bg.border = tkborder , panel.fun = function(region,value,...){
-            if(!("color" %in% colnames(data.T[[i]])) && !("cols" %in% colnames(data.TTC))){
+            if(!("color" %in% colnames(data.TT_old)) && !("cols" %in% colnames(data.TTC))){
               if(length(columns)==1 && tkbardir==1){
                 if(nchar(tklinecolor[1])!=0){
                   xlim <- get.cell.meta.data("xlim")
@@ -1340,7 +1375,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
           }
         }
-        lgdplot[[i]] <<- legendplot(tktype = tktype,data.TT = data.TT,data.TT_old = data.TT_old,i=i,legendpos = legendpos)
+        lgdplot[[i]] <<- legendplot(tktype = tktype,data.TT = data.TT,data.TT_old = data.TT_old,i=i,legendpos = legendpos,tkcolor = tkcolor)
         progress$set(value = i)
         
         
@@ -1468,14 +1503,16 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         circlize_plot()
         upViewport()
         h <- dev.size()[2]
-        draw(
-          packLegend(
-            list = lgdplot,
-            max_height = unit(0.9*h,"inch")
-          ),
-          x = circle_size,
-          just = "left"
-        )
+        if(length(lgdplot) != 0){
+          draw(
+            packLegend(
+              list = lgdplot,
+              max_height = unit(0.9*h,"inch")
+            ),
+            x = circle_size,
+            just = "left"
+          )
+        }
       })
     }else{
       ddd <- reactive({
@@ -1493,18 +1530,21 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         circlize_plot()
         upViewport()
         h <- dev.size()[1]
-        draw(
-          packLegend(
-            list = lgdplot,
-            max_width = unit(0.9*h,"inch"),
-            direction = "horizontal"
-          ),
-          y = unit(1,"npc")-circle_size,
-          just = "top"
-        )
+        if(length(lgdplot) != 0){
+          draw(
+            packLegend(
+              list = lgdplot,
+              max_width = unit(0.9*h,"inch"),
+              direction = "horizontal"
+            ),
+            y = unit(1,"npc")-circle_size,
+            just = "top"
+          )
+        }
       })
     }
   }else{
+    
     ddd <<- reactive({
       circle_size = unit(1, "snpc")
       pushViewport(

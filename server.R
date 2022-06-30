@@ -26,7 +26,9 @@ server <- function(input, output,session) {
   trasetout <<- list()
   dataview_export <<- NULL
   setlist <<- list()
+  check_setlist <<- list()
   setlist_old <<- list()
+  check_setlist_old <<- list(0)
   lab_setlist <<- list()
   lab_setlist_old <<- list()
   ####################  trasetting
@@ -150,13 +152,15 @@ server <- function(input, output,session) {
     sam_hlt_data <<- NULL
     
     sam_dataplan <- input$sam_dataplan
+    
     plotflash_report <<- 1
+    letplotgo <<- 1
     if(sam_dataplan == 1){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("barplot.csv","chromosome_ideogram.csv","heatmap-gradual.csv","line.csv","point.csv","rect_discrete.csv")
       name_data.N <<- c("gene_label.csv","gene_label1.csv")
       name_data.L <<- c("links.csv")
-	    sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+	    sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -167,12 +171,12 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/barplot.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/chromosome_ideogram.csv",header = T),stringsAsFactors = F)
-      data.T3 <<- data.frame(read.csv("./example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
-      data.T4 <<- data.frame(read.csv("./example_data/track/line.csv",header = T),stringsAsFactors = F)
-      data.T5 <<- data.frame(read.csv("./example_data/track/point.csv",header = T),stringsAsFactors = F)
-      data.T6 <<- data.frame(read.csv("./example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/barplot.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/chromosome_ideogram.csv",header = T),stringsAsFactors = F)
+      data.T3 <<- data.frame(read.csv("./www/example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
+      data.T4 <<- data.frame(read.csv("./www/example_data/track/line.csv",header = T),stringsAsFactors = F)
+      data.T5 <<- data.frame(read.csv("./www/example_data/track/point.csv",header = T),stringsAsFactors = F)
+      data.T6 <<- data.frame(read.csv("./www/example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4,data.T5,data.T6)
       sam_tratype <<- c("bar","ideogram","heatmap-gradual","line","point","rect-discrete")
       sam_trapos <<- c(1,2,3,4,5,6)
@@ -212,15 +216,15 @@ server <- function(input, output,session) {
       sam_tra_border <<- c("","","","","","")
       sam_tra_yaxis <<- c(2,2,2,2,2,2)
       sam_lab_index <<- c(0,3)
-      data.N1 <<- data.frame(read.csv("./example_data/label/gene_label.csv",header = T),stringsAsFactors = F)
-      data.N2 <<- data.frame(read.csv("./example_data/label/gene_label1.csv",header = T),stringsAsFactors = F)
+      data.N1 <<- data.frame(read.csv("./www/example_data/label/gene_label.csv",header = T),stringsAsFactors = F)
+      data.N2 <<- data.frame(read.csv("./www/example_data/label/gene_label1.csv",header = T),stringsAsFactors = F)
       sam_data.N <<- list(data.N1,data.N2)
       sam_labpos <<- c(0,3)
 	    sam_lab_fontsize <<- c(0.15,0.13)
       sam_lab_fontcol <<- c("#000000","#FF0000")
       sam_poslabels <<- c("inside","outside")
       sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N))))
-      sam_data.L <<- data.frame(read.csv("./example_data/links/links.csv",header = T),stringsAsFactors = F)
+      sam_data.L <<- data.frame(read.csv("./www/example_data/links/links.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "1"
 	    sam_colorLinks <<- "1"
       sam_selcolorLinks <<- "yellowgreen"
@@ -235,7 +239,7 @@ server <- function(input, output,session) {
     }else if(sam_dataplan == 2){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("line.csv","point.csv","rect_discrete.csv")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -246,9 +250,9 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T4 <<- data.frame(read.csv("./example_data/track/line.csv",header = T),stringsAsFactors = F)
-      data.T5 <<- data.frame(read.csv("./example_data/track/point.csv",header = T),stringsAsFactors = F)
-      data.T6 <<- data.frame(read.csv("./example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
+      data.T4 <<- data.frame(read.csv("./www/example_data/track/line.csv",header = T),stringsAsFactors = F)
+      data.T5 <<- data.frame(read.csv("./www/example_data/track/point.csv",header = T),stringsAsFactors = F)
+      data.T6 <<- data.frame(read.csv("./www/example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T4,data.T5,data.T6)
       sam_trapos <<- c(1,2,3)
       sam_tratype <<- c("line","point","rect-discrete")
@@ -296,7 +300,7 @@ server <- function(input, output,session) {
     }else if(sam_dataplan == 3){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("barplot.csv","barplot_bidirectional.csv","barplot_color.csv")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
       sam_heightChr <<- 0.05
       sam_chr_type <<- "2"
       sam_labelChr <<- 1
@@ -307,9 +311,9 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/barplot.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/barplot_bidirectional.csv",header = T),stringsAsFactors = F)
-      data.T3 <<- data.frame(read.csv("./example_data/track/barplot_color.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/barplot.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/barplot_bidirectional.csv",header = T),stringsAsFactors = F)
+      data.T3 <<- data.frame(read.csv("./www/example_data/track/barplot_color.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3)
       sam_trapos <<- c(1,2,3)
       sam_tratype <<- c("bar","bar","bar")
@@ -357,7 +361,7 @@ server <- function(input, output,session) {
     }else if(sam_dataplan == 4){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -368,8 +372,8 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/heatmap_discrete.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/heatmap_discrete.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2)
       sam_trapos <<- c(1,2)
       sam_tratype <<- c("heatmap-discrete","heatmap-gradual")
@@ -417,7 +421,7 @@ server <- function(input, output,session) {
     }else if(sam_dataplan == 5){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("line","line_color","line_multicolumn","stack_line")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "2"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -428,10 +432,10 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/line.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/line_color.csv",header = T),stringsAsFactors = F)
-      data.T3 <<- data.frame(read.csv("./example_data/track/line_multicolumn.csv",header = T),stringsAsFactors = F)
-      data.T4 <<- data.frame(read.csv("./example_data/track/stack_line.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/line.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/line_color.csv",header = T),stringsAsFactors = F)
+      data.T3 <<- data.frame(read.csv("./www/example_data/track/line_multicolumn.csv",header = T),stringsAsFactors = F)
+      data.T4 <<- data.frame(read.csv("./www/example_data/track/stack_line.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4)
       sam_trapos <<- c(1,2,3,4)
       sam_tratype <<- c("line","line","line","line")
@@ -481,7 +485,7 @@ server <- function(input, output,session) {
       name_data.T <<- c("point.csv","point_cex.csv","point_color.csv","point_color_cex.csv","point_color_pch.csv","point_color_pch_cex.csv","point_multicolumn.csv","point_pch.csv","point_pch_cex.csv","stack_point.csv")
       name_data.N <<- NULL
       name_data.L <<- c("links_discrete_color.csv")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -492,16 +496,16 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/point.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/point_cex.csv",header = T),stringsAsFactors = F)
-      data.T3 <<- data.frame(read.csv("./example_data/track/point_color.csv",header = T),stringsAsFactors = F)
-      data.T4 <<- data.frame(read.csv("./example_data/track/point_color_cex.csv",header = T),stringsAsFactors = F)
-      data.T5 <<- data.frame(read.csv("./example_data/track/point_color_pch.csv",header = T),stringsAsFactors = F)
-      data.T6 <<- data.frame(read.csv("./example_data/track/point_color_pch_cex.csv",header = T),stringsAsFactors = F)
-      data.T7 <<- data.frame(read.csv("./example_data/track/point_multicolumn.csv",header = T),stringsAsFactors = F)
-      data.T8 <<- data.frame(read.csv("./example_data/track/point_pch.csv",header = T),stringsAsFactors = F)
-      data.T9 <<- data.frame(read.csv("./example_data/track/point_pch_cex.csv",header = T),stringsAsFactors = F)
-      data.T10 <<- data.frame(read.csv("./example_data/track/stack_point.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/point.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/point_cex.csv",header = T),stringsAsFactors = F)
+      data.T3 <<- data.frame(read.csv("./www/example_data/track/point_color.csv",header = T),stringsAsFactors = F)
+      data.T4 <<- data.frame(read.csv("./www/example_data/track/point_color_cex.csv",header = T),stringsAsFactors = F)
+      data.T5 <<- data.frame(read.csv("./www/example_data/track/point_color_pch.csv",header = T),stringsAsFactors = F)
+      data.T6 <<- data.frame(read.csv("./www/example_data/track/point_color_pch_cex.csv",header = T),stringsAsFactors = F)
+      data.T7 <<- data.frame(read.csv("./www/example_data/track/point_multicolumn.csv",header = T),stringsAsFactors = F)
+      data.T8 <<- data.frame(read.csv("./www/example_data/track/point_pch.csv",header = T),stringsAsFactors = F)
+      data.T9 <<- data.frame(read.csv("./www/example_data/track/point_pch_cex.csv",header = T),stringsAsFactors = F)
+      data.T10 <<- data.frame(read.csv("./www/example_data/track/stack_point.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4,data.T5,data.T6,data.T7,data.T8,data.T9,data.T10)
       sam_tratype <<- c("point","point","point","point","point","point","point","point","point","point")
       sam_trapos <<- c(1,2,3,4,5,6,7,8,9,10)
@@ -547,7 +551,7 @@ server <- function(input, output,session) {
       sam_lab_fontcol <<- c("#000000","#FF0000")
       sam_poslabels <<- c("inside","outside")
       sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N))))
-      sam_data.L <<- data.frame(read.csv("./example_data/links/links_discrete_color.csv",header = T),stringsAsFactors = F)
+      sam_data.L <<- data.frame(read.csv("./www/example_data/links/links_discrete_color.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "2"
       sam_colorLinks <<- "2"
       sam_selcolorLinks <<- "a:red;b:blue"
@@ -564,7 +568,7 @@ server <- function(input, output,session) {
       name_data.T <<- c("line_color.csv","chromosome_ideogram.csv")
       name_data.N <<- NULL
       name_data.L <<- c("links_discrete_color.csv")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -575,8 +579,8 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 2
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/line_color.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/chromosome_ideogram.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/line_color.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/chromosome_ideogram.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2)
       sam_tratype <<- c("line","ideogram")
       sam_trapos <<- c(1,2)
@@ -618,7 +622,7 @@ server <- function(input, output,session) {
       sam_lab_index <<- c(0,3)
       sam_data.N <<- NULL
       sam_labels_inf <<- NULL
-      sam_data.L <<- data.frame(read.csv("./example_data/links/links_gradual_color.csv",header = T),stringsAsFactors = F)
+      sam_data.L <<- data.frame(read.csv("./www/example_data/links/links_gradual_color.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "3"
       sam_colorLinks <<- "2"
       sam_selcolorLinks <<- "a:red;b:blue"
@@ -635,7 +639,7 @@ server <- function(input, output,session) {
       name_data.T <<- NULL
       name_data.N <<- NULL
       name_data.L <<- c("links_gradual_color.csv")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "2"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -649,7 +653,7 @@ server <- function(input, output,session) {
       sam_data.T <<- NULL
      
       sam_data.N <<- NULL
-      sam_data.L <<- data.frame(read.csv("./example_data/links/links_gradual_color.csv",header = T),stringsAsFactors = F)
+      sam_data.L <<- data.frame(read.csv("./www/example_data/links/links_gradual_color.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "3"
       sam_colorLinks <<- "2"
       sam_selcolorLinks <<- "a:red;b:blue"
@@ -664,7 +668,7 @@ server <- function(input, output,session) {
     }else if(sam_dataplan == 9){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual","rect_discrete","rect_gradual")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -675,10 +679,10 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.01
-      data.T1 <<- data.frame(read.csv("./example_data/track/heatmap_discrete.csv",header = T),stringsAsFactors = F)
-      data.T2 <<- data.frame(read.csv("./example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
-      data.T3 <<- data.frame(read.csv("./example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
-      data.T4 <<- data.frame(read.csv("./example_data/track/rect_gradual.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/heatmap_discrete.csv",header = T),stringsAsFactors = F)
+      data.T2 <<- data.frame(read.csv("./www/example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
+      data.T3 <<- data.frame(read.csv("./www/example_data/track/rect_discrete.csv",header = T),stringsAsFactors = F)
+      data.T4 <<- data.frame(read.csv("./www/example_data/track/rect_gradual.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4)
       sam_trapos <<- c(1,2,3,4)
       sam_tratype <<- c("heatmap-discrete","heatmap-gradual","rect-discrete","rect-gradual")
@@ -705,7 +709,7 @@ server <- function(input, output,session) {
     }else{
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_gradual")
-      sam_data.C <<- data.frame(read.csv("./example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
+      sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
       sam_chr_type <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
@@ -716,7 +720,7 @@ server <- function(input, output,session) {
       sam_outAxis_size <<- 0.7
       sam_gapChr <<- 1
       sam_distance_Chr <<- 0.02
-      data.T1 <<- data.frame(read.csv("./example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
+      data.T1 <<- data.frame(read.csv("./www/example_data/track/heatmap_gradual.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1)
       sam_trapos <<- c(1)
       sam_tratype <<- c("heatmap-gradual")
@@ -2095,7 +2099,7 @@ server <- function(input, output,session) {
         if(!is.null(sam_data.L)){
           bs4Card(
             collapsible = FALSE,
-            title = "Link data",
+            title = "Links data",
             width = 12,
             tagList(
               fluidRow(
@@ -2312,6 +2316,7 @@ server <- function(input, output,session) {
     })
     sam_gracolinks <<- c(input$sam_lowColinks,input$sam_midColinks,input$sam_highColinks)
     sam_colorChr_in <- gsub("\\s","",strsplit(sam_colorChr,",")[[1]])
+    sam_pospos <- 1:length(sam_data.T)
     sam_midplot <- FALSE
     plotfig(input = input, output = output,session=session,data.C = sam_data.C , dis_Chr = sam_distance_Chr , data.T = sam_data.T , data.L = sam_data.L, data.N = sam_data.N , tra_Margin = sam_Tra_margin , labels_inf = sam_labels_inf , labelChr = sam_labelChr,colorChr=sam_colorChr_in , tra_hmap_typcolhmap = sam_tra_hmap_typcolhmap , tra_border = sam_tra_border , tra_yaxis = sam_tra_yaxis ,
             trackChr = sam_trackChr ,tratype = sam_tratype,sam_datype = sam_datype,chr_height = sam_heightChr,datatypeChr = datatypeChr , heightTra = sam_heightTraus , sam_chr_type = sam_chr_type, tra_poi_poisiz = sam_tra_poi_poisiz , heatmapcols = sam_heatmapcols , tra_bgcol = sam_tra_bgcol , legendtext = legendtext , gap.width = sam_gapChr ,
@@ -2319,7 +2324,7 @@ server <- function(input, output,session) {
             tra_rect_rectcol = sam_tra_rect_rectcol , tra_trct_colrect = sam_tra_trct_colrect , tra_rect_rectcoldis = sam_tra_rect_rectcoldis , tra_rect_rectcoldiscus = sam_tra_rect_rectcoldiscus , tra_transparency = sam_tra_transparency , tra_coltype = sam_tra_coltype , tra_colcol = sam_tra_colcol , tra_heatcol_dis = sam_tra_heatcol_dis , tra_heat_heatcoldiscus = sam_tra_heat_heatcoldiscus,
             tra_colorcus = sam_tra_colorcus , tra_line_fillarea = sam_tra_line_fillarea , tra_poipch = sam_tra_poipch , tra_colorline = sam_tra_colorline , tra_baseline = sam_tra_baseline , outAxis = sam_outAxis , fontSize = fontSize , outAxis_size = sam_outAxis_size , labelChr_size = sam_labelChr_size , tra_bar_direction = sam_tra_bar_direction ,
             tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks ,
-            selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot)
+            selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos)
     
     
     
@@ -2488,7 +2493,7 @@ server <- function(input, output,session) {
           )
         }else{
           
-          data.C <<- data.frame(fread(chrfil),stringsAsFactors = F)
+          data.C <<- fread(chrfil,data.table = FALSE,stringsAsFactors = F)
           tra_a <- length(tradatas)
           if(tra_a >= 1){
             trafil <- lapply(1:tra_a,function(x){
@@ -2528,9 +2533,36 @@ server <- function(input, output,session) {
           }else{
             data.N <<- NULL
           }
-          # 
-          
-          if(!(ncol(data.C)==3 | (ncol(data.C)==5 && is.character(data.C[,4]) && is.character(data.C[,5])))){
+          #
+          unichr <- unique(data.C[,1])
+          if(tra_a >= 1){
+            unitra <- unique(unlist(lapply(1:length(data.T), function(x){
+              data.T[[x]][,1]
+            })))
+          }else{
+            unitra <- NULL
+          }
+          if(lab_a >= 1){
+            unilab <- unique(unlist(lapply(1:length(data.N), function(x){
+              data.N[[x]][,1]
+            })))
+          }else{
+            unilab <- NULL
+          }
+          if(!is.null(data.L)){
+            unilin <- unique(data.L[,1])
+          }else{
+            unilin <- NULL
+          }
+          uniall <- unique(c(unitra,unilab,unilin))
+          if(!all(uniall %in% unichr)){
+            sendSweetAlert(
+              session = session,
+              title = "chr column error!",
+              text = "The chr column of the chromosome data is inconsistent with the chr column of other data",
+              type = "error"
+            )
+          }else if(!(ncol(data.C)==3 | (ncol(data.C)==5 && is.character(data.C[,4]) && is.character(data.C[,5])))){
             sendSweetAlert(
               session = session,
               title = "Data formatting error!",
@@ -2552,27 +2584,64 @@ server <- function(input, output,session) {
               type = "error"
             )
           }else{
-            data_info <- NULL
+            datat_info <- NULL
+            datan_info <- NULL
             if(length(data.T) != 0){
               for (tt in 1:length(data.T)) {
                 data.tt <- data.T[[tt]]
                 if(!(all(is.numeric(data.tt[,2]),is.numeric(data.tt[,3])))){
-                  data_info[tt] <- 1
+                  datat_info[tt] <- 1
                 }else if(sum(is.na(data.C[,2:3])) != 0){
-                  data_info[tt] <- 1
+                  datat_info[tt] <- 1
                 }else if(ncol(data.tt) <= 3){
-                  data_info[tt] <- 1
+                  datat_info[tt] <- 1
                 }else{
-                  data_info[tt] <- 0
+                  datat_info[tt] <- 0
                 }
               }
-              
+            }else if(length(data.N) != 0){
+              for (nn in 1:length(data.N)) {
+                data.nn <- data.N[[nn]]
+                if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
+                  datan_info[nn] <- 1
+                }else if(sum(is.na(data.C[,2:3])) != 0){
+                  datan_info[nn] <- 1
+                }else if(ncol(data.nn) != 4){
+                  datan_info[nn] <- 1
+                }else{
+                  datan_info[nn] <- 0
+                }
+              }
+            }else if(!is.null(data.L)){
+              if(ncol(data.L) != 6 | ncol(data.L) != 7){
+                sendSweetAlert(
+                  session = session,
+                  title = "Data formatting error!",
+                  text = paste0("Link data should contain six or seven columns."),
+                  type = "error"
+                )
+              }else if(!all(is.numeric(data.L[,2]),is.numeric(data.L[,3]),is.numeric(data.L[,5]),is.numeric(data.L[,6]))){
+                sendSweetAlert(
+                  session = session,
+                  title = "Data formatting error!",
+                  text = paste0("Columns 2,3,5,6 of link data should be numeric."),
+                  type = "error"
+                )
+              }
             }
-            if(sum(data_info)!=0){
+            if(sum(datat_info)!=0){
               sendSweetAlert(
                 session = session,
                 title = "Data formatting error!",
-                text = paste0("Track data error,index:",which(data_info==1)),
+                text = paste0("Track data error,index:",paste(which(datat_info==1),collapse = ",")),
+                type = "error"
+              )
+              dataview_export <<- NULL
+            }else if(sum(datan_info)!=0){
+              sendSweetAlert(
+                session = session,
+                title = "Data formatting error!",
+                text = paste0("Label data error,index:",paste(which(datan_info==1),collapse = ",")),
                 type = "error"
               )
               dataview_export <<- NULL
@@ -2580,7 +2649,7 @@ server <- function(input, output,session) {
               sendSweetAlert(
                 session = session,
                 title = "success !!",
-                text = "Please go to the 'Circos Parameters' page to preview the data.",
+                text = "Please go to the 'Circos Parameters' page to preview data and set parameters.",
                 type = "success"
               )
               dataview_export <<- 1
@@ -2719,7 +2788,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tratype",x),
                   label = NULL, 
-                  choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram")
+                  choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line")
                 )
               ),
               column(
@@ -3252,20 +3321,254 @@ server <- function(input, output,session) {
       return("inside")
     })
   })
+  observeEvent(input$dat_vie_ok,ignoreNULL = TRUE,ignoreInit = TRUE,priority = 3,{
+    
+    letplotgo <<- 0
+    chr_type <- input$chr_type
+    link_type <- input$colformatLinks
+    if(!is.null(data.T)){
+      tra_inf <- NULL
+      tra_inf_word <- NULL
+      for (k in 1:length(data.T)) { #"point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line"
+        tratype <- input[[paste0("tratype",k)]]
+        data_TT <- data.T[[k]]
+        if(tratype == "ideogram"){
+          if(ncol(data_TT) != 5){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The ideogram data should be five column." 
+          }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The last two columns of the ideogram data should be characters." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }else if(tratype == "stack-point" | tratype == "stack-line"){
+          if(!all(is.character(data_TT[,"stack"]))){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "Stack column should be character." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
+          tra_inf[k] <- 0
+          if("color" %in% colnames(data_TT)){
+            if(!all(is.character(data_TT[,"color"]))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Color column should be character." 
+            }
+          }
+          if("Cex" %in% colnames(data_TT)){
+            if(!all(is.numeric(data_TT[,"cex"]))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Cex column should be numeric." 
+            }
+          }
+          if("pch" %in% colnames(data_TT)){
+            if(!all(data_TT[,"pch"] %in% 1:25)){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "The value of Pch should be 1-25, please refer to the information for details." 
+            }
+          }
+          if("stack" %in% colnames(data_TT)){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "Please select 'stack-point'or'stack-line' to draw this track." 
+          }
+          if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The data contains 'group' column,maybe you should reselect plot type." 
+          }
+          if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
+            dataif <- NULL
+            for (l in 1:(ncol(data_TT)-3)) {
+              dataif[l] <- is.numeric(data_TT[,l+3])
+            }
+            if(sum(dataif) != (ncol(data_TT)-3)){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Multicolumn data should be numeric." 
+            }
+          }
+        }else if(tratype == "rect-discrete"){
+          if(ncol(data_TT) != 4){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The rect-discrete data should be four column." 
+          }else if(!is.character(data_TT[,4])){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The 'group' columns of the rect-discrete data should be characters." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }else if(tratype == "rect-gradual"){
+          if(ncol(data_TT) != 4){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The rect-gradual data should be four column." 
+          }else if(!is.numeric(data_TT[,4])){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The 'value' columns of the rect-gradual data should be numeric." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }else if(tratype == "heatmap-discrete"){
+          dataif <- NULL
+          for (l in 1:(ncol(data_TT)-3)) {
+            dataif[l] <- is.character(data_TT[,l+3])
+          }
+          if(sum(dataif) != (ncol(data_TT)-3)){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "'group' column should be character." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }else if(tratype == "heatmap-gradual"){
+          dataif <- NULL
+          for (l in 1:(ncol(data_TT)-3)) {
+            dataif[l] <- is.numeric(data_TT[,l+3])
+          }
+          if(sum(dataif) != (ncol(data_TT)-3)){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "'value' column should be numeric." 
+          }else{
+            tra_inf[k] <- 0
+            tra_inf_word[k] <- NULL
+          }
+        }
+      }
+    }else{
+      tra_inf <- 0
+      tra_inf_word <- NULL
+    }
+    if(!is.null(data.N)){
+      lab_inf <- NULL
+      lab_inf_word <- NULL
+      for (k in 1:length(data.N)) {
+        data_NN <- data.N[[k]]
+        if(ncol(data_NN) != 4){
+          lab_inf[k] <- 1
+          lab_inf_word[k] <- "Label data format error"
+        }
+      }
+    }else{
+      lab_inf <- 0
+    }
+    if(chr_type == 1 && ncol(data.C) != 3){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "general data format error",
+        type = "error"
+      ) 
+    }else if(chr_type == 2 && ncol(data.C) != 5){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "cytoband data format error",
+        type = "error"
+      )
+    }else if(sum(tra_inf) != 0){
+      tra_inf_word <- na.omit(tra_inf_word)
+      sendSweetAlert(
+        session = session,
+        title = paste0("Error index:",paste(which(tra_inf==1),collapse = ",")), #paste0("Error index:",paste(which(tra_inf==1),collapse = ",")),
+        text = paste(tra_inf_word,collapse = ";"),
+        type = "error"
+      )
+    }else if(sum(lab_inf) != 0){
+      lab_inf_word <- na.omit(lab_inf_word)
+      sendSweetAlert(
+        session = session,
+        title = paste0("Error index:",paste(which(lab_inf==1),collapse = ",")), #paste0("Error index:",paste(which(tra_inf==1),collapse = ",")),
+        text = paste(lab_inf_word,collapse = ";"),
+        type = "error"
+      )
+    }else if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){#colformatLinks
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Data without 'color' column should contain six columns.",
+        type = "error"
+      )
+    }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Seventh column of Data with multi-group should be character.",
+        type = "error"
+      )
+    }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Seventh column of Data with gradual value should be numeric.",
+        type = "error"
+      )
+    }else{
+      letplotgo <<- 1
+    }
+  })
+  observeEvent(input$chr_setting,{
+    chr_type <- input$chr_type
+    if(chr_type == 1 && ncol(data.C) != 3){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "general data format error",
+        type = "error"
+      ) 
+    }else if(chr_type == 2 && ncol(data.C) != 5){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "cytoband data format error",
+        type = "error"
+      )
+    }
+  })
+  observeEvent(input$linsetting,{
+    link_type <- input$colformatLinks
+    if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){#colformatLinks
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Data without 'color' column should contain six columns.",
+        type = "error"
+      )
+    }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Seventh column of Data with multi-group should be character.",
+        type = "error"
+      )
+    }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
+      sendSweetAlert(
+        session = session,
+        title = "Error!",
+        text = "Seventh column of Data with gradual value should be numeric.",
+        type = "error"
+      )
+    }
+  })
+  whichchange <<- NULL
   toListentra <- reactive({
     lapply(1:length(tradatas), function(x){
       input[[paste0("tra_setting",x)]]
-      
     })
   })
-  observeEvent(toListentra(),{
+  observeEvent(toListentra(),priority = 1,{
     if(input$dataup_go > 0){
       tradatas <- input$tradata
       lapply(1:length(tradatas), function(x){
         setlist[x] <<- input[[paste0("tra_setting",x)]]
       })
       x <- which((unlist(setlist)- unlist(setlist_old))==1)
+      whichchange <<- x
       setlist_old <<- setlist
+      
+      
       if(!is.null(input[[paste0("tra_bar_direction",x)]])){
         tra_bar_direction[x] <<- input[[paste0("tra_bar_direction",x)]]
       }
@@ -3373,7 +3676,7 @@ server <- function(input, output,session) {
       }
     }
   })
-  observeEvent(toListentra(),{
+  observeEvent(toListentra(),priority = 0,{
     tradatas <- input$tradata
     tra_num <- length(tradatas)
     tra_pos <<- lapply(1:tra_num, function(x){
@@ -3383,61 +3686,166 @@ server <- function(input, output,session) {
       tra_type <- lapply(1:tra_num, function(x){
         input[[paste0("tratype",x)]]
       })
-      # tratype_cache <- tra_type1
-      # tra_type <<- lapply(1:length(tra_pos), function(x){
-      #   tratype_cache[[as.numeric(tra_pos[[x]])]]
-      # })
     }
     
-    lapply(as.numeric(unlist(tra_pos)), function(x){
-      output[[paste0("sortable_track_datvie",x)]] <<- renderUI({
-        tagList(
-          h4(paste0("this track plot type is:",tra_type[[x]])),
-          if(tra_type[[x]] == "bar"){
-            tagList(
-              pickerInput(
-                inputId = paste0("tra_bar_direction",x),
-                label = tags$div(
-                  HTML(' <font><h5><b>Bar direction</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_bar_direction",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which 
+    if(length(whichchange) != 0){
+      tratype <- input[[paste0("tratype",whichchange)]]
+      data_TT <- data.T[[whichchange]]
+      tra_inf <- 0
+      if(tratype == "ideogram"){
+        if(ncol(data_TT) != 5){
+          tra_inf <- 1
+          tra_inf_word <- "The ideogram data should be five column." 
+        }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
+          tra_inf <- 1
+          tra_inf_word <- "The last two columns of the ideogram data should be characters." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
+        tra_inf <- 0
+        if("color" %in% colnames(data_TT)){
+          if(!all(is.character(data_TT[,"color"]))){
+            tra_inf <- 1
+            tra_inf_word <- "Color column should be character." 
+          }
+        }
+        if("Cex" %in% colnames(data_TT)){
+          if(!all(is.numeric(data_TT[,"cex"]))){
+            tra_inf <- 1
+            tra_inf_word <- "Cex column should be numeric." 
+          }
+        }
+        if("pch" %in% colnames(data_TT)){
+          if(!all(data_TT[,"pch"] %in% 1:25)){
+            tra_inf <- 1
+            tra_inf_word <- "The value of Pch should be 1-25, please refer to the information for details." 
+          }
+        }
+        if("stack" %in% colnames(data_TT)){
+          tra_inf <- 1
+          tra_inf_word <- "Please select 'stack-point'or'stack-line' to draw this track." 
+        }
+        if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
+          tra_inf <- 1
+          tra_inf_word <- "The data contains 'group' column,maybe you should reselect plot type." 
+        }
+        if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
+          dataif <- NULL
+          for (l in 1:(ncol(data_TT)-3)) {
+            dataif[l] <- is.numeric(data_TT[,l+3])
+          }
+          if(sum(dataif) != (ncol(data_TT)-3)){
+            tra_inf <- 1
+            tra_inf_word <- "Multicolumn data should be numeric." 
+          }
+        }
+      }else if(tratype == "rect-discrete"){
+        if(ncol(data_TT) != 4){
+          tra_inf <- 1
+          tra_inf_word <- "The rect-discrete data should be four column." 
+        }else if(!is.character(data_TT[,4])){
+          tra_inf <- 1
+          tra_inf_word <- "The 'group' columns of the rect-discrete data should be characters." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }else if(tratype == "rect-gradual"){
+        if(ncol(data_TT) != 4){
+          tra_inf <- 1
+          tra_inf_word <- "The rect-gradual data should be four column." 
+        }else if(!is.numeric(data_TT[,4])){
+          tra_inf <- 1
+          tra_inf_word <- "The 'value' columns of the rect-gradual data should be numeric." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }else if(tratype == "heatmap-discrete"){
+        dataif <- NULL
+        for (l in 1:(ncol(data_TT)-3)) {
+          dataif[l] <- is.character(data_TT[,l+3])
+        }
+        if(sum(dataif) != (ncol(data_TT)-3)){
+          tra_inf <- 1
+          tra_inf_word <- "'group' column should be character." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }else if(tratype == "heatmap-gradual"){
+        dataif <- NULL
+        for (l in 1:(ncol(data_TT)-3)) {
+          dataif[l] <- is.numeric(data_TT[,l+3])
+        }
+        if(sum(dataif) != (ncol(data_TT)-3)){
+          tra_inf <- 1
+          tra_inf_word <- "'value' column should be numeric." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }
+      if(tra_inf != 0){
+        tra_inf_word <- na.omit(tra_inf_word)
+        sendSweetAlert(
+          session = session,
+          title = "Error!",
+          text = paste(tra_inf_word),
+          type = "error"
+        )
+      }
+      
+      lapply(as.numeric(unlist(tra_pos)), function(x){
+        output[[paste0("sortable_track_datvie",x)]] <<- renderUI({
+          tagList(
+            h4(paste0("this track plot type is:",tra_type[[x]])),
+            if(tra_type[[x]] == "bar"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_bar_direction",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Bar direction</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_bar_direction",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which 
                                 contains the data values will be divided into two groups based on the boundary value.",
-                    placement = "bottom"
+                      placement = "bottom"
+                    )
+                  ),
+                  choices = c("Unidirectional" = "1", "Bidirectional" = "2"),
+                  selected = tra_bar_direction[x]
+                ),
+                conditionalPanel(
+                  condition= paste0("input.tra_bar_direction",x,"== '2'"),
+                  numericInput(
+                    inputId = paste0("tra_bar_Boundary",x),
+                    label = "Boundary value:",
+                    value=tra_bar_Boundary[x],
+                    step=0.01
+                  ),
+                  colourInput(
+                    inputId = paste0("tra_bar_coldir1",x),
+                    label = "Outer color:",
+                    value = tra_bar_coldir1[x]
+                  ),
+                  colourInput(
+                    inputId = paste0("tra_bar_coldir2",x),
+                    label = "Inner color:",
+                    value = tra_bar_coldir2[x]
                   )
-                ),
-                choices = c("Unidirectional" = "1", "Bidirectional" = "2"),
-                selected = tra_bar_direction[x]
-              ),
-              conditionalPanel(
-                condition= paste0("input.tra_bar_direction",x,"== '2'"),
-                numericInput(
-                  inputId = paste0("tra_bar_Boundary",x),
-                  label = "Boundary value:",
-                  value=tra_bar_Boundary[x],
-                  step=0.01
-                ),
-                colourInput(
-                  inputId = paste0("tra_bar_coldir1",x),
-                  label = "Outer color:",
-                  value = tra_bar_coldir1[x]
-                ),
-                colourInput(
-                  inputId = paste0("tra_bar_coldir2",x),
-                  label = "Inner color:",
-                  value = tra_bar_coldir2[x]
                 )
               )
-            )
-          },
-          if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
-            if(tra_type[[x]] != "bar"){
+            },
+            if(tra_type[[x]] == "stack-point" | tra_type[[x]] == "stack-line"){
               tagList(
                 pickerInput(
                   inputId = paste0("tra_coltype",x),
@@ -3462,42 +3870,38 @@ server <- function(input, output,session) {
                       placement = "right"
                     )
                   ),
-                  choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
+                  choices = c("Random" = "1", "Custom for data with multi-group" = "3"),
                   selected = tra_coltype[x]
-                ),
-                conditionalPanel(
-                  condition = paste0("input.tra_coltype",x,"== '2'"),
-                  textInput(paste0("tra_colcol",x), NULL, value=tra_colcol[x])
                 ),
                 conditionalPanel(
                   condition = paste0("input.tra_coltype",x," == '3'"),
                   textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
                 )
               )
-            }else{
-              tagList(
-                conditionalPanel(
-                  condition = paste0("input.tra_bar_direction",x,"== '1'"),
+            },
+            if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"& tra_type[[x]] != "stack-line"& tra_type[[x]] != "stack-point"){
+              if(tra_type[[x]] != "bar"){
+                tagList(
                   pickerInput(
                     inputId = paste0("tra_coltype",x),
                     label = tags$div(
                       HTML(' <font><h5><b>Data color</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
-                          inputId = paste0("datvie_tip_bar_trycoltp2",x), 
+                          inputId = paste0("datvie_tip_bar_trycoltp",x), 
                           label="" , 
                           icon=icon("question"),
                           status="info",
                           size = "xs"
                         ),
                         title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
-                        To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.
-                        To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
-                        Users should provide a character strings assigning colors to each group. 
-                        For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                        Color for data groups without assigned color would be set as 'grey'. 
-                        Hex color codes as '#FF0000' are also supported. See example data for more details.",
+                      To customize color for data with multiple columns, users should provide a character string representing one or multiple 
+                      colors separated by commas. For example, 'red' or 'red,orange,blue'.
+                      To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                      Users should provide a character strings assigning colors to each group. 
+                      For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
+                      Color for data groups without assigned color would be set as 'grey'. 
+                      Hex color codes as '#FF0000' are also supported. See example data for more details.",
                         placement = "right"
                       )
                     ),
@@ -3513,519 +3917,611 @@ server <- function(input, output,session) {
                     textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
                   )
                 )
-              )
-            }
-          },
-          if(tra_type[[x]] == "line" && !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
-            pickerInput(
-              inputId = paste0("tra_line_fillarea",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Fill area</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_bar_fillarea",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Fill the area below the lines.",
-                  placement = "right"
+              }else{
+                tagList(
+                  conditionalPanel(
+                    condition = paste0("input.tra_bar_direction",x,"== '1'"),
+                    pickerInput(
+                      inputId = paste0("tra_coltype",x),
+                      label = tags$div(
+                        HTML(' <font><h5><b>Data color</b></font>'),
+                        bs4Dash::tooltip(
+                          actionButton(
+                            inputId = paste0("datvie_tip_bar_trycoltp2",x), 
+                            label="" , 
+                            icon=icon("question"),
+                            status="info",
+                            size = "xs"
+                          ),
+                          title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                        To customize color for data with multiple columns, users should provide a character string representing one or multiple 
+                        colors separated by commas. For example, 'red' or 'red,orange,blue'.
+                        To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                        Users should provide a character strings assigning colors to each group. 
+                        For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
+                        Color for data groups without assigned color would be set as 'grey'. 
+                        Hex color codes as '#FF0000' are also supported. See example data for more details.",
+                          placement = "right"
+                        )
+                      ),
+                      choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
+                      selected = tra_coltype[x]
+                    ),
+                    conditionalPanel(
+                      condition = paste0("input.tra_coltype",x,"== '2'"),
+                      textInput(paste0("tra_colcol",x), NULL, value=tra_colcol[x])
+                    ),
+                    conditionalPanel(
+                      condition = paste0("input.tra_coltype",x," == '3'"),
+                      textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
+                    )
+                  )
                 )
-              ),
-              
-              choices = c("Yes" = "add", "No" = ""),
-              selected=tra_line_fillarea[x]
-            )
-          },
-          if(tra_type[[x]] == "rect-gradual"){
-            tagList(
+              }
+            },
+            if(tra_type[[x]] == "line" && !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
               pickerInput(
-                inputId = paste0("tra_trct_colrect",x),
-                label = "Color presets",
-                choices = c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "olivedrab", "gold", "lightblue", "navy.yellow", "purple.seagreen", "navy.orange", "navy.cyan", "blue.red", "green.red"),
-                selected = tra_trct_colrect[x]
-              )
-            )
-          },
-          if(tra_type[[x]] == "rect-discrete"){
-            tagList(
-              pickerInput(
-                inputId = paste0("tra_rect_rectcol",x),
+                inputId = paste0("tra_line_fillarea",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Select color</b></font>'),
+                  HTML(' <font><h5><b>Fill area</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
-                      inputId = paste0("datvie_tip_rect_rectcol",x), 
+                      inputId = paste0("datvie_tip_bar_fillarea",x), 
                       label="" , 
                       icon=icon("question"),
                       status="info",
                       size = "xs"
                     ),
-                    title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    title = "Fill the area below the lines.",
+                    placement = "right"
+                  )
+                ),
+                
+                choices = c("Yes" = "add", "No" = ""),
+                selected=tra_line_fillarea[x]
+              )
+            },
+            if(tra_type[[x]] == "rect-gradual"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_trct_colrect",x),
+                  label = "Color presets",
+                  choices = c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "olivedrab", "gold", "lightblue", "navy.yellow", "purple.seagreen", "navy.orange", "navy.cyan", "blue.red", "green.red"),
+                  selected = tra_trct_colrect[x]
+                )
+              )
+            },
+            if(tra_type[[x]] == "rect-discrete"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_rect_rectcol",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Select color</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_rect_rectcol",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
                     If 'Specific' was chosen, all data will be filled by a specified color. 
                     If 'Custom' was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
                     Users should provide values as 'a:red;b:green;c:blue', in which 'a b c' represent different
                     data category indicated by the 4th column of the uploaded data. 
                     Color for data without customed color will be set to NULL. Hex color codes as '#FF0000' are also supported.",
-                    placement = "right"
-                  )
-                ),
-                
-                choices = c("Random" = "1", "Specific" = "2", "Custom" = "3"),
-                selected = tra_rect_rectcol[x]
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_rect_rectcol",x,"== '2'"),
-                colourInput(
-                  inputId = paste0("tra_rect_rectcoldis",x),
-                  label = NULL,
-                  value = tra_rect_rectcoldis[x]
-                )
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_rect_rectcol",x,"== '3'"),
-                textInput(paste0("tra_rect_rectcoldiscus",x), NULL, value=tra_rect_rectcoldiscus[x])
-              )
-            )
-          },
-          if(tra_type[[x]] == "line" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
-            tagList(
-              conditionalPanel(
-                condition = paste0("input.tra_line_fillarea",x,"== 'add'"),
-                pickerInput(
-                  inputId = paste0("tra_line_selrea",x),
-                  label = tags$div(
-                    HTML(' <font><h5><b>Area color</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_line_selrea",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Specific' was chosen, all data will be filled by a specified color as 'orange'.",
                       placement = "right"
                     )
                   ),
-                  choices =  c("Identical with lines" = "1", "Specific" = "2"),
-                  selected=tra_line_selrea[x]
+                  
+                  choices = c("Random" = "1", "Specific" = "2", "Custom" = "3"),
+                  selected = tra_rect_rectcol[x]
                 ),
                 conditionalPanel(
-                  condition = paste0("input.tra_line_selrea",x,"== '2'"),
+                  condition = paste0("input.tra_rect_rectcol",x,"== '2'"),
                   colourInput(
-                    inputId = paste0("tra_bar_borderarea",x),
+                    inputId = paste0("tra_rect_rectcoldis",x),
                     label = NULL,
-                    value = tra_bar_borderarea[x]
+                    value = tra_rect_rectcoldis[x]
                   )
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_rect_rectcol",x,"== '3'"),
+                  textInput(paste0("tra_rect_rectcoldiscus",x), NULL, value=tra_rect_rectcoldiscus[x])
                 )
               )
-            )
-          },
-          if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
-            numericInput(
-              inputId = paste0("tra_transparency",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Color transparency:</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_tra_trans",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
-                  placement = "right"
-                )
-              ),
-              value=tra_transparency[x],
-              min=0,
-              max=1,
-              step=0.1
-            )
-          },
-          if(tra_type[[x]] == "point" & !("pch" %in% colnames(data.T[[x]]))){
-            textInput(
-              paste0("tra_poipch",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Symbol type:</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_poi_pch",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
-                  placement = "right"
-                )
-              ),
-              value= tra_poipch[x]
-            )
-          },
-          if(tra_type[[x]] == "point" & !("cex" %in% colnames(data.T[[x]]))){
-            numericInput(
-              paste0("tra_poi_poisiz",x),
-              label = "Point size:",
-              value=tra_poi_poisiz[x],
-              min=0,
-              max=1.5,
-              step=0.1
-            )
-          },
-          if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
-            textInput(
-              inputId = paste0("tra_baseline",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Y coordinates of baselines:</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_baseline",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Decimal numbers in [0, 1] to adjust y axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
-                  placement = "right"
-                )
-              ),
-              value=tra_baseline[x]
-            )
-          },
-          if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(tra_type[[x]]=="line" && (ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack"))){
-            colourInput(
-              inputId = paste0("tra_colorline",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Baselines color(s):</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_baselinecol",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
-                  placement = "right"
-                )
-              ),
-              value = tra_colorline[x]
-            )
-          },
-          if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
-            colourInput(
-              inputId = paste0("tra_bgcol",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Background color(s):</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_bgcol",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
-                  automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.",
-                  placement = "right"
-                )
-              ),
-              value = tra_bgcol[x]
-            )
-          },
-          if(tra_type[[x]] == "heatmap-gradual"){
-            tagList(
-              pickerInput(
-                inputId = paste0("tra_hmap_heatmapcol",x),
-                label = tags$div(
-                  HTML(' <font><h5><b>Colors</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_heat_col",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
+            },
+            if(tra_type[[x]] == "line" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
+              tagList(
+                conditionalPanel(
+                  condition = paste0("input.tra_line_fillarea",x,"== 'add'"),
+                  pickerInput(
+                    inputId = paste0("tra_line_selrea",x),
+                    label = tags$div(
+                      HTML(' <font><h5><b>Area color</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_line_selrea",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Specific' was chosen, all data will be filled by a specified color as 'orange'.",
+                        placement = "right"
+                      )
                     ),
-                    title = "Colors to be used for the heatmap, which can be assigned by the application or specified by the users.",
-                    placement = "right"
-                  )
-                ),
-                choices = c("Typical" = "1", "Custom" = "2"),
-                selected = tra_hmap_heatmapcol[x]
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_hmap_heatmapcol",x,"== '1'"),
-                pickerInput(
-                  inputId = paste0("tra_hmap_typcolhmap",x),
-                  label = NULL,
-                  choices =  c("blue.white.red", "green.black.red", "green.yellow.red", "purple.yellow.red", "blue.green.red", "blue.yellow.green", "cyan.white.deeppink1"),
-                  selected = tra_hmap_typcolhmap[x]
-                )
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_hmap_heatmapcol",x,"== '2'"),
-                colourInput(
-                  inputId = paste0("tra_hmap_lowColor",x),
-                  label = "lowColor",
-                  value = tra_hmap_lowColor[x]
-                ),
-                colourInput(
-                  inputId = paste0("tra_hmap_midColor",x),
-                  label = "midColor",
-                  value = tra_hmap_midColor[x]
-                ),
-                colourInput(
-                  inputId = paste0("tra_hmap_highColor",x),
-                  label = "highColor",
-                  value = tra_hmap_highColor[x]
-                )
-              ),
-              pickerInput(
-                inputId = paste0("tra_hmap_poslines",x),
-                label = tags$div(
-                  HTML(' <font><h5><b>Add position lines</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_heat_posline",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
-                    placement = "right"
-                  )
-                ),
-                choices = c("Yes" = "1", "No" = "2"),
-                selected = tra_hmap_poslines[x]
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_hmap_poslines",x,"== '1'"),
-                numericInput(
-                  inputId = paste0("tra_hmap_poslinhei",x),
-                  label = tags$div(
-                    HTML(' <font><h5><b>Position lines height:</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_heat_poslinehei",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Height of the position lines.",
-                      placement = "right"
+                    choices =  c("Identical with lines" = "1", "Specific" = "2"),
+                    selected=tra_line_selrea[x]
+                  ),
+                  conditionalPanel(
+                    condition = paste0("input.tra_line_selrea",x,"== '2'"),
+                    colourInput(
+                      inputId = paste0("tra_bar_borderarea",x),
+                      label = NULL,
+                      value = tra_bar_borderarea[x]
                     )
-                  ),
-                  value=tra_hmap_poslinhei[x],
-                  min=0,
-                  max=0.8,
-                  step=0.01
+                  )
                 )
               )
-            )
-          },
-          if(tra_type[[x]] == "heatmap-discrete"){
-            tagList(
-              pickerInput(
-                inputId = paste0("tra_heatcol_dis",x),
-                label = "Select color",
-                choices = c("Random" = "1" , "Custom" = "2"),
-                selected = tra_heatcol_dis[x]
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_heatcol_dis",x,"== '2'"),
+            },
+            if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
+              numericInput(
+                inputId = paste0("tra_transparency",x),
+                label = tags$div(
+                  HTML(' <font><h5><b>Color transparency:</b></font>'),
+                  bs4Dash::tooltip(
+                    actionButton(
+                      inputId = paste0("datvie_tip_tra_trans",x), 
+                      label="" , 
+                      icon=icon("question"),
+                      status="info",
+                      size = "xs"
+                    ),
+                    title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
+                    placement = "right"
+                  )
+                ),
+                value=tra_transparency[x],
+                min=0,
+                max=1,
+                step=0.1
+              )
+            },
+            if(tra_type[[x]] == "point" & !("pch" %in% colnames(data.T[[x]]))){
+              textInput(
+                paste0("tra_poipch",x),
+                label = tags$div(
+                  HTML(' <font><h5><b>Symbol type:</b></font>'),
+                  bs4Dash::tooltip(
+                    actionButton(
+                      inputId = paste0("datvie_tip_poi_pch",x), 
+                      label="" , 
+                      icon=icon("question"),
+                      status="info",
+                      size = "xs"
+                    ),
+                    title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                    placement = "right"
+                  )
+                ),
+                value= tra_poipch[x]
+              )
+            },
+            if(tra_type[[x]] == "stack-point"){
+              tagList(
                 textInput(
-                  inputId =  paste0("tra_heat_heatcoldiscus",x), 
-                  label =  NULL,
-                  value = tra_heat_heatcoldiscus[x])
-              ),
-              pickerInput(
-                inputId = paste0("tra_hmap_poslines",x),
-                label = tags$div(
-                  HTML(' <font><h5><b>Add position lines</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_heat_posline2",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
-                    placement = "right"
-                  )
-                ),
-                choices = c("Yes" = "1", "No" = "2"),
-                selected = tra_hmap_poslines[x]
-              ),
-              conditionalPanel(
-                condition = paste0("input.tra_hmap_poslines",x,"== '1'"),
-                numericInput(
-                  inputId = paste0("tra_hmap_poslinhei",x),
+                  paste0("tra_poipch",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Position lines height:</b></font>'),
+                    HTML(' <font><h5><b>Symbol type:</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
-                        inputId = paste0("datvie_tip_heat_poslinehei2",x), 
+                        inputId = paste0("datvie_tip_poi_pch",x), 
                         label="" , 
                         icon=icon("question"),
                         status="info",
                         size = "xs"
                       ),
-                      title = "Height of the position lines.",
+                      title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
                       placement = "right"
                     )
                   ),
-                  value=tra_hmap_poslinhei[x],
+                  value= tra_poipch[x]
+                ),
+                numericInput(
+                  paste0("tra_poi_poisiz",x),
+                  label = "Point size:",
+                  value=tra_poi_poisiz[x],
                   min=0,
-                  max=0.8,
-                  step=0.01
+                  max=1.5,
+                  step=0.1
                 )
               )
-            )
-          },
-          numericInput(
-            inputId = paste0("heightTra",x),
-            label = tags$div(
-              HTML(' <font><h5><b>Track height:</b></font>'),
-              bs4Dash::tooltip(
-                actionButton(
-                  inputId = paste0("datvie_tip_trahei",x), 
-                  label="" , 
-                  icon=icon("question"),
-                  status="info",
-                  size = "xs"
-                ),
-                title = "Height of the track.",
-                placement = "right"
+              
+            },
+            if(tra_type[[x]] == "point" & !("cex" %in% colnames(data.T[[x]]))){
+              numericInput(
+                paste0("tra_poi_poisiz",x),
+                label = "Point size:",
+                value=tra_poi_poisiz[x],
+                min=0,
+                max=1.5,
+                step=0.1
               )
-            ),
-            value = heightTra[x],
-            min=0.01,
-            max=0.9,
-            step=0.01
-          ),
-          
-          numericInput(
-            inputId = paste0("Tra_margin",x),
-            label = tags$div(
-              HTML(' <font><h5><b>Distance from the next section</b></font>'),
-              bs4Dash::tooltip(
-                actionButton(
-                  inputId = paste0("datvie_tip_tramar",x), 
-                  label="" , 
-                  icon=icon("question"),
-                  status="info",
-                  size = "xs"
+            },
+            if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
+              tagList(
+                textInput(
+                  inputId = paste0("tra_baseline",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Y coordinates of baselines:</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_baseline",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "Decimal numbers in [0, 1] to adjust y axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
+                      placement = "right"
+                    )
+                  ),
+                  value=tra_baseline[x]
                 ),
-                title = "The gap with the next section",
-                placement = "right"
+                colourInput(
+                  inputId = paste0("tra_colorline",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Baselines color(s):</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_baselinecol",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
+                      placement = "right"
+                    )
+                  ),
+                  value = tra_colorline[x]
+                )
               )
-            ),
-            value=Tra_margin[x],
-            min=0,
-            max=0.1,
-            step=0.01
-          ),
-          
-          if(tra_type[[x]] == "heatmap-gradual" | tra_type[[x]] == "heatmap-discrete"){
-            tagList(
-              pickerInput(
-                inputId = paste0("tra_hmap_cellbord",x),
+            },
+            # if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(tra_type[[x]]=="line" && (ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack"))){
+            #   colourInput(
+            #     inputId = paste0("tra_colorline",x),
+            #     label = tags$div(
+            #       HTML(' <font><h5><b>Baselines color(s):</b></font>'),
+            #       bs4Dash::tooltip(
+            #         actionButton(
+            #           inputId = paste0("datvie_tip_baselinecol",x), 
+            #           label="" , 
+            #           icon=icon("question"),
+            #           status="info",
+            #           size = "xs"
+            #         ),
+            #         title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
+            #         placement = "right"
+            #       )
+            #     ),
+            #     value = tra_colorline[x]
+            #   )
+            # },
+            if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
+              colourInput(
+                inputId = paste0("tra_bgcol",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Add cell borders</b></font>'),
+                  HTML(' <font><h5><b>Background color(s):</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
-                      inputId = paste0("datvie_tip_heaat_cellbo",x), 
+                      inputId = paste0("datvie_tip_bgcol",x), 
                       label="" , 
                       icon=icon("question"),
                       status="info",
                       size = "xs"
                     ),
-                    title = "Add borders to the heatmap grids, which can separate cells from each other.",
+                    title = "The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
+                  automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.",
                     placement = "right"
                   )
                 ),
-                choices = c("Yes" = "add", "No" = ""),
-                selected = tra_hmap_cellbord[x]
+                value = tra_bgcol[x]
+              )
+            },
+            if(tra_type[[x]] == "heatmap-gradual"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_hmap_heatmapcol",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Colors</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_heat_col",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "Colors to be used for the heatmap, which can be assigned by the application or specified by the users.",
+                      placement = "right"
+                    )
+                  ),
+                  choices = c("Typical" = "1", "Custom" = "2"),
+                  selected = tra_hmap_heatmapcol[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_hmap_heatmapcol",x,"== '1'"),
+                  pickerInput(
+                    inputId = paste0("tra_hmap_typcolhmap",x),
+                    label = NULL,
+                    choices =  c("blue.white.red", "green.black.red", "green.yellow.red", "purple.yellow.red", "blue.green.red", "blue.yellow.green", "cyan.white.deeppink1"),
+                    selected = tra_hmap_typcolhmap[x]
+                  )
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_hmap_heatmapcol",x,"== '2'"),
+                  colourInput(
+                    inputId = paste0("tra_hmap_lowColor",x),
+                    label = "lowColor",
+                    value = tra_hmap_lowColor[x]
+                  ),
+                  colourInput(
+                    inputId = paste0("tra_hmap_midColor",x),
+                    label = "midColor",
+                    value = tra_hmap_midColor[x]
+                  ),
+                  colourInput(
+                    inputId = paste0("tra_hmap_highColor",x),
+                    label = "highColor",
+                    value = tra_hmap_highColor[x]
+                  )
+                ),
+                pickerInput(
+                  inputId = paste0("tra_hmap_poslines",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Add position lines</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_heat_posline",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                      placement = "right"
+                    )
+                  ),
+                  choices = c("Yes" = "1", "No" = "2"),
+                  selected = tra_hmap_poslines[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_hmap_poslines",x,"== '1'"),
+                  numericInput(
+                    inputId = paste0("tra_hmap_poslinhei",x),
+                    label = tags$div(
+                      HTML(' <font><h5><b>Position lines height:</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_heat_poslinehei",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "Height of the position lines.",
+                        placement = "right"
+                      )
+                    ),
+                    value=tra_hmap_poslinhei[x],
+                    min=0,
+                    max=0.8,
+                    step=0.01
+                  )
+                )
+              )
+            },
+            if(tra_type[[x]] == "heatmap-discrete"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_heatcol_dis",x),
+                  label = "Select color",
+                  choices = c("Random" = "1" , "Custom" = "2"),
+                  selected = tra_heatcol_dis[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_heatcol_dis",x,"== '2'"),
+                  textInput(
+                    inputId =  paste0("tra_heat_heatcoldiscus",x), 
+                    label =  NULL,
+                    value = tra_heat_heatcoldiscus[x])
+                ),
+                pickerInput(
+                  inputId = paste0("tra_hmap_poslines",x),
+                  label = tags$div(
+                    HTML(' <font><h5><b>Add position lines</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_heat_posline2",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                      placement = "right"
+                    )
+                  ),
+                  choices = c("Yes" = "1", "No" = "2"),
+                  selected = tra_hmap_poslines[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_hmap_poslines",x,"== '1'"),
+                  numericInput(
+                    inputId = paste0("tra_hmap_poslinhei",x),
+                    label = tags$div(
+                      HTML(' <font><h5><b>Position lines height:</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_heat_poslinehei2",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "Height of the position lines.",
+                        placement = "right"
+                      )
+                    ),
+                    value=tra_hmap_poslinhei[x],
+                    min=0,
+                    max=0.8,
+                    step=0.01
+                  )
+                )
+              )
+            },
+            numericInput(
+              inputId = paste0("heightTra",x),
+              label = tags$div(
+                HTML(' <font><h5><b>Track height:</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_trahei",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Height of the track.",
+                  placement = "right"
+                )
               ),
-              conditionalPanel(
-                condition = paste0("input.tra_hmap_cellbord",x,"== 'add'"),
-                colourInput(
-                  inputId = paste0("tra_hmap_cellbord_col",x),
+              value = heightTra[x],
+              min=0.01,
+              max=0.9,
+              step=0.01
+            ),
+            
+            numericInput(
+              inputId = paste0("Tra_margin",x),
+              label = tags$div(
+                HTML(' <font><h5><b>Distance from the next section</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_tramar",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "The gap with the next section",
+                  placement = "right"
+                )
+              ),
+              value=Tra_margin[x],
+              min=0,
+              max=0.1,
+              step=0.01
+            ),
+            
+            if(tra_type[[x]] == "heatmap-gradual"){
+              tagList(
+                pickerInput(
+                  inputId = paste0("tra_hmap_cellbord",x),
                   label = tags$div(
                     HTML(' <font><h5><b>Add cell borders</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
-                        inputId = paste0("datvie_tip_heaat_bocol",x), 
+                        inputId = paste0("datvie_tip_heaat_cellbo",x), 
                         label="" , 
                         icon=icon("question"),
                         status="info",
                         size = "xs"
                       ),
-                      title = "The color to be used for the borders of heatmap grids. For example, 'white' or 'red'. Hex color codes as '#FF0000' are also supported.",
+                      title = "Add borders to the heatmap grids, which can separate cells from each other.",
                       placement = "right"
                     )
                   ),
-                  value = tra_hmap_cellbord_col[x]
+                  choices = c("Yes" = "add", "No" = ""),
+                  selected = tra_hmap_cellbord[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_hmap_cellbord",x,"== 'add'"),
+                  colourInput(
+                    inputId = paste0("tra_hmap_cellbord_col",x),
+                    label = tags$div(
+                      HTML(' <font><h5><b>Add cell borders</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_heaat_bocol",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "The color to be used for the borders of heatmap grids. For example, 'white' or 'red'. Hex color codes as '#FF0000' are also supported.",
+                        placement = "right"
+                      )
+                    ),
+                    value = tra_hmap_cellbord_col[x]
+                  )
                 )
               )
-            )
-          },
-          if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
-            pickerInput(
-              inputId = paste0("tra_border",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Add borders</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_tra_bo",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Add borders to the plotting regions.",
-                  placement = "right"
-                )
-              ),
-              choices = c("Yes" = "add", "No" = ""),
-              selected= tra_border[x]
-            )
-          },
-          if(tra_type[[x]] == "point"|tra_type[[x]] == "line"|tra_type[[x]] == "bar"){
-            pickerInput(
-              inputId = paste0("tra_yaxis",x),
-              label = tags$div(
-                HTML(' <font><h5><b>Add y-axis</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_tra_yax",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Add a y-axis, which widens the gap before the first sector",
-                  placement = "right"
-                )
-              ),
-              choices = c("Yes" = "1", "No" = "2"),
-              selected= tra_yaxis[x]
-            )
-          }
-        )
+            },
+            if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
+              pickerInput(
+                inputId = paste0("tra_border",x),
+                label = tags$div(
+                  HTML(' <font><h5><b>Add borders</b></font>'),
+                  bs4Dash::tooltip(
+                    actionButton(
+                      inputId = paste0("datvie_tip_tra_bo",x), 
+                      label="" , 
+                      icon=icon("question"),
+                      status="info",
+                      size = "xs"
+                    ),
+                    title = "Add borders to the plotting regions.",
+                    placement = "right"
+                  )
+                ),
+                choices = c("Yes" = "add", "No" = ""),
+                selected= tra_border[x]
+              )
+            },
+            if(tra_type[[x]] == "point"|tra_type[[x]] == "line"|tra_type[[x]] == "bar"){
+              pickerInput(
+                inputId = paste0("tra_yaxis",x),
+                label = tags$div(
+                  HTML(' <font><h5><b>Add y-axis</b></font>'),
+                  bs4Dash::tooltip(
+                    actionButton(
+                      inputId = paste0("datvie_tip_tra_yax",x), 
+                      label="" , 
+                      icon=icon("question"),
+                      status="info",
+                      size = "xs"
+                    ),
+                    title = "Add a y-axis, which widens the gap before the first sector",
+                    placement = "right"
+                  )
+                ),
+                choices = c("Yes" = "1", "No" = "2"),
+                selected= tra_yaxis[x]
+              )
+            }
+          )
+        })
       })
-    })
+      
+      
+    }
+    
   })
-  
-  
   
   toListenlab <- reactive({
     lapply(1:length(labdatas), function(x){
@@ -4040,6 +4536,28 @@ server <- function(input, output,session) {
       })
       x <- which((unlist(lab_setlist)- unlist(lab_setlist_old))==1)
       lab_setlist_old <<- lab_setlist
+      if(length(x) != 0){
+        lab_inf <- 0
+        lab_inf_word <- NULL
+        data_NN <- data.N[[x]]
+        if(ncol(data_NN) != 4){
+          lab_inf <- 1
+          lab_inf_word <- "Label data format error"
+        }
+        if(lab_inf != 0){
+          sendSweetAlert(
+            session = session,
+            title = "Error",
+            text = paste(lab_inf_word),
+            type = "error"
+          )
+        }
+        
+      }
+      
+      
+      
+      
       if(!is.null(input[[paste0("lab_fontsize",x)]])){
         lab_fontsize[x] <<- input[[paste0("lab_fontsize",x)]]
       }
@@ -4129,48 +4647,40 @@ server <- function(input, output,session) {
     list(input$dat_vie_ok,input$updateplot)
   })
   observeEvent(toListen3(),ignoreNULL = TRUE,ignoreInit = TRUE,priority = 2,{
-    lab_pos <- lapply(1:length(labdatas),function(x){
-      input[[paste0("labpos",x)]]
-    })
-    tra_pos <- lapply(1:length(tradatas), function(x){
-      input[[paste0("trapos",x)]]
-    })
-    if(sum(duplicated(unlist(tra_pos))) != 0){
-      sendSweetAlert(
-        session = session,
-        title = "error !!",
-        text = "Please check for duplicate track indexes.",
-        type = "error"
-      )
-      plotflash_report <<- 0
-    }else if(sum(duplicated(unlist(lab_pos))) != 0){
-      sendSweetAlert(
-        session = session,
-        title = "error !!",
-        text = "Please check for duplicate label indexes.",
-        type = "error"
-      )
-      plotflash_report <<- 0
+    if(letplotgo == 1){
+      lab_pos <- lapply(1:length(labdatas),function(x){
+        input[[paste0("labpos",x)]]
+      })
+      tra_pos <- lapply(1:length(tradatas), function(x){
+        input[[paste0("trapos",x)]]
+      })
+      if(sum(duplicated(unlist(tra_pos))) != 0){
+        sendSweetAlert(
+          session = session,
+          title = "error !!",
+          text = "Please check for duplicate track indexes.",
+          type = "error"
+        )
+        plotflash_report <<- 0
+      }else if(sum(duplicated(unlist(lab_pos))) != 0){
+        sendSweetAlert(
+          session = session,
+          title = "error !!",
+          text = "Please check for duplicate label indexes.",
+          type = "error"
+        )
+        plotflash_report <<- 0
+      }else{
+        plotflash_report <<- 1
+      }
     }else{
-      plotflash_report <<- 1
+      plotflash_report <<- 0
     }
-    
-    
-    
-    
-    
   })
   
   
   observeEvent(toListen3(),ignoreNULL = TRUE,ignoreInit = TRUE,priority = 0,{
-    
-    
-    
-    
-    
-    
     isolate({
-      
       if(plotflash_report == 1){
         if(length(data.T) != 0){
           length_T <- length(data.T)
@@ -4208,29 +4718,36 @@ server <- function(input, output,session) {
         tra_pos <<- lapply(1:tra_num, function(x){
           input[[paste0("trapos",x)]]
         })
-       
         
+        # if(tra_num != 0){
+        #   tra_type <<- lapply(1:tra_num, function(x){
+        #     input[[paste0("tratype",x)]]
+        #   })
+        # }
+        # 
+        pospos <<- as.numeric(unlist(tra_pos))
+        ordertrapos <- order(pospos)
         if(tra_num != 0){
           tra_type1 <- lapply(1:tra_num, function(x){
             input[[paste0("tratype",x)]]
           })
           tratype_cache <- tra_type1
           tra_type <<- lapply(1:length(tra_pos), function(x){
-            tratype_cache[[as.numeric(tra_pos[[x]])]]
+            tratype_cache[[ordertrapos[[x]]]]#order(pospos)
           })
         }
-        if(input$datatype == "a"){
-          data.T_cache <- data.T
-          if(!is.null(data.T)){
-            data.Tt <- lapply(1:length(tra_pos), function(x){
-              data.T_cache[[as.numeric(tra_pos[[x]])]]
-            })
-          }else{
-            data.Tt <- NULL
-          }
-          
-        }
-        pospos <- as.numeric(unlist(tra_pos))
+        # if(input$datatype == "a"){
+        #   data.T_cache <- data.T
+        #   if(!is.null(data.T)){
+        #     data.Tt <- lapply(1:length(tra_pos), function(x){
+        #       data.T_cache[[as.numeric(tra_pos[[x]])]]
+        #     })
+        #   }else{
+        #     data.Tt <- NULL
+        #   }
+        #   
+        # }
+        
         lapply(1:length(tradatas), function(x){
           
           if(!is.null(input[[paste0("tra_bar_direction",x)]])){
@@ -4404,13 +4921,13 @@ server <- function(input, output,session) {
         
         
         
-        plotfig(input = input, output = output,session=session,data.C = data.C , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.Tt , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
+        plotfig(input = input, output = output,session=session,data.C = data.C , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
                 trackChr = trackChr ,tratype = tra_type,sam_datype = sam_datype,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , sam_chr = sam_chr, tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , legendtext = legendtext , gap.width = gap.width ,
                 tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = plotsize ,
                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
                 tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , fontSize = fontSize , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
                 tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
-                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot
+                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos
         )
       }
     })
@@ -4905,6 +5422,13 @@ server <- function(input, output,session) {
           text = "Incorrect data format input!",
           type = "error"
         ) 
+      }else if(!all(unique(hlt_data1[,1]) %in% unique(data.C[,1]))){
+        sendSweetAlert(
+          session = session,
+          title = "error !!",
+          text = "Incorrect chr data",
+          type = "error"
+        )
       }else{
         
         if(length(grep("#",colorcol))!=0){
