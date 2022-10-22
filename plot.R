@@ -1,4 +1,4 @@
-source("server.R")
+#source("server.R")
 
 
 legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
@@ -14,7 +14,6 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
         Legend(
           col_fun = f,
           title = paste0("track",i)
-          
         )
       )
     }else{
@@ -46,11 +45,13 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
       )
     }
   }else if(tktype == "rect-discrete"){
+    lgdcol <- cbind(unique(data.TT_old[,4]),unique(data.TT[,4]))
+    lgdcol <- lgdcol[order(lgdcol[,1]),]
     if(legendpos == "Right"){
       return(
         Legend(
-          at = unique(data.TT_old[,4]),
-          legend_gp = gpar(fill = unique(data.TT[,4])),
+          at = lgdcol[,1],
+          legend_gp = gpar(fill = lgdcol[,2]),
           nrow = 6,
           title = paste0("track",i)
         )
@@ -58,8 +59,8 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
     }else{
       return(
         Legend(
-          at = unique(data.TT_old[,4]),
-          legend_gp = gpar(fill = unique(data.TT[,4])),
+          at = lgdcol[,1],
+          legend_gp = gpar(fill = lgdcol[,2]),
           ncol = 4,
           by_row = TRUE,
           title = paste0("track",i),
@@ -69,11 +70,15 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
     }
     
   }else if(tktype == "heatmap-discrete"){
+    lgdcol <- cbind(unique(c(t(data.TT_old[,4:length(data.TT_old)]))),unique(c(t(data.TT))))
+    lgdcol <- lgdcol[order(lgdcol[,1]),]
+    
+    
     if(legendpos == "Right"){
       return(
         Legend(
-          at = unique(c(t(data.TT_old[,4:length(data.TT_old)]))),
-          legend_gp = gpar(fill = unique(c(t(data.TT)))),
+          at = lgdcol[,1],
+          legend_gp = gpar(fill = lgdcol[,2]),
           nrow = 6,
           title = paste0("track",i)
         )
@@ -81,8 +86,8 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
     }else{
       return(
         Legend(
-          at = unique(c(t(data.TT_old[,4:length(data.TT_old)]))),
-          legend_gp = gpar(fill = unique(c(t(data.TT)))),
+          at = lgdcol[,1],
+          legend_gp = gpar(fill = lgdcol[,2]),
           ncol = 4,
           by_row = TRUE,
           title = paste0("track",i),
@@ -92,19 +97,24 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
     }
     
   }else if("stack" %in% colnames(data.TT_old)){
+    lgdcol <- cbind(unique(data.TT_old[,4],fromLast = TRUE),tkcolor)
+    lgdcol <- lgdcol[order(lgdcol[,1]),]
+    
+    
+    
     if(legendpos == "Right"){
       return(
         Legend(
-          at = unique(data.TT_old[,4],fromLast = TRUE),
-          legend_gp = gpar(fill = tkcolor),
+          at = lgdcol[,1],
+          legend_gp = gpar(fill = lgdcol[,2]),
           nrow = 6,
           title = paste0("track",i)
         )
       )
     }else{
       Legend(
-        at = unique(data.TT_old[,4],fromLast = TRUE),
-        legend_gp = gpar(fill = tkcolor),
+        at = lgdcol[,1],
+        legend_gp = gpar(fill = lgdcol[,2]),
         ncol = 4,
         by_row = TRUE,
         title = paste0("track",i),
@@ -117,9 +127,19 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
 
 
 
-plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size){
+plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
   circos.par("start.degree" = 90 - rotation , "gap.degree" = gap.width , cell.padding=c(0,0,0,0) , track.margin=c(0,0))
   circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  if(plotother != 0){
+    if(!is.null(plotTypes)){
+      circos.updatePlotRegion(
+        sector.index = x[,1][nrow(x)],
+        track.index = 1,
+        bg.border = NA,
+        bg.col = NA
+      )
+    }
+  }
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="outside"){
       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = ((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15 , line_col = labels_inf_chr[[4]] , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
@@ -130,7 +150,37 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
   }else{
     gapgap <- 0
   }
-  circos.genomicTrackPlotRegion(ylim = c(0, 1) , bg.col = colorChr, bg.border = NA , track.height = chr_height , track.margin = c(dis_Chr,gapgap))	
+  
+  circos.genomicTrackPlotRegion(ylim = c(0, 1) , bg.col = colorChr, bg.border = NA , track.height = chr_height , track.margin = c(dis_Chr,gapgap))
+  if(plotother != 0){
+    circos.updatePlotRegion(
+      sector.index = x[,1][nrow(x)],
+      track.index = get.current.track.index(),
+      bg.border = NA,
+      bg.col = NA
+    )
+    if(plotother == 2.2){
+      traxlim <- get.cell.meta.data("xlim", sector.index = get.current.sector.index(), track.index = get.current.track.index())
+      circos.text(
+        sector.index = get.current.sector.index(),
+        track.index = get.current.track.index(),
+        x = round((traxlim[2]-traxlim[1])/3),
+        y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        labels = 0,
+        facing = "downward"
+      )
+    }else if(plotother == 1.2){
+      circos.text(
+        sector.index = get.current.sector.index(),
+        track.index = get.current.track.index(),
+        x = get.cell.meta.data("xcenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        labels = 0,
+        facing = "downward"
+      )
+    }
+  }
+      
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="inside"){
       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = ((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15 , line_col = labels_inf_chr[[4]] , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
@@ -138,9 +188,19 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
   }
 }
 
-plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size){
+plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
   circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  if(plotother != 0){
+    if(!is.null(plotTypes)){
+      circos.updatePlotRegion(
+        sector.index = x[,1][nrow(x)],
+        track.index = 1,
+        bg.border = NA,
+        bg.col = NA
+      )
+    }
+  }
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="inside"){
       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15 , line_col = labels_inf_chr[[4]] , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
@@ -149,9 +209,19 @@ plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr 
   
 }
 
-plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size){ 
+plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
   circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  if(plotother != 0){
+    if(!is.null(plotTypes)){
+      circos.updatePlotRegion(
+        sector.index = x[,1][nrow(x)],
+        track.index = 1,
+        bg.border = NA,
+        bg.col = NA
+      )
+    }
+  }
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="outside"){
       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15 , line_col = labels_inf_chr[[4]] , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
@@ -166,8 +236,36 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
     col = cytoband.col(value[[2]])
     circos.genomicRect(region, value, ybottom = 0, ytop = 1, col = col, border = NA, ...)
     xlim = get.cell.meta.data("xlim")
-    circos.rect(xlim[1], 0, xlim[2], 1, border = "black")
-    }, cell.padding = c(0, 0, 0, 0)) 
+    circos.rect(xlim[1], 0, xlim[2], 1, border = "#000000")
+    }, cell.padding = c(0, 0, 0, 0))
+  if(plotother != 0){
+    circos.updatePlotRegion(
+      sector.index = x[,1][nrow(x)],
+      track.index = get.current.track.index(),
+      bg.border = NA,
+      bg.col = NA
+    )
+    if(plotother == 2.2){
+      traxlim <- get.cell.meta.data("xlim", sector.index = get.current.sector.index(), track.index = get.current.track.index())
+      circos.text(
+        sector.index = get.current.sector.index(),
+        track.index = get.current.track.index(),
+        x = round((traxlim[2]-traxlim[1])/3),
+        y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        labels = 0,
+        facing = "downward"
+      )
+    }else if(plotother == 1.2){
+      circos.text(
+        sector.index = get.current.sector.index(),
+        track.index = get.current.track.index(),
+        x = get.cell.meta.data("xcenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+        labels = 0,
+        facing = "downward"
+      )
+    }
+  }
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="inside"){
       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15 , line_col = labels_inf_chr[[4]] , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
@@ -176,12 +274,12 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
 }
 
 plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.L , data.N , colorChr , tra_Margin , labels_inf , labelChr , tra_hmap_typcolhmap , tra_border , tra_heatcol_dis , tra_heat_heatcoldiscus ,
-                    trackChr , tratype , sam_datype , chr_height , datatypeChr , heightTra , sam_chr_type , tra_poi_poisiz , heatmapcols , tra_bgcol , legendtext , gap.width , tra_yaxis,
+                    trackChr , tratype ,  chr_height , datatypeChr , heightTra , source_data , tra_poi_poisiz , heatmapcols , tra_bgcol , gap.width , tra_yaxis,
                     tra_hmap_poslines , tra_hmap_poslinhei , tra_hmap_cellbord , tra_hmap_cellbord_col , tra_hmap_heatmapcol , plotsize ,
                     tra_rect_rectcol , tra_trct_colrect , tra_rect_rectcoldis , tra_rect_rectcoldiscus , tra_transparency , tra_coltype , tra_colcol ,
                     tra_colorcus , tra_line_fillarea , tra_poipch , tra_colorline , tra_baseline , outAxis , fontSize , outAxis_size , labelChr_size , tra_bar_direction ,
                     tra_bar_Boundary , tra_bar_coldir1 , tra_bar_coldir2 , hltTrack.List , hltdata.List , tra_line_selrea , tra_bar_borderarea , colformatLinks , colorLinks ,
-                    selcolorLinks , transparencyhltLinks , gracolinks , transparencyLinks , legendpos , addlegend , hlt_data , midplot , trapos){
+                    selcolorLinks , transparencyhltLinks , gracolinks , transparencyLinks , legendpos , addlegend , hlt_data , midplot , trapos , trac_index){
   
   
   heilab <- 0
@@ -212,6 +310,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             tra_hmap_poslinhei[[k]] <- 0.7*tra_hmap_poslinhei[[k]]/allheight
           }
           heightTra[[k]] <- 0.7*heightTra[[k]]/allheight
+          tra_Margin[[k]] <- 0.7*tra_Margin[[k]]/allheight
         }
       }
       dis_Chr <- 0.7*dis_Chr/allheight
@@ -230,6 +329,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             tra_hmap_poslinhei[[k]] <- 0.9*tra_hmap_poslinhei[[k]]/allheight
           }
           heightTra[[k]] <- 0.9*heightTra[[k]]/allheight
+          tra_Margin[[k]] <- 0.9*tra_Margin[[k]]/allheight
         }
       }
       dis_Chr <- 0.9*dis_Chr/allheight
@@ -288,17 +388,22 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     }
     
     ## *** The gap width ***
-    if(1 %in% unlist(tra_yaxis)){
-      repnumgap <- round(length(unique(data.C[,1]))/length(gap.width))+1
-      gap.width <- rep(gap.width, repnumgap)[1:length(unique(data.C[,1]))]
-      gap.width <- as.numeric(gap.width)
-      if(gap.width[length(gap.width)] < 6){
-        gap.width[length(gap.width)] <- 6
+    repnumgap <- round(length(unique(data.C[,1]))/length(gap.width))+1
+    gap.width <- rep(gap.width, repnumgap)[1:length(unique(data.C[,1]))]
+    gap.width <- as.numeric(gap.width)
+    if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
+      if(1 %in% unlist(tra_yaxis) & trac_index == "Yes"){
+        gap.width[(length(unique(data.C[,1]))-1):length(unique(data.C[,1]))] <- c(1,2)
+        rotation <- 8
+      }else if(1 %in% unlist(tra_yaxis) & trac_index != "Yes"){
+        gap.width[(length(unique(data.C[,1]))-1):length(unique(data.C[,1]))] <- c(0.5,0.5)
+        rotation <- 5
+      }else{
+        gap.width[(length(unique(data.C[,1]))-1):length(unique(data.C[,1]))] <- c(0.5,0.5)
+        rotation <- 5
       }
     }else{
-      repnumgap <- round(length(unique(data.C[,1]))/length(gap.width))+1
-      gap.width <- rep(gap.width, repnumgap)[1:length(unique(data.C[,1]))]
-      gap.width <- as.numeric(gap.width)
+      rotation <- gap.width[length(gap.width)]/2
     }
     
     
@@ -307,9 +412,8 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     colorChr <- gsub("0x","#", colorChr)        
     repnumcol <- round(length(unique(data.C[,1]))/length(colorChr))+1
     colorChr <- rep(colorChr, repnumcol)[1:length(unique(data.C[,1]))]
-    ## *** The gap width ***
     
-    rotation <- gap.width[length(gap.width)]/2
+    
     if(outAxis == 1 && labelChr == 1){
       plotTypes <- c("labels","axis")
     }else if(outAxis == 1 && labelChr == 2){
@@ -319,25 +423,41 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     }else{
       plotTypes <- NULL
     }
-    if(sam_datype == "a"){ # upload
+    if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
+      if(1 %in% unlist(tra_yaxis) & trac_index != "Yes"){
+        plotother <- 2.1
+      }else if(!(1 %in% unlist(tra_yaxis)) & trac_index == "Yes"){
+        plotother <- 1.2
+      }else{
+        plotother <- 2.2
+      }
+    }else{
+      plotother <- 0
+    }
+    if(source_data == "a"){ # upload
+      
       if(datatypeChr == "1"){ # general
         if(trackChr == "track"){ #Chromosome band show
           #trackChr : "Show" = "track", "Hide" = ""
-          plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size)
+          plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr ,
+                     data.CN = data.CN , rotation = rotation , gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
         }else if(trackChr!="track"){
-          
-          plotcircos.notrack(data.C , plotTypes = plotTypes , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size)
+          plotcircos.notrack(data.C , plotTypes = plotTypes , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,
+                             outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
         }
       }else if(datatypeChr == "2"){# cytoband
-        
-        plotcircos.cyto(data.C , plotTypes=plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,  outAxis_size = outAxis_size , labelChr_size = labelChr_size)
+        plotcircos.cyto(data.C , plotTypes=plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr ,
+                        data.CN = data.CN , rotation = rotation , gap.width = gap.width ,  outAxis_size = outAxis_size , labelChr_size = labelChr_size ,
+                        plotother = plotother)
         
       }
-    }else if(sam_datype == "b"){ #sample
-      if(sam_chr_type == "1"){
-        plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size)
+    }else if(source_data == "b"){ #sample
+      if(datatypeChr == "1"){
+        plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , 
+                   gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
       }else{
-        plotcircos.cyto(data.C , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,  outAxis_size = outAxis_size , labelChr_size = labelChr_size)
+        plotcircos.cyto(data.C , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,
+                        outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
         
       }
     }
@@ -815,36 +935,12 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               })
             })
           }
-          if(tra_yaxis[[i]]==1){
-            circos.yaxis(
-              side = "left",
-              tick = TRUE,
-              at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
-              #at = c(as.numeric(sprintf("%0.2f",min(data.TT_old[,4]))),as.numeric(sprintf("%0.2f",max(data.TT_old[,4])))),
-              sector.index = get.all.sector.index()[1],
-              labels.cex = 0.5
-            )
-          }
-          
-          
-          
-          
-          
-          
-          
-          
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "stack-line"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
             }
           }
-          
           bed_list <- lapply(unique(data.TT_old[,4],fromLast = TRUE),function(x){
             if(coltypeTrack==2){
               data.TT[data.TT[,4] %in% x,1:3]
@@ -860,15 +956,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
             }
           })
-          
-          
-          
-          
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "stack-point"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
@@ -892,11 +979,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
             }
           })
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "point"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
@@ -1127,21 +1209,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               })
             }
           }
-          if(tra_yaxis[[i]]==1){
-            circos.yaxis(
-              side = "left",
-              tick = TRUE,
-              at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
-              #at = c(as.numeric(sprintf("%0.2f",min(data_t[,4]))),as.numeric(sprintf("%0.2f",max(data_t[,4])))),
-              sector.index = get.all.sector.index()[1],
-              labels.cex = 0.5
-            )
-          }
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "rect-discrete" | tktype == "rect-gradual"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
@@ -1169,11 +1236,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.genomicRect(region, value, col=adjustcolor(f(value[[1]]),alpha.f = tktransparency), border = NA, ...)
             })
           }
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "heatmap-gradual"){
           data.TT$num <- NULL
           if(lab_inf[i]){
@@ -1185,7 +1247,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           break2 <- max(as.numeric(as.matrix(data.TT[,-c(1:3)])))
           midpoint <- (break1+break2)/2
           f <- colorRamp2(breaks = c(break1, midpoint, break2), colors = hmapcols)
-          
           if(is.na(tkbordercol)){ #no cell borders
             if(tra_hmap_poslines[[i]] == "2"){ #no position lines
               circos.genomicHeatmap(
@@ -1207,15 +1268,9 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               )
             }
           }
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "heatmap-discrete"){
           data.TT$num <- NULL
           if(lab_inf[i] != 0){
-            
             if(labels_inf[[2]]=="outside"){
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
             }
@@ -1226,17 +1281,11 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL
             )
           }else{
-            print(data_TT_col)
             circos.genomicHeatmap(
               data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines
             )
           }
           data.TT <- data_TT_col
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "ideogram"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
@@ -1244,11 +1293,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
           }
           circos.genomicIdeogram(data.TT,track.height = tkheight, track.margin = c(tkmargin,0))
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
-            }
-          }
         }else if(tktype == "bar"){
           if(lab_inf[i]){
             if(labels_inf[[2]]=="outside"){
@@ -1256,7 +1300,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
           }
           data.TT[,ncol(data.TT)] <- as.numeric(data.TT[,ncol(data.TT)])
-          
           circos.genomicTrackPlotRegion(data.TT, track.height = tkheight, track.margin = c(tkmargin,0),bg.col = tkbgcol , bg.border = tkborder , panel.fun = function(region,value,...){
             if(!("color" %in% colnames(data.TT_old)) && !("cols" %in% colnames(data.TTC))){
               if(length(columns)==1 && tkbardir==1){
@@ -1318,6 +1361,39 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
                 circos.genomicRect(region, value, ytop.column = 2, ybottom = min(c(data.TT[,4],data.TT[,5])), col=tkbarcol2, border = NA, ...)
               }
             }
+            if(("color" %in% colnames(data.TT_old)) && ("cols" %in% colnames(data.TTC))){
+              if(length(columns)==2 && tkbardir==2){
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                circos.genomicRect(region, value, ytop.column = 1, ybottom = min(c(data.TT[,4],data.TT[,5])), col=tkbarcol1, border = NA, ...)
+                circos.genomicRect(region, value, ytop.column = 2, ybottom = min(c(data.TT[,4],data.TT[,5])), col=tkbarcol2, border = NA, ...)
+              }else if(length(columns)==1 && tkbardir==2){
+                if(nchar(tklinecolor[1])!=0){
+                  xlim <- get.cell.meta.data("xlim")
+                  ylim <- get.cell.meta.data("ylim")
+                  for(k in 1:length(tklinecoord)){
+                    y1 <- as.numeric(quantile(ylim,probs=tklinecoord[k]))
+                    circos.lines(x=xlim,y=c(y1,y1), col=tklinecolor[k], lwd=0.1)
+                  }
+                }
+                tkbarvalue <- as.numeric(tkbarvalue)
+                indx <- value[,1] > tkbarvalue
+                if(length(value[indx,])!=0 && length(value[!indx,])!=0){
+                  circos.genomicRect(region[indx,], value[indx,], ytop.column = 1, ybottom = tkbarvalue, col=tkbarcol1, border = NA, ...)
+                  circos.genomicRect(region[!indx,], value[!indx,], ytop.column = 1, ybottom =  tkbarvalue, col=tkbarcol2, border = NA, ...)
+                }else if(length(value[indx,])!=0 && length(value[!indx,])==0){
+                  circos.genomicRect(region[indx,], value[indx,], ytop.column = 1, ybottom = tkbarvalue, col=tkbarcol1, border = NA, ...)
+                }else if(length(value[indx,])==0 && length(value[!indx,])!=0){
+                  circos.genomicRect(region[!indx,], value[!indx,], ytop.column = 1, ybottom =  tkbarvalue, col=tkbarcol2, border = NA, ...)
+                }
+              }
+            }
             if(length(columns)==1 && tkbardir==1 && coltypeTrack==2){
               if(nchar(tklinecolor[1])!=0){
                 xlim <- get.cell.meta.data("xlim")
@@ -1360,47 +1436,80 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               circos.rect(xleft=dat[,2], xright=dat[,3],ytop=dat[,4],ybottom=rep(get.cell.meta.data("ylim")[1],nrow(dat)), col=adjustcolor(dat$cols,alpha.f = tktransparency), border = NA)
             })
           }
+        }
+        
+        if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
+          circos.updatePlotRegion(
+            sector.index = data.C[,1][nrow(data.C)],
+            track.index = get.current.track.index(),
+            bg.border = NA,
+            bg.col = NA
+          )
+          fanwei <- get.cell.meta.data("ylim",sector.index = get.current.sector.index(), track.index = get.current.track.index())
+          fanwei[fanwei < 0] <- ceiling(fanwei[fanwei < 0]*100)/100
+          fanwei[fanwei > 0] <- floor(fanwei[fanwei > 0 ]*100)/100
           if(tra_yaxis[[i]]==1){
             circos.yaxis(
               side = "left",
               tick = TRUE,
-              at = c(min(data.TT_old[,4]),max(data.TT_old[,4])),
+              at = fanwei,
               sector.index = get.all.sector.index()[1],
+              labels.niceFacing = FALSE,
               labels.cex = 0.5
             )
           }
-          if(lab_inf[i]){
-            if(labels_inf[[2]]=="inside"){
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
+          if(trac_index == "Yes"){
+            if(1 %in% unlist(tra_yaxis) & trac_index == "Yes"){
+              traxlim <- get.cell.meta.data("xlim", sector.index = get.current.sector.index(), track.index = get.current.track.index())
+              circos.text(
+                sector.index = get.current.sector.index(),
+                track.index = get.current.track.index(),
+                x = round((traxlim[2]-traxlim[1])/3),
+                y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+                labels = as.character(i),
+                facing = "downward"
+              )
+            }else{
+              circos.text(
+                sector.index = get.current.sector.index(),
+                track.index = get.current.track.index(),
+                x = get.cell.meta.data("xcenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+                y = get.cell.meta.data("ycenter", sector.index = get.current.sector.index(), track.index = get.current.track.index()),
+                labels = as.character(i),
+                facing = "downward"
+              )
             }
+          }
+        }
+        if(lab_inf[i]){
+          if(labels_inf[[2]]=="inside"){
+            circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = labels_inf[[4]] , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
           }
         }
         lgdplot[[i]] <<- legendplot(tktype = tktype,data.TT = data.TT,data.TT_old = data.TT_old,i=i,legendpos = legendpos,tkcolor = tkcolor)
         progress$set(value = i)
-        
-        
       }
-      lgdplot_cache <- NULL
-      if(!is.null(unlist(lgdplot))){
-        for (k in 1:length(lgdplot)) {
-          if(is.null(lgdplot[[k]])){
-            lgdplot_cache <- c(lgdplot_cache,k)
-          }
-        }
-        if(!is.null(lgdplot_cache)){
-          lgdplot <<- lgdplot[-c(lgdplot_cache)]
-        }
-      }
-      
-      
-      ##
+      # lgdplot_cache <- NULL
+      # if(!is.null(unlist(lgdplot))){ #remove empty values
+      #   for (k in 1:length(lgdplot)) {
+      #     if(is.null(lgdplot[[k]])){
+      #       lgdplot_cache <- c(lgdplot_cache,k)
+      #     }
+      #   }
+      #   if(!is.null(lgdplot_cache)){
+      #     lgdplot <<- lgdplot[-c(lgdplot_cache)]
+      #   }
+      # }
       
     }
     
     if(!is.null(data.L)){
+      
+      
       rou <- get_most_inside_radius()
+      # rou <- rou[1]+0.05
       rou <- rou[1]
-      if(colformatLinks!=3){
+      if(colformatLinks!=3){ #not gradual color
         if(colorLinks==2){ #specific color
           splitcol <- ":" %in% unlist(strsplit(selcolorLinks,""))
           if(ncol(data.L)==7 && colnames(data.L)[7]=="color" && splitcol){
@@ -1418,6 +1527,25 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             rownames(data.LC) <- NULL
             data.L$num <- NULL
             colLinks <- adjustcolor(data.LC$cols, alpha.f = transparencyLinks)
+            lgdcol <- data.LC[,c("color","cols")]
+            lgdcol <- lgdcol[order(lgdcol[,1]),]
+            if(legendpos == "Right"){
+              lgdplot[[length(lgdplot)+1]] <<- Legend(
+                at = unique(lgdcol[,1]),
+                legend_gp = gpar(fill = unique(lgdcol[,2])),
+                nrow = 6,
+                title = paste0("links")
+              )
+            }else{
+              lgdplot[[length(lgdplot)+1]] <<- Legend(
+                at = unique(lgdcol[,1]),
+                legend_gp = gpar(fill = unique(lgdcol[,2])),
+                ncol = 4,
+                by_row = TRUE,
+                title = paste0("links"),
+                direction = "horizontal"
+              )
+            }
           }else if((ncol(data.L)==6 | ncol(data.L)==7) && !splitcol){
             colLinks <- adjustcolor(selcolorLinks[1], alpha.f = transparencyLinks)
           }
@@ -1436,13 +1564,36 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           data.L2 <- data.L2[,c(1:3)]
           if(ncol(data.L)==7 && colnames(data.L)[7]=="color"){
             circos.genomicLink(data.L1, data.L2, rou = rou, col = colLinks, border = NA , reduce_to_mid_line = midplot)
+            lgdcol <- data.LC[,c("color","cols")]
+            lgdcol <- lgdcol[order(lgdcol[,1]),]
+            if(legendpos == "Right"){
+              lgdplot[[length(lgdplot)+1]] <<- Legend(
+                at = unique(lgdcol[,1]),
+                legend_gp = gpar(fill = unique(lgdcol[,2])),
+                nrow = 6,
+                title = paste0("links")
+              )
+              
+            }else{
+              lgdplot[[length(lgdplot)+1]] <<- Legend(
+                at = unique(lgdcol[,1]),
+                legend_gp = gpar(fill = unique(lgdcol[,2])),
+                ncol = 4,
+                by_row = TRUE,
+                title = paste0("links"),
+                direction = "horizontal"
+              )
+              
+            }
+            
+            
           }else{
             linkscolor.export <<- rand_color(nrow(data.L1), transparency = 1-transparencyLinks)
             circos.genomicLink(data.L1, data.L2, rou = rou, col = linkscolor.export, border = NA , reduce_to_mid_line = midplot)
           }
           
         }
-      }else{
+      }else{ #gradual color
         if(ncol(data.L)==7 && colnames(data.L)[7]=="color"){
           break1 <- min(as.numeric(as.matrix(data.L[,-c(1:6)])))
           break2 <- max(as.numeric(as.matrix(data.L[,-c(1:6)])))
@@ -1459,7 +1610,33 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           data.L2 <- data.L[,c(4:6)]
           circos.genomicLink(data.L1, data.L2, rou = rou, col = colLinks, border = NA , reduce_to_mid_line = midplot)
         }
-        
+        if(legendpos == "Right"){
+          lgdplot[[length(lgdplot)+1]] <<- Legend(
+            col_fun = f,
+            title = paste0("links")
+          )
+        }else{
+          lgdplot[[length(lgdplot)+1]] <<- Legend(
+            col_fun = f,
+            title = paste0("links"),
+            direction = "horizontal"
+          )
+        }
+      }
+      
+      
+      
+    }
+    
+    lgdplot_cache <- NULL
+    if(!is.null(unlist(lgdplot))){ #remove empty values
+      for (k in 1:length(lgdplot)) {
+        if(is.null(lgdplot[[k]])){
+          lgdplot_cache <- c(lgdplot_cache,k)
+        }
+      }
+      if(!is.null(lgdplot_cache)){
+        lgdplot <<- lgdplot[-c(lgdplot_cache)]
       }
     }
     if(length(hlt_data) != 0){
@@ -1471,13 +1648,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           rou1 = 1,
           col =  kdata[4]
         )
-        # draw.sector(
-        #   start.degree = get.cell.meta.data("cell.start.degree", sector.index = kdata[1]),
-        #   end.degree = get.cell.meta.data("cell.end.degree", sector.index =  kdata[2]),
-        #   rou1 = get.cell.meta.data("cell.top.radius", track.index =  as.numeric(kdata[3])),
-        #   rou2 = get.cell.meta.data("cell.bottom.radius", track.index =  as.numeric(kdata[4])),
-        #   col =  kdata[4]
-        # )
       })
     }
     circos.clear()
@@ -1485,10 +1655,75 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
   }
 
   
-  lgdplot <- list()
-  if(addlegend == "yes"){
-    if(legendpos == "Right"){
-      ddd <- reactive({
+  output$circosfigure <- renderPlot({
+    
+    progress <<- Progress$new(session, min=1, max=length(data.T))
+    on.exit(progress$close())
+    progress$set(
+      message = 'Calculation in progress'
+      #detail = 'This may take a while...'
+    )
+    grid.newpage()
+    lgdplot <<- list()
+    if(addlegend == "yes"){
+      if(legendpos == "Right"){
+        ddd <- reactive({
+          circle_size = unit(1, "snpc")
+          pushViewport(
+            viewport(
+              x = 0, 
+              y = 0.5,
+              width = circle_size, 
+              height = circle_size,
+              just = c("left", "center")
+            )
+          )
+          par(omi = gridOMI(),  new = TRUE)
+          circlize_plot()
+          upViewport()
+          h <- dev.size()[2]
+          if(length(lgdplot) != 0){
+            draw(
+              packLegend(
+                list = lgdplot,
+                max_height = unit(0.9*h,"inch")
+              ),
+              x = circle_size,
+              just = "left"
+            )
+          }
+        })
+      }else{
+        ddd <- reactive({
+          circle_size = unit(1, "snpc")
+          pushViewport(
+            viewport(
+              x = 0.5,
+              y = 1,
+              width = circle_size, 
+              height = circle_size,
+              just = c("center", "top")
+            )
+          )
+          par(omi = gridOMI(),  new = TRUE)
+          circlize_plot()
+          upViewport()
+          h <- dev.size()[1]
+          if(length(lgdplot) != 0){
+            draw(
+              packLegend(
+                list = lgdplot,
+                max_width = unit(0.9*h,"inch"),
+                direction = "horizontal"
+              ),
+              y = unit(1,"npc")-circle_size,
+              just = "top"
+            )
+          }
+        })
+      }
+    }else{
+      ddd <<- reactive({
         circle_size = unit(1, "snpc")
         pushViewport(
           viewport(
@@ -1502,83 +1737,10 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         par(omi = gridOMI(),  new = TRUE)
         circlize_plot()
         upViewport()
-        h <- dev.size()[2]
-        if(length(lgdplot) != 0){
-          draw(
-            packLegend(
-              list = lgdplot,
-              max_height = unit(0.9*h,"inch")
-            ),
-            x = circle_size,
-            just = "left"
-          )
-        }
-      })
-    }else{
-      ddd <- reactive({
-        circle_size = unit(1, "snpc")
-        pushViewport(
-          viewport(
-            x = 0.5,
-            y = 1,
-            width = circle_size, 
-            height = circle_size,
-            just = c("center", "top")
-          )
-        )
-        par(omi = gridOMI(),  new = TRUE)
-        circlize_plot()
-        upViewport()
-        h <- dev.size()[1]
-        if(length(lgdplot) != 0){
-          draw(
-            packLegend(
-              list = lgdplot,
-              max_width = unit(0.9*h,"inch"),
-              direction = "horizontal"
-            ),
-            y = unit(1,"npc")-circle_size,
-            just = "top"
-          )
-        }
       })
     }
-  }else{
-    
-    ddd <<- reactive({
-      circle_size = unit(1, "snpc")
-      pushViewport(
-        viewport(
-          x = 0, 
-          y = 0.5,
-          width = circle_size, 
-          height = circle_size,
-          just = c("left", "center")
-        )
-      )
-      par(omi = gridOMI(),  new = TRUE)
-      circlize_plot()
-      upViewport()
-    })
-  }
-  output$circosfigure <- renderPlot({
-    progress <<- Progress$new(session, min=1, max=length(data.T))
-    on.exit(progress$close())
-    progress$set(
-      message = 'Calculation in progress',
-      detail = 'This may take a while...'
-    )
-    grid.newpage()
     grid.draw(ddd())
     figurecp <<- recordPlot()
   },width = plotsize[1],height = plotsize[2])
 }
-  
-  
-  
-  
-  
-
-
-
 

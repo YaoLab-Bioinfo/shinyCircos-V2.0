@@ -1,5 +1,4 @@
 options(shiny.maxRequestSize=6000*1024^2)
-
 library(shiny)
 library(circlize)
 library(bs4Dash)
@@ -14,13 +13,5 @@ library(shinycssloaders)
 library(colourpicker)
 library(gridBase)
 library(ComplexHeatmap)
-
-
-
-
-library(GenomicRanges)
-
-
+#library(GenomicRanges)
 source("plot.R")
-
-

@@ -22,7 +22,6 @@ server <- function(input, output,session) {
   tra_type <<- list()
   hltTrack.List <<- list()
   hltdata.List <<- list()
-  legendtext <<- c()
   trasetout <<- list()
   dataview_export <<- NULL
   setlist <<- list()
@@ -82,7 +81,7 @@ server <- function(input, output,session) {
     name_data.N <<- NULL
     name_data.L <<- NULL
     sam_data.C <<- NULL
-    sam_chr_type <<- NULL
+    sam_datatypeChr <<- NULL
     sam_labelChr <<- NULL
     sam_labelChr_size <<- 1.2
     sam_trackChr <<- NULL
@@ -147,7 +146,7 @@ server <- function(input, output,session) {
     sam_highColinks <<- NULL
     sam_addlegend <<- NULL
     sam_legendpos <<- NULL
-    sam_datype <<- NULL
+    sam_source_data <<- NULL
     sam_plotsize <<- NULL
     sam_hlt_data <<- NULL
     
@@ -161,7 +160,7 @@ server <- function(input, output,session) {
       name_data.N <<- c("gene_label.csv","gene_label1.csv")
       name_data.L <<- c("links.csv")
 	    sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -234,13 +233,13 @@ server <- function(input, output,session) {
       sam_highColinks <<- "#FFFF00"
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 2){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("line.csv","point.csv","rect_discrete.csv")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -286,7 +285,7 @@ server <- function(input, output,session) {
       sam_tra_heatcol_dis <<- c(1,1,1)
       sam_tra_heat_heatcoldiscus <<- c("a:red;b:blue;c:cyan","a:red;b:blue;c:cyan","a:red;b:blue;c:cyan")
       sam_heightTraus <<- c(0.2,0.2,0.05)
-      sam_Tra_margin <<- c(0.01,0.01,0.01)
+      sam_Tra_margin <<- c(0.03,0.03,0.03)
       sam_tra_hmap_cellbord <<- c("","","")
       sam_tra_hmap_cellbord_col <<- c("#000000","#000000","#000000")
       sam_tra_border <<- c("","","")
@@ -295,14 +294,14 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 3){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("barplot.csv","barplot_bidirectional.csv","barplot_color.csv")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
       sam_heightChr <<- 0.05
-      sam_chr_type <<- "2"
+      sam_datatypeChr <<- "2"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -347,7 +346,7 @@ server <- function(input, output,session) {
       sam_tra_heatcol_dis <<- c(1,1,1)
       sam_tra_heat_heatcoldiscus <<- c("a:red;b:blue;c:cyan","a:red;b:blue;c:cyan","a:red;b:blue;c:cyan")
       sam_heightTraus <<- c(0.15,0.2,0.15)
-      sam_Tra_margin <<- c(0.01,0.01,0.01)
+      sam_Tra_margin <<- c(0.03,0.03,0.03)
       sam_tra_hmap_cellbord <<- c("","","")
       sam_tra_hmap_cellbord_col <<- c("#000000","#000000","#000000")
       sam_tra_border <<- c("","","")
@@ -356,13 +355,13 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "no"
       sam_legendpos <<- "Right"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 4){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -416,13 +415,13 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "yes"
       sam_legendpos <<- "Right"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(850,750)
     }else if(sam_dataplan == 5){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("line","line_color","line_multicolumn","stack_line")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "2"
+      sam_datatypeChr <<- "2"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -438,7 +437,7 @@ server <- function(input, output,session) {
       data.T4 <<- data.frame(read.csv("./www/example_data/track/stack_line.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4)
       sam_trapos <<- c(1,2,3,4)
-      sam_tratype <<- c("line","line","line","line")
+      sam_tratype <<- c("line","line","line","stack-line")
       sam_tra_bar_direction <<- c(1,1,1,1)
       sam_tra_bar_Boundary <<- c(0,0,0,0)
       sam_tra_bar_coldir1 <<- c("#FF0000","#FF0000","#FF0000","#FF0000")
@@ -478,7 +477,7 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 6){
       name_data.C <<- c("chromosome_general.csv")
@@ -486,7 +485,7 @@ server <- function(input, output,session) {
       name_data.N <<- NULL
       name_data.L <<- c("links_discrete_color.csv")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -507,7 +506,7 @@ server <- function(input, output,session) {
       data.T9 <<- data.frame(read.csv("./www/example_data/track/point_pch_cex.csv",header = T),stringsAsFactors = F)
       data.T10 <<- data.frame(read.csv("./www/example_data/track/stack_point.csv",header = T),stringsAsFactors = F)
       sam_data.T <<- list(data.T1,data.T2,data.T3,data.T4,data.T5,data.T6,data.T7,data.T8,data.T9,data.T10)
-      sam_tratype <<- c("point","point","point","point","point","point","point","point","point","point")
+      sam_tratype <<- c("point","point","point","point","point","point","point","point","point","stack-point")
       sam_trapos <<- c(1,2,3,4,5,6,7,8,9,10)
       sam_tra_bar_direction <<- c(1,1,1,1,1,1,1,1,1,1)
       sam_tra_bar_Boundary <<- c(0,0,0,0,0,0,0,0,0,0)
@@ -561,15 +560,15 @@ server <- function(input, output,session) {
       sam_highColinks <<- "#FFFF00"
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
-    }else if(sam_dataplan == 7){
+    } else if (sam_dataplan == 7) {
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("line_color.csv","chromosome_ideogram.csv")
       name_data.N <<- NULL
       name_data.L <<- c("links_discrete_color.csv")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -632,7 +631,7 @@ server <- function(input, output,session) {
       sam_highColinks <<- "#FFFF00"
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 8){
       name_data.C <<- c("chromosome_cytoband.csv")
@@ -640,7 +639,7 @@ server <- function(input, output,session) {
       name_data.N <<- NULL
       name_data.L <<- c("links_gradual_color.csv")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_cytoband.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "2"
+      sam_datatypeChr <<- "2"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -663,13 +662,13 @@ server <- function(input, output,session) {
       sam_highColinks <<- "#FFFF00"
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }else if(sam_dataplan == 9){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual","rect_discrete","rect_gradual")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -704,13 +703,13 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "yes"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
-      sam_plotsize <<- c(750,850)
-    }else{
+      sam_source_data <<- "b"
+      sam_plotsize <<- c(650,750)
+    } else {
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_gradual")
       sam_data.C <<- data.frame(read.csv("./www/example_data/chromosome/chromosome_general.csv",header = T),stringsAsFactors = F)
-      sam_chr_type <<- "1"
+      sam_datatypeChr <<- "1"
       sam_labelChr <<- 1
       sam_labelChr_size <<- 1.2
       sam_trackChr <<- "track"
@@ -739,31 +738,46 @@ server <- function(input, output,session) {
       sam_data.L <<- NULL
       sam_addlegend <<- "no"
       sam_legendpos <<- "Bottom"  
-      sam_datype <<- "b"
+      sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
     }
     
     output$viewchr_sam <- renderDT(
-      sam_data.C,
-      extensions = 'Buttons', 
-      server = FALSE,
-      options = list(
-        dom = 'Bfrtip',
-        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-      )
+      DT::datatable(
+        sam_data.C,
+        extensions = "Buttons",
+        options = list(
+          dom = 'Bfrtip',
+          buttons = list(
+            'pageLength',
+            'copy',
+            list(extend = 'csv',filename = paste0("chrdata")),
+            list(extend = 'excel',filename = paste0("chrdata"))
+          ),
+          scrollX = TRUE
+        )
+      ),
+      server = FALSE
     )
     tra_len <- length(sam_data.T)
     if(tra_len >= 1){
       lapply(1:tra_len,function(x){
         output[[paste0("viewTra_sam",x)]] <<- renderDT(
-          sam_data.T[[x]],
-          extensions = 'Buttons', 
-          server = FALSE,
-          options = list(
-            dom = 'Bfrtip',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-          
+          DT::datatable(
+            sam_data.T[[x]],
+            extensions = "Buttons",
+            options = list(
+              dom = 'Bfrtip',
+              buttons = list(
+                'pageLength',
+                'copy',
+                list(extend = 'csv',filename = paste0("tradata",x)),
+                list(extend = 'excel',filename = paste0("tradata",x))
+              ),
+              scrollX = TRUE
+            )
+          ),
+          server = FALSE
         )
       })
     }
@@ -773,32 +787,48 @@ server <- function(input, output,session) {
     if(lab_len >= 1){
       lapply(1:lab_len,function(x){
         output[[paste0("viewLab_sam",x)]] <<- renderDT(
-          sam_data.N[[x]],
-          extensions = 'Buttons', 
-          server = FALSE,
-          options = list(
-            dom = 'Bfrtip',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
+          DT::datatable(
+            sam_data.N[[x]],
+            extensions = "Buttons",
+            options = list(
+              dom = 'Bfrtip',
+              buttons = list(
+                'pageLength',
+                'copy',
+                list(extend = 'csv',filename = paste0("labdata",x)),
+                list(extend = 'excel',filename = paste0("labdata",x))
+              ),
+              scrollX = TRUE
+            )
+          ),
+          server = FALSE
         )
       })
     }
     #links view
     output$viewlink_sam <- renderDT(
-      sam_data.L,
-      extensions = 'Buttons', 
-      server = FALSE,
-      options = list(
-        dom = 'Bfrtip',
-        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-      )
+      DT::datatable(
+        sam_data.L,
+        extensions = "Buttons",
+        options = list(
+          dom = 'Bfrtip',
+          buttons = list(
+            'pageLength',
+            'copy',
+            list(extend = 'csv',filename = paste0("lindata")),
+            list(extend = 'excel',filename = paste0("lindata"))
+          ),
+          scrollX = TRUE
+        )
+      ),
+      server = FALSE
     )
   })
   observeEvent(input$dataup_example_go,{
     sendSweetAlert(
       session = session,
-      title = "success !!",
-      text = "in the 'Data View' page you can preview the data.",
+      title = "Successful input!",
+      text = "Example data loaded successfully!",
       type = "success"
     )
     dataview_export <<- 1
@@ -808,14 +838,13 @@ server <- function(input, output,session) {
       tagList(
         bs4Card(
           collapsible = FALSE,
-          title = "Chromosome data",
+          title = HTML('<i class="fa-solid fa-circle"></i> Chromosome data (used to define the chromosomes of a Circos plot)'),
           width = 12,
-          
           fluidRow(
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>File name</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_sam_chrfilenm", 
@@ -824,7 +853,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The filename to call sampledata",
+                  title = "Filename of the datasets.",
                   placement = "bottom"
                 )
               )
@@ -832,7 +861,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>Chromosome type</font>'),
+                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome type</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_sam_chrtyp", 
@@ -841,7 +870,9 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The filename to call sampledata",
+                  title = "Chromosomes data can be either general data with three columns or cytoband data with five columns. 
+                     The first three columns of either type of data should be the chromosome ID,
+                     the start and end coordinates of different genomic regions. See example data for more details.",
                   placement = "bottom"
                 )
               )
@@ -865,7 +896,7 @@ server <- function(input, output,session) {
                       color = "success",
                       icon = icon("eye")
                     ),
-                    title = "Preview chromosome data",
+                    title = "Click to view the dataset.",
                     placement = "bottom"
                   )
                 )
@@ -877,10 +908,10 @@ server <- function(input, output,session) {
                 column(
                   11,
                   pickerInput(
-                    inputId = "sam_chr_type",
+                    inputId = "sam_datatypeChr",
                     label = NULL,
                     choices = c("general" = "1", "cytoband" = "2"),
-                    selected = sam_chr_type
+                    selected = sam_datatypeChr
                   )
                 ),
                 column(
@@ -891,15 +922,15 @@ server <- function(input, output,session) {
                       label = NULL,
                       style = "unite",
                       color = "success",
-                      icon = icon("cog")
+                      icon = icon("gear")
                     ),
-                    title = "Preview chromosome parameter settings.NOTE:your changes will not be applied in the current mode",
+                    title = "Set parameters for chromosome data. NOTE: Changes will not be applied for example datasets.",
                     placement = "bottom"
                   )
                 )
               )
             ),
-            tags$head(tags$style(paste0("#jquidatvie_chrvie_sam .modal-dialog{ width:1200px}"))),
+            tags$head(tags$style(paste0("#jquidatvie_chrvie_sam .modal-dialog{ max-width:1200px}"))),
             jqui_draggable(
               bsModal(
                 id = "jquidatvie_chrvie_sam",
@@ -917,11 +948,11 @@ server <- function(input, output,session) {
                 trigger = "sam_chr_setting",
                 size = "large",
                 conditionalPanel(
-                  condition = "input.sam_chr_type == '1'",
+                  condition = "input.sam_datatypeChr == '1'",
                   pickerInput(
                     inputId = "sam_trackChr",
                     label = tags$div(
-                      HTML(' <font><h5><b>Chromosome band</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_trachr", 
@@ -930,7 +961,7 @@ server <- function(input, output,session) {
                           status="info",
                           size = "xs"
                         ),
-                        title = "whether to show chromosome band",
+                        title = "Display or hide the chromosome band?",
                         placement = "bottom"
                       )
                     ),
@@ -942,7 +973,7 @@ server <- function(input, output,session) {
                     textInput(
                       inputId = "sam_colorChr",
                       label = tags$div(
-                        HTML(' <font><h5><b>Color(s)</b></font>'),
+                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s)</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = "datvie_sam_chrcol", 
@@ -961,7 +992,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_heightChr",
                     label = tags$div(
-                      HTML(' <font><h5><b>Band height:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Band height:</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_heichr1", 
@@ -981,11 +1012,11 @@ server <- function(input, output,session) {
                   )
                 ),
                 conditionalPanel(
-                  condition = "input.sam_chr_type == '2'",
+                  condition = "input.sam_datatypeChr == '2'",
                   numericInput(
                     inputId = "sam_heightChr",
                     label = tags$div(
-                      HTML(' <font><h5><b>Band height:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Band height:</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_heichr2", 
@@ -1008,7 +1039,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_outAxis",
                   label = tags$div(
-                    HTML(' <font><h5><b>Genomic position axis</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b>Axis for genomic position</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_sam_outaxis", 
@@ -1017,7 +1048,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "whether to display the genomic position axis",
+                      title = "Display or hide the axis for genomic position?",
                       placement = "bottom"
                     )
                   ),
@@ -1029,7 +1060,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_outAxis_size",
                     label = tags$div(
-                      HTML(' <font><h5><b>Genome position axis font size</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of the axis for genomic position</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_tip_sam_outaxissize", 
@@ -1038,7 +1069,7 @@ server <- function(input, output,session) {
                           status="info",
                           size = "xs"
                         ),
-                        title = "The genome position axis font size,too large may cause some problems",
+                        title = "Too large font size may cause problems.",
                         placement = "bottom"
                       )
                     ),
@@ -1051,7 +1082,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_labelChr",
                   label = tags$div(
-                    HTML(' <font><h5><b>Chromosome IDs</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome IDs</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_sam_labelchr", 
@@ -1060,7 +1091,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "whether to display the genomic IDs",
+                      title = "Display or hide the chromosome IDs?",
                       placement = "bottom"
                     )
                   ),
@@ -1068,11 +1099,11 @@ server <- function(input, output,session) {
                   selected = sam_labelChr
                 ),
                 conditionalPanel(
-                  condition = "input.sam_labelChr == 'labels'",
+                  condition = "input.sam_labelChr == '1'",
                   numericInput(
                     inputId = "sam_labelChr_size",
                     label = tags$div(
-                      HTML(' <font><h5><b>Chromosome IDs font size</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of chromosome IDs</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_labsize_tip", 
@@ -1081,7 +1112,7 @@ server <- function(input, output,session) {
                           status="info",
                           size = "xs"
                         ),
-                        title = "The font size of chromosome ID, too large may cause some problems",
+                        title = "Too large font size may cause problems.",
                         placement = "bottom"
                       )
                     ),
@@ -1094,7 +1125,7 @@ server <- function(input, output,session) {
                 textInput(
                   inputId = "sam_gapChr",
                   label = tags$div(
-                    HTML(' <font><h5><b>Gap width(s):</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_tip_sam_gapchr", 
@@ -1112,7 +1143,7 @@ server <- function(input, output,session) {
                 numericInput(
                   inputId = "sam_distance_Chr",
                   label = tags$div(
-                    HTML(' <font><h5><b>Distance to next part</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_tip_sam_dischr", 
@@ -1121,7 +1152,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "The next part can be 'label''track''link'",
+                      title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
                       placement = "bottom"
                     )
                   ),
@@ -1137,13 +1168,13 @@ server <- function(input, output,session) {
         if(!is.null(sam_data.T)){
           bs4Card(
             collapsible = FALSE,
-            title = "Track data",
+            title = HTML('<i class="fa-solid fa-circle"></i> Track data (to be displayed in different tracks of a Circos plot)'),
             width = 12,
             fluidRow(
               column(
                 6,
                 tags$div(
-                  HTML(' <font color="#2196F3"><h4>File name</font>'),
+                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = "datvie_tip_sam_chrnm", 
@@ -1152,7 +1183,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "The filename to call sampledata",
+                    title = "Filename of the datasets.",
                     placement = "bottom"
                   )
                 )
@@ -1160,7 +1191,7 @@ server <- function(input, output,session) {
               column(
                 3,
                 tags$div(
-                  HTML(' <font color="#2196F3"><h4>Plot type</font>'),
+                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = "datvie_tip_sam_plottype", 
@@ -1169,7 +1200,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "The drawing type of the track, different choices will affect the parameters(The user's adjustments when using samledata do not affect the results)",
+                    title = "The type of plot to create using data of the current track.",
                     placement = "bottom"
                   )
                 )
@@ -1177,7 +1208,7 @@ server <- function(input, output,session) {
               column(
                 3,
                 tags$div(
-                  HTML( '<font color="#2196F3"><h4>Track index</font>'),
+                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = "datvie_tip_sam_traidx", 
@@ -1186,7 +1217,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "The index of the track data drawing, currently cannot be mixed.(The user's adjustments when using samledata do not affect the results)",
+                    title = "The index of the current track. Identical index is not allowed for different tracks.",
                     placement = "bottom"
                   )
                 )
@@ -1205,13 +1236,13 @@ server <- function(input, output,session) {
                       2,
                       bs4Dash::tooltip(
                         actionBttn(
-                          inputId = paste0("view_tra_data",x),
+                          inputId = paste0("view_sam_tra_data",x),
                           label = NULL,
                           style = "unite",
                           color = "success",
                           icon = icon("eye")
                         ),
-                        title = "Click to preview this track data",
+                        title = "Click to view the dataset.",
                         placement = "bottom"
                       )
                     )
@@ -1222,7 +1253,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = paste0("sam_tratype",x),
                     label = NULL,
-                    choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram"),
+                    choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line"),
                     selected = sam_tratype[x]
                   )
                 ),
@@ -1246,26 +1277,30 @@ server <- function(input, output,session) {
                           label = NULL,
                           style = "unite",
                           color = "success",
-                          icon = icon("cog")
+                          icon = icon("gear")
                         ),
-                        title = "This track parameter settings(The user's adjustments when using samledata do not affect the results)",
+                        title = "Set parameters for this track. NOTE: Changes will not be applied for example datasets.",
                         placement = "bottom"
                       )
                     )
                   )
                   
                 ),
-                tags$head(tags$style(paste0("#jquidatvie_travie",x," .modal-dialog{ width:1200px}"))),
+                tags$head(tags$style(paste0("#jquidatvie_travie_sam",x," .modal-dialog{ max-width:1200px}"))),
                 jqui_draggable(
                   bsModal(
-                    id = paste0("jquidatvie_travie",x),
+                    id = paste0("jquidatvie_travie_sam",x),
                     title = NULL,
-                    trigger = paste0("view_tra_data",x),
+                    trigger = paste0("view_sam_tra_data",x),
                     size = "large",
                     DTOutput(paste0("viewTra_sam",x))
                   )
                 ),
-                tags$head(tags$style(paste0("#jquidatvie_trasetting_sam",x," .modal-dialog{ width:1200px}"))),
+                tags$head(
+                  tags$style(
+                    paste0("#jquidatvie_trasetting_sam",x," .modal-dialog{ width:1200px}")
+                  )
+                ),
                 jqui_draggable(
                   bsModal(
                     id = paste0("jquidatvie_trasetting_sam",x),
@@ -1273,13 +1308,13 @@ server <- function(input, output,session) {
                     trigger = paste0("sam_tra_setting",x),
                     size = "large",
                     tagList(
-                      h4(paste0("this track plot type is:",sam_tratype[x])),
+                      h4(paste0("Plot type of the current track: ",sam_tratype[x])),
                       if(sam_tratype[x] == "bar"){
                         tagList(
                           pickerInput(
                             inputId = paste0("sam_tra_bar_direction",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Bar direction</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_bar_direction",x), 
@@ -1306,13 +1341,15 @@ server <- function(input, output,session) {
                             ),
                             colourInput(
                               inputId = paste0("sam_tra_bar_coldir1",x),
-                              label = "Outer color:",
-                              value = sam_tra_bar_coldir1[x]
+                              label = "Outward bar color:",
+                              value = sam_tra_bar_coldir1[x],
+                              returnName = TRUE
                             ),
                             colourInput(
                               inputId = paste0("sam_tra_bar_coldir2",x),
-                              label = "Inner color:",
-                              value = sam_tra_bar_coldir2[x]
+                              label = "Inward bar color:",
+                              value = sam_tra_bar_coldir2[x],
+                              returnName = TRUE
                             )
                           )
                         )
@@ -1323,7 +1360,7 @@ server <- function(input, output,session) {
                             pickerInput(
                               inputId = paste0("sam_tra_coltype",x),
                               label = tags$div(
-                                HTML(' <font><h5><b>Data color</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_bar_sam_trycoltp",x), 
@@ -1363,7 +1400,7 @@ server <- function(input, output,session) {
                               pickerInput(
                                 inputId = paste0("sam_tra_coltype",x),
                                 label = tags$div(
-                                  HTML(' <font><h5><b>Data color</b></font>'),
+                                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                                   bs4Dash::tooltip(
                                     actionButton(
                                       inputId = paste0("datvie_tip_bar_sam_trycoltp2",x), 
@@ -1403,7 +1440,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_line_fillarea",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Fill area</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_bar_sam_fillarea",x), 
@@ -1435,7 +1472,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_rect_rectcol",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Select color</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_rect_sam_rectcol",x), 
@@ -1461,7 +1498,8 @@ server <- function(input, output,session) {
                             colourInput(
                               inputId = paste0("sam_tra_rect_rectcoldis",x),
                               label = NULL,
-                              value = sam_tra_rect_rectcoldis[x]
+                              value = sam_tra_rect_rectcoldis[x],
+                              returnName = TRUE
                             )
                           ),
                           conditionalPanel(
@@ -1477,7 +1515,7 @@ server <- function(input, output,session) {
                             pickerInput(
                               inputId = paste0("sam_tra_line_selrea",x),
                               label = tags$div(
-                                HTML(' <font><h5><b>Area color</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Area color</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_line_sam_selrea",x), 
@@ -1498,7 +1536,8 @@ server <- function(input, output,session) {
                               colourInput(
                                 inputId = paste0("sam_tra_bar_borderarea",x),
                                 label = NULL,
-                                value = sam_tra_bar_borderarea[x]
+                                value = sam_tra_bar_borderarea[x],
+                                returnName = TRUE
                               )
                             )
                           )
@@ -1508,7 +1547,7 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_tra_transparency",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Color transparency:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_trans",x), 
@@ -1531,7 +1570,7 @@ server <- function(input, output,session) {
                         textInput(
                           paste0("sam_tra_poipch",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Symbol type:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_poi_pch",x), 
@@ -1547,10 +1586,44 @@ server <- function(input, output,session) {
                           value= sam_tra_poipch[x]
                         )
                       },
+                      if(tra_type[x] == "stack-point"){
+                        tagList(
+                          textInput(
+                            inputId = paste0("sam_tra_poipch",x),
+                            label = tags$div(
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
+                              bs4Dash::tooltip(
+                                actionButton(
+                                  inputId = paste0("datvie_tip_sam_poi_pch",x), 
+                                  label="" , 
+                                  icon=icon("question"),
+                                  status="info",
+                                  size = "xs"
+                                ),
+                                title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                                placement = "right"
+                              )
+                            ),
+                            value= sam_tra_poipch[x]
+                          ),
+                          numericInput(
+                            paste0("sam_tra_poi_poisiz",x),
+                            label = tags$div(
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                            ),
+                            value=sam_tra_poi_poisiz[x],
+                            min=0,
+                            max=1.5,
+                            step=0.1
+                          )
+                        )
+                      },
                       if(sam_tratype[x] == "point" & !("cex" %in% colnames(sam_data.T[[x]]))){
                         numericInput(
                           paste0("sam_tra_poi_poisiz",x),
-                          label = "Point size:",
+                          label = tags$div(
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                          ),
                           value=sam_tra_poi_poisiz[x],
                           min=0,
                           max=1.5,
@@ -1561,7 +1634,7 @@ server <- function(input, output,session) {
                         textInput(
                           inputId = paste0("sam_tra_baseline",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Y coordinates of baselines:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y coordinates of baselines:</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_baseline",x), 
@@ -1581,7 +1654,7 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_tra_colorline",x),
                           label = tags$div(
-                            HTML(' <font><h6><b>Baselines color(s):</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s):</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_baselinecol",x), 
@@ -1594,14 +1667,15 @@ server <- function(input, output,session) {
                               placement = "right"
                             )
                           ),
-                          value = sam_tra_colorline[x]
+                          value = sam_tra_colorline[x],
+                          returnName = TRUE
                         )
                       },
                       if(sam_tratype[x] != "heatmap-discrete" & sam_tratype[x] != "heatmap-gradual" & sam_tratype[x] != "ideogram"){
                         colourInput(
                           inputId = paste0("sam_tra_bgcol",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Background color(s):</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s):</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_bgcol",x), 
@@ -1615,7 +1689,8 @@ server <- function(input, output,session) {
                               placement = "right"
                             )
                           ),
-                          value = sam_tra_bgcol[x]
+                          value = sam_tra_bgcol[x],
+                          returnName = TRUE
                         )
                       },
                       if(sam_tratype[x] == "heatmap-gradual"){
@@ -1623,7 +1698,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_heatmapcol",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Colors</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_heat_sam_col",x), 
@@ -1653,23 +1728,26 @@ server <- function(input, output,session) {
                             colourInput(
                               inputId = paste0("sam_tra_hmap_lowColor",x),
                               label = "lowColor",
-                              value = sam_tra_hmap_lowColor[x]
+                              value = sam_tra_hmap_lowColor[x],
+                              returnName = TRUE
                             ),
                             colourInput(
                               inputId = paste0("sam_tra_hmap_midColor",x),
                               label = "midColor",
-                              value = sam_tra_hmap_midColor[x]
+                              value = sam_tra_hmap_midColor[x],
+                              returnName = TRUE
                             ),
                             colourInput(
                               inputId = paste0("sam_tra_hmap_highColor",x),
                               label = "highColor",
-                              value = sam_tra_hmap_highColor[x]
+                              value = sam_tra_hmap_highColor[x],
+                              returnName = TRUE
                             )
                           ),
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Add position lines</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_heat_sam_posline",x), 
@@ -1678,7 +1756,7 @@ server <- function(input, output,session) {
                                   status="info",
                                   size = "xs"
                                 ),
-                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
                                 placement = "right"
                               )
                             ),
@@ -1690,7 +1768,7 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML(' <font><h5><b>Position lines height:</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_heat_sam_poslinehei",x), 
@@ -1729,7 +1807,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Add position lines</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_heat_posline2",x), 
@@ -1738,7 +1816,7 @@ server <- function(input, output,session) {
                                   status="info",
                                   size = "xs"
                                 ),
-                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
                                 placement = "right"
                               )
                             ),
@@ -1750,7 +1828,7 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML(' <font><h5><b>Position lines height:</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_heat_sam_poslinehei2",x), 
@@ -1774,7 +1852,7 @@ server <- function(input, output,session) {
                       numericInput(
                         inputId = paste0("sam_heightTraus",x),
                         label = tags$div(
-                          HTML(' <font><h5><b>Track height:</b></font>'),
+                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height:</b></font>'),
                           bs4Dash::tooltip(
                             actionButton(
                               inputId = paste0("datvie_tip_sam_trahei",x), 
@@ -1783,7 +1861,7 @@ server <- function(input, output,session) {
                               status="info",
                               size = "xs"
                             ),
-                            title = "Height of the track.",
+                            title = "Height of the current track.",
                             placement = "right"
                           )
                         ),
@@ -1796,7 +1874,7 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_Tra_margin",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Distance from the next section</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tramar",x), 
@@ -1805,7 +1883,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The gap with the next section",
+                              title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
                               placement = "right"
                             )
                           ),
@@ -1821,7 +1899,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_cellbord",x),
                             label = tags$div(
-                              HTML(' <font><h5><b>Add cell borders</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_heaat_cellbo",x), 
@@ -1830,7 +1908,7 @@ server <- function(input, output,session) {
                                   status="info",
                                   size = "xs"
                                 ),
-                                title = "Add borders to the heatmap grids, which can separate cells from each other.",
+                                title = "Add borders to the heatmap grids, which can be used to separate cells from each other.",
                                 placement = "right"
                               )
                             ),
@@ -1842,7 +1920,7 @@ server <- function(input, output,session) {
                             colourInput(
                               inputId = paste0("sam_tra_hmap_cellbord_col",x),
                               label = tags$div(
-                                HTML(' <font><h5><b>Add cell borders</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_sam_heaat_bocol",x), 
@@ -1855,7 +1933,8 @@ server <- function(input, output,session) {
                                   placement = "right"
                                 )
                               ),
-                              value = sam_tra_hmap_cellbord_col[x]
+                              value = sam_tra_hmap_cellbord_col[x],
+                              returnName = TRUE
                             )
                           )
                         )
@@ -1864,7 +1943,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_border",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Add borders</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_bo",x), 
@@ -1886,7 +1965,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_yaxis",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Add y-axis</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_yax",x), 
@@ -1895,7 +1974,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "Add a y-axis, which widens the gap before the first sector",
+                              title = "Add Y-axis for all the tracks if applicable.",
                               placement = "right"
                             )
                           ),
@@ -1914,23 +1993,23 @@ server <- function(input, output,session) {
         if(!is.null(sam_data.N)){
           bs4Card(
             collapsible = FALSE,
-            title = "Label data",
+            title = HTML('<i class="fa-solid fa-circle"></i> Label data (used to label elements in a track)'),
             width = 12,
             tagList(
               fluidRow(
                 column(
                   6,
                   tags$div(
-                    HTML(' <font color="#2196F3"><h4>File name</font>'),
+                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                     bs4Dash::tooltip(
                       actionButton(
-                        inputId = "datvie_lab_tip1", 
+                        inputId = "datvie_lab_tip1_sam", 
                         label="" , 
                         icon=icon("question"),
                         status="info",
                         size = "xs"
                       ),
-                      title = "The filename to call sampledata",
+                      title = "Filename of the datasets.",
                       placement = "bottom"
                     )
                   )
@@ -1938,7 +2017,7 @@ server <- function(input, output,session) {
                 column(
                   6,
                   tags$div(
-                    HTML( '<font color="#2196F3"><h4>Label index</font>'),
+                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_tip_sam_labidx", 
@@ -1947,7 +2026,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "The index of the label data drawing, currently cannot be mixed.(The user's adjustments when using samledata do not affect the results)",
+                      title = "The track index for the label data. Elements in the selected track will be labeled by the label data.",
                       placement = "bottom"
                     )
                   )
@@ -1972,7 +2051,7 @@ server <- function(input, output,session) {
                             color = "success",
                             icon = icon("eye")
                           ),
-                          title = paste0("Click to preview this label data"),
+                          title = paste0("Click to view the dataset."),
                           placement = "bottom"
                         )
                       )
@@ -1999,16 +2078,16 @@ server <- function(input, output,session) {
                             label = NULL,
                             style = "unite",
                             color = "success",
-                            icon = icon("cog")
+                            icon = icon("gear")
                           ),
-                          title = paste0("This Label parameter settings"),
+                          title = paste0("Set parameters for the label data. NOTE: Changes will not be applied for example datasets."),
                           placement = "bottom"
                         )
                       )
                     )
                     
                   ),
-                  tags$head(tags$style(paste0("#jquicirpar_labview_sam",x," .modal-dialog{ width:1200px}"))),
+                  tags$head(tags$style(paste0("#jquicirpar_labview_sam",x," .modal-dialog{ max-width:1200px}"))),
                   jqui_draggable(
                     bsModal(
                       id = paste0("jquicirpar_labview_sam",x),
@@ -2029,7 +2108,7 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_lab_fontsize",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Label hight</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_lab_labhi",x), 
@@ -2038,7 +2117,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The height of the track occupied by the label, the font size adapts to the track height",
+                              title = "The height of the track occupied by the label.",
                               placement = "right"
                             )
                           ),
@@ -2050,7 +2129,7 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_lab_fontcol",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Font color</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_lab_labcol",x), 
@@ -2059,17 +2138,17 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The color of the label font and connection line",
+                              title = "The color of the label text and the connection line.",
                               placement = "right"
                             )
                           ),
-                          
+                          returnName = TRUE,
                           value = sam_lab_fontcol[x]
                         ),
                         pickerInput(
                           inputId = paste0("sam_poslabels",x),
                           label = tags$div(
-                            HTML(' <font><h5><b>Label Position</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_lab_labpos",x), 
@@ -2078,7 +2157,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "which side of the track the label is drawn",
+                              title = "Place the labels in the inner or the outer of the track?",
                               placement = "right"
                             )
                           ),
@@ -2099,23 +2178,23 @@ server <- function(input, output,session) {
         if(!is.null(sam_data.L)){
           bs4Card(
             collapsible = FALSE,
-            title = "Links data",
+            title = HTML('<i class="fa-solid fa-circle"></i> Links data'),
             width = 12,
             tagList(
               fluidRow(
                 column(
                   6,
                   tags$div(
-                    HTML(' <font color="#2196F3"><h4>File name</font>'),
+                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                     bs4Dash::tooltip(
                       actionButton(
-                        inputId = "datvie_link_tip1", 
+                        inputId = "datvie_link_tip1_sam", 
                         label="" , 
                         icon=icon("question"),
                         status="info",
                         size = "xs"
                       ),
-                      title = "The filename to call sampledata",
+                      title = "Filename of the datasets.",
                       placement = "bottom"
                     )
                   )
@@ -2123,16 +2202,16 @@ server <- function(input, output,session) {
                 column(
                   6,
                   tags$div(
-                    HTML(' <font color="#2196F3"><h4>Linkdata format</font>'),
+                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Linkdata format</font>'),
                     bs4Dash::tooltip(
                       actionButton(
-                        inputId = "datvie_link_tip2", 
+                        inputId = "datvie_link_tip2_sam", 
                         label="" , 
                         icon=icon("question"),
                         status="info",
                         size = "xs"
                       ),
-                      title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without color column'. 
+                      title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without a color column'. 
 	For data with 7 columns, user should select 'Data with multi-group' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
 	For data with 7 columns, user should select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
                       placement = "bottom"
@@ -2150,12 +2229,16 @@ server <- function(input, output,session) {
                     ),
                     column(
                       2,
-                      actionBttn(
-                        inputId = "sam_view_lin_data",
-                        label = NULL,
-                        style = "unite",
-                        color = "success",
-                        icon = icon("eye")
+                      bs4Dash::tooltip(
+                        actionBttn(
+                          inputId = "sam_view_lin_data",
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("eye")
+                        ),
+                        title = paste0("Click to view the dataset."),
+                        placement = "bottom"
                       )
                     )
                   )
@@ -2168,23 +2251,27 @@ server <- function(input, output,session) {
                       pickerInput(
                         inputId = "sam_colformatLinks",
                         label = NULL,
-                        choices = c("Data without 'color' column" = "1","Data with multi-group" = "2", "Data with gradual values" = "3"),
+                        choices = c("Data without a 'color' column" = "1","Data with multi-group" = "2", "Data with gradual values" = "3"),
                         selected = sam_colformatLinks
                       )
                     ),
                     column(
                       1,
-                      actionBttn(
-                        inputId = "sam_linsetting",
-                        label = NULL,
-                        style = "unite",
-                        color = "success",
-                        icon = icon("cog")
+                      bs4Dash::tooltip(
+                        actionBttn(
+                          inputId = "sam_linsetting",
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("gear")
+                        ),
+                        title = paste0("Set parameters for Links data. NOTE: Changes will not be applied for example datasets."),
+                        placement = "bottom"
                       )
                     )
                   )
                 ),
-                tags$head(tags$style(paste0("#jquidatvie_linview_sam .modal-dialog{ width:1200px}"))),
+                tags$head(tags$style(paste0("#jquidatvie_linview_sam .modal-dialog{ max-width:1200px}"))),
                 jqui_draggable(
                   bsModal(
                     id = "jquidatvie_linview_sam",
@@ -2206,7 +2293,7 @@ server <- function(input, output,session) {
                       pickerInput(
                         inputId = "sam_colorLinks",
                         label = tags$div(
-                          HTML(' <font><h5><b>Data color</b></font>'),
+                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                           bs4Dash::tooltip(
                             actionButton(
                               inputId = "datvie_link_sam_collink", 
@@ -2233,7 +2320,7 @@ server <- function(input, output,session) {
                       numericInput(
                         inputId = "sam_transparencyLinks",
                         label = tags$div(
-                          HTML(' <font><h5><b>Color transparency:</b></font>'),
+                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
                           bs4Dash::tooltip(
                             actionButton(
                               inputId = "datvie_link_tra_lintran", 
@@ -2255,7 +2342,7 @@ server <- function(input, output,session) {
                     conditionalPanel(
                       condition="input.sam_colformatLinks==3",
                       tags$div(
-                        HTML(' <font color="#2196F3"><h4>Data color</font>'),
+                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = "datvie_link_sam_tip5", 
@@ -2264,7 +2351,7 @@ server <- function(input, output,session) {
                             status="info",
                             size = "small"
                           ),
-                          title = "For data with 'color' column indicated by numbers, links are filled with colors specified by the user."
+                          title = "For data with a 'color' column indicated by numbers, links are filled with colors specified by the user."
                         )
                       ),
                       fluidRow(
@@ -2274,7 +2361,8 @@ server <- function(input, output,session) {
                           colourInput(
                             "sam_lowColinks",
                             label = HTML('<p><font size="1.8"><strong>Low Color</strong></font></p>'),
-                            value = sam_lowColinks
+                            value = sam_lowColinks,
+                            returnName = TRUE
                           )
                         ),
                         column(
@@ -2282,7 +2370,8 @@ server <- function(input, output,session) {
                           colourInput(
                             "sam_midColinks",
                             label = HTML('<p><font size="1.8"><strong>Middle Color</strong></font></p>'),
-                            value = sam_midColinks
+                            value = sam_midColinks,
+                            returnName = TRUE
                           )
                         ),
                         column(
@@ -2290,7 +2379,8 @@ server <- function(input, output,session) {
                           colourInput(
                             "sam_highColinks",
                             label = HTML('<p><font size="1.8"><strong>High Color</strong></font></p>'),
-                            value = sam_highColinks
+                            value = sam_highColinks,
+                            returnName = TRUE
                           )
                         )
                       ),
@@ -2318,13 +2408,14 @@ server <- function(input, output,session) {
     sam_colorChr_in <- gsub("\\s","",strsplit(sam_colorChr,",")[[1]])
     sam_pospos <- 1:length(sam_data.T)
     sam_midplot <- FALSE
+    sam_trac_index <- "No"
     plotfig(input = input, output = output,session=session,data.C = sam_data.C , dis_Chr = sam_distance_Chr , data.T = sam_data.T , data.L = sam_data.L, data.N = sam_data.N , tra_Margin = sam_Tra_margin , labels_inf = sam_labels_inf , labelChr = sam_labelChr,colorChr=sam_colorChr_in , tra_hmap_typcolhmap = sam_tra_hmap_typcolhmap , tra_border = sam_tra_border , tra_yaxis = sam_tra_yaxis ,
-            trackChr = sam_trackChr ,tratype = sam_tratype,sam_datype = sam_datype,chr_height = sam_heightChr,datatypeChr = datatypeChr , heightTra = sam_heightTraus , sam_chr_type = sam_chr_type, tra_poi_poisiz = sam_tra_poi_poisiz , heatmapcols = sam_heatmapcols , tra_bgcol = sam_tra_bgcol , legendtext = legendtext , gap.width = sam_gapChr ,
+            trackChr = sam_trackChr ,tratype = sam_tratype,source_data = sam_source_data,chr_height = sam_heightChr, heightTra = sam_heightTraus , datatypeChr = sam_datatypeChr, tra_poi_poisiz = sam_tra_poi_poisiz , heatmapcols = sam_heatmapcols , tra_bgcol = sam_tra_bgcol , gap.width = sam_gapChr ,
             tra_hmap_poslines = sam_tra_hmap_poslines , tra_hmap_poslinhei = sam_tra_hmap_poslinhei , tra_hmap_cellbord = sam_tra_hmap_cellbord , tra_hmap_cellbord_col = sam_tra_hmap_cellbord_col , tra_hmap_heatmapcol = sam_tra_hmap_heatmapcol , plotsize = sam_plotsize ,
             tra_rect_rectcol = sam_tra_rect_rectcol , tra_trct_colrect = sam_tra_trct_colrect , tra_rect_rectcoldis = sam_tra_rect_rectcoldis , tra_rect_rectcoldiscus = sam_tra_rect_rectcoldiscus , tra_transparency = sam_tra_transparency , tra_coltype = sam_tra_coltype , tra_colcol = sam_tra_colcol , tra_heatcol_dis = sam_tra_heatcol_dis , tra_heat_heatcoldiscus = sam_tra_heat_heatcoldiscus,
             tra_colorcus = sam_tra_colorcus , tra_line_fillarea = sam_tra_line_fillarea , tra_poipch = sam_tra_poipch , tra_colorline = sam_tra_colorline , tra_baseline = sam_tra_baseline , outAxis = sam_outAxis , fontSize = fontSize , outAxis_size = sam_outAxis_size , labelChr_size = sam_labelChr_size , tra_bar_direction = sam_tra_bar_direction ,
             tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks ,
-            selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos)
+            selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos , trac_index = sam_trac_index)
     
     
     
@@ -2335,28 +2426,26 @@ server <- function(input, output,session) {
     if(is.null(input$alldata)){
       sendSweetAlert(
         session = session,
-        title = "Error!!",
+        title = "Error!",
         text = "The file connot be empty.",
         type = "error"
       )
-      
     }else{
       sendSweetAlert(
         session = session,
-        title = "Success !!",
-        text = "Data has been uploaded successfully!!",
+        title = "Success!",
+        text = "Data uploaded successfully!",
         type = "success"
       )
     }
     ###
     file <- input$alldata
-    filepath <- file$datapath
     filename <- file$name
     if(!is.null(file)){
       output$dataclassify <<- renderUI({
         tagList(
           tags$div(
-            HTML(' <font><h4>Please classify the data</font>'),
+            HTML('<font><h4><i class="fa-solid fa-play"></i> Step 2.1. Please distribute the uploaded datasets to appropriate data groups:</font>'),
             bs4Dash::tooltip(
               actionButton(
                 inputId = "datup_tip3", 
@@ -2365,7 +2454,7 @@ server <- function(input, output,session) {
                 status="info",
                 size = "xs"
               ),
-              title = "Please drag the data to a different box,and Click 'GO!!!' after saving",
+              title = "Please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then Click the 'Save uploaded data' button.",
               placement = "bottom"
             )
           ),
@@ -2415,28 +2504,33 @@ server <- function(input, output,session) {
     tradatas <<- input$tradata
     lindatas <<- input$lindata
     labdatas <<- input$labdata
-    alldatapath <<- base::unique(rbind(input$alldata,alldatapath))
+    garbage <<- input$garbage
+    alldatapath <<- unique(rbind(input$alldata,alldatapath))
+    alldatapath <<- alldatapath[!duplicated(alldatapath$name),]
+    
+    
+    
     lonalldat <<- c(length(chrdatas),length(tradatas),length(lindatas),length(labdatas))
     ### alert box
     if(lonalldat[1] > 1){
       sendSweetAlert(
         session = session,
-        title = "chromosome data error !!",
-        text = "Please check the chromosome data to make sure you only uploaded one.",
+        title = "Error!",
+        text = "Only a single chromosome dataset is allowed.",
         type = "error"
       )
     }else if(lonalldat[3] > 1){
       sendSweetAlert(
         session = session,
-        title = "error !!",
-        text = "Please check the links data to make sure you only uploaded one..",
+        title = "Error!",
+        text = "Only a single Links dataset is allowed.",
         type = "error"
       )
     }else{
       sendSweetAlert(
         session = session,
-        title = "success !!",
-        text = "The data has been saved and you can continue adding data or click 'GO' to preview the data.",
+        title = "Success!",
+        text = "The data has been saved and you can add more datasets using the 'Upload one or multiple input datasets:' widget or finish the data uploading process by clicking the 'SUBMIT!' button.",
         type = "success"
       )
     }  
@@ -2449,16 +2543,16 @@ server <- function(input, output,session) {
     if(datarepet == TRUE){
       sendSweetAlert(
         session = session,
-        title = "error !!",
-        text = "The data contains duplicate values,please drag the duplicate data into the 'Garbage'.",
+        title = "Error!",
+        text = "Duplicated datasets found, please drag the duplicated datasets into the 'Garbage'.",
         type = "error"
       )
     }else{
       if(lonalldat[1] == 0){
         sendSweetAlert(
           session = session,
-          title = "error !!",
-          text = "Chromosome data cannot be empty.",
+          title = "Error!",
+          text = "Chromosome data can not be empty.",
           type = "error"
         )
       }else{
@@ -2466,29 +2560,29 @@ server <- function(input, output,session) {
         if(!grepl("text",alldatapath[which(alldatapath[1] == chrdatas[1]),3])){
           sendSweetAlert(
             session = session,
-            title = "error !!",
-            text = "Chromosome data type error.",
+            title = "Error!",
+            text = "Please check the format of the Chromosome data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == tradatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "error !!",
-            text = "Track data type error.",
+            title = "Error!",
+            text = "Please check the format of the Track data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == labdatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "error !!",
-            text = "Label data type error.",
+            title = "Error!",
+            text = "Please check the format of the Label data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == lindatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "error !!",
-            text = "Link data type error.",
+            title = "Error!",
+            text = "Please check the format of the Link data.",
             type = "error"
           )
         }else{
@@ -2558,29 +2652,29 @@ server <- function(input, output,session) {
           if(!all(uniall %in% unichr)){
             sendSweetAlert(
               session = session,
-              title = "chr column error!",
-              text = "The chr column of the chromosome data is inconsistent with the chr column of other data",
+              title = "Wrong data format!",
+              text = "The chr column of the chromosome data is inconsistent with the chr column of other datasets.",
               type = "error"
             )
           }else if(!(ncol(data.C)==3 | (ncol(data.C)==5 && is.character(data.C[,4]) && is.character(data.C[,5])))){
             sendSweetAlert(
               session = session,
-              title = "Data formatting error!",
+              title = "Wrong data format!",
               text = "Chromosome data should contain three (general type) or five columns (cytoband type). Please upload applicable chromosome data.",
               type = "error"
             )
           }else if(!(all(is.numeric(data.C[,2]),is.numeric(data.C[,3])))){
             sendSweetAlert(
               session = session,
-              title = "Data formatting error!",
-              text = "The second and third column of chromosome data should be numeric vectors.",
+              title = "Wrong data format!",
+              text = "The second and third columns of the chromosome data should be numeric vectors.",
               type = "error"
             )
           }else if(sum(is.na(data.C[,2:3])) != 0){
             sendSweetAlert(
               session = session,
-              title = "Data formatting error!",
-              text = "The chromosome data contains missing value.",
+              title = "Wrong data format!",
+              text = "Missing value found in the chromosome data.",
               type = "error"
             )
           }else{
@@ -2616,14 +2710,14 @@ server <- function(input, output,session) {
               if(ncol(data.L) != 6 | ncol(data.L) != 7){
                 sendSweetAlert(
                   session = session,
-                  title = "Data formatting error!",
+                  title = "Wrong data format!",
                   text = paste0("Link data should contain six or seven columns."),
                   type = "error"
                 )
               }else if(!all(is.numeric(data.L[,2]),is.numeric(data.L[,3]),is.numeric(data.L[,5]),is.numeric(data.L[,6]))){
                 sendSweetAlert(
                   session = session,
-                  title = "Data formatting error!",
+                  title = "Wrong data format!",
                   text = paste0("Columns 2,3,5,6 of link data should be numeric."),
                   type = "error"
                 )
@@ -2632,24 +2726,24 @@ server <- function(input, output,session) {
             if(sum(datat_info)!=0){
               sendSweetAlert(
                 session = session,
-                title = "Data formatting error!",
-                text = paste0("Track data error,index:",paste(which(datat_info==1),collapse = ",")),
+                title = "Wrong data format!",
+                text = paste0("Wrong data format found in Track ",paste(which(datat_info==1),collapse = ",")),
                 type = "error"
               )
               dataview_export <<- NULL
             }else if(sum(datan_info)!=0){
               sendSweetAlert(
                 session = session,
-                title = "Data formatting error!",
-                text = paste0("Label data error,index:",paste(which(datan_info==1),collapse = ",")),
+                title = "Wrong data format!",
+                text = paste0("Wrong Label data format found in ",paste(which(datan_info==1),collapse = ",")),
                 type = "error"
               )
               dataview_export <<- NULL
             }else{
               sendSweetAlert(
                 session = session,
-                title = "success !!",
-                text = "Please go to the 'Circos Parameters' page to preview data and set parameters.",
+                title = "Success!",
+                text = "Please go to the 'Circos Parameters' page to view the uploaded datasets and set parameters.",
                 type = "success"
               )
               dataview_export <<- 1
@@ -2661,11 +2755,16 @@ server <- function(input, output,session) {
     
     #chromosome view
     output$viewChr <- renderDT(
-      data.C,
-      extensions = "Buttons",
-      options = list(
-        dom = 'Brti',
-        buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+      DT::datatable(
+        data.C,
+        extensions = "Buttons",
+        options = list(
+          dom = 'Bfrtip',
+          buttons = list(
+            'pageLength'
+          ),
+          scrollX = TRUE
+        )
       )
     )
     #tracks view
@@ -2673,7 +2772,17 @@ server <- function(input, output,session) {
     if(tra_len >= 1){
       lapply(1:tra_len,function(x){
         output[[paste0("viewTra",x)]] <<- renderDT(
-          data.T[[x]]
+          DT::datatable(
+            data.T[[x]],
+            extensions = "Buttons",
+            options = list(
+              dom = 'Bfrtip',
+              buttons = list(
+                'pageLength'
+              ),
+              scrollX = TRUE
+            )
+          )
         )
       })
     }else if(tra_len < 1){
@@ -2686,7 +2795,17 @@ server <- function(input, output,session) {
     if(lab_len >= 1){
       lapply(1:lab_len,function(x){
         output[[paste0("viewLab",x)]] <<- renderDT(
-          data.N[[x]]
+          DT::datatable(
+            data.N[[x]],
+            extensions = "Buttons",
+            options = list(
+              dom = 'Bfrtip',
+              buttons = list(
+                'pageLength'
+              ),
+              scrollX = TRUE
+            )
+          )
         )
       })
     }
@@ -2694,7 +2813,17 @@ server <- function(input, output,session) {
     
     #links view
     output$viewlink <- renderDT(
-      data.L
+      DT::datatable(
+        data.L,
+        extensions = "Buttons",
+        options = list(
+          dom = 'Bfrtip',
+          buttons = list(
+            'pageLength'
+          ),
+          scrollX = TRUE
+        )
+      )
     )
     output$sortable_chr <<- renderUI({
       if(!is.null(chrdatas)){
@@ -2709,7 +2838,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>File name</font>'),
+                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_tra_tip1", 
@@ -2718,7 +2847,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The filename when uploading the file",
+                  title = "Name of the uploaded file.",
                   placement = "bottom"
                 )
               )
@@ -2726,7 +2855,7 @@ server <- function(input, output,session) {
             column(
               3,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>Plot type</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_tra_tip2", 
@@ -2735,7 +2864,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The drawing type of the track, different choices will affect the parameters",
+                  title = "The type of plot to create using data of the current track.",
                   placement = "bottom"
                 )
               )
@@ -2743,7 +2872,7 @@ server <- function(input, output,session) {
             column(
               3,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>Track index</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_tra_tip3", 
@@ -2752,7 +2881,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The index of the track data drawing, currently cannot be mixed.",
+                  title = "The index of the current track. Identical index is not allowed for different tracks.",
                   placement = "bottom"
                 )
               )
@@ -2777,7 +2906,7 @@ server <- function(input, output,session) {
                         color = "success",
                         icon = icon("eye")
                       ),
-                      title = "Click to preview this track data",
+                      title = "Click to view the dataset.",
                       placement = "bottom"
                     )
                   )
@@ -2811,15 +2940,15 @@ server <- function(input, output,session) {
                         label = NULL,
                         style = "unite",
                         color = "success",
-                        icon = icon("cog")
+                        icon = icon("gear")
                       ),
-                      title = paste0("This track parameter settings"),
+                      title = paste0("Set parameters for this track."),
                       placement = "bottom"
                     )
                   )
                 )
               ),
-              tags$head(tags$style(paste0("#jquidatvie_travie",x," .modal-dialog{ width:1200px}"))),
+              tags$head(tags$style(paste0("#jquidatvie_travie",x," .modal-dialog{ max-width:1200px}"))),
               jqui_draggable(
                 bsModal(
                   id = paste0("jquidatvie_travie",x),
@@ -2854,7 +2983,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>File name</font>'),
+                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_lab_tip1", 
@@ -2863,7 +2992,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The filename when uploading the file",
+                  title = "Name of the uploaded file.",
                   placement = "bottom"
                 )
               )
@@ -2871,7 +3000,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>Label index</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_lab_tip2", 
@@ -2880,7 +3009,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The index of the label data drawing, currently cannot be mixed.",
+                  title = "The track index for the label data. Elements in the selected track will be labeled by the label data.",
                   placement = "bottom"
                 )
               )
@@ -2905,7 +3034,7 @@ server <- function(input, output,session) {
                         color = "success",
                         icon = icon("eye")
                       ),
-                      title = paste0("Click to preview this label data"),
+                      title = paste0("Click to view the dataset."),
                       placement = "bottom"
                     )
                   )
@@ -2931,15 +3060,15 @@ server <- function(input, output,session) {
                         label = NULL,
                         style = "unite",
                         color = "success",
-                        icon = icon("cog")
+                        icon = icon("gear")
                       ),
-                      title = paste0("This Label parameter settings"),
+                      title = paste0("Set parameters for the label data."),
                       placement = "bottom"
                     )
                   )
                 )
               ),
-              tags$head(tags$style(paste0("#jquicirpar_labview",x," .modal-dialog{ width:1200px}"))),
+              tags$head(tags$style(paste0("#jquicirpar_labview",x," .modal-dialog{ max-width:1200px}"))),
               jqui_draggable(
                 bsModal(
                   id = paste0("jquicirpar_labview",x),
@@ -2971,16 +3100,16 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>File name</font>'),
+                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_link_tip1", 
                     label="" , 
                     icon=icon("question"),
                     status="info",
-                    size = "small"
+                    size = "xs"
                   ),
-                  title = "The filename when uploading the file",
+                  title = "Name of the uploaded file.",
                   placement = "bottom"
                 )
               )
@@ -2988,16 +3117,16 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4>Linkdata format</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Linkdata format</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_link_tip2", 
                     label="" , 
                     icon=icon("question"),
                     status="info",
-                    size = "small"
+                    size = "xs"
                   ),
-                  title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without color column'. 
+                  title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without a color column'. 
                   For data with 7 columns, user should select 'Data with multi-group' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
                   For data with 7 columns, user should select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
                   placement = "bottom"
@@ -3023,7 +3152,7 @@ server <- function(input, output,session) {
                       color = "success",
                       icon = icon("eye")
                     ),
-                    title = paste0("Click to preview links data"),
+                    title = paste0("Click to view the dataset."),
                     placement = "bottom"
                   )
                 )
@@ -3037,7 +3166,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "colformatLinks",
                     label = NULL,
-                    choices = c("Data without 'color' column" = "1","Data with multi-group" = "2", "Data with gradual values" = "3"),
+                    choices = c("Data without a 'color' column" = "1", "Data with multi-group" = "2", "Data with gradual values" = "3"),
                     selected="1"
                   )
                 ),
@@ -3049,15 +3178,15 @@ server <- function(input, output,session) {
                       label = NULL,
                       style = "unite",
                       color = "success",
-                      icon = icon("cog")
+                      icon = icon("gear")
                     ),
-                    title = paste0("links parameter settings"),
+                    title = paste0("Set parameter for Links data."),
                     placement = "bottom"
                   )
                 )
               )
             ),
-            tags$head(tags$style(paste0("#jquidatvie_linview .modal-dialog{ width:1200px}"))),
+            tags$head(tags$style(paste0("#jquidatvie_linview .modal-dialog{ max-width:1200px}"))),
             jqui_draggable(
               bsModal(
                 id = "jquidatvie_linview",
@@ -3077,7 +3206,8 @@ server <- function(input, output,session) {
                 materialSwitch(
                   inputId = "midplot",
                   label = tags$div(
-                    HTML(' <font><h5><b>Use the middle points to draw the link</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Use the middle points to draw the links</b></font>'),
+                    #HTML(' <font><h5><b>Use the middle points to draw the link</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_link_tip0", 
@@ -3086,7 +3216,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Only use the middle points of area1 and area2 to draw the link.This is often used for extremely short link regions in large genomes.",
+                      title = "Only use the middle points of two genomic regions to draw the link. This is often used for extremely small genomic regions in large genomes.",
                       placement = "bottom"
                     )
                   ),
@@ -3099,7 +3229,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "colorLinks",
                     label = tags$div(
-                      HTML(' <font><h5><b>Data color</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_link_tip3", 
@@ -3116,17 +3246,25 @@ server <- function(input, output,session) {
                     selected="1"
                   ),
                   conditionalPanel(
-                    condition="input.colorLinks==2",
+                    condition="input.colorLinks==2 && input.colformatLinks=='1'",
                     textInput(
-                      inputId = "selcolorLinks",
+                      inputId = "selcolorLinks1",
                       label = NULL,
                       value="yellowgreen"
+                    )
+                  ),
+                  conditionalPanel(
+                    condition="input.colorLinks==2 && input.colformatLinks=='2'",
+                    textInput(
+                      inputId = "selcolorLinks2",
+                      label = NULL,
+                      value="a:red;b:#00FF00;c:yellowgreen"
                     )
                   ),
                   numericInput(
                     inputId = "transparencyLinks",
                     label = tags$div(
-                      HTML(' <font><h5><b>Color transparency:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_link_tip4", 
@@ -3148,16 +3286,16 @@ server <- function(input, output,session) {
                 conditionalPanel(
                   condition="input.colformatLinks==3",
                   tags$div(
-                    HTML(' <font color="#2196F3"><h4>Data color</font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_link_tip5", 
                         label="" , 
                         icon=icon("question"),
                         status="info",
-                        size = "small"
+                        size = "xs"
                       ),
-                      title = "For data with 'color' column indicated by numbers, links are filled with colors specified by the user."
+                      title = "For data with a 'color' column, links are filled with colors specified by the user."
                     )
                   ),
                   fluidRow(
@@ -3165,24 +3303,27 @@ server <- function(input, output,session) {
                       width = 4,
                       colourInput(
                         inputId = "lowColinks",
-                        label = HTML('<p><font size="1.8"><strong>Low Color</strong></font></p>'),
-                        value = "#0016DB"
+                        label = HTML('<p><font size="2.4"><strong>Low Color</strong></font></p>'),
+                        value = "#0016DB",
+                        returnName = TRUE
                       )
                     ),
                     column(
                       4,
                       colourInput(
                         inputId = "midColinks",
-                        label = HTML('<p><font size="1.8"><strong>Middle Color</strong></font></p>'),
-                        value = "#FFFFFF"
+                        label = HTML('<p><font size="2.4"><strong>Middle Color</strong></font></p>'),
+                        value = "#FFFFFF",
+                        returnName = TRUE
                       )
                     ),
                     column(
                       4,
                       colourInput(
                         inputId = "highColinks",
-                        label = HTML('<p><font size="1.8"><strong>High Color</strong></font></p>'),
-                        value = "#FFFF00"
+                        label = HTML('<p><font size="2.4"><strong>High Color</strong></font></p>'),
+                        value = "#FFFF00",
+                        returnName = TRUE
                       )
                     )
                   ),
@@ -3292,7 +3433,7 @@ server <- function(input, output,session) {
       return("a:red;b:blue;c:cyan")
     })
     heightTra <<- lapply(1:length(tradatas), function(x){
-      return(0.05)
+      return(0.1)
     })
     Tra_margin <<- lapply(1:length(tradatas), function(x){
       return(0.01)
@@ -3335,7 +3476,7 @@ server <- function(input, output,session) {
         if(tratype == "ideogram"){
           if(ncol(data_TT) != 5){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The ideogram data should be five column." 
+            tra_inf_word[k] <- "The ideogram data should contain five columns." 
           }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The last two columns of the ideogram data should be characters." 
@@ -3344,9 +3485,12 @@ server <- function(input, output,session) {
             tra_inf_word[k] <- NULL
           }
         }else if(tratype == "stack-point" | tratype == "stack-line"){
-          if(!all(is.character(data_TT[,"stack"]))){
+          if(!"stack" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "Stack column should be character." 
+            tra_inf_word[k] <- "The 'stack' column does not exist." 
+          }else if(!all(is.character(data_TT[,"stack"]))){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The 'stack' column should be character." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3356,43 +3500,50 @@ server <- function(input, output,session) {
           if("color" %in% colnames(data_TT)){
             if(!all(is.character(data_TT[,"color"]))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "Color column should be character." 
+              tra_inf_word[k] <- "The 'color' column should be character." 
             }
           }
           if("Cex" %in% colnames(data_TT)){
             if(!all(is.numeric(data_TT[,"cex"]))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "Cex column should be numeric." 
+              tra_inf_word[k] <- "The 'cex' column should be numeric." 
             }
           }
           if("pch" %in% colnames(data_TT)){
             if(!all(data_TT[,"pch"] %in% 1:25)){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The value of Pch should be 1-25, please refer to the information for details." 
+              tra_inf_word[k] <- "The Pch value should be integers in 1-25, please refer to the help manual for more details." 
             }
           }
           if("stack" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "Please select 'stack-point'or'stack-line' to draw this track." 
+            tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type to for the input data of this track." 
           }
           if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The data contains 'group' column,maybe you should reselect plot type." 
+            tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
           }
-          if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
-            dataif <- NULL
-            for (l in 1:(ncol(data_TT)-3)) {
-              dataif[l] <- is.numeric(data_TT[,l+3])
+          if(tratype != "point"){
+            if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
+              dataif <- NULL
+              for (l in 1:(ncol(data_TT)-3)) {
+                dataif[l] <- is.numeric(data_TT[,l+3])
+              }
+              if(sum(dataif) != (ncol(data_TT)-3)){
+                tra_inf <- 1
+                tra_inf_word <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
+              }
             }
-            if(sum(dataif) != (ncol(data_TT)-3)){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "Multicolumn data should be numeric." 
+          }else{
+            if(sum(grepl("value",colnames(data_TT)[4:ncol(data_TT)])) != 1){
+              tra_inf <- 1
+              tra_inf_word <- "Point data should contain only four columns." 
             }
           }
         }else if(tratype == "rect-discrete"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-discrete data should be four column." 
+            tra_inf_word[k] <- "The rect-discrete data should contain four columns." 
           }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 'group' columns of the rect-discrete data should be characters." 
@@ -3403,7 +3554,7 @@ server <- function(input, output,session) {
         }else if(tratype == "rect-gradual"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-gradual data should be four column." 
+            tra_inf_word[k] <- "The rect-gradual data should contain four columns." 
           }else if(!is.numeric(data_TT[,4])){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 'value' columns of the rect-gradual data should be numeric." 
@@ -3418,7 +3569,7 @@ server <- function(input, output,session) {
           }
           if(sum(dataif) != (ncol(data_TT)-3)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "'group' column should be character." 
+            tra_inf_word[k] <- "The 'group' column should be character." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3430,7 +3581,7 @@ server <- function(input, output,session) {
           }
           if(sum(dataif) != (ncol(data_TT)-3)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "'value' column should be numeric." 
+            tra_inf_word[k] <- "The 'value' column should be numeric." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3458,14 +3609,14 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "general data format error",
+        text = "Format of the general chromosome data is incorrect.",
         type = "error"
-      ) 
+      )
     }else if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "cytoband data format error",
+        text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
     }else if(sum(tra_inf) != 0){
@@ -3488,21 +3639,21 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Data without 'color' column should contain six columns.",
+        text = "Data without a 'color' column should contain six columns.",
         type = "error"
       )
     }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Seventh column of Data with multi-group should be character.",
+        text = "The seventh column of Data with multi-groups should be character.",
         type = "error"
       )
     }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Seventh column of Data with gradual value should be numeric.",
+        text = "The seventh column of Data with gradual value should be numeric.",
         type = "error"
       )
     }else{
@@ -3515,14 +3666,14 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "general data format error",
+        text = "Format of the general chromosome data is incorrect.",
         type = "error"
-      ) 
+      )
     }else if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "cytoband data format error",
+        text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
     }
@@ -3533,21 +3684,21 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Data without 'color' column should contain six columns.",
+        text = "Data without a 'color' column should contain six columns.",
         type = "error"
       )
     }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Seventh column of Data with multi-group should be character.",
+        text = "The seventh column of Data with multi-group should be character.",
         type = "error"
       )
     }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
       sendSweetAlert(
         session = session,
         title = "Error!",
-        text = "Seventh column of Data with gradual value should be numeric.",
+        text = "The seventh column of Data with gradual value should be numeric.",
         type = "error"
       )
     }
@@ -3676,7 +3827,7 @@ server <- function(input, output,session) {
       }
     }
   })
-  observeEvent(toListentra(),priority = 0,{
+  observeEvent(toListentra(),priority = 0,{ #right bottom
     tradatas <- input$tradata
     tra_num <- length(tradatas)
     tra_pos <<- lapply(1:tra_num, function(x){
@@ -3695,10 +3846,21 @@ server <- function(input, output,session) {
       if(tratype == "ideogram"){
         if(ncol(data_TT) != 5){
           tra_inf <- 1
-          tra_inf_word <- "The ideogram data should be five column." 
+          tra_inf_word <- "The ideogram data should contain five columns." 
         }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
           tra_inf <- 1
           tra_inf_word <- "The last two columns of the ideogram data should be characters." 
+        }else{
+          tra_inf <- 0
+          tra_inf_word <- NULL
+        }
+      }else if(tratype == "stack-point" | tratype == "stack-line"){
+        if(!"stack" %in% colnames(data_TT)){
+          tra_inf <- 1
+          tra_inf_word <- "The stack column was not found in the input data." 
+        }else if(!all(is.character(data_TT[,"stack"]))){
+          tra_inf <- 1
+          tra_inf_word <- "The stack column of the input data should be character." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3708,46 +3870,56 @@ server <- function(input, output,session) {
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
             tra_inf <- 1
-            tra_inf_word <- "Color column should be character." 
+            tra_inf_word <- "The 'color' column should be character." 
           }
         }
-        if("Cex" %in% colnames(data_TT)){
+        if("cex" %in% colnames(data_TT)){
           if(!all(is.numeric(data_TT[,"cex"]))){
             tra_inf <- 1
-            tra_inf_word <- "Cex column should be numeric." 
+            tra_inf_word <- "The 'cex' column should be numeric." 
           }
         }
         if("pch" %in% colnames(data_TT)){
           if(!all(data_TT[,"pch"] %in% 1:25)){
             tra_inf <- 1
-            tra_inf_word <- "The value of Pch should be 1-25, please refer to the information for details." 
+            tra_inf_word <- "The Pch value should be integers in 1-25, please refer to the help manual for more details." 
           }
         }
         if("stack" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "Please select 'stack-point'or'stack-line' to draw this track." 
+          tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type to for the input data of this track." 
         }
         if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
           tra_inf <- 1
-          tra_inf_word <- "The data contains 'group' column,maybe you should reselect plot type." 
+          tra_inf_word <- "A 'group' column was found in the input dataset. Please choose another plot type." 
         }
-        if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
-          dataif <- NULL
-          for (l in 1:(ncol(data_TT)-3)) {
-            dataif[l] <- is.numeric(data_TT[,l+3])
+        
+        
+        if(tratype != "point"){
+          if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
+            dataif <- NULL
+            for (l in 1:(ncol(data_TT)-3)) {
+              dataif[l] <- is.numeric(data_TT[,l+3])
+            }
+            if(sum(dataif) != (ncol(data_TT)-3)){
+              tra_inf <- 1
+              tra_inf_word <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
+            }
           }
-          if(sum(dataif) != (ncol(data_TT)-3)){
+        }else{
+          if(sum(grepl("value",colnames(data_TT)[4:ncol(data_TT)])) != 1){
             tra_inf <- 1
-            tra_inf_word <- "Multicolumn data should be numeric." 
+            tra_inf_word <- "Point data should contain only four columns." 
           }
         }
+        
       }else if(tratype == "rect-discrete"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-discrete data should be four column." 
+          tra_inf_word <- "The rect-discrete data should contain four columns." 
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'group' columns of the rect-discrete data should be characters." 
+          tra_inf_word <- "The 'group' columns of rect-discrete data should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3755,10 +3927,10 @@ server <- function(input, output,session) {
       }else if(tratype == "rect-gradual"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-gradual data should be four column." 
+          tra_inf_word <- "The rect-gradual data should contain four columns." 
         }else if(!is.numeric(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'value' columns of the rect-gradual data should be numeric." 
+          tra_inf_word <- "The 'value' columns of rect-gradual data should be numeric." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3770,7 +3942,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "'group' column should be character." 
+          tra_inf_word <- "The 'group' column should be character." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3782,7 +3954,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "'value' column should be numeric." 
+          tra_inf_word <- "The 'value' column should be numeric." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3801,13 +3973,13 @@ server <- function(input, output,session) {
       lapply(as.numeric(unlist(tra_pos)), function(x){
         output[[paste0("sortable_track_datvie",x)]] <<- renderUI({
           tagList(
-            h4(paste0("this track plot type is:",tra_type[[x]])),
+            h4(paste0("Plot type of the current track: ",tra_type[[x]])),
             if(tra_type[[x]] == "bar"){
               tagList(
                 pickerInput(
                   inputId = paste0("tra_bar_direction",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Bar direction</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_bar_direction",x), 
@@ -3835,12 +4007,14 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_bar_coldir1",x),
                     label = "Outer color:",
-                    value = tra_bar_coldir1[x]
+                    value = tra_bar_coldir1[x],
+                    returnName = TRUE
                   ),
                   colourInput(
                     inputId = paste0("tra_bar_coldir2",x),
                     label = "Inner color:",
-                    value = tra_bar_coldir2[x]
+                    value = tra_bar_coldir2[x],
+                    returnName = TRUE
                   )
                 )
               )
@@ -3850,7 +4024,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_coltype",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Data color</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_bar_trycoltp",x), 
@@ -3885,7 +4059,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = paste0("tra_coltype",x),
                     label = tags$div(
-                      HTML(' <font><h5><b>Data color</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_bar_trycoltp",x), 
@@ -3924,7 +4098,7 @@ server <- function(input, output,session) {
                     pickerInput(
                       inputId = paste0("tra_coltype",x),
                       label = tags$div(
-                        HTML(' <font><h5><b>Data color</b></font>'),
+                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = paste0("datvie_tip_bar_trycoltp2",x), 
@@ -3963,7 +4137,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_line_fillarea",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Fill area</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_bar_fillarea",x), 
@@ -3976,7 +4150,6 @@ server <- function(input, output,session) {
                     placement = "right"
                   )
                 ),
-                
                 choices = c("Yes" = "add", "No" = ""),
                 selected=tra_line_fillarea[x]
               )
@@ -3996,7 +4169,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_rect_rectcol",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Select color</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_rect_rectcol",x), 
@@ -4023,7 +4196,8 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_rect_rectcoldis",x),
                     label = NULL,
-                    value = tra_rect_rectcoldis[x]
+                    value = tra_rect_rectcoldis[x],
+                    returnName = TRUE
                   )
                 ),
                 conditionalPanel(
@@ -4039,7 +4213,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = paste0("tra_line_selrea",x),
                     label = tags$div(
-                      HTML(' <font><h5><b>Area color</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Area color</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_line_selrea",x), 
@@ -4060,7 +4234,8 @@ server <- function(input, output,session) {
                     colourInput(
                       inputId = paste0("tra_bar_borderarea",x),
                       label = NULL,
-                      value = tra_bar_borderarea[x]
+                      value = tra_bar_borderarea[x],
+                      returnName = TRUE
                     )
                   )
                 )
@@ -4070,7 +4245,7 @@ server <- function(input, output,session) {
               numericInput(
                 inputId = paste0("tra_transparency",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Color transparency:</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_trans",x), 
@@ -4093,7 +4268,7 @@ server <- function(input, output,session) {
               textInput(
                 paste0("tra_poipch",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Symbol type:</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4114,7 +4289,7 @@ server <- function(input, output,session) {
                 textInput(
                   paste0("tra_poipch",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Symbol type:</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4131,19 +4306,22 @@ server <- function(input, output,session) {
                 ),
                 numericInput(
                   paste0("tra_poi_poisiz",x),
-                  label = "Point size:",
+                  label = tags$div(
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                  ),
                   value=tra_poi_poisiz[x],
                   min=0,
                   max=1.5,
                   step=0.1
                 )
               )
-              
             },
             if(tra_type[[x]] == "point" & !("cex" %in% colnames(data.T[[x]]))){
               numericInput(
                 paste0("tra_poi_poisiz",x),
-                label = "Point size:",
+                label = tags$div(
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                ),
                 value=tra_poi_poisiz[x],
                 min=0,
                 max=1.5,
@@ -4155,7 +4333,7 @@ server <- function(input, output,session) {
                 textInput(
                   inputId = paste0("tra_baseline",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Y coordinates of baselines:</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y coordinates of baselines:</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_baseline",x), 
@@ -4173,7 +4351,7 @@ server <- function(input, output,session) {
                 colourInput(
                   inputId = paste0("tra_colorline",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Baselines color(s):</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s):</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_baselinecol",x), 
@@ -4186,35 +4364,16 @@ server <- function(input, output,session) {
                       placement = "right"
                     )
                   ),
-                  value = tra_colorline[x]
+                  value = tra_colorline[x],
+                  returnName = TRUE
                 )
               )
             },
-            # if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(tra_type[[x]]=="line" && (ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack"))){
-            #   colourInput(
-            #     inputId = paste0("tra_colorline",x),
-            #     label = tags$div(
-            #       HTML(' <font><h5><b>Baselines color(s):</b></font>'),
-            #       bs4Dash::tooltip(
-            #         actionButton(
-            #           inputId = paste0("datvie_tip_baselinecol",x), 
-            #           label="" , 
-            #           icon=icon("question"),
-            #           status="info",
-            #           size = "xs"
-            #         ),
-            #         title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
-            #         placement = "right"
-            #       )
-            #     ),
-            #     value = tra_colorline[x]
-            #   )
-            # },
             if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
               colourInput(
                 inputId = paste0("tra_bgcol",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Background color(s):</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s):</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_bgcol",x), 
@@ -4228,7 +4387,8 @@ server <- function(input, output,session) {
                     placement = "right"
                   )
                 ),
-                value = tra_bgcol[x]
+                value = tra_bgcol[x],
+                returnName = TRUE
               )
             },
             if(tra_type[[x]] == "heatmap-gradual"){
@@ -4236,7 +4396,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_heatmapcol",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Colors</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heat_col",x), 
@@ -4266,23 +4426,26 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_hmap_lowColor",x),
                     label = "lowColor",
-                    value = tra_hmap_lowColor[x]
+                    value = tra_hmap_lowColor[x],
+                    returnName = TRUE
                   ),
                   colourInput(
                     inputId = paste0("tra_hmap_midColor",x),
                     label = "midColor",
-                    value = tra_hmap_midColor[x]
+                    value = tra_hmap_midColor[x],
+                    returnName = TRUE
                   ),
                   colourInput(
                     inputId = paste0("tra_hmap_highColor",x),
                     label = "highColor",
-                    value = tra_hmap_highColor[x]
+                    value = tra_hmap_highColor[x],
+                    returnName = TRUE
                   )
                 ),
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Add position lines</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heat_posline",x), 
@@ -4291,7 +4454,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
                       placement = "right"
                     )
                   ),
@@ -4303,7 +4466,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = paste0("tra_hmap_poslinhei",x),
                     label = tags$div(
-                      HTML(' <font><h5><b>Position lines height:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_heat_poslinehei",x), 
@@ -4342,7 +4505,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Add position lines</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heat_posline2",x), 
@@ -4351,7 +4514,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and regions.",
+                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
                       placement = "right"
                     )
                   ),
@@ -4363,7 +4526,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = paste0("tra_hmap_poslinhei",x),
                     label = tags$div(
-                      HTML(' <font><h5><b>Position lines height:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_heat_poslinehei2",x), 
@@ -4387,7 +4550,7 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("heightTra",x),
               label = tags$div(
-                HTML(' <font><h5><b>Track height:</b></font>'),
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height:</b></font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = paste0("datvie_tip_trahei",x), 
@@ -4409,7 +4572,7 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("Tra_margin",x),
               label = tags$div(
-                HTML(' <font><h5><b>Distance from the next section</b></font>'),
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section</b></font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = paste0("datvie_tip_tramar",x), 
@@ -4418,7 +4581,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The gap with the next section",
+                  title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
                   placement = "right"
                 )
               ),
@@ -4433,7 +4596,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_cellbord",x),
                   label = tags$div(
-                    HTML(' <font><h5><b>Add cell borders</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heaat_cellbo",x), 
@@ -4454,7 +4617,7 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_hmap_cellbord_col",x),
                     label = tags$div(
-                      HTML(' <font><h5><b>Add cell borders</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_heaat_bocol",x), 
@@ -4467,7 +4630,8 @@ server <- function(input, output,session) {
                         placement = "right"
                       )
                     ),
-                    value = tra_hmap_cellbord_col[x]
+                    value = tra_hmap_cellbord_col[x],
+                    returnName = TRUE
                   )
                 )
               )
@@ -4476,7 +4640,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_border",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Add borders</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_bo",x), 
@@ -4497,7 +4661,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_yaxis",x),
                 label = tags$div(
-                  HTML(' <font><h5><b>Add y-axis</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_yax",x), 
@@ -4506,7 +4670,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "Add a y-axis, which widens the gap before the first sector",
+                    title = "Add Y-axis for all the tracks if applicable.",
                     placement = "right"
                   )
                 ),
@@ -4517,10 +4681,7 @@ server <- function(input, output,session) {
           )
         })
       })
-      
-      
     }
-    
   })
   
   toListenlab <- reactive({
@@ -4542,12 +4703,12 @@ server <- function(input, output,session) {
         data_NN <- data.N[[x]]
         if(ncol(data_NN) != 4){
           lab_inf <- 1
-          lab_inf_word <- "Label data format error"
+          lab_inf_word <- "Format of the Label data is incorrect."
         }
         if(lab_inf != 0){
           sendSweetAlert(
             session = session,
-            title = "Error",
+            title = "Error!",
             text = paste(lab_inf_word),
             type = "error"
           )
@@ -4581,7 +4742,7 @@ server <- function(input, output,session) {
           numericInput(
             inputId = paste0("lab_fontsize",x),
             label = tags$div(
-              HTML(' <font><h5><b>Label hight</b></font>'),
+              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
               bs4Dash::tooltip(
                 actionButton(
                   inputId = paste0("datvie_tip_lab_labhi",x), 
@@ -4590,11 +4751,10 @@ server <- function(input, output,session) {
                   status="info",
                   size = "xs"
                 ),
-                title = "The height of the track occupied by the label, the font size adapts to the track height",
+                title = "Height of the track occupied by the label.",
                 placement = "right"
               )
             ),
-            
             value= lab_fontsize[x], 
             min=0.01, 
             max=1,
@@ -4603,7 +4763,7 @@ server <- function(input, output,session) {
           colourInput(
             inputId = paste0("lab_fontcol",x),
             label = tags$div(
-              HTML(' <font><h5><b>Font color</b></font>'),
+              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
               bs4Dash::tooltip(
                 actionButton(
                   inputId = paste0("datvie_tip_lab_labcol",x), 
@@ -4612,17 +4772,17 @@ server <- function(input, output,session) {
                   status="info",
                   size = "xs"
                 ),
-                title = "The color of the label font and connection line",
+                title = "Color of the label text and the connection line.",
                 placement = "right"
               )
             ),
-            
-            value = lab_fontcol[x]
+            value = lab_fontcol[x],
+            returnName = TRUE
           ),
           pickerInput(
             inputId = paste0("poslabels",x),
             label = tags$div(
-              HTML(' <font><h5><b>Label Position</b></font>'),
+              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
               bs4Dash::tooltip(
                 actionButton(
                   inputId = paste0("datvie_tip_lab_labpos",x), 
@@ -4631,7 +4791,7 @@ server <- function(input, output,session) {
                   status="info",
                   size = "xs"
                 ),
-                title = "which side of the track the label is drawn",
+                title = "Place the labels in the inner or the outer of the track?",
                 placement = "right"
               )
             ),
@@ -4657,16 +4817,16 @@ server <- function(input, output,session) {
       if(sum(duplicated(unlist(tra_pos))) != 0){
         sendSweetAlert(
           session = session,
-          title = "error !!",
-          text = "Please check for duplicate track indexes.",
+          title = "Error!",
+          text = "Duplicated track indexes are not allowed.",
           type = "error"
         )
         plotflash_report <<- 0
       }else if(sum(duplicated(unlist(lab_pos))) != 0){
         sendSweetAlert(
           session = session,
-          title = "error !!",
-          text = "Please check for duplicate label indexes.",
+          title = "Error!",
+          text = "Duplicated label indexes are not allowed.",
           type = "error"
         )
         plotflash_report <<- 0
@@ -4691,8 +4851,6 @@ server <- function(input, output,session) {
         trackChr <<- input$trackChr
         
         tradat_cir <- input$tradata
-        tradat_sam <- input$Id095
-        legendtext <<- NULL
         lab_pos <<- lapply(1:length(labdatas),function(x){
           input[[paste0("labpos",x)]]
         })
@@ -4719,12 +4877,6 @@ server <- function(input, output,session) {
           input[[paste0("trapos",x)]]
         })
         
-        # if(tra_num != 0){
-        #   tra_type <<- lapply(1:tra_num, function(x){
-        #     input[[paste0("tratype",x)]]
-        #   })
-        # }
-        # 
         pospos <<- as.numeric(unlist(tra_pos))
         ordertrapos <- order(pospos)
         if(tra_num != 0){
@@ -4736,17 +4888,6 @@ server <- function(input, output,session) {
             tratype_cache[[ordertrapos[[x]]]]#order(pospos)
           })
         }
-        # if(input$datatype == "a"){
-        #   data.T_cache <- data.T
-        #   if(!is.null(data.T)){
-        #     data.Tt <- lapply(1:length(tra_pos), function(x){
-        #       data.T_cache[[as.numeric(tra_pos[[x]])]]
-        #     })
-        #   }else{
-        #     data.Tt <- NULL
-        #   }
-        #   
-        # }
         
         lapply(1:length(tradatas), function(x){
           
@@ -4856,11 +4997,6 @@ server <- function(input, output,session) {
             tra_yaxis[pospos[x]] <<- input[[paste0("tra_yaxis",x)]]
           }
         })
-        #unlist(tra)
-        
-        
-        
-        
         Tra_margin[(length(Tra_margin)+1)] <- 0
         
         #}
@@ -4871,23 +5007,21 @@ server <- function(input, output,session) {
         }else{
           chr_height <- input$heightChr_cyt
         }
-        sam_datype <- input$datatype
+        source_data <- input$datatype
         datatypeChr <- input$chr_type
+        trac_index <- input$trac_index
         heatmapcols <<- lapply(1:length_T, function(x){
           c(tra_hmap_lowColor[[x]],tra_hmap_midColor[[x]],tra_hmap_highColor[[x]])
         })
         if(length(data.L)!= 0){
-          if(input$linsetting != 0){
-            colformatLinks <<- input$colformatLinks
-            colorLinks <<- input$colorLinks
-            selcolorLinks <<- input$selcolorLinks
-            transparencyLinks <<- input$transparencyLinks
+          colformatLinks <<- input$colformatLinks
+          colorLinks <<- input$colorLinks
+          if(colformatLinks == 1){
+            selcolorLinks <<- input$selcolorLinks1
           }else{
-            colformatLinks <<- "1"
-            colorLinks <<- "1"
-            selcolorLinks <<- "yellowgreen"
-            transparencyLinks <<- 0.5
+            selcolorLinks <<- input$selcolorLinks2
           }
+          transparencyLinks <<- input$transparencyLinks
         }
         
         transparencyhltLinks <<- input$transparencyhltLinks
@@ -4898,36 +5032,41 @@ server <- function(input, output,session) {
         gap.width <<- gsub("\\s","",strsplit(input$gapChr,",")[[1]])
         colorChr <<- gsub("\\s","",strsplit(input$colorChr,",")[[1]])
         addlegend <- input$addlegend
-        if(addlegend == "yes"){
-          for(k in 1:length(data.T)){
-            legendtext <<- c(legendtext,input[[paste0("text",k)]])
-          }
-          if(!is.null(lindatas)){
-            legendtext <<- c(legendtext,input$textlin)
-          }
-          if(datatypeChr=="1" && trackChr!="track"){
-            legendtext <<- legendtext
-          }else{
-            legendtext <<- c(input$text0,legendtext)
-          }
-          legendtext <<- legendtext[nchar(legendtext)>0]
-        }else{
-          legendtext <<- NULL
-        }
+        
         cexlabel <<- input$cexlabel
         legendpos <- input$legendpos
         midplot <- input$midplot
-        plotsize <- c(input$plotsize_width,input$plotsize_height)
-        
-        
-        
-        plotfig(input = input, output = output,session=session,data.C = data.C , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
-                trackChr = trackChr ,tratype = tra_type,sam_datype = sam_datype,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , sam_chr = sam_chr, tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , legendtext = legendtext , gap.width = gap.width ,
-                tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = plotsize ,
+        plotsize <- input$plotmultiples
+        if(input$addlegend == "Yes"){
+          
+          #在这里设置宽度跟随legend变化
+          
+          if(input$legendpos == "Right"){
+            sizeplot <- c(850,750)
+          }else{
+            sizeplot <- c(650,750)
+          }
+        }else{
+          sizeplot <- c(750,750)
+        }
+        sizeplot <- sizeplot*plotsize*0.01
+        if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
+          if(ncol(data.C) == 3){
+            data.CC <- rbind(data.C,c("add",1,round(0.025*sum(data.C[,3]))))
+          }else{
+            kk <- tapply(data.C[,3],data.C[,1],max)
+            data.CC <- rbind(data.C,c("add",1,round(0.025*sum(kk)),"1","1"))
+          }
+        }else{
+          data.CC <- data.C
+        }
+        plotfig(input = input, output = output,session=session,data.C = data.CC , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
+                trackChr = trackChr ,tratype = tra_type,source_data = source_data,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , gap.width = gap.width ,
+                tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot ,
                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
                 tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , fontSize = fontSize , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
                 tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
-                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos
+                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index
         )
       }
     })
@@ -4937,313 +5076,47 @@ server <- function(input, output,session) {
   })
   observeEvent(toListenpdf(),ignoreNULL = TRUE,{
     
+    
+    
+    
+    
+    plotsize <- input$plotmultiples
+    if(input$addlegend == "Yes"){
+      if(input$legendpos == "Right"){
+        sizeplot <- c(850,750)
+      }else{
+        sizeplot <- c(650,750)
+      }
+    }else{
+      sizeplot <- c(750,750)
+    }
+    sizeplot <- sizeplot*plotsize*0.01
     if(input$datatype == "a"){
-      plotsizepdf <<- c(input$plotsize_width,input$plotsize_height)
+      plotsizepdf <<- sizeplot
     }else if(input$datatype == "b"){
       plotsizepdf <<- sam_plotsize
     }
-  })
-  observe({
     
-    ## *** Download PDF file ***
-    output$shinyCircos.pdf <- downloadHandler(
-      filename <- function(){ paste('shinyCircos.pdf') },
-      content <- function(file){
-        pdf(file, width = plotsizepdf[1]/72, height = plotsizepdf[2]/72)
-        print(figurecp)
-        dev.off()
-      }, contentType = 'application/pdf')
-    ## *** Download SVG file ***
-    output$shinyCircos.svg <- downloadHandler(
-      filename <- function(){ paste('shinyCircos.svg') },
-      content <- function(file){
-        svg(file, width = plotsizepdf[1]/72, height = plotsizepdf[2]/72)
-        print(figurecp)		 
-        dev.off()
-      }, contentType = 'image/svg')
-  })
-  
-  
-  observeEvent(input$sam_view_ok,{
-    cho_003 <- input$cho_003
-    cho_chr_002 <- input$cho_chr_002
-    cho_lin_002 <- input$cho_lin_002
-    cho_tra_002 <- input$cho_tra_002
-    if(cho_003 == "chromosome"){
-      if(cho_chr_002 == "chromosome_general"){
-        output$sam_view <- renderDT(
-          data_chr_gen,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
+    
+    output$sortable_plot <<- renderUI({
+      tagList(
+        div(
+          style= paste0("height:",sizeplot[2],"px;width: ",sizeplot[1],"px;"),
+          shinycssloaders::withSpinner(
+            plotOutput("circosfigure"),
+            type = 8,
+            hide.ui = TRUE,
+            image.height = "auto"
           )
-        )
-      }else if(cho_chr_002 == "chromosome_cytoband"){
-        output$sam_view <- renderDT(
-          data_chr_cyt,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-        )
-      }
-    }else if(cho_003 == "links"){
-      if(cho_lin_002 == "links"){
-        output$sam_view <- renderDT(
-          data_lk_lk,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-        )
-      }else if(cho_lin_002 == "links_discrete_color"){
-        output$sam_view <- renderDT(
-          data_lk_dis,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-        )
-      }else if(cho_lin_002 == "links_gradual_color"){
-        output$sam_view <- renderDT(
-          data_lk_gra,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-        )
-      }
-    }else if(cho_003 == "track"){
-      if(cho_tra_002 == "point"){
-        cho_tra_poi <- input$cho_tra_poi
-        if(cho_tra_poi == "point"){
-          output$sam_view <- renderDT(
-            data_trk_poi,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_cex"){
-          output$sam_view <- renderDT(
-            data_trk_poi_cex,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_color"){
-          output$sam_view <- renderDT(
-            data_trk_poi_col,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_color_cex"){
-          output$sam_view <- renderDT(
-            data_trk_poi_col_cex,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_color_pch"){
-          output$sam_view <- renderDT(
-            data_trk_poi_col_pch,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_color_pch_cex"){
-          output$sam_view <- renderDT(
-            data_trk_poi_col_pch_cex,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_multicolumn"){
-          output$sam_view <- renderDT(
-            data_trk_poi_mul,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_pch"){
-          output$sam_view <- renderDT(
-            data_trk_poi_pch,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "point_pch_cex"){
-          output$sam_view <- renderDT(
-            data_trk_poi_pch_cex,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_poi == "stack_point"){
-          output$sam_view <- renderDT(
-            data_trk_sta_poi,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }
-      }else if(cho_tra_002 == "line"){
-        cho_tra_lin <- input$cho_tra_lin
-        if(cho_tra_lin == "line"){
-          output$sam_view <- renderDT(
-            data_trk_lin,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_lin == "line_color"){
-          output$sam_view <- renderDT(
-            data_trk_lin_col,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_lin == "line_multicolumn"){
-          output$sam_view <- renderDT(
-            data_trk_lin_mul,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_lin == "stack_line"){
-          output$sam_view <- renderDT(
-            data_trk_sta_lin,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }
-      }else if(cho_tra_002 == "barplot"){
-        cho_tra_bar <- input$cho_tra_bar
-        if(cho_tra_bar == "barplot"){
-          output$sam_view <- renderDT(
-            data_trk_bar,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_bar == "barplot_bidirectional"){
-          output$sam_view <- renderDT(
-            data_trk_bar_bid,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_bar == "barplot_lolor"){
-          output$sam_view <- renderDT(
-            data_trk_bar_col,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }
-      }else if(cho_tra_002 == "rect"){
-        cho_tra_rec <- input$cho_tra_rec
-        if(cho_tra_rec == "rect_discrete"){
-          output$sam_view <- renderDT(
-            data_trk_rec_dis,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_rec == "rect_gradual"){
-          output$sam_view <- renderDT(
-            data_trk_rec_gra,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }
-      }else if(cho_tra_002 == "heatmap"){
-        cho_tra_heat <- input$cho_tra_heat
-        if(cho_tra_heat == "heatmap_gradual"){
-          output$sam_view <- renderDT(
-            data_trk_heat_gra,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }else if(cho_tra_heat == "heatmap_discrete"){
-          output$sam_view <- renderDT(
-            data_trk_heat_dis,
-            extensions = "Buttons",
-            options = list(
-              dom = 'Brti',
-              buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-            )
-          )
-        }
-      }else if(cho_tra_002 == "ideogram"){
-        output$sam_view <- renderDT(
-          data_trk_ide,
-          extensions = "Buttons",
-          options = list(
-            dom = 'Brti',
-            buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
-          )
-        )
-      }
-    }else if(cho_003 == "gene_label"){
-      output$sam_view <- renderDT(
-        data_gen_lab,
-        extensions = "Buttons",
-        options = list(
-          dom = 'Brti',
-          buttons = c('copy', 'csv', 'excel', 'pdf', 'print')
         )
       )
-    } 
+    })
+    
+    
+    
   })
+ 
+  
   ##clear button
   observe({
     length_T <<- length(data.T)
@@ -5318,7 +5191,7 @@ server <- function(input, output,session) {
                         1:9 + 0.45,
                         col = color,
                         border = "white")
-            if(iflegend == "yes"){
+            if(iflegend == "Yes"){
               if(legendpos == "on"){
                 circos.text(
                   rep(xlim[1], 9),
@@ -5359,37 +5232,8 @@ server <- function(input, output,session) {
     })
     outputOptions(output, "chrdata1", suspendWhenHidden = FALSE)
     
-    
-    
-    
   })
-  observe({
-    if(input$addlegend == "yes"){
-      if(input$legendpos == "Right"){
-        updateNumericInput(
-          session,
-          inputId = "plotsize_width",
-          value = 850
-        )
-        updateNumericInput(
-          session,
-          inputId = "plotsize_height",
-          value = 750
-        )
-      }else{
-        updateNumericInput(
-          session,
-          inputId = "plotsize_width",
-          value = 750
-        )
-        updateNumericInput(
-          session,
-          inputId = "plotsize_height",
-          value = 850
-        )
-      }
-    }
-  })
+  
   observeEvent(input$clearhlData,{
     hlt_data <<- NULL
     updateTextInput(
@@ -5418,43 +5262,61 @@ server <- function(input, output,session) {
       if(any("0" %in% hlt_data1[,1])){
         sendSweetAlert(
           session = session,
-          title = "error !!",
-          text = "Incorrect data format input!",
+          title = "Error!",
+          text = "Format of the input data is incorrect!",
           type = "error"
         ) 
       }else if(!all(unique(hlt_data1[,1]) %in% unique(data.C[,1]))){
         sendSweetAlert(
           session = session,
-          title = "error !!",
-          text = "Incorrect chr data",
+          title = "Error!",
+          text = "Format of the chromosome data is incorrect!",
           type = "error"
         )
       }else{
-        
         if(length(grep("#",colorcol))!=0){
-          if(!any(grepl("^#([0-9a-fA-F]{6})$",colorcol[grep("#",colorcol)]))){
+          colorcol16 <- colorcol[grep("#",colorcol)]
+          colorcol7 <- colorcol16[which(nchar(colorcol16) == 7)]
+          colorcol9 <- colorcol16[which(nchar(colorcol16) == 9)]
+          if(!all(nchar(colorcol16) == 7| nchar(colorcol16) == 9)){
             sendSweetAlert(
               session = session,
-              title = "error !!",
-              text = "RGB setting error!",
+              title = "Error!",
+              text = "Wrong RGB error!",
+              type = "error"
+            )
+          }else if(!any(grepl("^#([0-9a-fA-F]{6})$",colorcol7)) & length(colorcol7) != 0){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "Wrong RGB error!",
+              type = "error"
+            )
+          }else if(!any(grepl("^#([0-9a-fA-F]{8})$",colorcol9)) & length(colorcol9) != 0){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "Wrong RGB error!",
               type = "error"
             )
           }else if(!all(colorcol[-grep("#",colorcol)] %in% colors())){
             sendSweetAlert(
               session = session,
-              title = "error !!",
-              text = "wrong color input!",
+              title = "Error!",
+              text = "Wrong color input!",
               type = "error"
             )
           }else{
             sendSweetAlert(
               session = session,
-              title = "success !!",
-              text = "Input is complete, please click the 'Update' button to update the image!",
+              title = "Success!",
+              text = "Please click the 'Update' button to update the Circos plot!",
               type = "success"
             )
             for (k in 1:nrow(hlt_data1)) {
-              hlt_data1[k,4] <- adjustcolor(hlt_data1[k,4], alpha.f = hltrans/100)
+              if(nchar(hlt_data1[k,4]) != 9){
+                hlt_data1[k,4] <- adjustcolor(hlt_data1[k,4], alpha.f = hltrans/100)
+              }
             }
             hlt_data <<- hlt_data1
           }
@@ -5462,15 +5324,15 @@ server <- function(input, output,session) {
           if(!all(colorcol %in% colors())){
             sendSweetAlert(
               session = session,
-              title = "error !!",
-              text = "wrong color input!",
+              title = "Error!",
+              text = "Wrong color input!",
               type = "error"
             )
           }else{
             sendSweetAlert(
               session = session,
-              title = "success !!",
-              text = "Input is complete, please click the 'Update' button to update the image!",
+              title = "Success!",
+              text = "Please click the 'Update' button to update the image!",
               type = "success"
             )
             for (k in 1:nrow(hlt_data1)) {
@@ -5484,16 +5346,48 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "note",
-        text = "input is empty!",
+        text = "Empty input!",
         type = "info"
       )
     }
   })
-  observeEvent(input$testbottom,{
-    output$testplot <- renderPlot({
-      a <- input$testbottom
-      aa <- as.numeric(a)
-      plot(aa)
-    })
+  ## *** Download PDF file ***
+  observe({
+    output$shinyCircos.pdf <- downloadHandler(
+      filename <- function(){ paste('shinyCircos.pdf') },
+      content <- function(file){
+        pdf(file, width = plotsizepdf[1]/72, height = plotsizepdf[2]/72)
+        print(figurecp)
+        dev.off()
+      }, contentType = 'application/pdf')
   })
+  ## *** Download SVG file ***
+  observe({
+    output$shinyCircos.svg <- downloadHandler(
+      filename <- function(){ paste('shinyCircos.svg') },
+      content <- function(file){
+        svg(file, width = plotsizepdf[1]/72, height = plotsizepdf[2]/72)
+        print(figurecp)
+        dev.off()
+      }, contentType = 'image/svg')
+  })
+  ## *** Download Chinese help file ***
+  observe({
+    output$Chinesehelpmanual <- downloadHandler(
+      filename <- function(){paste('shinyCircos_User_Manual_Chinese.pdf')},
+      content <- function(file){
+        file.copy("www/shinyCircos-V2.0_User_Manual_Chinese.pdf",file)
+      }, contentType = 'application/pdf'
+    )
+  })
+  ## *** Download English help file ***
+  observe({
+    output$Englishhelpmanual <- downloadHandler(
+      filename <- function(){paste('shinyCircos_User_Manual_English.pdf')},
+      content <- function(file){
+        file.copy("www/shinyCircos-V2.0_User_Manual_English.pdf",file)
+      }, contentType = 'application/pdf'
+    )
+  })
+  
 }
