@@ -1,1238 +1,1307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<style type="text/css">
-    .p{
-        text-indent: 2em;
-    }
-    .a{
-        font-family: 'Times New Roman', Times, serif;
-    }
-    .content{
-        font-size: 20px;
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-</style>
-<title>shinyCircos2.0 help</title>
-</head>
-<body>
-    <h2 class="a">Contents</h2>
-    <p style="line-height: 23px;">
-        <a href="#div1"><span class="content"> 1 Introduction</span></a>
-    
-        <br>
-        <a href="#div2"><span class="content"> 2 Input data format</span></a>
-        <br>
-        &emsp;<a href="#div2.1"><span class="content"> 2.1 Chromosome data (used to define the chromosomes of a Circos plot)</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.1.1"><span class="content"> 2.1.1 General data with three columns</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.1.2"><span class="content"> 2.1.2 Cytoband data with five columns</span></a>
-        <br>
-        &emsp;<a href="#div2.2"><span class="content"> 2.2 Track data (to be displayed in different tracks of a Circos plot)</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.1"><span class="content"> 2.2.1 Tarck data to plot bars</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.2"><span class="content"> 2.2.2 Tarck data to plot lines</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.3"><span class="content"> 2.2.3 Tarck data to plot points</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.4"><span class="content"> 2.2.4 Tarck data to create ideogram</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.5"><span class="content"> 2.2.5 Tarck data to plot discrete rectangles</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.6"><span class="content"> 2.2.6 Tarck data to plot gradual rectangles</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.7"><span class="content"> 2.2.7 Tarck data to plot discrete heatmaps</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.8"><span class="content"> 2.2.8 Tarck data to plot gradual heatmaps</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.9"><span class="content"> 2.2.9 Tarck data to plot stack-point</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div2.2.10"><span class="content"> 2.2.10 Tarck data to plot stack-line</span></a>
-        <br>
-        &emsp;<a href="#div2.3"><span class="content"> 2.3 Label data (used to label elements in a track)</span></a>
-        <br>
-        &emsp;<a href="#div2.4"><span class="content"> 2.4 Links data</span></a>
-        <br>
-        <a href="#div3"><span class="content"> 3 Use shinyCircos online or on local computer</span></a>
-        <br>
-        &emsp;<a href="#div3.1"><span class="content"> 3.1 Use shinyCircos-V2.0 online</span></a>
-        <br>
-        &emsp;<a href="#div3.2"><span class="content"> 3.2 Interface of shinyCircos-V2.0</span></a>
-        <br>
-        &emsp;<a href="#div3.3"><span class="content"> 3.3 Install and use shinyCircos-V2.0 on local computer</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.3.1"><span class="content"> Step 1. Install R and RStudio</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.3.1"><span class="content"> Step 2. Install the R/Shiny package and other R packages required by shinyCircos-V2.0</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.3.1"><span class="content"> Step 3. Run the shinyCircos-V2.0 application</span></a>
-        <br>
-        &emsp;<a href="#div3.4"><span class="content"> 4 Steps to create a Circos diagram with shinyCircos-V2.0</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.4.1"><span class="content"> 4.1 Basic steps to create a Circos diagram with shinyCircos-V2.0</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.1.1"><span class="content"> Step 1. Upload a single "Chromosome data" to define the chromosomes of a Circos plot</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.1.2"><span class="content"> Step 2. Upload one or multiple input datasets to be displayed in different Tracks</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.1.3"><span class="content"> Step 3. Set the "Track" index and plot type for each input dataset</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.1.4"><span class="content"> Step 4. Click the "Submit!" button to create the Circos plot</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.4.2"><span class="content"> 4.2 Update a Circos plot by replacing one or more input datasets</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.4.3"><span class="content"> 4.3 Download the created Circos plot in PDF or SVG format</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.4.4"><span class="content"> 4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.4.5"><span class="content"> 5 Plot options to decorate a Circos plot</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.1"><span class="content"> 5.1 Track height</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.2"><span class="content"> 5.2 Y-axis</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.3"><span class="content"> 5.3 Distances between adjacent tracks</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.4"><span class="content"> 5.4 Cell border</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.5"><span class="content"> 5.5 Background color of a "Track"</span></a>
-        <br>
-        &emsp;&emsp;&emsp;<a href="#div3.4.5.6"><span class="content"> 5.6 Distances between adjacent sectors</span></a>
-        <br>
-        &emsp;<a href="#div3.5"><span class="content"> 6 Advanced features</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.5.1"><span class="content"> 6.1 Add figure legend</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.5.2"><span class="content"> 6.2 Highlight specific genomic regions</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.5.3"><span class="content"> 6.3 Adjust plot size</span></a>
-        <br>
-        &emsp;&emsp;<a href="#div3.5.4"><span class="content"> 6.4 Add "Track index"</span></a>
-        <br>
+    <head>
+        <meta charset = "UTF-8">
+        <style type="text/css">
+            .global-div {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+            }
 
-    </p>
-    
-    
+            .p{
+                text-indent: 2em;
+            }
+            .a{
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .content{
+                font-size: 20px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .content-left {
+                float: left;
+                width: 72%;
+                
+            }
+            .content-right{
+                position: fixed;
+                left: 76%;
+                height: 87%;
+                overflow: auto;
+                background-color: #FFFFFF;
+                margin-top: -5%;
+                display: block;
+                padding: 1%;
+            }
+            
+        </style>
+        <title>shinyCircos2.0 help</title>
 
-
-
-
-
-    <hr>
-    <div id="div1">
-        <h2 class="a">1 Introduction</h2>
-        <p class="p">
-            shinyCircos-V2.0 is an R/shiny application for interactive creation of Circos diagrams.
-        </p>
-        <p style="font-size: 20px;">
-            &emsp;&emsp;&emsp;<b>Source code: </b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
-            <br>
-            &emsp;&emsp;&emsp;<b>Online use: </b><a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos2.0/</a>
-            <br>
-            &emsp;&emsp;&emsp;<b>Contact: </b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
-        </p>
-        <p class="p">
-			<a href="https://venyao.xyz/shinycircos/" target="_blank">shinyCircos</a> is a web application for creation of Circos plot developed by <a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al in 2017</a>, which has been recognized by many users for its graphical user interface and ease of use.
-            shinyCircos-V2.0 is the updated version of <a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>. 
-			In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
-        </p>
-        <p style="text-align: center;">
-            <img src="./helpfigures/main.jpg" width="90%">
-        </p>
-        <p class="p">
-            Before using shinyCircos-V2.0, we need to understand the structure of a typical Circos plot. Please check the names of each component of a typical Circos plot, which will help you go through this manual.
-        </p>
-        <p style="text-align: center;">
-            <img src="./helpfigures/circosintroduce/1.jpg" width="60%">
-            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                The basic structure of a Circos diagram.
-            </p>
-        </p>
-        <p style="text-align: center;">
-            <img src="./helpfigures/circosintroduce/2.jpg" width="60%">
-            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                Different tracks of a Circos diagram.
-            </p>
-        </p>
         
-    </div>
-	<div id="div2">
-        <h2 class="a">2 Input data format</h2>
-        <p class="p">
-            To use shinyCircos-V2.0, input datasets must be prepared in correct format.
-        </p>
-        <p class="p">
-            We recommend uploading the input file in ".csv" format, as ".csv" files are explicit and commonly used in data storage and analysis. Please note that <span style="color: red;" >proper names and orders of columns are critical for the input data</span>.
-        </p>
-        <div id="div2.1">
-            <h3 class="a">2.1 Chromosome data (used to define the chromosomes of a Circos plot)</h3>
-                <p class="p">
-                    A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. Two types of Chromosome data are accepted by shinyCircos-V2.0, the General chromosome data, and the Cytoband data.
-                </p>
-                <div id="div2.1.1">
-                    <h4 class="a">2.1.1 General data with three columns</h4>
+    </head>
+    
+    <body>
+        
+        <div class="global-div">
+            <div class = "content-left">
+                <div id="div1">
+                    <h2 class="a">1 Introduction</h2>
                     <p class="p">
-                        Chromosomes data can be a general chromosome data with three columns: the chromosome ID, the start and end coordinates of different genomic regions.
+                        shinyCircos-V2.0 is an R/shiny application for interactive creation of Circos diagrams.
                     </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/chrosome/general.jpg" width="60%">
-                        <p style="font-size: 25px;text-align: center;">
-                            A general chromosome data.
-                            <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
-                        </p>
+                    <p style="font-size: 20px;">
+                        &emsp;&emsp;&emsp;<b>Source code: </b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
+                        <br>
+                        &emsp;&emsp;&emsp;<b>Online use: </b><a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos2.0/</a>
+                        <br>
+                        &emsp;&emsp;&emsp;<b>Contact: </b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
                     </p>
                     <p class="p">
-                        The default color of the chromosome bands of a Circos plot created with a general chromosome data is gray.
+                        <a href="https://venyao.xyz/shinycircos/" target="_blank">shinyCircos</a> is a web application for creation of Circos plot developed by <a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al in 2017</a>, which has been recognized by many users for its graphical user interface and ease of use.
+                        shinyCircos-V2.0 is the updated version of <a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>. 
+                        In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
                     </p>
                     <p style="text-align: center;">
-                        <img src="./helpfigures/chrosome/gen.jpg" width="60%">
+                        <img src="./helpfigures/main.jpg" width="90%">
+                    </p>
+                    <p class="p">
+                        Before using shinyCircos-V2.0, we need to understand the structure of a typical Circos plot. Please check the names of each component of a typical Circos plot, which will help you go through this manual.
+                    </p>
+                    <p style="text-align: center;">
+                        <img src="./helpfigures/circosintroduce/1.jpg" width="60%">
                         <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                            A Circos plot created with a General chromosome data.
+                            The basic structure of a Circos diagram.
                         </p>
                     </p>
-                </div>
-                
-                <div id="div2.1.2">
-                    <h4 class="a">2.1.2 Cytoband data with five columns</h4>
-                    <p class="p">
-                        Cytoband data contains five columns: the chromosome ID, the start and end coordinates of different genomic regions, the name of cytogenetic band, and Giemsa stain results.
-                    </p>
                     <p style="text-align: center;">
-                        <img src="./helpfigures/chrosome/cytoband.jpg" width="60%">
-                        <p style="font-size: 25px;text-align: center;">
-                            A cytoband chromosome data.
-                            <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
-                        </p>
-                    </p>
-                    <p class="p">
-                        A Circos plot with Ideogram chromosome will be created when cytoband data is used.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/chrosome/cyt.jpg" width="60%">
+                        <img src="./helpfigures/circosintroduce/2.jpg" width="60%">
                         <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                            A Circos plot created with a cytoband chromosome data.
+                            Different tracks of a Circos diagram.
                         </p>
                     </p>
+                    
                 </div>
+
+                <div id="div2">
+                    <h2 class="a">2 Input data format</h2>
+                    <p class="p">
+                        To use shinyCircos-V2.0, input datasets must be prepared in correct format.
+                    </p>
+                    <p class="p">
+                        We recommend uploading the input file in ".csv" format, as ".csv" files are explicit and commonly used in data storage and analysis. Please note that <span style="color: red;" >proper names and orders of columns are critical for the input data</span>.
+                    </p>
+                    <div id="div2.1">
+                        <h3 class="a">2.1 Chromosome data (used to define the chromosomes of a Circos plot)</h3>
+                            <p class="p">
+                                A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. Two types of Chromosome data are accepted by shinyCircos-V2.0, the General chromosome data, and the Cytoband data.
+                            </p>
+                            <div id="div2.1.1">
+                                <h4 class="a">2.1.1 General data with three columns</h4>
+                                <p class="p">
+                                    Chromosomes data can be a general chromosome data with three columns: the chromosome ID, the start and end coordinates of different genomic regions.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/chrosome/general.jpg" width="60%">
+                                    <p style="font-size: 25px;text-align: center;">
+                                        A general chromosome data.
+                                        <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                    </p>
+                                </p>
+                                <p class="p">
+                                    The default color of the chromosome bands of a Circos plot created with a general chromosome data is gray.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/chrosome/gen.jpg" width="60%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                        A Circos plot created with a General chromosome data.
+                                    </p>
+                                </p>
+                            </div>
+                            
+                            <div id="div2.1.2">
+                                <h4 class="a">2.1.2 Cytoband data with five columns</h4>
+                                <p class="p">
+                                    Cytoband data contains five columns: the chromosome ID, the start and end coordinates of different genomic regions, the name of cytogenetic band, and Giemsa stain results.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/chrosome/cytoband.jpg" width="60%">
+                                    <p style="font-size: 25px;text-align: center;">
+                                        A cytoband chromosome data.
+                                        <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                    </p>
+                                </p>
+                                <p class="p">
+                                    A Circos plot with Ideogram chromosome will be created when cytoband data is used.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/chrosome/cyt.jpg" width="60%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                        A Circos plot created with a cytoband chromosome data.
+                                    </p>
+                                </p>
+                            </div>
+                            
+                    </div>
+                    <div id="div2.2">
+                        <h3 class="a">2.2 Track data (to be displayed in different tracks of a Circos plot)</h3>
+                        <p class="p">
+                            One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. The first three columns of the input data for any type of plot are fixed, namely the chromosome, the strat and end coordinates of genomic regions.
+                        </p>
+                        <div id="div2.2.1">
+                            <h4 class="a">2.2.1 Tarck data to plot bars</h4>
+                            <p class="p">
+                                The input data to make bar plot in a Circos diagram should contain at least four columns, the chromosome, the strat and end coordinates of genomic regions, and a fourth column with data values. Please note that the fourth column must be positive or negative numeric real numers. Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
+                            </p>
+                            <hr>
+                            <p class="p">
+                                For unidirectional bar plot, the minimum value of the fourth column will be used as the starting point of all bars, as shown in the following figure.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/unibardata.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to make unidirectional bars.
+                                    <a href="./example_data/track/barplot.csv" download="barplot.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/unidirectionbar.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A circos plot with unidirectional bars.
+                                </p>
+                            </p>
+                            <p class="p">
+                                For bidirectional bars, the 4th column which contains the data values will be divided into two groups based on the boundary value. The default boundary value is set as zero, which can be modified by the user.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/bidirectional.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to make bidirectional bars.
+                                    <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/bidbar.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A circos plot with bidirectional bars.
+                                </p>
+                            </p>
+                            <p class="p">
+                                An additional color column can be added in the input data to make colored bars in shinyCircos-V2.0. To customize color for data with multiple columns, users should provide a character string representing one or multiple colors separated by commas. For example, 'red' or 'red,orange,blue'. To customize color for data with multiple groups, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/barcolordata.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to make colored bars.
+                                    <a href="./example_data/track/barplot_color.csv" download="barplot_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/barcolor.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A circos plot with colored bars.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.2">
+                            <h4 class="a">2.2.2 Tarck data to plot lines</h4>
+                            <p class="p">
+                                The input data to make line chart should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
+                            </p>
+                            <hr>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to plot lines.
+                                    <a href="./example_data/track/line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_picture.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of line plot.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                An additional 'color' column can be added in the input dataset to assign colors to lines of different groups on the same track.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_color.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An input dataset with a color column to create line plot.
+                                    <a href="./example_data/track/line_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_color_pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of line chart with different colors for different data groups.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_mul.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Example input dataset with multiple columns of data values.
+                                    <a href="./example_data/track/line_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/lin_mut_pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of line chart with multiple lines.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.3">
+                            <h4 class="a">2.2.3 Tarck data to plot points</h4>
+                            <p class="p">
+                                The format of input dataset to plot points is similar to the input data to make line charts.
+                            </p>
+                            <hr>
+                            <p class="p">
+                                The input data to plot points should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to plot points.
+                                    <a href="./example_data/track/point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of points plot.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                An additional 'cex' column can be added in the input data to control the size of the points. The 'cex' column should be positive numeric numbers.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_cex.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'cex' column.
+                                    <a href="./example_data/track/point_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_cex-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point sizes.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                Similarly, an additional 'color' column can be added in the input data to assign colors to points of different groups on the same track.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'color' column.
+                                    <a href="./example_data/track/point_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point colors.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                Moreover, an additional 'pch' column can be added in the input data to control the shapes of points for different groups on the same track.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/pch.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 50px;">
+                                    Different point shapes defined by the pch parameter in R.
+                                </p>
+                                <p style="font-size: 25px;text-align: center;margin-top: -50px;margin-bottom: 50px;">
+                                    (Image Source:<a href="http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html">http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html</a>)
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'pch' column.
+                                    <a href="./example_data/track/point_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point shapes.
+                                </p>
+                            </p>
+                            
+                            <p class="p">
+                                The 'cex', 'color' and 'pch' columns can appear in a single input dataset, at the same time.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch_cex.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'pch' column and a 'cex' column.
+                                    <a href="./example_data/track/point_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch_cex-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point shapes and point sizes.
+                                </p>
+                            </p>
+            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_cex.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'color' column and a 'cex' column.
+                                    <a href="./example_data/track/point_color_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_cex-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point colors and point sizes.
+                                </p>
+                            </p>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'color' column and a 'pch' column.
+                                    <a href="./example_data/track/point_color_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point colors and point shapes.
+                                </p>
+                            </p>
+            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch_cex.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Input data to plot points with a 'color' column, a 'pch' column and a 'cex' column.
+                                    <a href="./example_data/track/point_color_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch_cex-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with varying point colors, varying point shapes, and varying point sizes.
+                                </p>
+                            </p>
+            
+                            <p class="p">
+                                Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_mul.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    Example input dataset with multiple columns of data values.
+                                    <a href="./example_data/track/point_multicolumn.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_mul-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A single track of point chart with multiple groups of points.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.4">
+                            <h4 class="a">2.2.4 Tarck data to create ideogram</h4>
+                            <p class="p">
+                                An ideogram is a graphical representation of chromosomes.
+                                In shinyCircos-V2.0, we can draw ideogram on any Track. The format of input data to create ideogram is the same as that of the <a href="#div2.1.2"> Cytoband data with five columns</a>.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/ideogram/ideogram.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create ideogram.
+                                    <a href="./example_data/track/chromosome_ideogram.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/ideogram/ideogram-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of ideogram.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.5">
+                            <h4 class="a">2.2.5 Tarck data to plot discrete rectangles</h4>
+                            <p class="p">
+                                The input data to plot discrete rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column must be a chracter vector.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/dis.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create discrete rectangles.
+                                    <a href="./example_data/track/rect_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/dis-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of discrete rectangles.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.6">
+                            <h4 class="a">2.2.6 Tarck data to plot gradual rectangles</h4>
+                            <p class="p">
+                                The input data to plot gradual rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be real numbers.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/gra.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create gradual rectangles.
+                                    <a href="./example_data/track/rect_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/gra-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of gradual rectangles.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.7">
+                            <h4 class="a">2.2.7 Tarck data to plot discrete heatmaps</h4>
+                            <p class="p">
+                                The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a chracter vector.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/dis.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create discrete heatmaps.
+                                    <a href="./example_data/track/heatmap_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/dis_pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of discrete heatmap.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.8">
+                            <h4 class="a">2.2.8 Tarck data to plot gradual heatmaps</h4>
+                            <p class="p">
+                                The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a numeric vector.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/gra.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create gradual heatmaps.
+                                    <a href="./example_data/track/heatmap_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/gra_pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of gradual heatmap.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.9">
+                            <h4 class="a">2.2.9 Tarck data to plot stack-point</h4>
+                            <p class="p">
+                                Using shinyCircos-V2.0, we can also create stack point chart. The input data should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth stack column represents the group of different data values. And data values of the same group will be plotted on the same line.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/poi.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create stack points.
+                                    <a href="./example_data/track/stack_point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/poi-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of stack points.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.10">
+                            <h4 class="a">2.2.10 Tarck data to plot stack-line</h4>
+                            <p class="p">
+                                Similarly, we can also create stack line chart using shinyCircos-V2.0. The input data format is the same as the input data of stack-point.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/line.jpg" width="60%">
+                                <p style="font-size: 25px;text-align: center;">
+                                    An example dataset to create stack lines.
+                                    <a href="./example_data/track/stack_line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/line-pic.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                    A Circos diagram with a single track of stack lines.
+                                </p>
+                            </p>
+                        </div>
+            
+                    </div>
+            
+            
+            
+                    <div id="div2.3">
+                        <h3 class="a">2.3 Label data (used to label elements in a track)</h3>
+                        <p class="p">
+                            Label data is used to annotate the elements in a specified track with text labels. The input data should contain four or five columns, as shown in the figure below.
+                        </p>
+
+                        <p class="p">
+                            The four-column label data is used to draw general labels, and their colors are uniform.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label.jpg" width="60%">
+                            <p style="font-size: 25px;text-align: center;">
+                                An example label data.
+                                <a href="./example_data/label/gene_label.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label-pic.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                An example Circos diagrams with text labels.
+                            </p>
+                        </p>
+
+                        <p class="p">
+                            The five-column label data is used to draw complex labels, and their colors correspond one-to-one with the color values of the color columns.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label-color.jpg" width="60%">
+                            <p style="font-size: 25px;text-align: center;">
+                                An example label data with a color column.
+                                <a href="./example_data/label/gene_label_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label-color-pic.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                An example Circos diagrams with labels of different colors.
+                            </p>
+                        </p>
+                    </div>
+                    <div id="div2.4">
+                        <h3 class="a">2.4 Links data</h3>
+                        <p class="p">
+                            The links data should contain at least six columns. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. Links will be created between all pairs of genomic regions in the same line of the input dataset.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link.jpg" width="60%">
+                            <p style="font-size: 25px;text-align: center;">
+                                An example links dataset.
+                                <a href="./example_data/links/links.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link-pic.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                An example Circos diagrams with links.
+                            </p>
+                        </p>
+                        <p class="p">
+                            An additional color column can be added in the input dataset to control the color of the links. The color column can be a character vector or a numeric vector.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_dis.jpg" width="60%">
+                            <p style="font-size: 25px;text-align: center;">
+                                An example links dataset with a color column of characters.
+                                <a href="./example_data/links/links_discrete_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_dis-pic.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                An example Circos diagrams with links colored by different groups.
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_gra.jpg" width="60%">
+                            <p style="font-size: 25px;text-align: center;">
+                                An example links dataset with a color column of numeric numbers.
+                                <a href="./example_data/links/links_gradual_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_gra-pic.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
+                                An example Circos diagrams with links of gradual colors.
+                            </p>
+                        </p>
+                    </div>
+                </div>
+                <div id="div3">
+                    <h2 class="a">3 Use shinyCircos online or on local computer</h2>
+                    
+                    <div id="div3.1">
+                        <h3 class="a">3.1 Use shinyCircos-V2.0 online</h3>
+                        <p class="p">
+                            The URL to use shinyCircos-V2.0 online is <a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos2.0/</a>.
+                        </p>
+                    </div>
+            
+            
+                    <div id="div3.2">
+                        <h3 class="a">3.2 Interface of shinyCircos-V2.0</h3>
+                        <p class="p">
+                            The shinyCircos-V2.0 application contains 8 main menus: "shinyCircos-V2.0", "Data Upload", "Circos Parameters", "Circos Plot", "Gallery", "Help", "About" and "Contact". The "shinyCircos-V2.0" menu gives a brief introduction to the shinyCircos-V2.0 application.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/main.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The home page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="p">
+                            The "Data Upload" menu allows the user to upload their own input data from the local disk or load example datasets from shinyCircos.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/circosinterface/datasource.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                Upload data or load example data?
+                            </p>
+                        </p>
+                        <p class="p">
+                            You can upload multiple datasets at the same time or upload them separately. Remember to save the uploaded data timely.
+                            When all input datasets were properly uploaded, please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then Click the 'Save uploaded data' button.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/circosinterface/datasource2.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                Upload input data from local disk.
+                            </p>
+                        </p>
+                        <p class="p">
+                            The users can also choose to load example datasets from shinyCircos. A total of 10 different example datasets were stored in shinyCircos.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/circosinterface/datasource1.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                Load example data from shinyCircos.
+                            </p>
+                        </p>
+                        <p class="p">
+                            The "Circos Parameters" provided functionalities for users to view the contents of all uploaded datasets, and the functionalities for users to set parameters for each input dataset. 
+                            The input datasets are categorized into four groups, including Chromosome data, Track data, Label data and Links data. 
+                            The filename of each input dataset is diaplayed in a single row of this page. And the content of each dataset can be viewed by clicking the eye icon beside the corresponding file name.
+                            For each input dataset, the user is required to set the plot type and other plotting parameters.
+                            A small gear at the end of each row is designed for users to set the plotting parameters. 
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/circospar.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The Circos Parameters page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="P">
+                            Once all the input datasets and the parameters were submitted to the shinyCircos server, a Circos plot will be created and displayed in the 'Circos plot' page of shinyCircos-V2.0.
+                            The created Circos plot can be downloaded in PDF or SVG format.
+                            Several advanced options to tune the appearance of the created Circos plot are implemented under the 'Advanced options' button.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/CircosPlot.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The Circos Plot page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="p">
+                            Thirty example Circos plots created with shinyCircos-V2.0 are listed in the "Gallery" menu of the shinyCircos-V2.0. The input datasets used to create each example plot are also provided for downloading.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/gallery.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The Gallery page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="p">
+                            Help documents on the usage of shinyCircos-V2.0 are provided in the Help page.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/help_English.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The Help page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="p">
+                            The dependent R packages used by shinyCircos-V2.0 and other information are given in the "About" menu of shinyCircos-V2.0.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/about.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The About page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                        <p class="p">
+                            Contact information is given in the "Contact" page of shinyCircos-V2.0.
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/contact.jpg" width="70%">
+                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                The Contact page of shinyCircos-V2.0.
+                            </p>
+                        </p>
+                    </div>
+            
+            
+                    <div id="div3.3">
+                        <h3 class="a">3.3 Install and use shinyCircos-V2.0 on local computers</h3>
+                        <p class="p">
+                            Users can choose to install and run shinyCircos-V2.0 on a personal computer (Windows, Mac or Linux) without uploading data to an online server. shinyCircos-V2.0 is a cross-platform application, i.e. shinyCircos-V2.0 can be installed on any platform with an available R environment. The installation of shinyCircos-V2.0 consists of three steps.
+                        </p>
+                        <div id="div3.3.1">
+                            <h3 class="a">Step 1. Install R and RStudio</h3>
+                            <p class="p">
+                                Please check CRAN (<a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>) for the installation of R.  
+                                Please check <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a> for the installation of RStudio.  
+                            </p>
+                        </div>
+                        <div id="div3.3.2">
+                            <h3 class="a">Step 2. Install the R/Shiny package and other R packages required by shinyCircos-V2.0</h3>
+                            <p class="p">
+                                Start an R session with RStudio and run the following lines:
+                            </p>
+                            <pre><code>
+                    # try an http CRAN mirror if https CRAN mirror doesn't work
+                    install.packages("shiny")
+                    install.packages("circlize")
+                    install.packages("bs4Dash")
+                    install.packages("DT")
+                    install.packages("RColorBrewer")
+                    install.packages("shinyWidgets")
+                    install.packages("data.table")
+                    install.packages("shinyBS")
+                    install.packages("sortable")
+                    install.packages("shinyjqui")
+                    install.packages("shinycssloaders")
+                    install.packages("colourpicker")
+                    install.packages("gridBase")
+                    install.packages("BiocManager")
+                    BiocManager::install("ComplexHeatmap")
+                            </code></pre>
+                        </div>
+                        <div id="div3.3.3">
+                            <h3 class="a">Step 3. Run the shinyCircos-V2.0 application</h3>
+                            <p class="p">
+                                Start an R session with RStudio and run the following lines:
+                            </p>
+                            <pre><code>
+                    shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
+                            </code></pre>
+                            <p class="p">
+                                This command will download the source code of shinyCircos-V2.0 from GitHub to a temporary directory on your computer, then launch the shinyCircos-V2.0 application in a web browser. <span style="color: red;" >The downloaded shinyCircos-V2.0 code will be deleted from your computer once the web browser is closed. The next time you run this command in RStudio, it will download the source code of shinyCircos-V2.0 from GitHub again to a temporary directory. </span>This process is cumbersome because it takes some time to download the shinyCircos-V2.0 code from GitHub.
+                            </p>
+                            <p class="p">
+                                We recommended that users download the source code of shinyCircos-V2.0 from GitHub to a fixed directory on your computer, such as "E:\apps" on Windows. A zip file named "shinyCircos-V2.0-master.zip" will be downloaded to your computer. Move this file to "E:\apps" and unzip this file. Then a directory named "shinyCircos-V2.0-master" will be generated in "E:\apps". The scripts "server.R" and "ui.R" can be found in "E:\apps\shinyCircos-V2.0-master". You can then start the shinyCircos-V2.0 application by running the following lines in RStudio.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/downcode.jpg" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Download the source code of shinyCircos-V2.0 from GitHub.
+                                </p>
+                            </p>
+                            <pre><code>
+                                library(shiny)
+                                runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
+                            </code></pre>
+                            <p class="p">
+                                The shinyCircos-V2.0 application will then be opened in your computer's default browser.
+                            </p>
+                        </div>
+                    </div>
+            
+            
+                    <div id="div4">
+                        <h3 class="a">4 Steps to create a Circos diagram with shinyCircos-V2.0</h3>
+                        <p class="p">
+                            To make a Circos plot using shinyCircos-V2.0, the user must prepare and upload a file that defines the chromosomes of a specific genome, as well as other input data to be displayed along the genome. In this section, we will demonstrate all the basic steps to create a Circos diagram using example datasets.
+                        </p>
+                        <div id="div4.1">
+                            <h3 class="a">4.1 Basic steps to create a Circos diagram with shinyCircos-V2.0</h3>
+                            <div id="div4.1.1">
+                                <h3 class="a">Step 1. Upload a single "Chromosome data" to define the chromosomes of a Circos plot</h3>
+                                <p class="p">
+                                    A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. 
+                                    The detailed format of a Chromosome data is described in the "<a href="#div2">Input Data Format</a>" section.
+                                </p>
+                                <p class="p">
+                                    A file named as 'chromosome_general.csv' was uploaded from the local disk to to shinyCircos-V2.0 using the data upload widget implemented in the "Data Upload" menu of the shinyCircos-V2.0 application, as shown in the figure below.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/uploaddata/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Upload a chromosome data.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.1.2">
+                                <h3 class="a">Step 2. Upload one or multiple input datasets to be displayed in different Tracks</h3>
+                                <p class="p">
+                                    Except for a Chromosome data, one or multiple other input datasets can be uploaded to shinyCircos-V2.0, to be displayed in different trakcs of a Circos plot.
+                                    The detailed format of input files to make different types of plot is detailed in the "<a href="#div2">Input Data Format</a>" section. 
+                                    Here, two files named as "barplot.csv" and "line.csv" were uploaded from local disk to shinyCircos-V2.0.
+                                    Both datasets were distributed into the 'Track data' box. Remember to save the uploaded data timely.
+                                </p>
+                            </div>
+                            <div id="div4.1.3">
+                                <h3 class="a">Step 3. Set the "Track" index and plot type for each input dataset</h3>
+                                <p class="p">
+                                    By default, the track index for the input datasets were determined by the order of uploading. And the default plot type for all input datasets were set as point.
+                                    Here, the plot type for "barplot.csv" was set as 'bar', and the plot type for "line.csv" was set as 'line'.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/uploaddata/2.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Set Track index and plot type in the Circos Parameters page of shinyCircos-V2.0.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.1.4">
+                                <h3 class="a">Step 4. Click the "Submit!" button to create the Circos plot</h3>
+                                <p class="p">
+                                    When the track indedx and plot type were correctly setted for all the input datasets, please click the "Step 4. Submit the plot parameters to make the Circos plot!" button at the bottom of the "Circos Parameters" page to make the desired Circos plot.
+                                    <span style="color: red;">By default, random colors or predefined colors will be used by shinyCircos-V2.0 if necessary</span>.
+                                </p>
+            
+                            </div>
+                        </div>
+                        <div id="div4.2">
+                            <h3 class="a">4.2 Update a Circos plot by replacing one or more input datasets</h3>
+                            <p class="p">
+                                A track of a Circos plot is usually defined by a single input dataset. And a typical Circos plot usually contains multiple tracks defined by multiple input datasets.
+                                From time to time, we may want to replace one or more of these input files so that we can update some tracks of a Circos plot without recreating the entire plot.
+                                For example, we want to create a Circos plot with discrete rectangles by replacing Track2's "line.csv" with a new input file "rect_discrete.csv".
+                                To achieve this, we can go to the "Data Upload" page and upload "rect_discrete.csv" to shinyCircos-V2.0, distribute the "rect_discrete.csv" file into the "Track data" box, and move the "line.csv" file to the "Garbage" box. After that, we should click the "Step 2.2. Save uploaded data" button.
+                                At the same time, we need to change the plot type of the newly uploaded dataset from 'line' to "rect_discrete".
+                                Finally, we need to click the "Step 4. Submit the plot parameters to make the Circos plot!" button at the bottom of the "Circos Parameters" panel to update the Circos plot.
+                            </p>
+                        </div>
+                        <div id="div4.3">
+                            <h3 class="a">4.3 Download the created Circos plot in PDF or SVG format</h3>
+                            <p class="p">
+                                The created Circos plot can be downloaded as a PDF or a SVG file using the widgets "Download PDF-file" and "Download SVG-file" on the top of the "Circos Plot" page. By default, the two files are named as "shinyCircos.pdf" and "shinyCircos.svg", respectively.
+                                The downloaded PDF file can be opened in Adobe Acrobat, while the downloaded SVG file "shinyCircos.svg" can be opened in Google Chrome browser.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/download/1.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Options to download the created Circos plot.
+                                </p>
+                            </p>
+                        </div>
+                        <div id="div4.4">
+                            <h3 class="a">4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</h3>
+                            <p class="p">
+                                Using shinyCircos-V2.0, 10 different types of graphs, including point, line, bar, stack-line, stack-point, rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete and ideogram, can be created. 
+                                To create a Circos graph, at least one input data file is required, that is, a Chromosome data file that defines the length of the genome.
+                                In this section, we will show the steps to create a complex Circos diagram with shinyCircos-V2.0.
+                            </p>
+                            
+                            <div id="div4.4.1">
+                                <h3 class="a">Step 1.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        All data uploaded and categorized correctly
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.2">
+                                <h3 class="a">Step 2.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/2.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Select the correct data type for the corresponding data
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.3">
+                                <h3 class="a">Step 3.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/3.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        In the pop-up menu, choose to draw the vertical axis for the histogram, and then draw it after the setting is complete.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.4">
+                                <h3 class="a">Step 4.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/4.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        After getting the Circos diagram, make advanced settings for it
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.5">
+                                <h3 class="a">Step 5.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/5.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Select Add Legend for the Circos diagram and the legend is on the right, then select Add Track Index, then click "Updata" to update the Circos diagram
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.6">
+                                <h3 class="a">Step 6.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/6.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Get Circos plot with Track index and legend
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.7">
+                                <h3 class="a">Step 7.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/7.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Continue to set the highlighted area in the "Advanced options" menu, enter the position you want to highlight in the left text box, then select the transparency, click the "SAVE" button to check whether the input data is compliant, and click "Update" after there is no problem "Update Circos Diagram
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div4.4.8">
+                                <h3 class="a">Step 8.</h3>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/plot_complex/8.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Finally, get a complex Circos diagram, at which point you can save the Circos diagram as PDF or SVG
+                                    </p>
+                                </p>
+                            </div>
+                            
+                        </div>
+                        <div id="div5">
+                            <h3 class="a">5 Plot options to decorate a Circos plot</h3>
+                            <p class="p">
+                                In the "Circos Parameters" menu, a small gear button is displayed at the rightmost of each input dataset. By clicking this button, a page with multiple widgets will pop up for users to set parameters for the corresponding input data. Setting of several parameters are demonstrated in this section.
+                            </p>
+                            <div id="div5.1">
+                                <h3 class="a">5.1 Track height</h3>
+                                <p class="p">
+                                    The default Track height is set as 0.1. The track height can be increased by turning up this number.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/track_height/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to increase the track height of a Circos plot.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div5.2">
+                                <h3 class="a">5.2 Y-axis</h3>
+                                <p class="p">
+                                    shinyCircos-V2.0 now supports adding a Y-axis to a specified track, to display the range of data values for the corresponding track.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/yaxis/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to add Y-axis for a track in a Circos plot.
+                                    </p>
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/yaxis/2.png" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        A Circos plot with Y-axis.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div5.3">
+                                <h3 class="a">5.3 Distances between adjacent tracks</h3>
+                                <p class="p">
+                                    This parameter is designed to tune the distance between adjancent tracks, which can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/gap_track/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to adjust the distances between adjacent tracks.
+                                    </p>
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/gap_track/2.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        A Circos plot with larger gaps between adjacent tracks.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div5.4">
+                                <h3 class="a">5.4 Cell border</h3>
+                                <p class="p">
+                                    shinyCircos-V2.0 also supporting adding cell borders to one or multiple "Tracks" to emphasize these Tracks.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/cell_border/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to add cell borders.
+                                    </p>
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/cell_border/2.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        A Circos plot with cell borders.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div5.5">
+                                <h3 class="a">5.5 Background color of a "Track"</h3>
+                                <p class="p">
+                                    In shinyCircos-V2.0, users can adjust the background color of different Tracks to distinguish different tracks. The color can be null or a color vector of arbitrary length adjusted automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/tra_bgcol/1.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to change the background color of the current Track.
+                                    </p>
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/tra_bgcol/2.jpg" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Tracks with different background colors in a Circos plot.
+                                    </p>
+                                </p>
+                            </div>
+                            <div id="div5.6">
+                                <h3 class="a">5.6 Distances between adjacent sectors</h3>
+                                <p class="p">
+                                    This parameter is used to tune the gap size between adjacent sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the gap between the first and the second sector.
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/sec_gap/1.png" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        Options to adjust the distances between adjacent setcors.
+                                    </p>
+                                </p>
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/sec_gap/2.png" width="70%">
+                                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                        A circos plot with larger gap size between adjacent sectors.
+                                    </p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            
+            
+                    <div id="div6">
+                        <h3 class="a">6 Advanced features</h3>
+                        <p class="p">
+                            Compared with the previous version of shinyCircos, we developed several advanced features in shinyCircos-V2.0.
+                        </p>
+                        <div id="div6.1">
+                            <h3 class="a">6.1 Add legend</h3>
+                            <p class="p">
+                                For any of the plot type including "stack-line", "stack-point", "heatmap-gradual", "heatmap-discrete", "rect-gradual" and "rect-discrete", a figure legend can be added to the created Circos plot using the widget in "Advanced options" of the "Circos Plot" menu. The figure legend can be placed at the bottom or right side of the Circos plot.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/legend/1.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Options to add figure legend for a Circos plot.
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/legend/2.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    A Circos diagram with figure legend.
+                                </p>
+                            </p>
+                        </div>
+                        <div id="div6.2">
+                            <h3 class="a">6.2 Highlight specific genomic regions</h3>
+                            <p class="p">
+                                shinyCircos-V2.0 supports highlighting one or multiple Sectors of a Circos plot. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/highlight/1_English.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Options to highlight one or multiple genomic regions.
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/highlight/2.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    A Circos diagram with highlighted genomic regions.
+                                </p>
+                            </p>
+                        </div>
+                        <div id="div6.3">
+                            <h3 class="a">6.3 Adjust plotsize</h3>
+                            <p class="p">
+                                shinyCircos-V2.0 supports resizing of a created Circos plot, using the widget shown below.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plotsize/1.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Options to adjust the size of a Circos Plot.
+                                </p>
+                            </p>
+                        </div>
+                        <div id="div6.4">
+                            <h3 class="a">6.4 Add "Track index"</h3>
+                            <p class="p">
+                                shinyCircos-V2.0 supports adding index to all the tracks of a Circos plot to distinguish different tracks. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/tra_index/1.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    Options to add Track index.
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/tra_index/2.png" width="70%">
+                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                    A Circos diagram with Track index.
+                                </p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class = "content-right">
+                <h2 class="a">Contents</h2>
+                <p style="line-height: 23px;">
+                    <a href="#div1"><span class="content"> 1 Introduction</span></a>
                 
-        </div>
-        <div id="div2.2">
-            <h3 class="a">2.2 Track data (to be displayed in different tracks of a Circos plot)</h3>
-            <p class="p">
-                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. The first three columns of the input data for any type of plot are fixed, namely the chromosome, the strat and end coordinates of genomic regions.
-            </p>
-            <div id="div2.2.1">
-                <h4 class="a">2.2.1 Tarck data to plot bars</h4>
-                <p class="p">
-                    The input data to make bar plot in a Circos diagram should contain at least four columns, the chromosome, the strat and end coordinates of genomic regions, and a fourth column with data values. Please note that the fourth column must be positive or negative numeric real numers. Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
-                </p>
-                <hr>
-                <p class="p">
-                    For unidirectional bar plot, the minimum value of the fourth column will be used as the starting point of all bars, as shown in the following figure.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/unibardata.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to make unidirectional bars.
-                        <a href="./example_data/track/barplot.csv" download="barplot.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/unidirectionbar.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A circos plot with unidirectional bars.
-                    </p>
-                </p>
-                <p class="p">
-                    For bidirectional bars, the 4th column which contains the data values will be divided into two groups based on the boundary value. The default boundary value is set as zero, which can be modified by the user.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/bidirectional.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to make bidirectional bars.
-                        <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/bidbar.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A circos plot with bidirectional bars.
-                    </p>
-                </p>
-                <p class="p">
-                    An additional color column can be added in the input data to make colored bars in shinyCircos-V2.0. To customize color for data with multiple columns, users should provide a character string representing one or multiple colors separated by commas. For example, 'red' or 'red,orange,blue'. To customize color for data with multiple groups, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/barcolordata.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to make colored bars.
-                        <a href="./example_data/track/barplot_color.csv" download="barplot_color.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/bar/barcolor.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A circos plot with colored bars.
-                    </p>
-                </p>
-            </div>
-
-
-            <div id="div2.2.2">
-                <h4 class="a">2.2.2 Tarck data to plot lines</h4>
-                <p class="p">
-                    The input data to make line chart should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
-                </p>
-                <hr>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/line.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to plot lines.
-                        <a href="./example_data/track/line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/line_picture.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of line plot.
-                    </p>
-                </p>
-
-                <p class="p">
-                    An additional 'color' column can be added in the input dataset to assign colors to lines of different groups on the same track.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/line_color.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An input dataset with a color column to create line plot.
-                        <a href="./example_data/track/line_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/line_color_pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of line chart with different colors for different data groups.
-                    </p>
-                </p>
-
-				<p class="p">
-                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/line_mul.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Example input dataset with multiple columns of data values.
-                        <a href="./example_data/track/line_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/line/lin_mut_pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of line chart with multiple lines.
-                    </p>
-                </p>
-            </div>
+                    <br>
+                    <a href="#div2"><span class="content"> 2 Input data format</span></a>
+                    <br>
+                    &emsp;<a href="#div2.1"><span class="content"> 2.1 Chromosome data (used to define the chromosomes of a Circos plot)</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.1.1"><span class="content"> 2.1.1 General data with three columns</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.1.2"><span class="content"> 2.1.2 Cytoband data with five columns</span></a>
+                    <br>
+                    &emsp;<a href="#div2.2"><span class="content"> 2.2 Track data (to be displayed in different tracks of a Circos plot)</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.1"><span class="content"> 2.2.1 Tarck data to plot bars</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.2"><span class="content"> 2.2.2 Tarck data to plot lines</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.3"><span class="content"> 2.2.3 Tarck data to plot points</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.4"><span class="content"> 2.2.4 Tarck data to create ideogram</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.5"><span class="content"> 2.2.5 Tarck data to plot discrete rectangles</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.6"><span class="content"> 2.2.6 Tarck data to plot gradual rectangles</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.7"><span class="content"> 2.2.7 Tarck data to plot discrete heatmaps</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.8"><span class="content"> 2.2.8 Tarck data to plot gradual heatmaps</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.9"><span class="content"> 2.2.9 Tarck data to plot stack-point</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.10"><span class="content"> 2.2.10 Tarck data to plot stack-line</span></a>
+                    <br>
+                    &emsp;<a href="#div2.3"><span class="content"> 2.3 Label data (used to label elements in a track)</span></a>
+                    <br>
+                    &emsp;<a href="#div2.4"><span class="content"> 2.4 Links data</span></a>
+                    <br>
+                    <a href="#div3"><span class="content"> 3 Use shinyCircos online or on local computer</span></a>
+                    <br>
+                    &emsp;<a href="#div3.1"><span class="content"> 3.1 Use shinyCircos-V2.0 online</span></a>
+                    <br>
+                    &emsp;<a href="#div3.2"><span class="content"> 3.2 Interface of shinyCircos-V2.0</span></a>
+                    <br>
+                    &emsp;<a href="#div3.3"><span class="content"> 3.3 Install and use shinyCircos-V2.0 on local computer</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div3.3.1"><span class="content"> Step 1. Install R and RStudio</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div3.3.2"><span class="content"> Step 2. Install the R/Shiny package and other R packages required by shinyCircos-V2.0</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div3.3.3"><span class="content"> Step 3. Run the shinyCircos-V2.0 application</span></a>
+                    <br>
+                    <a href="#div4"><span class="content"> 4 Steps to create a Circos diagram with shinyCircos-V2.0</span></a>
+                    <br>
+                    &emsp;<a href="#div4.1"><span class="content"> 4.1 Basic steps to create a Circos diagram with shinyCircos-V2.0</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.1.1"><span class="content"> Step 1. Upload a single "Chromosome data" to define the chromosomes of a Circos plot</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.1.2"><span class="content"> Step 2. Upload one or multiple input datasets to be displayed in different Tracks</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.1.3"><span class="content"> Step 3. Set the "Track" index and plot type for each input dataset</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.1.4"><span class="content"> Step 4. Click the "Submit!" button to create the Circos plot</span></a>
+                    <br>
+                    &emsp;<a href="#div4.2"><span class="content"> 4.2 Update a Circos plot by replacing one or more input datasets</span></a>
+                    <br>
+                    &emsp;<a href="#div4.3"><span class="content"> 4.3 Download the created Circos plot in PDF or SVG format</span></a>
+                    <br>
+                    &emsp;<a href="#div4.4"><span class="content"> 4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.1"><span class="content"> Step 1. upload data</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.2"><span class="content"> Step 2. Select data type</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.3"><span class="content"> Step 3. Set parameters for the corresponding data in the pop-up menu</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.4"><span class="content"> Step 4. Get simple Circos diagram</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.5"><span class="content"> Step 5. Set legend and track index</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.6"><span class="content"> Step 6. preview</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.7"><span class="content"> Step 7. Set highlight</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div4.4.8"><span class="content"> Step 8. Get a complex Circos diagrams</span></a>
+                    <br>
+                    <a href="#div5"><span class="content"> 5 Plot options to decorate a Circos plot</span></a>
+                    <br>
+                    &emsp;<a href="#div5.1"><span class="content"> 5.1 Track height</span></a>
+                    <br>
+                    &emsp;<a href="#div5.2"><span class="content"> 5.2 Y-axis</span></a>
+                    <br>
+                    &emsp;<a href="#div5.3"><span class="content"> 5.3 Distances between adjacent tracks</span></a>
+                    <br>
+                    &emsp;<a href="#div5.4"><span class="content"> 5.4 Cell border</span></a>
+                    <br>
+                    &emsp;<a href="#div5.5"><span class="content"> 5.5 Background color of a "Track"</span></a>
+                    <br>
+                    &emsp;<a href="#div5.6"><span class="content"> 5.6 Distances between adjacent sectors</span></a>
+                    <br>
+                    <a href="#div6"><span class="content"> 6 Advanced features</span></a>
+                    <br>
+                    &emsp;<a href="#div6.1"><span class="content"> 6.1 Add figure legend</span></a>
+                    <br>
+                    &emsp;<a href="#div6.2"><span class="content"> 6.2 Highlight specific genomic regions</span></a>
+                    <br>
+                    &emsp;<a href="#div6.3"><span class="content"> 6.3 Adjust plot size</span></a>
+                    <br>
+                    &emsp;<a href="#div6.4"><span class="content"> 6.4 Add "Track index"</span></a>
             
-
-            <div id="div2.2.3">
-                <h4 class="a">2.2.3 Tarck data to plot points</h4>
-                <p class="p">
-                    The format of input dataset to plot points is similar to the input data to make line charts.
-                </p>
-                <hr>
-                <p class="p">
-                    The input data to plot points should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to plot points.
-                        <a href="./example_data/track/point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of points plot.
-                    </p>
-                </p>
-
-                <p class="p">
-                    An additional 'cex' column can be added in the input data to control the size of the points. The 'cex' column should be positive numeric numbers.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_cex.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'cex' column.
-                        <a href="./example_data/track/point_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_cex-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point sizes.
-                    </p>
-                </p>
-
-                <p class="p">
-                    Similarly, an additional 'color' column can be added in the input data to assign colors to points of different groups on the same track.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'color' column.
-                        <a href="./example_data/track/point_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point colors.
-                    </p>
-                </p>
-
-                <p class="p">
-                    Moreover, an additional 'pch' column can be added in the input data to control the shapes of points for different groups on the same track.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/pch.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 50px;">
-                        Different point shapes defined by the pch parameter in R.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_pch.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'pch' column.
-                        <a href="./example_data/track/point_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_pch-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point shapes.
-                    </p>
-                </p>
-                
-                <p class="p">
-                    The 'cex', 'color' and 'pch' columns can appear in a single input dataset, at the same time.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_pch_cex.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'pch' column and a 'cex' column.
-                        <a href="./example_data/track/point_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_pch_cex-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point shapes and point sizes.
-                    </p>
-                </p>
-
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_cex.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'color' column and a 'cex' column.
-                        <a href="./example_data/track/point_color_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_cex-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point colors and point sizes.
-                    </p>
-                </p>
-                
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_pch.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Input data to plot points with a 'color' column and a 'pch' column.
-                        <a href="./example_data/track/point_color_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_pch-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point colors and point shapes.
-                    </p>
-                </p>
-
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_pch_cex.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-						Input data to plot points with a 'color' column, a 'pch' column and a 'cex' column.
-                        <a href="./example_data/track/point_color_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_col_pch_cex-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with varying point colors, varying point shapes, and varying point sizes.
-                    </p>
-                </p>
-
-                <p class="p">
-                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_mul.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        Example input dataset with multiple columns of data values.
-                        <a href="./example_data/track/point_multicolumn.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/point/poi_mul-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A single track of point chart with multiple groups of points.
-                    </p>
-                </p>
-            </div>
-            
-
-            <div id="div2.2.4">
-                <h4 class="a">2.2.4 Tarck data to create ideogram</h4>
-                <p class="p">
-					An ideogram is a graphical representation of chromosomes.
-                    In shinyCircos-V2.0, we can draw ideogram on any Track. The format of input data to create ideogram is the same as that of the <a href="#div2.1.2"> Cytoband data with five columns</a>.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/ideogram/ideogram.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create ideogram.
-                        <a href="./example_data/track/chromosome_ideogram.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/ideogram/ideogram-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of ideogram.
-                    </p>
-                </p>
-            </div>
-            
-
-            <div id="div2.2.5">
-                <h4 class="a">2.2.5 Tarck data to plot discrete rectangles</h4>
-                <p class="p">
-                    The input data to plot discrete rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column must be a chracter vector.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/rect/dis.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create discrete rectangles.
-                        <a href="./example_data/track/rect_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/rect/dis-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of discrete rectangles.
-                    </p>
-                </p>
-            </div>
-            
-
-            <div id="div2.2.6">
-                <h4 class="a">2.2.6 Tarck data to plot gradual rectangles</h4>
-                <p class="p">
-                    The input data to plot gradual rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be real numbers.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/rect/gra.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create gradual rectangles.
-                        <a href="./example_data/track/rect_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/rect/gra-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of gradual rectangles.
-                    </p>
-                </p>
-            </div>
-            
-
-            <div id="div2.2.7">
-                <h4 class="a">2.2.7 Tarck data to plot discrete heatmaps</h4>
-                <p class="p">
-                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a chracter vector.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/heatmap/dis.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create discrete heatmaps.
-                        <a href="./example_data/track/heatmap_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/heatmap/dis_pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of discrete heatmap.
-                    </p>
-                </p>
-            </div>
-
-
-            <div id="div2.2.8">
-                <h4 class="a">2.2.8 Tarck data to plot gradual heatmaps</h4>
-                <p class="p">
-                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a numeric vector.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/heatmap/gra.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create gradual heatmaps.
-                        <a href="./example_data/track/heatmap_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/heatmap/gra_pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of gradual heatmap.
-                    </p>
-                </p>
-            </div>
-
-
-            <div id="div2.2.9">
-                <h4 class="a">2.2.9 Tarck data to plot stack-point</h4>
-                <p class="p">
-                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth stack column represents the group of different data values. And data values of the same group will be plotted on the same line.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/stack/poi.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create stack points.
-                        <a href="./example_data/track/stack_point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/stack/poi-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of stack points.
-                    </p>
-                </p>
-            </div>
-
-
-            <div id="div2.2.10">
-                <h4 class="a">2.2.10 Tarck data to plot stack-line</h4>
-                <p class="p">
-                    Similarly, we can also create stack line chart using shinyCircos-V2.0. The input data format is the same as the input data of stack-point.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/stack/line.jpg" width="60%">
-                    <p style="font-size: 25px;text-align: center;">
-                        An example dataset to create stack lines.
-                        <a href="./example_data/track/stack_line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/stack/line-pic.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                        A Circos diagram with a single track of stack lines.
-                    </p>
-                </p>
-            </div>
-
-        </div>
-
-
-
-        <div id="div2.3">
-            <h3 class="a">2.3 Label data (used to label elements in a track)</h3>
-            <p class="p">
-                Label data is used to annotate the elements in a specified track with text labels. The input data should contain four columns, as shown in the figure below.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/label/label.jpg" width="60%">
-                <p style="font-size: 25px;text-align: center;">
-                    An example label data.
-                    <a href="./example_data/track/stack_line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                </p>
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/label/label-pic.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                    An example Circos diagrams with text labels.
-                </p>
-            </p>
-        </div>
-        <div id="div2.4">
-            <h3 class="a">2.4 Links data</h3>
-            <p class="p">
-                The links data should contain at least six columns. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. Links will be created between all pairs of genomic regions in the same line of the input dataset.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link.jpg" width="60%">
-                <p style="font-size: 25px;text-align: center;">
-                    An example links dataset.
-                    <a href="./example_data/links/links.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                </p>
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link-pic.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                    An example Circos diagrams with links.
-                </p>
-            </p>
-            <p class="p">
-                An additional color column can be added in the input dataset to control the color of the links. The color column can be a character vector or a numeric vector.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link_dis.jpg" width="60%">
-                <p style="font-size: 25px;text-align: center;">
-                    An example links dataset with a color column of characters.
-                    <a href="./example_data/links/links_discrete_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                </p>
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link_dis-pic.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                    An example Circos diagrams with links colored by different groups.
-                </p>
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link_gra.jpg" width="60%">
-                <p style="font-size: 25px;text-align: center;">
-                    An example links dataset with a color column of numeric numbers.
-                    <a href="./example_data/links/links_gradual_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
-                </p>
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/link/link_gra-pic.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: -30px;margin-bottom: 80px;">
-                    An example Circos diagrams with links of gradual colors.
-                </p>
-            </p>
-        </div>
-    </div>
-    <div id="div3">
-        <h2 class="a">3 Use shinyCircos online or on local computer</h2>
-        
-        <div id="div3.1">
-            <h3 class="a">3.1 Use shinyCircos-V2.0 online</h3>
-            <p class="p">
-                The URL to use shinyCircos-V2.0 online is <a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos2.0/</a>.
-            </p>
-        </div>
-
-
-        <div id="div3.2">
-            <h3 class="a">3.2 Interface of shinyCircos-V2.0</h3>
-            <p class="p">
-                The shinyCircos-V2.0 application contains 8 main menus: "shinyCircos-V2.0", "Data Upload", "Circos Parameters", "Circos Plot", "Gallery", "Help", "About" and "Contact". The "shinyCircos-V2.0" menu gives a brief introduction to the shinyCircos-V2.0 application.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/main.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The home page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="p">
-                The "Data Upload" menu allows the user to upload their own input data from the local disk or load example datasets from shinyCircos.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/circosinterface/datasource.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    Upload data or load example data?
-                </p>
-            </p>
-            <p class="p">
-				You can upload multiple datasets at the same time or upload them separately. Remember to save the uploaded data timely.
-				When all input datasets were properly uploaded, please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then Click the 'Save uploaded data' button.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/circosinterface/datasource2.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    Upload input data from local disk.
-                </p>
-            </p>
-            <p class="p">
-                The users can also choose to load example datasets from shinyCircos. A total of 10 different example datasets were stored in shinyCircos.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/circosinterface/datasource1.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    Load example data from shinyCircos.
-                </p>
-            </p>
-            <p class="p">
-                The "Circos Parameters" provided functionalities for users to view the contents of all uploaded datasets, and the functionalities for users to set parameters for each input dataset. 
-                The input datasets are categorized into four groups, including Chromosome data, Track data, Label data and Links data. 
-				The filename of each input dataset is diaplayed in a single row of this page. And the content of each dataset can be viewed by clicking the eye icon beside the corresponding file name.
-				For each input dataset, the user is required to set the plot type and other plotting parameters.
-				A small gear at the end of each row is designed for users to set the plotting parameters. 
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/circospar.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The Circos Parameters page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="P">
-                Once all the input datasets and the parameters were submitted to the shinyCircos server, a Circos plot will be created and displayed in the 'Circos plot' page of shinyCircos-V2.0.
-				The created Circos plot can be downloaded in PDF or SVG format.
-				Several advanced options to tune the appearance of the created Circos plot are implemented under the 'Advanced options' button.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/CircosPlot.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The Circos Plot page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="p">
-                Thirty example Circos plots created with shinyCircos-V2.0 are listed in the "Gallery" menu of the shinyCircos-V2.0. The input datasets used to create each example plot are also provided for downloading.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/gallery.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The Gallery page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="p">
-                Help documents on the usage of shinyCircos-V2.0 are provided in the Help page.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/help_English.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The Help page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="p">
-                The dependent R packages used by shinyCircos-V2.0 and other information are given in the "About" menu of shinyCircos-V2.0.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/about.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The About page of shinyCircos-V2.0.
-                </p>
-            </p>
-            <p class="p">
-                Contact information is given in the "Contact" page of shinyCircos-V2.0.
-            </p>
-            <p style="text-align: center;">
-                <img src="./helpfigures/contact.jpg" width="70%">
-                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                    The Contact page of shinyCircos-V2.0.
-                </p>
-            </p>
-        </div>
-
-
-        <div id="div3.3">
-            <h3 class="a">3.3 Install and use shinyCircos-V2.0 on local computers</h3>
-            <p class="p">
-                Users can choose to install and run shinyCircos-V2.0 on a personal computer (Windows, Mac or Linux) without uploading data to an online server. shinyCircos-V2.0 is a cross-platform application, i.e. shinyCircos-V2.0 can be installed on any platform with an available R environment. The installation of shinyCircos-V2.0 consists of three steps.
-            </p>
-            <div id="div3.3.1">
-                <h3 class="a">Step 1. Install R and RStudio</h3>
-                <p class="p">
-                    Please check CRAN (<a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>) for the installation of R.  
-					Please check <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a> for the installation of RStudio.  
-                </p>
-            </div>
-            <div id="div3.3.2">
-                <h3 class="a">Step 2. Install the R/Shiny package and other R packages required by shinyCircos-V2.0</h3>
-                <p class="p">
-                    Start an R session with RStudio and run the following lines:
-                </p>
-                <pre><code>
-        # try an http CRAN mirror if https CRAN mirror doesn't work
-        install.packages("shiny")
-        install.packages("circlize")
-        install.packages("bs4Dash")
-        install.packages("DT")
-        install.packages("RColorBrewer")
-        install.packages("shinyWidgets")
-        install.packages("data.table")
-        install.packages("shinyBS")
-        install.packages("sortable")
-        install.packages("shinyjqui")
-        install.packages("shinycssloaders")
-        install.packages("colourpicker")
-        install.packages("gridBase")
-        install.packages("BiocManager")
-        BiocManager::install("ComplexHeatmap")
-                </code></pre>
-            </div>
-            <div id="div3.3.3">
-                <h3 class="a">Step 3. Run the shinyCircos-V2.0 application</h3>
-                <p class="p">
-                    Start an R session with RStudio and run the following lines:
-                </p>
-                <pre><code>
-        shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
-                </code></pre>
-                <p class="p">
-                    This command will download the source code of shinyCircos-V2.0 from GitHub to a temporary directory on your computer, then launch the shinyCircos-V2.0 application in a web browser. <span style="color: red;" >The downloaded shinyCircos-V2.0 code will be deleted from your computer once the web browser is closed. The next time you run this command in RStudio, it will download the source code of shinyCircos-V2.0 from GitHub again to a temporary directory. </span>This process is cumbersome because it takes some time to download the shinyCircos-V2.0 code from GitHub.
-                </p>
-                <p class="p">
-                    We recommended that users download the source code of shinyCircos-V2.0 from GitHub to a fixed directory on your computer, such as "E:\apps" on Windows. A zip file named "shinyCircos-V2.0-master.zip" will be downloaded to your computer. Move this file to "E:\apps" and unzip this file. Then a directory named "shinyCircos-V2.0-master" will be generated in "E:\apps". The scripts "server.R" and "ui.R" can be found in "E:\apps\shinyCircos-V2.0-master". You can then start the shinyCircos-V2.0 application by running the following lines in RStudio.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/downcode.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Download the source code of shinyCircos-V2.0 from GitHub.
-                    </p>
-                </p>
-                <pre><code>
-					library(shiny)
-					runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
-                </code></pre>
-                <p class="p">
-                    The shinyCircos-V2.0 application will then be opened in your computer's default browser.
                 </p>
             </div>
         </div>
-
-
-        <div id="div3.4">
-            <h3 class="a">4 Steps to create a Circos diagram with shinyCircos-V2.0</h3>
-            <p class="p">
-                To make a Circos plot using shinyCircos-V2.0, the user must prepare and upload a file that defines the chromosomes of a specific genome, as well as other input data to be displayed along the genome. In this section, we will demonstrate all the basic steps to create a Circos diagram using example datasets.
-            </p>
-            <div id="div3.4.1">
-                <h3 class="a">4.1 Basic steps to create a Circos diagram with shinyCircos-V2.0</h3>
-                <div id="div3.4.1.1">
-                    <h3 class="a">Step 1. Upload a single "Chromosome data" to define the chromosomes of a Circos plot</h3>
-                    <p class="p">
-                        A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. 
-                        The detailed format of a Chromosome data is described in the "<a href="#div2">Input Data Format</a>" section.
-                    </p>
-                    <p class="p">
-						A file named as 'chromosome_general.csv' was uploaded from the local disk to to shinyCircos-V2.0 using the data upload widget implemented in the "Data Upload" menu of the shinyCircos-V2.0 application, as shown in the figure below.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/uploaddata/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Upload a chromosome data.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.1.2">
-                    <h3 class="a">Step 2. Upload one or multiple input datasets to be displayed in different Tracks</h3>
-                    <p class="p">
-                        Except for a Chromosome data, one or multiple other input datasets can be uploaded to shinyCircos-V2.0, to be displayed in different trakcs of a Circos plot.
-						The detailed format of input files to make different types of plot is detailed in the "<a href="#div2">Input Data Format</a>" section. 
-						Here, two files named as "barplot.csv" and "line.csv" were uploaded from local disk to shinyCircos-V2.0.
-                        Both datasets were distributed into the 'Track data' box. Remember to save the uploaded data timely.
-                    </p>
-                </div>
-                <div id="div3.4.1.3">
-                    <h3 class="a">Step 3. Set the "Track" index and plot type for each input dataset</h3>
-                    <p class="p">
-                        By default, the track index for the input datasets were determined by the order of uploading. And the default plot type for all input datasets were set as point.
-                        Here, the plot type for "barplot.csv" was set as 'bar', and the plot type for "line.csv" was set as 'line'.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/uploaddata/2.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Set Track index and plot type in the Circos Parameters page of shinyCircos-V2.0.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.1.4">
-                    <h3 class="a">Step 4. Click the "Submit!" button to create the Circos plot</h3>
-                    <p class="p">
-                        When the track indedx and plot type were correctly setted for all the input datasets, please click the "Step 4. Submit the plot parameters to make the Circos plot!" button at the bottom of the "Circos Parameters" page to make the desired Circos plot.
-                        <span style="color: red;">By default, random colors or predefined colors will be used by shinyCircos-V2.0 if necessary</span>.
-                    </p>
-
-                </div>
-            </div>
-            <div id="div3.4.2">
-                <h3 class="a">4.2 Update a Circos plot by replacing one or more input datasets</h3>
-                <p class="p">
-                    A track of a Circos plot is usually defined by a single input dataset. And a typical Circos plot usually contains multiple tracks defined by multiple input datasets.
-                    From time to time, we may want to replace one or more of these input files so that we can update some tracks of a Circos plot without recreating the entire plot.
-                    For example, we want to create a Circos plot with discrete rectangles by replacing Track2's "line.csv" with a new input file "rect_discrete.csv".
-                    To achieve this, we can go to the "Data Upload" page and upload "rect_discrete.csv" to shinyCircos-V2.0, distribute the "rect_discrete.csv" file into the "Track data" box, and move the "line.csv" file to the "Garbage" box. After that, we should click the "Step 2.2. Save uploaded data" button.
-                    At the same time, we need to change the plot type of the newly uploaded dataset from 'line' to "rect_discrete".
-                    Finally, we need to click the "Step 4. Submit the plot parameters to make the Circos plot!" button at the bottom of the "Circos Parameters" panel to update the Circos plot.
-                </p>
-            </div>
-            <div id="div3.4.3">
-                <h3 class="a">4.3 Download the created Circos plot in PDF or SVG format</h3>
-                <p class="p">
-                    The created Circos plot can be downloaded as a PDF or a SVG file using the widgets "Download PDF-file" and "Download SVG-file" on the top of the "Circos Plot" page. By default, the two files are named as "shinyCircos.pdf" and "shinyCircos.svg", respectively.
-                    The downloaded PDF file can be opened in Adobe Acrobat, while the downloaded SVG file "shinyCircos.svg" can be opened in Google Chrome browser.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/download/1.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Options to download the created Circos plot.
-                    </p>
-                </p>
-            </div>
-            <div id="div3.4.4">
-                <h3 class="a">4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</h3>
-                <p class="p">
-                    Using shinyCircos-V2.0, 10 different types of graphs, including point, line, bar, stack-line, stack-point, rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete and ideogram, can be created. 
-					To create a Circos graph, at least one input data file is required, that is, a Chromosome data file that defines the length of the genome.
-					In this section, we will show the steps to create a complex Circos diagram with shinyCircos-V2.0.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/1.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Open shinyCircos-V2.0 and goto the "Data Upload" page.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/2.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Trigger the data uploading process by clicking the 'Step 2. Upload one or multiple input datasets:' button.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/3.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Upload a chromosome data.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/4.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        A chromosome data upload successfully.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/5.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Distribute the chromosome data into the '*Chromosome data' box.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/6.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Save the uploaded Chromosome data.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/7.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Upload multiple track data.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/8.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Set plot type for all uploaded datasets.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/9.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Set parameters for all input datasets.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/10.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Submit the input datasets and plot parameters to make the Circos plot!
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotstep_English/11.jpg" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        The created Circos diagram.
-                    </p>
-                </p>
-            </div>
-            <div id="div3.4.5">
-                <h3 class="a">5 Plot options to decorate a Circos plot</h3>
-                <p class="p">
-				    In the "Circos Parameters" menu, a small gear button is displayed at the rightmost of each input dataset. By clicking this button, a page with multiple widgets will pop up for users to set parameters for the corresponding input data. Setting of several parameters are demonstrated in this section.
-                </p>
-                <div id="div3.4.5.1">
-                    <h3 class="a">5.1 Track height</h3>
-                    <p class="p">
-                        The default Track height is set as 0.1. The track height can be increased by turning up this number.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/track_height/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to increase the track height of a Circos plot.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.5.2">
-                    <h3 class="a">5.2 Y-axis</h3>
-                    <p class="p">
-                        shinyCircos-V2.0 now supports adding a Y-axis to a specified track, to display the range of data values for the corresponding track.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/yaxis/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to add Y-axis for a track in a Circos plot.
-                        </p>
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/yaxis/2.png" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            A Circos plot with Y-axis.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.5.3">
-                    <h3 class="a">5.3 Distances between adjacent tracks</h3>
-                    <p class="p">
-                        This parameter is designed to tune the distance between adjancent tracks, which can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/gap_track/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to adjust the distances between adjacent tracks.
-                        </p>
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/gap_track/2.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            A Circos plot with larger gaps between adjacent tracks.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.5.4">
-                    <h3 class="a">5.4 Cell border</h3>
-                    <p class="p">
-                        shinyCircos-V2.0 also supporting adding cell borders to one or multiple "Tracks" to emphasize these Tracks.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/cell_border/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to add cell borders.
-                        </p>
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/cell_border/2.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            A Circos plot with cell borders.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.5.5">
-                    <h3 class="a">5.5 Background color of a "Track"</h3>
-                    <p class="p">
-                        In shinyCircos-V2.0, users can adjust the background color of different Tracks to distinguish different tracks. The color can be null or a color vector of arbitrary length adjusted automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/tra_bgcol/1.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to change the background color of the current Track.
-                        </p>
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/tra_bgcol/2.jpg" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Tracks with different background colors in a Circos plot.
-                        </p>
-                    </p>
-                </div>
-                <div id="div3.4.5.6">
-                    <h3 class="a">5.6 Distances between adjacent sectors</h3>
-                    <p class="p">
-                        This parameter is used to tune the gap size between adjacent sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the gap between the first and the second sector.
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/sec_gap/1.png" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            Options to adjust the distances between adjacent setcors.
-                        </p>
-                    </p>
-                    <p style="text-align: center;">
-                        <img src="./helpfigures/sec_gap/2.png" width="70%">
-                        <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                            A circos plot with larger gap size between adjacent sectors.
-                        </p>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="div3.5">
-            <h3 class="a">6 Advanced features</h3>
-            <p class="p">
-                Compared with the previous version of shinyCircos, we developed several advanced features in shinyCircos-V2.0.
-            </p>
-            <div id="div3.5.1">
-                <h3 class="a">6.1 Add legend</h3>
-                <p class="p">
-                    For any of the plot type including "stack-line", "stack-point", "heatmap-gradual", "heatmap-discrete", "rect-gradual" and "rect-discrete", a figure legend can be added to the created Circos plot using the widget in "Advanced options" of the "Circos Plot" menu. The figure legend can be placed at the bottom or right side of the Circos plot.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/legend/1.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Options to add figure legend for a Circos plot.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/legend/2.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        A Circos diagram with figure legend.
-                    </p>
-                </p>
-            </div>
-            <div id="div3.5.2">
-                <h3 class="a">6.2 Highlight specific genomic regions</h3>
-                <p class="p">
-                    shinyCircos-V2.0 supports highlighting one or multiple Sectors of a Circos plot. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/highlight/1_English.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Options to highlight one or multiple genomic regions.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/highlight/2.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        A Circos diagram with highlighted genomic regions.
-                    </p>
-                </p>
-            </div>
-            <div id="div3.5.3">
-                <h3 class="a">6.3 Adjust plotsize</h3>
-                <p class="p">
-                    shinyCircos-V2.0 supports resizing of a created Circos plot, using the widget shown below.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/plotsize/1.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Options to adjust the size of a Circos Plot.
-                    </p>
-                </p>
-            </div>
-            <div id="div3.5.4">
-                <h3 class="a">6.4 Add "Track index"</h3>
-                <p class="p">
-                    shinyCircos-V2.0 supports adding index to all the tracks of a Circos plot to distinguish different tracks. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/tra_index/1.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        Options to add Track index.
-                    </p>
-                </p>
-                <p style="text-align: center;">
-                    <img src="./helpfigures/tra_index/2.png" width="70%">
-                    <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
-                        A Circos diagram with Track index.
-                    </p>
-                </p>
-            </div>
-        </div>
-
-
-        
-    </div>
-</body>
+    </body>
 </html>

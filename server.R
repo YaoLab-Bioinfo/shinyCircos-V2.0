@@ -1277,7 +1277,7 @@ server <- function(input, output,session) {
                           label = NULL,
                           style = "unite",
                           color = "success",
-                          icon = icon("gear")
+                          icon = icon("gear", verify_fa = FALSE)
                         ),
                         title = "Set parameters for this track. NOTE: Changes will not be applied for example datasets.",
                         placement = "bottom"
@@ -2078,7 +2078,7 @@ server <- function(input, output,session) {
                             label = NULL,
                             style = "unite",
                             color = "success",
-                            icon = icon("gear")
+                            icon = icon("gear", verify_fa = FALSE)
                           ),
                           title = paste0("Set parameters for the label data. NOTE: Changes will not be applied for example datasets."),
                           placement = "bottom"
@@ -2680,6 +2680,7 @@ server <- function(input, output,session) {
           }else{
             datat_info <- NULL
             datan_info <- NULL
+            datan_info_text <- NULL
             if(length(data.T) != 0){
               for (tt in 1:length(data.T)) {
                 data.tt <- data.T[[tt]]
@@ -2694,16 +2695,59 @@ server <- function(input, output,session) {
                 }
               }
             }else if(length(data.N) != 0){
+              
               for (nn in 1:length(data.N)) {
                 data.nn <- data.N[[nn]]
-                if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
-                  datan_info[nn] <- 1
-                }else if(sum(is.na(data.C[,2:3])) != 0){
-                  datan_info[nn] <- 1
-                }else if(ncol(data.nn) != 4){
-                  datan_info[nn] <- 1
+                if(ncol(data.nn) == 4 | ncol(data.nn) == 5){
+                  if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
+                    datan_info[nn] <- 1
+                    datan_info_text[nn] <- "The second and third columns are not numbers"
+                  }else if(sum(is.na(data.C[,2:3])) != 0){
+                    datan_info[nn] <- 1
+                    datan_info_text[nn] <- "The second and third columns contain null values"
+                  }else if(ncol(data.nn) == 5){
+                    color_label <- data.nn$color
+                    if(any(color_label == "" | is.na(color_label))){
+                      datan_info[nn] <- 1
+                      datan_info_text[nn] <- "Color column contains null values"
+                    }else{
+                      if(length(grep("#",color_label))!=0){
+                        color_label16 <- color_label[grep("#",color_label)]
+                        color_label7 <- color_label16[which(nchar(color_label16) == 7)]
+                        color_label9 <- color_label16[which(nchar(color_label16) == 9)]
+                        if(!all(nchar(color_label16) == 7| nchar(color_label16) == 9)){
+                          datan_info[nn] <- 1
+                          datan_info_text[nn] <- "Wrong RGB error!"
+                        }else if(!any(grepl("^#([0-9a-fA-F]{6})$",color_label7)) & length(color_label7) != 0){
+                          datan_info[nn] <- 1
+                          datan_info_text[nn] <- "Wrong RGB error!"
+                        }else if(!any(grepl("^#([0-9a-fA-F]{8})$",color_label9)) & length(color_label9) != 0){
+                          datan_info[nn] <- 1
+                          datan_info_text[nn] <- "Wrong RGB error!"
+                        }else if(!all(color_label[-grep("#",color_label)] %in% colors())){
+                          datan_info[nn] <- 1
+                          datan_info_text[nn] <- "Wrong color input!"
+                        }else{
+                          datan_info[nn] <- 0
+                          datan_info_text[nn] <- ""
+                        }
+                      }else{
+                        if(!all(color_label %in% colors())){
+                          datan_info[nn] <- 1
+                          datan_info_text[nn] <- "Wrong color input!"
+                        }else{
+                          datan_info[nn] <- 0
+                          datan_info_text[nn] <- ""
+                        }
+                      }
+                    }
+                  }else if(ncol(data) == 4){
+                    datan_info[nn] <- 0
+                    datan_info_text[nn] <- ""
+                  }
                 }else{
-                  datan_info[nn] <- 0
+                  datan_info[nn] <- 1
+                  datan_info_text <- "The data is in the wrong format, the data should be 4 or 5 columns"
                 }
               }
             }else if(!is.null(data.L)){
@@ -2734,8 +2778,8 @@ server <- function(input, output,session) {
             }else if(sum(datan_info)!=0){
               sendSweetAlert(
                 session = session,
-                title = "Wrong data format!",
-                text = paste0("Wrong Label data format found in ",paste(which(datan_info==1),collapse = ",")),
+                title = paste0("Wrong Label data format found in data",paste(which(datan_info==1),collapse = ",")),
+                text = paste0(datan_info_text[datan_info_text != ""],collapse = ";"),
                 type = "error"
               )
               dataview_export <<- NULL
@@ -3523,21 +3567,16 @@ server <- function(input, output,session) {
             tra_inf[k] <- 1
             tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
           }
-          if(tratype != "point"){
+          if(tratype != "bar"){
             if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
               dataif <- NULL
               for (l in 1:(ncol(data_TT)-3)) {
                 dataif[l] <- is.numeric(data_TT[,l+3])
               }
               if(sum(dataif) != (ncol(data_TT)-3)){
-                tra_inf <- 1
-                tra_inf_word <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
               }
-            }
-          }else{
-            if(sum(grepl("value",colnames(data_TT)[4:ncol(data_TT)])) != 1){
-              tra_inf <- 1
-              tra_inf_word <- "Point data should contain only four columns." 
             }
           }
         }else if(tratype == "rect-discrete"){
@@ -3592,19 +3631,6 @@ server <- function(input, output,session) {
       tra_inf <- 0
       tra_inf_word <- NULL
     }
-    if(!is.null(data.N)){
-      lab_inf <- NULL
-      lab_inf_word <- NULL
-      for (k in 1:length(data.N)) {
-        data_NN <- data.N[[k]]
-        if(ncol(data_NN) != 4){
-          lab_inf[k] <- 1
-          lab_inf_word[k] <- "Label data format error"
-        }
-      }
-    }else{
-      lab_inf <- 0
-    }
     if(chr_type == 1 && ncol(data.C) != 3){
       sendSweetAlert(
         session = session,
@@ -3625,14 +3651,6 @@ server <- function(input, output,session) {
         session = session,
         title = paste0("Error index:",paste(which(tra_inf==1),collapse = ",")), #paste0("Error index:",paste(which(tra_inf==1),collapse = ",")),
         text = paste(tra_inf_word,collapse = ";"),
-        type = "error"
-      )
-    }else if(sum(lab_inf) != 0){
-      lab_inf_word <- na.omit(lab_inf_word)
-      sendSweetAlert(
-        session = session,
-        title = paste0("Error index:",paste(which(lab_inf==1),collapse = ",")), #paste0("Error index:",paste(which(tra_inf==1),collapse = ",")),
-        text = paste(lab_inf_word,collapse = ";"),
         type = "error"
       )
     }else if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){#colformatLinks
@@ -3866,7 +3884,6 @@ server <- function(input, output,session) {
           tra_inf_word <- NULL
         }
       }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
-        tra_inf <- 0
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
             tra_inf <- 1
@@ -3895,7 +3912,7 @@ server <- function(input, output,session) {
         }
         
         
-        if(tratype != "point"){
+        if(tratype != "bar"){
           if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
             dataif <- NULL
             for (l in 1:(ncol(data_TT)-3)) {
@@ -3905,11 +3922,6 @@ server <- function(input, output,session) {
               tra_inf <- 1
               tra_inf_word <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
             }
-          }
-        }else{
-          if(sum(grepl("value",colnames(data_TT)[4:ncol(data_TT)])) != 1){
-            tra_inf <- 1
-            tra_inf_word <- "Point data should contain only four columns." 
           }
         }
         
@@ -4697,24 +4709,7 @@ server <- function(input, output,session) {
       })
       x <- which((unlist(lab_setlist)- unlist(lab_setlist_old))==1)
       lab_setlist_old <<- lab_setlist
-      if(length(x) != 0){
-        lab_inf <- 0
-        lab_inf_word <- NULL
-        data_NN <- data.N[[x]]
-        if(ncol(data_NN) != 4){
-          lab_inf <- 1
-          lab_inf_word <- "Format of the Label data is incorrect."
-        }
-        if(lab_inf != 0){
-          sendSweetAlert(
-            session = session,
-            title = "Error!",
-            text = paste(lab_inf_word),
-            type = "error"
-          )
-        }
-        
-      }
+      
       
       
       
@@ -4738,67 +4733,115 @@ server <- function(input, output,session) {
     })
     lapply(1:length(labdatas), function(x){
       output[[paste0("sortable_label_datvie",x)]] <<- renderUI({
-        tagList(
-          numericInput(
-            inputId = paste0("lab_fontsize",x),
-            label = tags$div(
-              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
-              bs4Dash::tooltip(
-                actionButton(
-                  inputId = paste0("datvie_tip_lab_labhi",x), 
-                  label="" , 
-                  icon=icon("question"),
-                  status="info",
-                  size = "xs"
-                ),
-                title = "Height of the track occupied by the label.",
-                placement = "right"
-              )
+        if(ncol(data.N[[x]]) == 4){
+          tagList(
+            numericInput(
+              inputId = paste0("lab_fontsize",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_labhi",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Height of the track occupied by the label.",
+                  placement = "right"
+                )
+              ),
+              value= lab_fontsize[x], 
+              min=0.01, 
+              max=1,
+              step=0.01
             ),
-            value= lab_fontsize[x], 
-            min=0.01, 
-            max=1,
-            step=0.01
-          ),
-          colourInput(
-            inputId = paste0("lab_fontcol",x),
-            label = tags$div(
-              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
-              bs4Dash::tooltip(
-                actionButton(
-                  inputId = paste0("datvie_tip_lab_labcol",x), 
-                  label="" , 
-                  icon=icon("question"),
-                  status="info",
-                  size = "xs"
-                ),
-                title = "Color of the label text and the connection line.",
-                placement = "right"
-              )
+            colourInput(
+              inputId = paste0("lab_fontcol",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_labcol",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Color of the label text and the connection line.",
+                  placement = "right"
+                )
+              ),
+              value = lab_fontcol[x],
+              returnName = TRUE
             ),
-            value = lab_fontcol[x],
-            returnName = TRUE
-          ),
-          pickerInput(
-            inputId = paste0("poslabels",x),
-            label = tags$div(
-              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
-              bs4Dash::tooltip(
-                actionButton(
-                  inputId = paste0("datvie_tip_lab_labpos",x), 
-                  label="" , 
-                  icon=icon("question"),
-                  status="info",
-                  size = "xs"
-                ),
-                title = "Place the labels in the inner or the outer of the track?",
-                placement = "right"
-              )
-            ),
-            choices = c("inside", "outside"),
-            selected = poslabels[x]
+            pickerInput(
+              inputId = paste0("poslabels",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_labpos",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Place the labels in the inner or the outer of the track?",
+                  placement = "right"
+                )
+              ),
+              choices = c("inside", "outside"),
+              selected = poslabels[x]
+            )
           )
-        )
+          
+        }else{
+          tagList(
+            numericInput(
+              inputId = paste0("lab_fontsize",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_labhi",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Height of the track occupied by the label.",
+                  placement = "right"
+                )
+              ),
+              value= lab_fontsize[x], 
+              min=0.01, 
+              max=1,
+              step=0.01
+            ),
+            pickerInput(
+              inputId = paste0("poslabels",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_labpos",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "Place the labels in the inner or the outer of the track?",
+                  placement = "right"
+                )
+              ),
+              choices = c("inside", "outside"),
+              selected = poslabels[x]
+            )
+          )
+          
+        }
+        
       })
     })
   })
@@ -5038,8 +5081,6 @@ server <- function(input, output,session) {
         midplot <- input$midplot
         plotsize <- input$plotmultiples
         if(input$addlegend == "Yes"){
-          
-          #在这里设置宽度跟随legend变化
           
           if(input$legendpos == "Right"){
             sizeplot <- c(850,750)

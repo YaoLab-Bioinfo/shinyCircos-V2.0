@@ -17,7 +17,6 @@ sidebar <- bs4DashSidebar(
     bs4SidebarMenuItem("Data Upload",tabName = "dat-upl", icon = icon("upload",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Parameters",tabName = "dat-vie", icon = icon("gears",lib = "font-awesome")),
     bs4SidebarMenuItem("Circos Plot",tabName = "cir-par", icon = icon("image",lib = "font-awesome")),
-    #bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("adjust",lib = "font-awesome")),
     bs4SidebarMenuItem("Gallery",tabName = "gal", icon = icon("circle-half-stroke",lib = "font-awesome")),
     bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
     bs4SidebarMenuItem("About",tabName = "about", icon = icon("info",lib = "font-awesome")),
@@ -641,7 +640,7 @@ body <- bs4DashBody(
                                )
                              ),
                              choices = c("Yes", "No"),
-                             selected = "no"
+                             selected = "No"
                            )
                          ),
                          column(
@@ -680,35 +679,56 @@ body <- bs4DashBody(
                          selected = 100
                        ),
                        hr(),
-                       tags$div(
-                         HTML('<font><h4><i class="fa-solid fa-play"></i> Highlight genomic regions with input data pasted below:</font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "cirplo_highlight",
-                             label="" ,
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Each row should contain five values separated by commas indicating the start sector position, the end sector position, start track index, end track index, and the color. For example, 'chr1,1,10000,'#FF0000'.",
-                           placement = "bottom"
+                       
+                       fluidRow(
+                         column(
+                           width = 6,
+                           tags$div(
+                             HTML('<font><h4><i class="fa-solid fa-play"></i> Highlight genomic regions with input data pasted below:</font>'),
+                             bs4Dash::tooltip(
+                               actionButton(
+                                 inputId = "cirplo_highlight",
+                                 label="" ,
+                                 icon=icon("question"),
+                                 status="info",
+                                 size = "xs"
+                               ),
+                               title = "Each row should contain five values separated by commas indicating the start sector position, the end sector position, start track index, end track index, and the color. For example, 'chr1,1,10000,'#FF0000'.",
+                               placement = "bottom"
+                             )
+                           )
+                         ),
+                         column(
+                           width = 6,
+                           tags$div(
+                             style = "with:1200px;",
+                             HTML('<font><h4><i class="fa-solid fa-circle"></i> Transparency (%)</font>'),
+                             br()
+                           )
                          )
                        ),
-                       tags$textarea(
-                         id = "hltData",
-                         rows = 5,
-                         cols = 60,
-                         ""
-                       ),
-                       sliderTextInput(
-                         inputId = "hltrans",
-                         label = tags$div(
-                           style = "with:1200px;",
-                           HTML('<font><h4><i class="fa-solid fa-play"></i> Transparency (%)</font>'),
+                       fluidRow(
+                         column(
+                           width = 6,
+                           tags$textarea(
+                             id = "hltData",
+                             rows = 2,
+                             cols = 40,
+                             ""
+                           )
                          ),
-                         choices = c(1:100),
-                         selected = 25
+                         column(
+                           width = 6,
+                           sliderTextInput(
+                             inputId = "hltrans",
+                             label = NULL,
+                             choices = c(1:100),
+                             selected = 25
+                           )
+                         )
                        ),
+                       
+                       
                        actionBttn(
                          inputId = "savehlData",
                          label = "SAVE",
@@ -817,20 +837,20 @@ body <- bs4DashBody(
              label = NULL,
              choices = c("English" = 1,"简体中文" = 2),
              selected = 1
-           ),
+           )
          ),
          column(
-           width = 8
+           width = 8,
          )
        ),
        hr(),
        conditionalPanel(
          condition = "input.helplan == '1'",
-         includeHTML("www/help-English.html")
+         shiny::includeHTML("www/help-English.html")
        ),
        conditionalPanel(
          condition = "input.helplan == '2'",
-         includeHTML("www/help-Chinese.html")
+         shiny::includeHTML("www/help-Chinese.html")
        )
      ),
      bs4TabItem(
