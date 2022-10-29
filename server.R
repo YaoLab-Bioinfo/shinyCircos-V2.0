@@ -1277,7 +1277,7 @@ server <- function(input, output,session) {
                           label = NULL,
                           style = "unite",
                           color = "success",
-                          icon = icon("gear", verify_fa = FALSE)
+                          icon = icon("gear")
                         ),
                         title = "Set parameters for this track. NOTE: Changes will not be applied for example datasets.",
                         placement = "bottom"
@@ -2078,7 +2078,7 @@ server <- function(input, output,session) {
                             label = NULL,
                             style = "unite",
                             color = "success",
-                            icon = icon("gear", verify_fa = FALSE)
+                            icon = icon("gear")
                           ),
                           title = paste0("Set parameters for the label data. NOTE: Changes will not be applied for example datasets."),
                           placement = "bottom"
@@ -2702,7 +2702,7 @@ server <- function(input, output,session) {
                   if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
                     datan_info[nn] <- 1
                     datan_info_text[nn] <- "The second and third columns are not numbers"
-                  }else if(sum(is.na(data.C[,2:3])) != 0){
+                  }else if(sum(is.na(data.nn[,2:3])) != 0){
                     datan_info[nn] <- 1
                     datan_info_text[nn] <- "The second and third columns contain null values"
                   }else if(ncol(data.nn) == 5){
@@ -2741,7 +2741,7 @@ server <- function(input, output,session) {
                         }
                       }
                     }
-                  }else if(ncol(data) == 4){
+                  }else if(ncol(data.nn) == 4){
                     datan_info[nn] <- 0
                     datan_info_text[nn] <- ""
                   }
@@ -2759,6 +2759,7 @@ server <- function(input, output,session) {
                   type = "error"
                 )
               }else if(!all(is.numeric(data.L[,2]),is.numeric(data.L[,3]),is.numeric(data.L[,5]),is.numeric(data.L[,6]))){
+                
                 sendSweetAlert(
                   session = session,
                   title = "Wrong data format!",
