@@ -222,7 +222,7 @@ server <- function(input, output,session) {
 	    sam_lab_fontsize <<- c(0.15,0.13)
       sam_lab_fontcol <<- c("#000000","#FF0000")
       sam_poslabels <<- c("inside","outside")
-      sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N))))
+      sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N)),rep(1,length(sam_lab_fontcol)),rep(100,length(sam_lab_fontcol))))
       sam_data.L <<- data.frame(read.csv("./www/example_data/links/links.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "1"
 	    sam_colorLinks <<- "1"
@@ -549,7 +549,7 @@ server <- function(input, output,session) {
       sam_lab_fontsize <<- c(0.15,0.13)
       sam_lab_fontcol <<- c("#000000","#FF0000")
       sam_poslabels <<- c("inside","outside")
-      sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N))))
+      sam_labels_inf <<- as.data.frame(cbind(sam_labpos,sam_poslabels,sam_lab_fontsize,sam_lab_fontcol,c(1:length(sam_data.N)),rep(1,length(sam_lab_fontcol)),rep(100,length(sam_lab_fontcol))))
       sam_data.L <<- data.frame(read.csv("./www/example_data/links/links_discrete_color.csv",header = T),stringsAsFactors = F)
       sam_colformatLinks <<- "2"
       sam_colorLinks <<- "2"
@@ -1725,23 +1725,34 @@ server <- function(input, output,session) {
                           ),
                           conditionalPanel(
                             condition = paste0("input.sam_tra_hmap_heatmapcol",x,"== '2'"),
-                            colourInput(
-                              inputId = paste0("sam_tra_hmap_lowColor",x),
-                              label = "lowColor",
-                              value = sam_tra_hmap_lowColor[x],
-                              returnName = TRUE
-                            ),
-                            colourInput(
-                              inputId = paste0("sam_tra_hmap_midColor",x),
-                              label = "midColor",
-                              value = sam_tra_hmap_midColor[x],
-                              returnName = TRUE
-                            ),
-                            colourInput(
-                              inputId = paste0("sam_tra_hmap_highColor",x),
-                              label = "highColor",
-                              value = sam_tra_hmap_highColor[x],
-                              returnName = TRUE
+                            fluidRow(
+                              column(
+                                width = 4,
+                                colourInput(
+                                  inputId = paste0("sam_tra_hmap_lowColor",x),
+                                  label = "lowColor",
+                                  value = sam_tra_hmap_lowColor[x],
+                                  returnName = TRUE
+                                )
+                              ),
+                              column(
+                                width = 4,
+                                colourInput(
+                                  inputId = paste0("sam_tra_hmap_midColor",x),
+                                  label = "midColor",
+                                  value = sam_tra_hmap_midColor[x],
+                                  returnName = TRUE
+                                )
+                              ),
+                              column(
+                                width = 4,
+                                colourInput(
+                                  inputId = paste0("sam_tra_hmap_highColor",x),
+                                  label = "highColor",
+                                  value = sam_tra_hmap_highColor[x],
+                                  returnName = TRUE
+                                )
+                              )
                             )
                           ),
                           pickerInput(
@@ -1793,7 +1804,26 @@ server <- function(input, output,session) {
                         tagList(
                           pickerInput(
                             inputId = paste0("sam_tra_heatcol_dis",x),
-                            label = "Select color",
+                            label = tags$div(
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
+                              bs4Dash::tooltip(
+                                actionButton(
+                                  inputId = paste0("datvie_tip_sam_heat_colorsel",x), 
+                                  label="" , 
+                                  icon=icon("question"),
+                                  status="info",
+                                  size = "xs"
+                                ),
+                                title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    If 'Specific' was chosen, all data will be filled by a specified color. 
+                    If 'Custom' was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
+                    Users should provide values as 'a:red;b:green;c:blue', in which 'a b c' represent different
+                    data category indicated by the 4th column of the uploaded data. 
+                    Color for data without customed color will be set to NULL. Hex color codes as '#FF0000' are also supported.",
+                                placement = "right"
+                              )
+                            ),
+                            #label = "Select color",
                             choices = c("Random" = "1" , "Custom" = "2"),
                             selected = sam_tra_heatcol_dis[x]
                           ),
@@ -2360,7 +2390,7 @@ server <- function(input, output,session) {
                           
                           colourInput(
                             "sam_lowColinks",
-                            label = HTML('<p><font size="1.8"><strong>Low Color</strong></font></p>'),
+                            label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
                             value = sam_lowColinks,
                             returnName = TRUE
                           )
@@ -2369,7 +2399,7 @@ server <- function(input, output,session) {
                           4,
                           colourInput(
                             "sam_midColinks",
-                            label = HTML('<p><font size="1.8"><strong>Middle Color</strong></font></p>'),
+                            label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Middle Color</strong></font></p>'),
                             value = sam_midColinks,
                             returnName = TRUE
                           )
@@ -2378,7 +2408,7 @@ server <- function(input, output,session) {
                           4,
                           colourInput(
                             "sam_highColinks",
-                            label = HTML('<p><font size="1.8"><strong>High Color</strong></font></p>'),
+                            label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> High Color</strong></font></p>'),
                             value = sam_highColinks,
                             returnName = TRUE
                           )
@@ -3248,11 +3278,10 @@ server <- function(input, output,session) {
                 title = NULL,
                 trigger = "linsetting",
                 size = "large",
-                materialSwitch(
+                pickerInput(
                   inputId = "midplot",
                   label = tags$div(
                     HTML('<font><h5><i class="fa-solid fa-play"></i><b> Use the middle points to draw the links</b></font>'),
-                    #HTML(' <font><h5><b>Use the middle points to draw the link</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_link_tip0", 
@@ -3265,9 +3294,8 @@ server <- function(input, output,session) {
                       placement = "bottom"
                     )
                   ),
-                  value = FALSE,
-                  status = "success"
-                  #right = TRUE
+                  choices = c("Yes" = TRUE,"No" = FALSE),
+                  selected = FALSE
                 ),
                 conditionalPanel(
                   condition="input.colformatLinks=='1' | input.colformatLinks=='2'",
@@ -3348,7 +3376,7 @@ server <- function(input, output,session) {
                       width = 4,
                       colourInput(
                         inputId = "lowColinks",
-                        label = HTML('<p><font size="2.4"><strong>Low Color</strong></font></p>'),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
                         value = "#0016DB",
                         returnName = TRUE
                       )
@@ -3357,7 +3385,7 @@ server <- function(input, output,session) {
                       4,
                       colourInput(
                         inputId = "midColinks",
-                        label = HTML('<p><font size="2.4"><strong>Middle Color</strong></font></p>'),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Middle Color</strong></font></p>'),
                         value = "#FFFFFF",
                         returnName = TRUE
                       )
@@ -3366,13 +3394,12 @@ server <- function(input, output,session) {
                       4,
                       colourInput(
                         inputId = "highColinks",
-                        label = HTML('<p><font size="2.4"><strong>High Color</strong></font></p>'),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> High Color</strong></font></p>'),
                         value = "#FFFF00",
                         returnName = TRUE
                       )
                     )
-                  ),
-                  HTML('<br>')
+                  )
                 )
               )
             )
@@ -3503,6 +3530,12 @@ server <- function(input, output,session) {
     lab_fontcol <<- lapply(1:length(labdatas), function(x){
       return("#000000")
     })
+    lab_fontper <<- lapply(1:length(labdatas), function(x){
+      return(100)
+    })
+    lab_adjustfontsize <<- lapply(1:length(labdatas), function(x){
+      return(1)
+    })
     poslabels <<- lapply(1:length(labdatas), function(x){
       return("inside")
     })
@@ -3632,14 +3665,15 @@ server <- function(input, output,session) {
       tra_inf <- 0
       tra_inf_word <- NULL
     }
-    if(chr_type == 1 && ncol(data.C) != 3){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "Format of the general chromosome data is incorrect.",
-        type = "error"
-      )
-    }else if(chr_type == 2 && ncol(data.C) != 5){
+    # if(chr_type == 1 && ncol(data.C) != 3){
+    #   sendSweetAlert(
+    #     session = session,
+    #     title = "Error!",
+    #     text = "Format of the general chromosome data is incorrect.",
+    #     type = "error"
+    #   )
+    # }else 
+    if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
         title = "Error!",
@@ -3654,41 +3688,73 @@ server <- function(input, output,session) {
         text = paste(tra_inf_word,collapse = ";"),
         type = "error"
       )
-    }else if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){#colformatLinks
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "Data without a 'color' column should contain six columns.",
-        type = "error"
-      )
-    }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "The seventh column of Data with multi-groups should be character.",
-        type = "error"
-      )
-    }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "The seventh column of Data with gradual value should be numeric.",
-        type = "error"
-      )
+    }else if(!is.null(data.L)){
+      if(link_type == 1){
+        letplotgo <<- 1
+        if(ncol(data.L) != 6 | ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data without a 'color' column should contain six columns.",
+            type = "error"
+          )
+        }
+      }else if(link_type == 2){
+        if(ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data should contain seven columns.",
+            type = "error"
+          )
+        }else{
+          if(!is.character(data.L[,7])){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "The seventh column of Data with multi-group should be character.",
+              type = "error"
+            )
+          }else{
+            letplotgo <<- 1
+          }
+        }
+      }else{
+        if(ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data should contain seven columns.",
+            type = "error"
+          )
+        }else{
+          if(!is.numeric(data.L[,7])){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "The seventh column of Data with gradual value should be numeric.",
+              type = "error"
+            )
+          }else{
+            letplotgo <<- 1
+          }
+        }
+      }
     }else{
       letplotgo <<- 1
     }
   })
   observeEvent(input$chr_setting,{
     chr_type <- input$chr_type
-    if(chr_type == 1 && ncol(data.C) != 3){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "Format of the general chromosome data is incorrect.",
-        type = "error"
-      )
-    }else if(chr_type == 2 && ncol(data.C) != 5){
+    # if(chr_type == 1 && ncol(data.C) != 3){
+    #   sendSweetAlert(
+    #     session = session,
+    #     title = "Error!",
+    #     text = "Format of the general chromosome data is incorrect.",
+    #     type = "error"
+    #   )
+    # }else 
+    if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
         title = "Error!",
@@ -3699,28 +3765,76 @@ server <- function(input, output,session) {
   })
   observeEvent(input$linsetting,{
     link_type <- input$colformatLinks
-    if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){#colformatLinks
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "Data without a 'color' column should contain six columns.",
-        type = "error"
-      )
-    }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "The seventh column of Data with multi-group should be character.",
-        type = "error"
-      )
-    }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
-      sendSweetAlert(
-        session = session,
-        title = "Error!",
-        text = "The seventh column of Data with gradual value should be numeric.",
-        type = "error"
-      )
+    if(!is.null(data.L)){
+      if(link_type == 1){
+        if(ncol(data.L) != 6 | ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data without a 'color' column should contain six columns.",
+            type = "error"
+          )
+        }
+      }else if(link_type == 2){
+        if(ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data should contain seven columns.",
+            type = "error"
+          )
+        }else{
+          if(!is.character(data.L[,7])){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "The seventh column of Data with multi-group should be character.",
+              type = "error"
+            )
+          }
+        }
+      }else{
+        if(ncol(data.L) != 7){
+          sendSweetAlert(
+            session = session,
+            title = "Error!",
+            text = "Data should contain seven columns.",
+            type = "error"
+          )
+        }else{
+          if(!is.numeric(data.L[,7])){
+            sendSweetAlert(
+              session = session,
+              title = "Error!",
+              text = "The seventh column of Data with gradual value should be numeric.",
+              type = "error"
+            )
+          }
+        }
+      }
     }
+    # if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){ # colformatLinks
+    #   sendSweetAlert(
+    #     session = session,
+    #     title = "Error!",
+    #     text = "Data without a 'color' column should contain six columns.",
+    #     type = "error"
+    #   )
+    # }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
+    #   sendSweetAlert(
+    #     session = session,
+    #     title = "Error!",
+    #     text = "The seventh column of Data with multi-group should be character.",
+    #     type = "error"
+    #   )
+    # }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
+    #   sendSweetAlert(
+    #     session = session,
+    #     title = "Error!",
+    #     text = "The seventh column of Data with gradual value should be numeric.",
+    #     type = "error"
+    #   )
+    # }
   })
   whichchange <<- NULL
   toListentra <- reactive({
@@ -4171,7 +4285,9 @@ server <- function(input, output,session) {
               tagList(
                 pickerInput(
                   inputId = paste0("tra_trct_colrect",x),
-                  label = "Color presets",
+                  label = tags$div(
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color presets</b></font>')
+                  ),
                   choices = c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "olivedrab", "gold", "lightblue", "navy.yellow", "purple.seagreen", "navy.orange", "navy.cyan", "blue.red", "green.red"),
                   selected = tra_trct_colrect[x]
                 )
@@ -4436,23 +4552,34 @@ server <- function(input, output,session) {
                 ),
                 conditionalPanel(
                   condition = paste0("input.tra_hmap_heatmapcol",x,"== '2'"),
-                  colourInput(
-                    inputId = paste0("tra_hmap_lowColor",x),
-                    label = "lowColor",
-                    value = tra_hmap_lowColor[x],
-                    returnName = TRUE
-                  ),
-                  colourInput(
-                    inputId = paste0("tra_hmap_midColor",x),
-                    label = "midColor",
-                    value = tra_hmap_midColor[x],
-                    returnName = TRUE
-                  ),
-                  colourInput(
-                    inputId = paste0("tra_hmap_highColor",x),
-                    label = "highColor",
-                    value = tra_hmap_highColor[x],
-                    returnName = TRUE
+                  fluidRow(
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("tra_hmap_lowColor",x),
+                        label = "lowColor",
+                        value = tra_hmap_lowColor[x],
+                        returnName = TRUE
+                      )
+                    ),
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("tra_hmap_midColor",x),
+                        label = "midColor",
+                        value = tra_hmap_midColor[x],
+                        returnName = TRUE
+                      )
+                    ),
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("tra_hmap_highColor",x),
+                        label = "highColor",
+                        value = tra_hmap_highColor[x],
+                        returnName = TRUE
+                      )
+                    )
                   )
                 ),
                 pickerInput(
@@ -4504,7 +4631,11 @@ server <- function(input, output,session) {
               tagList(
                 pickerInput(
                   inputId = paste0("tra_heatcol_dis",x),
-                  label = "Select color",
+                  label = tags$div(
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>')
+                  ),
+                  #label = HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
+                  #label = "Select color",
                   choices = c("Random" = "1" , "Custom" = "2"),
                   selected = tra_heatcol_dis[x]
                 ),
@@ -4721,6 +4852,13 @@ server <- function(input, output,session) {
       if(!is.null(input[[paste0("lab_fontcol",x)]])){
         lab_fontcol[x] <<- input[[paste0("lab_fontcol",x)]]
       }
+      if(!is.null(input[[paste0("lab_fontper",x)]])){
+        lab_fontper[x] <<- input[[paste0("lab_fontper",x)]]
+      }
+      if(!is.null(input[[paste0("lab_adjustfontsize",x)]])){
+        lab_adjustfontsize[x] <<- input[[paste0("lab_adjustfontsize",x)]]
+      }
+      
       if(!is.null(input[[paste0("poslabels",x)]])){
         poslabels[x] <<- input[[paste0("poslabels",x)]]
       }
@@ -4757,6 +4895,40 @@ server <- function(input, output,session) {
               max=1,
               step=0.01
             ),
+            
+            
+            
+            pickerInput(
+              inputId = paste0("lab_adjustfontsize",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_adjustfontsize",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "'Adaptive' means the font size is adaptive according to the height of the label track,'Custom' means the percentage of the font relative to the adaptive size.",
+                  placement = "right"
+                )
+              ),
+              choices = c("Adaptive" = 1, "Custom" = 2),
+              selected = lab_adjustfontsize[x]
+            ),
+            conditionalPanel(
+              condition = paste0("input.lab_adjustfontsize",x,"==2"),
+              numericInput(
+                inputId = paste0("lab_fontper",x),
+                value= lab_fontper[x], 
+                label = NULL,
+                min=30, 
+                max=120,
+                step=0.1
+              )
+            ),
+            
             colourInput(
               inputId = paste0("lab_fontcol",x),
               label = tags$div(
@@ -4913,8 +5085,14 @@ server <- function(input, output,session) {
             if(!is.null(input[[paste0("lab_fontcol",x)]])){
               lab_fontcol[x] <<- input[[paste0("lab_fontcol",x)]]
             }
+            if(!is.null(input[[paste0("lab_adjustfontsize",x)]])){
+              lab_adjustfontsize[x] <<- input[[paste0("lab_adjustfontsize",x)]]
+            }
+            if(!is.null(input[[paste0("lab_fontper",x)]])){
+              lab_fontper[x] <<- input[[paste0("lab_fontper",x)]]
+            }
           })
-          labels_inf <- as.data.frame(cbind(unlist(lab_pos),unlist(poslabels),unlist(lab_fontsize),unlist(lab_fontcol),c(1:length(data.N))))
+          labels_inf <- as.data.frame(cbind(unlist(lab_pos),unlist(poslabels),unlist(lab_fontsize),unlist(lab_fontcol),c(1:length(data.N)),unlist(lab_adjustfontsize),unlist(lab_fontper)))
         }
         tra_num <- length(tradatas)
         tra_pos <<- lapply(1:tra_num, function(x){

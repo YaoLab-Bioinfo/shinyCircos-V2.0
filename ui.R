@@ -613,15 +613,6 @@ body <- bs4DashBody(
                        size = "large",
                        fluidRow(
                          column(
-                           width = 6
-                         ),
-                         column(
-                           width = 6,
-                           
-                         )
-                       ),
-                       fluidRow(
-                         column(
                            width = 6,
                            pickerInput(
                              inputId = "addlegend",
@@ -801,17 +792,13 @@ body <- bs4DashBody(
                            color = "success"
                          )
                        )
-                       
                      )
-                     
                    )
-                   
                  )
                )
              ),
              column(
                width = 6,
-               
              )
            )
          )
