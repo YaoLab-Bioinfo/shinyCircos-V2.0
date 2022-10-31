@@ -4925,7 +4925,7 @@ server <- function(input, output,session) {
                 label = NULL,
                 min=30, 
                 max=120,
-                step=0.1
+                step=1
               )
             ),
             
@@ -4992,6 +4992,41 @@ server <- function(input, output,session) {
               max=1,
               step=0.01
             ),
+            pickerInput(
+              inputId = paste0("lab_adjustfontsize",x),
+              label = tags$div(
+                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
+                bs4Dash::tooltip(
+                  actionButton(
+                    inputId = paste0("datvie_tip_lab_adjustfontsize",x), 
+                    label="" , 
+                    icon=icon("question"),
+                    status="info",
+                    size = "xs"
+                  ),
+                  title = "'Adaptive' means the font size is adaptive according to the height of the label track,'Custom' means the percentage of the font relative to the adaptive size.",
+                  placement = "right"
+                )
+              ),
+              choices = c("Adaptive" = 1, "Custom" = 2),
+              selected = lab_adjustfontsize[x]
+            ),
+            conditionalPanel(
+              condition = paste0("input.lab_adjustfontsize",x,"==2"),
+              numericInput(
+                inputId = paste0("lab_fontper",x),
+                value= lab_fontper[x], 
+                label = NULL,
+                min=30, 
+                max=120,
+                step=1
+              )
+            ),
+            
+            
+            
+            
+            
             pickerInput(
               inputId = paste0("poslabels",x),
               label = tags$div(
