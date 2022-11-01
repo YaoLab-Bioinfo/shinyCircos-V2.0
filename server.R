@@ -827,7 +827,7 @@ server <- function(input, output,session) {
   observeEvent(input$dataup_example_go,{
     sendSweetAlert(
       session = session,
-      title = "Successful input!",
+      title = "",
       text = "Example data loaded successfully!",
       type = "success"
     )
@@ -861,7 +861,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome type</font>'),
+                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome data type</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_sam_chrtyp", 
@@ -910,7 +910,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "sam_datatypeChr",
                     label = NULL,
-                    choices = c("general" = "1", "cytoband" = "2"),
+                    choices = c("general data" = "1", "cytoband data" = "2"),
                     selected = sam_datatypeChr
                   )
                 ),
@@ -952,7 +952,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "sam_trackChr",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_trachr", 
@@ -965,7 +965,7 @@ server <- function(input, output,session) {
                         placement = "bottom"
                       )
                     ),
-                    choices = c("Show" = "track", "Hide" = ""),
+                    choices = c("Yes" = "track", "No" = ""),
                     selected = sam_trackChr
                   ),
                   conditionalPanel(
@@ -973,7 +973,7 @@ server <- function(input, output,session) {
                     textInput(
                       inputId = "sam_colorChr",
                       label = tags$div(
-                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s)</b></font>'),
+                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = "datvie_sam_chrcol", 
@@ -982,33 +982,36 @@ server <- function(input, output,session) {
                             status="info",
                             size = "xs"
                           ),
-                          title = "Colors to be used for each chromosome/sector. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of sectors. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
+                          title = "Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
                           placement = "bottom"
                         )
                       ),
                       value = sam_colorChr
                     )
                   ),
-                  numericInput(
-                    inputId = "sam_heightChr",
-                    label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Band height:</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_sam_heichr1", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
-                        placement = "bottom"
-                      )
-                    ),
-                    value = sam_heightChr, 
-                    min = 0.01, 
-                    max = 0.9,
-                    step = 0.01
+                  conditionalPanel(
+                    condition = "input.sam_trackChr == 'track'",
+                    numericInput(
+                      inputId = "sam_heightChr",
+                      label = tags$div(
+                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
+                        bs4Dash::tooltip(
+                          actionButton(
+                            inputId = "datvie_sam_heichr1", 
+                            label="" , 
+                            icon=icon("question"),
+                            status="info",
+                            size = "xs"
+                          ),
+                          title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
+                          placement = "bottom"
+                        )
+                      ),
+                      value = sam_heightChr, 
+                      min = 0.01, 
+                      max = 0.9,
+                      step = 0.01
+                    )
                   )
                 ),
                 conditionalPanel(
@@ -1016,7 +1019,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_heightChr",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Band height:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_heichr2", 
@@ -1039,7 +1042,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_outAxis",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b>Axis for genomic position</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display the axis for genomic position?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_sam_outaxis", 
@@ -1052,7 +1055,7 @@ server <- function(input, output,session) {
                       placement = "bottom"
                     )
                   ),
-                  choices = c("Show" = "1", "Hide" = "2"),
+                  choices = c("Yes" = "1", "No" = "2"),
                   selected = sam_outAxis
                 ),
                 conditionalPanel(
@@ -1060,7 +1063,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_outAxis_size",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of the axis for genomic position</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the axis for genomic position</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_tip_sam_outaxissize", 
@@ -1082,7 +1085,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_labelChr",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome IDs</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_sam_labelchr", 
@@ -1095,7 +1098,7 @@ server <- function(input, output,session) {
                       placement = "bottom"
                     )
                   ),
-                  choices = c("Show" = "1", "Hide" = "2"),
+                  choices = c("Yes" = "1", "No" = "2"),
                   selected = sam_labelChr
                 ),
                 conditionalPanel(
@@ -1103,7 +1106,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_labelChr_size",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of chromosome IDs</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_labsize_tip", 
@@ -1339,17 +1342,23 @@ server <- function(input, output,session) {
                               value=sam_tra_bar_Boundary[x],
                               step=0.01
                             ),
-                            colourInput(
-                              inputId = paste0("sam_tra_bar_coldir1",x),
-                              label = "Outward bar color:",
-                              value = sam_tra_bar_coldir1[x],
-                              returnName = TRUE
-                            ),
-                            colourInput(
-                              inputId = paste0("sam_tra_bar_coldir2",x),
-                              label = "Inward bar color:",
-                              value = sam_tra_bar_coldir2[x],
-                              returnName = TRUE
+                            fluidRow(
+                              column(6,
+                                     colourInput(
+                                       inputId = paste0("sam_tra_bar_coldir1",x),
+                                       label = "Outward bar color:",
+                                       value = sam_tra_bar_coldir1[x],
+                                       returnName = TRUE
+                                     )
+                              ),
+                              column(6,
+                                     colourInput(
+                                       inputId = paste0("sam_tra_bar_coldir2",x),
+                                       label = "Inward bar color:",
+                                       value = sam_tra_bar_coldir2[x],
+                                       returnName = TRUE
+                                     )
+                              )
                             )
                           )
                         )
@@ -1440,7 +1449,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_line_fillarea",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_bar_sam_fillarea",x), 
@@ -1472,7 +1481,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_rect_rectcol",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_rect_sam_rectcol",x), 
@@ -1524,11 +1533,11 @@ server <- function(input, output,session) {
                                     status="info",
                                     size = "xs"
                                   ),
-                                  title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Specific' was chosen, all data will be filled by a specified color as 'orange'.",
+                                  title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
                                   placement = "right"
                                 )
                               ),
-                              choices =  c("Identical with lines" = "1", "Specific" = "2"),
+                              choices =  c("Identical with lines" = "1", "Custom" = "2"),
                               selected=sam_tra_line_selrea[x]
                             ),
                             conditionalPanel(
@@ -1547,7 +1556,7 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_tra_transparency",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_trans",x), 
@@ -1570,7 +1579,7 @@ server <- function(input, output,session) {
                         textInput(
                           paste0("sam_tra_poipch",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_poi_pch",x), 
@@ -1591,7 +1600,7 @@ server <- function(input, output,session) {
                           textInput(
                             inputId = paste0("sam_tra_poipch",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_poi_pch",x), 
@@ -1609,7 +1618,7 @@ server <- function(input, output,session) {
                           numericInput(
                             paste0("sam_tra_poi_poisiz",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size</b></font>')
                             ),
                             value=sam_tra_poi_poisiz[x],
                             min=0,
@@ -1622,7 +1631,7 @@ server <- function(input, output,session) {
                         numericInput(
                           paste0("sam_tra_poi_poisiz",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size</b></font>')
                           ),
                           value=sam_tra_poi_poisiz[x],
                           min=0,
@@ -1634,7 +1643,7 @@ server <- function(input, output,session) {
                         textInput(
                           inputId = paste0("sam_tra_baseline",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y coordinates of baselines:</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_baseline",x), 
@@ -1654,7 +1663,7 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_tra_colorline",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s):</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_baselinecol",x), 
@@ -1675,7 +1684,7 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_tra_bgcol",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s):</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_bgcol",x), 
@@ -1758,7 +1767,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_heat_sam_posline",x), 
@@ -1779,7 +1788,7 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_heat_sam_poslinehei",x), 
@@ -1805,7 +1814,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_heatcol_dis",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_heat_colorsel",x), 
@@ -1823,7 +1832,7 @@ server <- function(input, output,session) {
                                 placement = "right"
                               )
                             ),
-                            #label = "Select color",
+                            #label = "Data color",
                             choices = c("Random" = "1" , "Custom" = "2"),
                             selected = sam_tra_heatcol_dis[x]
                           ),
@@ -1837,7 +1846,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_heat_posline2",x), 
@@ -1858,7 +1867,7 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_heat_sam_poslinehei2",x), 
@@ -1882,7 +1891,7 @@ server <- function(input, output,session) {
                       numericInput(
                         inputId = paste0("sam_heightTraus",x),
                         label = tags$div(
-                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height:</b></font>'),
+                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height</b></font>'),
                           bs4Dash::tooltip(
                             actionButton(
                               inputId = paste0("datvie_tip_sam_trahei",x), 
@@ -1929,7 +1938,7 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_cellbord",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_heaat_cellbo",x), 
@@ -1973,7 +1982,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_border",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders?</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_bo",x), 
@@ -1995,7 +2004,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_yaxis",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_yax",x), 
@@ -2191,7 +2200,7 @@ server <- function(input, output,session) {
                               placement = "right"
                             )
                           ),
-                          choices = c("inside", "outside"),
+                          choices = c("Inward", "Outward"),
                           selected = sam_poslabels[x]
                         )
                       )
@@ -2350,7 +2359,7 @@ server <- function(input, output,session) {
                       numericInput(
                         inputId = "sam_transparencyLinks",
                         label = tags$div(
-                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
+                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
                           bs4Dash::tooltip(
                             actionButton(
                               inputId = "datvie_link_tra_lintran", 
@@ -2456,14 +2465,14 @@ server <- function(input, output,session) {
     if(is.null(input$alldata)){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "The file connot be empty.",
         type = "error"
       )
     }else{
       sendSweetAlert(
         session = session,
-        title = "Success!",
+        title = "",
         text = "Data uploaded successfully!",
         type = "success"
       )
@@ -2484,7 +2493,7 @@ server <- function(input, output,session) {
                 status="info",
                 size = "xs"
               ),
-              title = "Please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then Click the 'Save uploaded data' button.",
+              title = "Please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then move to Step 2.2.",
               placement = "bottom"
             )
           ),
@@ -2545,22 +2554,22 @@ server <- function(input, output,session) {
     if(lonalldat[1] > 1){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "Only a single chromosome dataset is allowed.",
         type = "error"
       )
     }else if(lonalldat[3] > 1){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "Only a single Links dataset is allowed.",
         type = "error"
       )
     }else{
       sendSweetAlert(
         session = session,
-        title = "Success!",
-        text = "The data has been saved and you can add more datasets using the 'Upload one or multiple input datasets:' widget or finish the data uploading process by clicking the 'SUBMIT!' button.",
+        title = "",
+        text = "Input datasets saved and you can add more datasets by repeating Step 2.\n You can also finish data uploading and move to Step 3.",
         type = "success"
       )
     }  
@@ -2573,7 +2582,7 @@ server <- function(input, output,session) {
     if(datarepet == TRUE){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "Duplicated datasets found, please drag the duplicated datasets into the 'Garbage'.",
         type = "error"
       )
@@ -2581,7 +2590,7 @@ server <- function(input, output,session) {
       if(lonalldat[1] == 0){
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = "Chromosome data can not be empty.",
           type = "error"
         )
@@ -2590,28 +2599,28 @@ server <- function(input, output,session) {
         if(!grepl("text",alldatapath[which(alldatapath[1] == chrdatas[1]),3])){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Please check the format of the Chromosome data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == tradatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Please check the format of the Track data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == labdatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Please check the format of the Label data.",
             type = "error"
           )
         }else if(!all(grepl("text",alldatapath[which(alldatapath[1] == lindatas),3]))){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Please check the format of the Link data.",
             type = "error"
           )
@@ -2817,7 +2826,7 @@ server <- function(input, output,session) {
             }else{
               sendSweetAlert(
                 session = session,
-                title = "Success!",
+                title = "",
                 text = "Please go to the 'Circos Parameters' page to view the uploaded datasets and set parameters.",
                 type = "success"
               )
@@ -3337,7 +3346,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "transparencyLinks",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_link_tip4", 
@@ -3668,7 +3677,7 @@ server <- function(input, output,session) {
     # if(chr_type == 1 && ncol(data.C) != 3){
     #   sendSweetAlert(
     #     session = session,
-    #     title = "Error!",
+    #     title = "",
     #     text = "Format of the general chromosome data is incorrect.",
     #     type = "error"
     #   )
@@ -3676,7 +3685,7 @@ server <- function(input, output,session) {
     if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
@@ -3694,7 +3703,7 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 6 | ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Data without a 'color' column should contain six columns.",
             type = "error"
           )
@@ -3703,15 +3712,15 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
-            text = "Data should contain seven columns.",
+            title = "",
+            text = "The input data should contain seven columns.",
             type = "error"
           )
         }else{
           if(!is.character(data.L[,7])){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "The seventh column of Data with multi-group should be character.",
               type = "error"
             )
@@ -3723,15 +3732,15 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
-            text = "Data should contain seven columns.",
+            title = "",
+            text = "The input data should contain seven columns.",
             type = "error"
           )
         }else{
           if(!is.numeric(data.L[,7])){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "The seventh column of Data with gradual value should be numeric.",
               type = "error"
             )
@@ -3749,7 +3758,7 @@ server <- function(input, output,session) {
     # if(chr_type == 1 && ncol(data.C) != 3){
     #   sendSweetAlert(
     #     session = session,
-    #     title = "Error!",
+    #     title = "",
     #     text = "Format of the general chromosome data is incorrect.",
     #     type = "error"
     #   )
@@ -3757,7 +3766,7 @@ server <- function(input, output,session) {
     if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
-        title = "Error!",
+        title = "",
         text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
@@ -3770,7 +3779,7 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 6 | ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
+            title = "",
             text = "Data without a 'color' column should contain six columns.",
             type = "error"
           )
@@ -3779,15 +3788,15 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
-            text = "Data should contain seven columns.",
+            title = "",
+            text = "The input data should contain seven columns.",
             type = "error"
           )
         }else{
           if(!is.character(data.L[,7])){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "The seventh column of Data with multi-group should be character.",
               type = "error"
             )
@@ -3797,15 +3806,15 @@ server <- function(input, output,session) {
         if(ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
-            title = "Error!",
-            text = "Data should contain seven columns.",
+            title = "",
+            text = "The input data should contain seven columns.",
             type = "error"
           )
         }else{
           if(!is.numeric(data.L[,7])){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "The seventh column of Data with gradual value should be numeric.",
               type = "error"
             )
@@ -3816,21 +3825,21 @@ server <- function(input, output,session) {
     # if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){ # colformatLinks
     #   sendSweetAlert(
     #     session = session,
-    #     title = "Error!",
+    #     title = "",
     #     text = "Data without a 'color' column should contain six columns.",
     #     type = "error"
     #   )
     # }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
     #   sendSweetAlert(
     #     session = session,
-    #     title = "Error!",
+    #     title = "",
     #     text = "The seventh column of Data with multi-group should be character.",
     #     type = "error"
     #   )
     # }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
     #   sendSweetAlert(
     #     session = session,
-    #     title = "Error!",
+    #     title = "",
     #     text = "The seventh column of Data with gradual value should be numeric.",
     #     type = "error"
     #   )
@@ -4091,7 +4100,7 @@ server <- function(input, output,session) {
         tra_inf_word <- na.omit(tra_inf_word)
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = paste(tra_inf_word),
           type = "error"
         )
@@ -4264,7 +4273,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_line_fillarea",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_bar_fillarea",x), 
@@ -4298,7 +4307,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_rect_rectcol",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_rect_rectcol",x), 
@@ -4374,7 +4383,7 @@ server <- function(input, output,session) {
               numericInput(
                 inputId = paste0("tra_transparency",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency:</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_trans",x), 
@@ -4397,7 +4406,7 @@ server <- function(input, output,session) {
               textInput(
                 paste0("tra_poipch",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4418,7 +4427,7 @@ server <- function(input, output,session) {
                 textInput(
                   paste0("tra_poipch",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type:</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4436,7 +4445,7 @@ server <- function(input, output,session) {
                 numericInput(
                   paste0("tra_poi_poisiz",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size</b></font>')
                   ),
                   value=tra_poi_poisiz[x],
                   min=0,
@@ -4449,7 +4458,7 @@ server <- function(input, output,session) {
               numericInput(
                 paste0("tra_poi_poisiz",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size:</b></font>')
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point size</b></font>')
                 ),
                 value=tra_poi_poisiz[x],
                 min=0,
@@ -4462,7 +4471,7 @@ server <- function(input, output,session) {
                 textInput(
                   inputId = paste0("tra_baseline",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y coordinates of baselines:</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_baseline",x), 
@@ -4480,7 +4489,7 @@ server <- function(input, output,session) {
                 colourInput(
                   inputId = paste0("tra_colorline",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s):</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_baselinecol",x), 
@@ -4502,7 +4511,7 @@ server <- function(input, output,session) {
               colourInput(
                 inputId = paste0("tra_bgcol",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s):</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_bgcol",x), 
@@ -4632,10 +4641,10 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_heatcol_dis",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>')
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>')
                   ),
-                  #label = HTML('<font><h5><i class="fa-solid fa-play"></i><b> Select color</b></font>'),
-                  #label = "Select color",
+                  #label = HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
+                  #label = "Data color",
                   choices = c("Random" = "1" , "Custom" = "2"),
                   selected = tra_heatcol_dis[x]
                 ),
@@ -4960,11 +4969,11 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Place the labels in the inner or the outer of the track?",
+                  title = "Place the labels in the inner or the outer of the specified track?",
                   placement = "right"
                 )
               ),
-              choices = c("inside", "outside"),
+              choices = c("Inward", "Outward"),
               selected = poslabels[x]
             )
           )
@@ -5043,7 +5052,7 @@ server <- function(input, output,session) {
                   placement = "right"
                 )
               ),
-              choices = c("inside", "outside"),
+              choices = c("Inward", "Outward"),
               selected = poslabels[x]
             )
           )
@@ -5068,7 +5077,7 @@ server <- function(input, output,session) {
       if(sum(duplicated(unlist(tra_pos))) != 0){
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = "Duplicated track indexes are not allowed.",
           type = "error"
         )
@@ -5076,7 +5085,7 @@ server <- function(input, output,session) {
       }else if(sum(duplicated(unlist(lab_pos))) != 0){
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = "Duplicated label indexes are not allowed.",
           type = "error"
         )
@@ -5517,14 +5526,14 @@ server <- function(input, output,session) {
       if(any("0" %in% hlt_data1[,1])){
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = "Format of the input data is incorrect!",
           type = "error"
         ) 
       }else if(!all(unique(hlt_data1[,1]) %in% unique(data.C[,1]))){
         sendSweetAlert(
           session = session,
-          title = "Error!",
+          title = "",
           text = "Format of the chromosome data is incorrect!",
           type = "error"
         )
@@ -5536,35 +5545,35 @@ server <- function(input, output,session) {
           if(!all(nchar(colorcol16) == 7| nchar(colorcol16) == 9)){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "Wrong RGB error!",
               type = "error"
             )
           }else if(!any(grepl("^#([0-9a-fA-F]{6})$",colorcol7)) & length(colorcol7) != 0){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "Wrong RGB error!",
               type = "error"
             )
           }else if(!any(grepl("^#([0-9a-fA-F]{8})$",colorcol9)) & length(colorcol9) != 0){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "Wrong RGB error!",
               type = "error"
             )
           }else if(!all(colorcol[-grep("#",colorcol)] %in% colors())){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "Wrong color input!",
               type = "error"
             )
           }else{
             sendSweetAlert(
               session = session,
-              title = "Success!",
+              title = "",
               text = "Please click the 'Update' button to update the Circos plot!",
               type = "success"
             )
@@ -5579,14 +5588,14 @@ server <- function(input, output,session) {
           if(!all(colorcol %in% colors())){
             sendSweetAlert(
               session = session,
-              title = "Error!",
+              title = "",
               text = "Wrong color input!",
               type = "error"
             )
           }else{
             sendSweetAlert(
               session = session,
-              title = "Success!",
+              title = "",
               text = "Please click the 'Update' button to update the image!",
               type = "success"
             )

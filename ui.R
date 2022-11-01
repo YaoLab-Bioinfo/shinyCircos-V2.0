@@ -253,7 +253,7 @@ body <- bs4DashBody(
                column(
                  6,
                  tags$div(
-                   HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome type</font>'),
+                   HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome data type</font>'),
                    bs4Dash::tooltip(
                      actionButton(
                        inputId = "datvie_tip2", 
@@ -302,7 +302,7 @@ body <- bs4DashBody(
                      pickerInput(
                        inputId = "chr_type",
                        label = NULL,
-                       choices = c("general" = "1", "cytoband" = "2")
+                       choices = c("general data" = "1", "cytoband data" = "2")
                      )
                    ),
                    column(
@@ -343,7 +343,7 @@ body <- bs4DashBody(
                      pickerInput(
                        inputId = "trackChr",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band</b></font>'),
+                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip3", 
@@ -356,14 +356,14 @@ body <- bs4DashBody(
                            placement = "bottom"
                          )
                        ),
-                       choices = c("Show" = "track", "Hide" = "")
+                       choices = c("Yes" = "track", "No" = "")
                      ),
                      conditionalPanel(
                        condition = "input.trackChr == 'track'",
                        textInput(
                          inputId = "colorChr",
                          label = tags$div(
-                           HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s):</b></font>'),
+                           HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
                            bs4Dash::tooltip(
                              actionButton(
                                inputId = "datvie_tip4", 
@@ -372,7 +372,7 @@ body <- bs4DashBody(
                                status="info",
                                size = "xs"
                              ),
-                             title = "Colors to be used for each chromosome/sector. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of sectors. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
+                             title = "Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
                              placement = "bottom"
                            )
                          ),
@@ -381,7 +381,7 @@ body <- bs4DashBody(
                        numericInput(
                          inputId = "heightChr",
                          label = tags$div(
-                           HTML('<font><h5><i class="fa-solid fa-play"></i><b>Band height:</b></font>'),
+                           HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                            bs4Dash::tooltip(
                              actionButton(
                                inputId = "datvie_tip5", 
@@ -406,7 +406,7 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "heightChr_cyt",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Band height:</b></font>'),
+                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip6", 
@@ -428,7 +428,7 @@ body <- bs4DashBody(
                    pickerInput(
                      inputId = "outAxis",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b>Axis for genomic position</b></font>'),
+                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display the axis for genomic position?</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip7", 
@@ -441,7 +441,7 @@ body <- bs4DashBody(
                          placement = "bottom"
                        )
                      ),
-                     choices = c("Show" = "1", "Hide" = "2"),
+                     choices = c("Yes" = "1", "No" = "2"),
                      selected = "1"
                    ),
                    conditionalPanel(
@@ -449,7 +449,7 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "outAxis_size",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of the axis for genomic position</b></font>'),
+                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the axis for genomic position</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip11", 
@@ -471,7 +471,7 @@ body <- bs4DashBody(
                    pickerInput(
                      inputId = "labelChr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b>Chromosome IDs</b></font>'),
+                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip8", 
@@ -484,14 +484,14 @@ body <- bs4DashBody(
                          placement = "bottom"
                        )
                      ),
-                     choices = c("Show" = "1", "Hide" = "2")
+                     choices = c("Yes" = "1", "No" = "2")
                    ),
                    conditionalPanel(
                      condition = "input.labelChr == '1'",
                      numericInput(
                        inputId = "labelChr_size",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b>Font size of chromosome IDs</b></font>'),
+                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip9", 
@@ -513,7 +513,7 @@ body <- bs4DashBody(
                    textInput(
                      inputId = "gapChr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b>Distances between adjacent sectors</b></font>'),
+                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip12", 
@@ -531,7 +531,7 @@ body <- bs4DashBody(
                    numericInput(
                      inputId = "distance_Chr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b>Distance between adjacent tracks</b></font>'),
+                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip13", 
@@ -617,7 +617,7 @@ body <- bs4DashBody(
                            pickerInput(
                              inputId = "addlegend",
                              label = tags$div(
-                               HTML('<font><h4><i class="fa-solid fa-play"></i> Add legend</font>'),
+                               HTML('<font><h4><i class="fa-solid fa-play"></i> Add legend?</font>'),
                                bs4Dash::tooltip(
                                  actionButton(
                                    inputId = "cirplo_leg_tip1",
@@ -626,7 +626,7 @@ body <- bs4DashBody(
                                    status="info",
                                    size = "xs"
                                  ),
-                                 title = "Legend position",
+                                 title = "Display or hide the figure legend",
                                  placement = "bottom"
                                )
                              ),
@@ -738,7 +738,7 @@ body <- bs4DashBody(
                        pickerInput(
                          inputId = "trac_index",
                          label = tags$div(
-                           HTML('<font><h4><i class="fa-solid fa-play"></i> Add track index</font>'),
+                           HTML('<font><h4><i class="fa-solid fa-play"></i> Add track index?</font>'),
                            bs4Dash::tooltip(
                              actionButton(
                                inputId = "cirplo_leg_tip3",
@@ -747,7 +747,7 @@ body <- bs4DashBody(
                                status="info",
                                size = "xs"
                              ),
-                             title = "Display the index of each track.",
+                             title = "Display or hide the index of each track.",
                              placement = "bottom"
                            )
                          ),
