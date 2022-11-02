@@ -2790,7 +2790,7 @@ server <- function(input, output,session) {
                 }
               }
             }else if(!is.null(data.L)){
-              if(ncol(data.L) != 6 | ncol(data.L) != 7){
+              if(ncol(data.L) != 6 & ncol(data.L) != 7){
                 sendSweetAlert(
                   session = session,
                   title = "Wrong data format!",
@@ -3700,7 +3700,7 @@ server <- function(input, output,session) {
     }else if(!is.null(data.L)){
       if(link_type == 1){
         letplotgo <<- 1
-        if(ncol(data.L) != 6 | ncol(data.L) != 7){
+        if(ncol(data.L) != 6 & ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
             title = "",
@@ -3776,7 +3776,7 @@ server <- function(input, output,session) {
     link_type <- input$colformatLinks
     if(!is.null(data.L)){
       if(link_type == 1){
-        if(ncol(data.L) != 6 | ncol(data.L) != 7){
+        if(ncol(data.L) != 6 & ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
             title = "",
@@ -4973,7 +4973,7 @@ server <- function(input, output,session) {
                   placement = "right"
                 )
               ),
-              choices = c("Inward", "Outward"),
+              choices = c("Inward" = "inside", "Outward" = "outside"),
               selected = poslabels[x]
             )
           )
@@ -5052,7 +5052,7 @@ server <- function(input, output,session) {
                   placement = "right"
                 )
               ),
-              choices = c("Inward", "Outward"),
+              choices = c("Inward" = "inside", "Outward" = "outside"),
               selected = poslabels[x]
             )
           )
