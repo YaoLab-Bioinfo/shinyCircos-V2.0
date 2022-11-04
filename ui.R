@@ -262,8 +262,8 @@ body <- bs4DashBody(
                        status="info",
                        size = "xs"
                      ),
-                     title = "Chromosomes data can be either general data with three columns or cytoband data with five columns. 
-                     The first three columns of either type of data should be the chromosome ID,
+                     title = "Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
+                     The first 3 columns of either type of data should be the chromosome ID,
                      the start and end coordinates of different genomic regions. See example data for more details.",
                      placement = "bottom"
                    )
@@ -531,7 +531,7 @@ body <- bs4DashBody(
                    numericInput(
                      inputId = "distance_Chr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
+                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip13", 
@@ -626,7 +626,7 @@ body <- bs4DashBody(
                                    status="info",
                                    size = "xs"
                                  ),
-                                 title = "Display or hide the figure legend",
+                                 title = "Display or hide the figure legend?",
                                  placement = "bottom"
                                )
                              ),
@@ -684,7 +684,7 @@ body <- bs4DashBody(
                                  status="info",
                                  size = "xs"
                                ),
-                               title = "Each row should contain five values separated by commas indicating the start sector position, the end sector position, start track index, end track index, and the color. For example, 'chr1,1,10000,'#FF0000'.",
+                               title = "Each row should contain five values separated by commas indicating the start genomic position, the end genomic position, start track index, end track index, and the color. For example, 'chr1,1,10000,'#FF0000'.",
                                placement = "bottom"
                              )
                            )
@@ -747,7 +747,7 @@ body <- bs4DashBody(
                                status="info",
                                size = "xs"
                              ),
-                             title = "Display or hide the index of each track.",
+                             title = "Display or hide the index of each track?",
                              placement = "bottom"
                            )
                          ),

@@ -853,7 +853,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Filename of the datasets.",
+                  title = "Filenames of the input datasets.",
                   placement = "bottom"
                 )
               )
@@ -870,8 +870,8 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Chromosomes data can be either general data with three columns or cytoband data with five columns. 
-                     The first three columns of either type of data should be the chromosome ID,
+                  title = "Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
+                     The first 3 columns of either type of data should be the chromosome ID,
                      the start and end coordinates of different genomic regions. See example data for more details.",
                   placement = "bottom"
                 )
@@ -1106,7 +1106,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_labelChr_size",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the chromosome IDs</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_labsize_tip", 
@@ -1146,7 +1146,7 @@ server <- function(input, output,session) {
                 numericInput(
                   inputId = "sam_distance_Chr",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_tip_sam_dischr", 
@@ -1186,7 +1186,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "Filename of the datasets.",
+                    title = "Filenames of the input datasets.",
                     placement = "bottom"
                   )
                 )
@@ -1524,7 +1524,7 @@ server <- function(input, output,session) {
                             pickerInput(
                               inputId = paste0("sam_tra_line_selrea",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Area color</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color for the filled area </b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_line_sam_selrea",x), 
@@ -1533,7 +1533,7 @@ server <- function(input, output,session) {
                                     status="info",
                                     size = "xs"
                                   ),
-                                  title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
+                                  title = "Color used for the filled area, which can be identical with lines color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
                                   placement = "right"
                                 )
                               ),
@@ -1579,7 +1579,7 @@ server <- function(input, output,session) {
                         textInput(
                           paste0("sam_tra_poipch",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_poi_pch",x), 
@@ -1588,7 +1588,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                              title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
                               placement = "right"
                             )
                           ),
@@ -1600,7 +1600,7 @@ server <- function(input, output,session) {
                           textInput(
                             inputId = paste0("sam_tra_poipch",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
+                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
                               bs4Dash::tooltip(
                                 actionButton(
                                   inputId = paste0("datvie_tip_sam_poi_pch",x), 
@@ -1609,7 +1609,7 @@ server <- function(input, output,session) {
                                   status="info",
                                   size = "xs"
                                 ),
-                                title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                                title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
                                 placement = "right"
                               )
                             ),
@@ -1652,7 +1652,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "Decimal numbers in [0, 1] to adjust y axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
+                              title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
                               placement = "right"
                             )
                           ),
@@ -1672,7 +1672,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
+                              title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'. Hex color codes as '#FF0000' are also supported.",
                               placement = "right"
                             )
                           ),
@@ -1913,7 +1913,7 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_Tra_margin",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance between adjacent tracks</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tramar",x), 
@@ -1959,7 +1959,7 @@ server <- function(input, output,session) {
                             colourInput(
                               inputId = paste0("sam_tra_hmap_cellbord_col",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
+                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>'),
                                 bs4Dash::tooltip(
                                   actionButton(
                                     inputId = paste0("datvie_tip_sam_heaat_bocol",x), 
@@ -1982,7 +1982,7 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_border",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders?</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("datvie_tip_sam_tra_bo",x), 
@@ -1991,7 +1991,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "Add borders to the plotting regions.",
+                              title = "Add borders to each sector.",
                               placement = "right"
                             )
                           ),
@@ -2048,7 +2048,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Filename of the datasets.",
+                      title = "Filenames of the input datasets.",
                       placement = "bottom"
                     )
                   )
@@ -2233,7 +2233,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Filename of the datasets.",
+                      title = "Filenames of the input datasets.",
                       placement = "bottom"
                     )
                   )
@@ -2583,7 +2583,7 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "",
-        text = "Duplicated datasets found, please drag the duplicated datasets into the 'Garbage'.",
+        text = "Duplicated datasets found, please drag the duplicated datasets into the 'Garbage' area.",
         type = "error"
       )
     }else{
@@ -2699,14 +2699,14 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "Wrong data format!",
-              text = "Chromosome data should contain three (general type) or five columns (cytoband type). Please upload applicable chromosome data.",
+              text = "Chromosome data should contain 3 (general type) or 5 columns (cytoband type). Please upload applicable chromosome data.",
               type = "error"
             )
           }else if(!(all(is.numeric(data.C[,2]),is.numeric(data.C[,3])))){
             sendSweetAlert(
               session = session,
               title = "Wrong data format!",
-              text = "The second and third columns of the chromosome data should be numeric vectors.",
+              text = "The 2nd and 3rd columns of the chromosome data should be numeric vectors.",
               type = "error"
             )
           }else if(sum(is.na(data.C[,2:3])) != 0){
@@ -2740,15 +2740,15 @@ server <- function(input, output,session) {
                 if(ncol(data.nn) == 4 | ncol(data.nn) == 5){
                   if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
                     datan_info[nn] <- 1
-                    datan_info_text[nn] <- "The second and third columns are not numbers"
+                    datan_info_text[nn] <- "The 2nd and the 3rd columns should be numeric vectors."
                   }else if(sum(is.na(data.nn[,2:3])) != 0){
                     datan_info[nn] <- 1
-                    datan_info_text[nn] <- "The second and third columns contain null values"
+                    datan_info_text[nn] <- "Null values found in the 2nd or the 3rd column!"
                   }else if(ncol(data.nn) == 5){
                     color_label <- data.nn$color
                     if(any(color_label == "" | is.na(color_label))){
                       datan_info[nn] <- 1
-                      datan_info_text[nn] <- "Color column contains null values"
+                      datan_info_text[nn] <- "Null values found in the color column!"
                     }else{
                       if(length(grep("#",color_label))!=0){
                         color_label16 <- color_label[grep("#",color_label)]
@@ -2786,7 +2786,7 @@ server <- function(input, output,session) {
                   }
                 }else{
                   datan_info[nn] <- 1
-                  datan_info_text <- "The data is in the wrong format, the data should be 4 or 5 columns"
+                  datan_info_text <- "The input data should contain 4 or 5 columns."
                 }
               }
             }else if(!is.null(data.L)){
@@ -2794,7 +2794,7 @@ server <- function(input, output,session) {
                 sendSweetAlert(
                   session = session,
                   title = "Wrong data format!",
-                  text = paste0("Link data should contain six or seven columns."),
+                  text = paste0("Links data should contain 6 or 7 columns."),
                   type = "error"
                 )
               }else if(!all(is.numeric(data.L[,2]),is.numeric(data.L[,3]),is.numeric(data.L[,5]),is.numeric(data.L[,6]))){
@@ -2802,7 +2802,7 @@ server <- function(input, output,session) {
                 sendSweetAlert(
                   session = session,
                   title = "Wrong data format!",
-                  text = paste0("Columns 2,3,5,6 of link data should be numeric."),
+                  text = paste0("The 2nd, 3rd, 5th and 6th column of the links data should be numeric vectors."),
                   type = "error"
                 )
               }
@@ -2818,7 +2818,7 @@ server <- function(input, output,session) {
             }else if(sum(datan_info)!=0){
               sendSweetAlert(
                 session = session,
-                title = paste0("Wrong Label data format found in data",paste(which(datan_info==1),collapse = ",")),
+                title = paste0("Wrong data format found in Label data ",paste(which(datan_info==1),collapse = ",")),
                 text = paste0(datan_info_text[datan_info_text != ""],collapse = ";"),
                 type = "error"
               )
@@ -3563,10 +3563,10 @@ server <- function(input, output,session) {
         if(tratype == "ideogram"){
           if(ncol(data_TT) != 5){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The ideogram data should contain five columns." 
+            tra_inf_word[k] <- "The ideogram data should contain 5 columns." 
           }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The last two columns of the ideogram data should be characters." 
+            tra_inf_word[k] <- "The last 2 columns of the ideogram data should be characters." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3574,10 +3574,10 @@ server <- function(input, output,session) {
         }else if(tratype == "stack-point" | tratype == "stack-line"){
           if(!"stack" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'stack' column does not exist." 
+            tra_inf_word[k] <- "The 'stack' column is missing in the input data." 
           }else if(!all(is.character(data_TT[,"stack"]))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'stack' column should be character." 
+            tra_inf_word[k] <- "The 'stack' column should be a character vector." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3587,19 +3587,19 @@ server <- function(input, output,session) {
           if("color" %in% colnames(data_TT)){
             if(!all(is.character(data_TT[,"color"]))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'color' column should be character." 
+              tra_inf_word[k] <- "The 'color' column should be a character vector." 
             }
           }
           if("Cex" %in% colnames(data_TT)){
             if(!all(is.numeric(data_TT[,"cex"]))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'cex' column should be numeric." 
+              tra_inf_word[k] <- "The 'cex' column should be a numeric vector." 
             }
           }
           if("pch" %in% colnames(data_TT)){
             if(!all(data_TT[,"pch"] %in% 1:25)){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The Pch value should be integers in 1-25, please refer to the help manual for more details." 
+              tra_inf_word[k] <- "The Pch value should be integers in 1-25. Please refer to the help manual for more details." 
             }
           }
           if("stack" %in% colnames(data_TT)){
@@ -3618,17 +3618,17 @@ server <- function(input, output,session) {
               }
               if(sum(dataif) != (ncol(data_TT)-3)){
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
+                tra_inf_word[k] <- "All columns excecpt for the first 3 columns of data with multiple columns should be numeric." 
               }
             }
           }
         }else if(tratype == "rect-discrete"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-discrete data should contain four columns." 
+            tra_inf_word[k] <- "The rect-discrete data should contain 4 columns." 
           }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'group' columns of the rect-discrete data should be characters." 
+            tra_inf_word[k] <- "The 4th column of the rect-discrete data should be characters." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3636,10 +3636,10 @@ server <- function(input, output,session) {
         }else if(tratype == "rect-gradual"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-gradual data should contain four columns." 
+            tra_inf_word[k] <- "The rect-gradual data should contain 4 columns." 
           }else if(!is.numeric(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'value' columns of the rect-gradual data should be numeric." 
+            tra_inf_word[k] <- "The 4th column of the rect-gradual data should be numeric values." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3651,19 +3651,19 @@ server <- function(input, output,session) {
           }
           if(sum(dataif) != (ncol(data_TT)-3)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'group' column should be character." 
+            tra_inf_word[k] <- "All columns except for the first 3 columns should be characters." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
           }
         }else if(tratype == "heatmap-gradual"){
           dataif <- NULL
-          for (l in 1:(ncol(data_TT)-3)) {
-            dataif[l] <- is.numeric(data_TT[,l+3])
+          for (l in 1:(ncol(data_TT)-1)) {
+            dataif[l] <- is.numeric(data_TT[,l+1])
           }
-          if(sum(dataif) != (ncol(data_TT)-3)){
+          if(sum(dataif) != (ncol(data_TT)-1)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'value' column should be numeric." 
+            tra_inf_word[k] <- "All columns except for the first column should be numeric values." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3693,7 +3693,7 @@ server <- function(input, output,session) {
       tra_inf_word <- na.omit(tra_inf_word)
       sendSweetAlert(
         session = session,
-        title = paste0("Error index:",paste(which(tra_inf==1),collapse = ",")), #paste0("Error index:",paste(which(tra_inf==1),collapse = ",")),
+        title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
         text = paste(tra_inf_word,collapse = ";"),
         type = "error"
       )
@@ -3704,7 +3704,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "Data without a 'color' column should contain six columns.",
+            text = "Data without a 'color' column should contain 6 columns.",
             type = "error"
           )
         }
@@ -3713,7 +3713,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "The input data should contain seven columns.",
+            text = "The input data should contain 7 columns.",
             type = "error"
           )
         }else{
@@ -3721,7 +3721,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The seventh column of Data with multi-group should be character.",
+              text = "The 7th column of Data with multi-group should be characters.",
               type = "error"
             )
           }else{
@@ -3733,7 +3733,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "The input data should contain seven columns.",
+            text = "The input data should contain 7 columns.",
             type = "error"
           )
         }else{
@@ -3741,7 +3741,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The seventh column of Data with gradual value should be numeric.",
+              text = "The 7th column of Data with gradual value should be a numeric vector.",
               type = "error"
             )
           }else{
@@ -3780,7 +3780,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "Data without a 'color' column should contain six columns.",
+            text = "Data without a 'color' column should contain 6 columns.",
             type = "error"
           )
         }
@@ -3789,7 +3789,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "The input data should contain seven columns.",
+            text = "The input data should contain 7 columns.",
             type = "error"
           )
         }else{
@@ -3797,7 +3797,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The seventh column of Data with multi-group should be character.",
+              text = "The 7th column of Data with multi-group should be characters.",
               type = "error"
             )
           }
@@ -3807,7 +3807,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "The input data should contain seven columns.",
+            text = "The input data should contain 7 columns.",
             type = "error"
           )
         }else{
@@ -3815,7 +3815,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The seventh column of Data with gradual value should be numeric.",
+              text = "The 7th column of Data with gradual value should be a numeric vector.",
               type = "error"
             )
           }
@@ -3988,10 +3988,10 @@ server <- function(input, output,session) {
       if(tratype == "ideogram"){
         if(ncol(data_TT) != 5){
           tra_inf <- 1
-          tra_inf_word <- "The ideogram data should contain five columns." 
+          tra_inf_word <- "The ideogram data should contain 5 columns." 
         }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
           tra_inf <- 1
-          tra_inf_word <- "The last two columns of the ideogram data should be characters." 
+          tra_inf_word <- "The last 2 columns of the ideogram data should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -3999,10 +3999,10 @@ server <- function(input, output,session) {
       }else if(tratype == "stack-point" | tratype == "stack-line"){
         if(!"stack" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "The stack column was not found in the input data." 
+          tra_inf_word <- "The stack column was missing in the input data." 
         }else if(!all(is.character(data_TT[,"stack"]))){
           tra_inf <- 1
-          tra_inf_word <- "The stack column of the input data should be character." 
+          tra_inf_word <- "The 'stack' column of the input data should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4011,24 +4011,24 @@ server <- function(input, output,session) {
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
             tra_inf <- 1
-            tra_inf_word <- "The 'color' column should be character." 
+            tra_inf_word <- "The 'color' column should be characters." 
           }
         }
         if("cex" %in% colnames(data_TT)){
           if(!all(is.numeric(data_TT[,"cex"]))){
             tra_inf <- 1
-            tra_inf_word <- "The 'cex' column should be numeric." 
+            tra_inf_word <- "The 'cex' column should be a numeric vector." 
           }
         }
         if("pch" %in% colnames(data_TT)){
           if(!all(data_TT[,"pch"] %in% 1:25)){
             tra_inf <- 1
-            tra_inf_word <- "The Pch value should be integers in 1-25, please refer to the help manual for more details." 
+            tra_inf_word <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
           }
         }
         if("stack" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type to for the input data of this track." 
+          tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
         }
         if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
           tra_inf <- 1
@@ -4044,7 +4044,7 @@ server <- function(input, output,session) {
             }
             if(sum(dataif) != (ncol(data_TT)-3)){
               tra_inf <- 1
-              tra_inf_word <- "All columns excecpt for the first three columns of point data with multiple columns should be numeric." 
+              tra_inf_word <- "All columns excecpt for the first 3 columns of data with multiple columns should be numeric." 
             }
           }
         }
@@ -4052,7 +4052,7 @@ server <- function(input, output,session) {
       }else if(tratype == "rect-discrete"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-discrete data should contain four columns." 
+          tra_inf_word <- "The rect-discrete data should contain 4 columns." 
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
           tra_inf_word <- "The 'group' columns of rect-discrete data should be characters." 
@@ -4063,10 +4063,10 @@ server <- function(input, output,session) {
       }else if(tratype == "rect-gradual"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-gradual data should contain four columns." 
+          tra_inf_word <- "The rect-gradual data should contain 4 columns." 
         }else if(!is.numeric(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'value' columns of rect-gradual data should be numeric." 
+          tra_inf_word <- "The 'value' columns of rect-gradual data should be a numeric vector." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4078,7 +4078,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "The 'group' column should be character." 
+          tra_inf_word <- "The 'group' column should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4090,7 +4090,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "The 'value' column should be numeric." 
+          tra_inf_word <- "The 'value' column should be a numeric vector." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4406,7 +4406,7 @@ server <- function(input, output,session) {
               textInput(
                 paste0("tra_poipch",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4415,7 +4415,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                    title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
                     placement = "right"
                   )
                 ),
@@ -4427,7 +4427,7 @@ server <- function(input, output,session) {
                 textInput(
                   paste0("tra_poipch",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Symbol type</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_poi_pch",x), 
@@ -4436,7 +4436,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Symbols used for different points. Applicable value can be a number in [0-25] or a numeric vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
+                      title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
                       placement = "right"
                     )
                   ),
@@ -4480,7 +4480,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Decimal numbers in [0, 1] to adjust y axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
+                      title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
                       placement = "right"
                     )
                   ),
@@ -4594,7 +4594,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heat_posline",x), 
@@ -4658,7 +4658,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heat_posline2",x), 
@@ -4749,7 +4749,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_cellbord",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = paste0("datvie_tip_heaat_cellbo",x), 
@@ -4758,7 +4758,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Add borders to the heatmap grids, which can separate cells from each other.",
+                      title = "Add borders to the heatmap grids, which can be used to separate cells from each other.",
                       placement = "right"
                     )
                   ),
@@ -4770,7 +4770,7 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_hmap_cellbord_col",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders</b></font>'),
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = paste0("datvie_tip_heaat_bocol",x), 
@@ -4793,7 +4793,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_border",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add borders</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_bo",x), 
@@ -4802,7 +4802,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "Add borders to the plotting regions.",
+                    title = "Add borders to each sector.",
                     placement = "right"
                   )
                 ),
@@ -4814,7 +4814,7 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_yaxis",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis</b></font>'),
+                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>'),
                   bs4Dash::tooltip(
                     actionButton(
                       inputId = paste0("datvie_tip_tra_yax",x), 
@@ -5013,7 +5013,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "'Adaptive' means the font size is adaptive according to the height of the label track,'Custom' means the percentage of the font relative to the adaptive size.",
+                  title = "'Adaptive' means the font size is adaptive according to the height of the label track. 'Custom' means the percentage of the font relative to the adaptive size.",
                   placement = "right"
                 )
               ),
