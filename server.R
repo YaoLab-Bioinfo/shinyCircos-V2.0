@@ -25,6 +25,8 @@ server <- function(input, output,session) {
   trasetout <<- list()
   dataview_export <<- NULL
   setlist <<- list()
+  typlist <<- list()
+  typlist_old <<- list()
   check_setlist <<- list()
   setlist_old <<- list()
   check_setlist_old <<- list(0)
@@ -1420,7 +1422,7 @@ server <- function(input, output,session) {
                                     ),
                                     title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                         To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.
+                        colors separated by commas. For example, 'red' or 'red,orange,blue'.if there is only one column of value, only one color needs to be specified.
                         To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
                         Users should provide a character strings assigning colors to each group. 
                         For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
@@ -1429,13 +1431,12 @@ server <- function(input, output,session) {
                                     placement = "right"
                                   )
                                 ),
-                                
-                                choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
-                                selected = sam_tra_coltype[x]
+                                choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-group" = "3"),
+                                selected = tra_coltype[x]
                               ),
                               conditionalPanel(
-                                condition = paste0("input.sam_tra_coltype",x,"== '2'"),
-                                textInput(paste0("sam_tra_colcol",x), NULL, value=sam_tra_colcol[x])
+                                condition = paste0("input.tra_coltype",x,"== '2'"),
+                                textInput(paste0("tra_colcol",x), NULL, value=tra_colcol[x])
                               ),
                               conditionalPanel(
                                 condition = paste0("input.sam_tra_coltype",x," == '3'"),
@@ -2165,6 +2166,25 @@ server <- function(input, output,session) {
                           max=1,
                           step=0.1
                         ),
+                        sliderTextInput(
+                          inputId = paste0("sam_lab_fontper",x),
+                          label = tags$div(
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
+                            bs4Dash::tooltip(
+                              actionButton(
+                                inputId = paste0("sam_datvie_tip_lab_adjustfontsize",x),
+                                label="" ,
+                                icon=icon("question"),
+                                status="info",
+                                size = "xs"
+                              ),
+                              title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
+                              placement = "right"
+                            )
+                          ),
+                          choices = c(10:200),
+                          selected = 100
+                        ),
                         colourInput(
                           inputId = paste0("sam_lab_fontcol",x),
                           label = tags$div(
@@ -2688,7 +2708,35 @@ server <- function(input, output,session) {
             unilin <- NULL
           }
           uniall <- unique(c(unitra,unilab,unilin))
-          if(!all(uniall %in% unichr)){
+          
+          alldatalist <- c(list(data.C),data.T,list(data.L),data.N)
+          alldatalist <- alldatalist[!sapply(alldatalist, is.null)]
+          
+          primessage <- sapply(alldatalist, function(x){
+            
+            
+            if(!all(is.character(x[,1]))){
+              return("The first column of data should be characters")
+            }else if(!all(is.numeric(x[,3]),is.numeric(x[,2]))){
+              return("Columns 2 and 3 of the data should be numbers")
+            }else if(!all(x[,2] > 0)){
+              return("The value of the start column should be greater than 0")
+            }else if(!all((x[,3] > x[,2]) == TRUE)){
+              return("The value of the end column should not be greater than the start column")
+            }else{
+              return("success")
+            }
+          })
+          if(!all(primessage == "success")){
+            wrongdata <- dataall[primessage != "success"]
+            wrongtext <- primessage[primessage != "success"]
+            sendSweetAlert(
+              session = session,
+              title = paste0("Wrong data:",paste0(wrongdata,collapse = ",")),
+              text = paste0(wrongtext,collapse = ";"),
+              type = "error"
+            )
+          }else if(!all(uniall %in% unichr)){
             sendSweetAlert(
               session = session,
               title = "Wrong data format!",
@@ -3418,8 +3466,29 @@ server <- function(input, output,session) {
     })
   })
   
-  
-  
+  # whichchangechrtyp <<- NULL
+  # toListentratyp <- reactive({
+  #   lapply(1:length(tradatas), function(x){
+  #     input[[paste0("tratype",x)]]
+  #   })
+  # })
+  # observeEvent(toListentratyp(),priority = 1,{
+  #   if(input$dataup_go > 0){
+  #     lapply(1:length(tradatas), function(x){
+  #       typlist[x] <<- input[[paste0("tratype",x)]]
+  #     })
+  #     x <- as.numeric(unlist(typlist) != unlist(typlist_old))
+  #     #x <- which((unlist(typlist)- unlist(typlist_old))==1)
+  #     whichchangechrtyp <<- which(x == 1)
+  #     typlist_old <<- typlist
+  #     print("start")
+  #     print(tra_yaxis)
+  # 
+  #     tra_yaxis[whichchangechrtyp] <<- "2"
+  #     print(tra_yaxis)
+  # 
+  #   }
+  # })
   
   
   observeEvent(input$dataup_go,{
@@ -3543,14 +3612,13 @@ server <- function(input, output,session) {
       return(100)
     })
     lab_adjustfontsize <<- lapply(1:length(labdatas), function(x){
-      return(1)
+      return(2)
     })
     poslabels <<- lapply(1:length(labdatas), function(x){
       return("inside")
     })
   })
   observeEvent(input$dat_vie_ok,ignoreNULL = TRUE,ignoreInit = TRUE,priority = 3,{
-    
     letplotgo <<- 0
     chr_type <- input$chr_type
     link_type <- input$colformatLinks
@@ -3584,10 +3652,18 @@ server <- function(input, output,session) {
           }
         }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
           tra_inf[k] <- 0
+          if(setequal(grep("value",names(data_TT)),integer(0))){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "no value column" 
+          }
+          if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "value column should be numeric" 
+          }
           if("color" %in% colnames(data_TT)){
-            if(!all(is.character(data_TT[,"color"]))){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'color' column should be a character vector." 
+          	if(!all(is.character(data_TT[,"color"]))){
+            	tra_inf[k] <- 1
+              	tra_inf_word[k] <- "The 'color' column should be a character vector." 
             }
           }
           if("Cex" %in% colnames(data_TT)){
@@ -3681,7 +3757,7 @@ server <- function(input, output,session) {
     #     text = "Format of the general chromosome data is incorrect.",
     #     type = "error"
     #   )
-    # }else 
+    # }else
     if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
@@ -3845,7 +3921,7 @@ server <- function(input, output,session) {
     #   )
     # }
   })
-  whichchange <<- NULL
+  whichchangechrset <<- NULL
   toListentra <- reactive({
     lapply(1:length(tradatas), function(x){
       input[[paste0("tra_setting",x)]]
@@ -3858,7 +3934,7 @@ server <- function(input, output,session) {
         setlist[x] <<- input[[paste0("tra_setting",x)]]
       })
       x <- which((unlist(setlist)- unlist(setlist_old))==1)
-      whichchange <<- x
+      whichchangechrset <<- x
       setlist_old <<- setlist
       
       
@@ -3981,9 +4057,9 @@ server <- function(input, output,session) {
       })
     }
     
-    if(length(whichchange) != 0){
-      tratype <- input[[paste0("tratype",whichchange)]]
-      data_TT <- data.T[[whichchange]]
+    if(length(whichchangechrset) != 0){
+      tratype <- input[[paste0("tratype",whichchangechrset)]]
+      data_TT <- data.T[[whichchangechrset]]
       tra_inf <- 0
       if(tratype == "ideogram"){
         if(ncol(data_TT) != 5){
@@ -4008,6 +4084,14 @@ server <- function(input, output,session) {
           tra_inf_word <- NULL
         }
       }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
+        if(setequal(grep("value",names(data_TT)),integer(0))){
+          tra_inf <- 1
+          tra_inf_word <- "no value column" 
+        }
+        if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
+          tra_inf <- 1
+          tra_inf_word <- "value column should be numeric" 
+        }
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
             tra_inf <- 1
@@ -4245,7 +4329,7 @@ server <- function(input, output,session) {
                           ),
                           title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                         To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.
+                        colors separated by commas. For example, 'red' or 'red,orange,blue'.if there is only one column of value, only one color needs to be specified.
                         To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
                         Users should provide a character strings assigning colors to each group. 
                         For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
@@ -4254,7 +4338,7 @@ server <- function(input, output,session) {
                           placement = "right"
                         )
                       ),
-                      choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
+                      choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-group" = "3"),
                       selected = tra_coltype[x]
                     ),
                     conditionalPanel(
@@ -4904,40 +4988,25 @@ server <- function(input, output,session) {
               max=1,
               step=0.01
             ),
-            
-            
-            
-            pickerInput(
-              inputId = paste0("lab_adjustfontsize",x),
+            sliderTextInput(
+              inputId = paste0("lab_fontper",x),
               label = tags$div(
                 HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_adjustfontsize",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "'Adaptive' means the font size is adaptive according to the height of the label track,'Custom' means the percentage of the font relative to the adaptive size.",
-                  placement = "right"
-                )
+                  bs4Dash::tooltip(
+                    actionButton(
+                      inputId = paste0("datvie_tip_lab_adjustfontsize",x),
+                      label="" ,
+                      icon=icon("question"),
+                      status="info",
+                      size = "xs"
+                    ),
+                    title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
+                    placement = "right"
+                  )
               ),
-              choices = c("Adaptive" = 1, "Custom" = 2),
-              selected = lab_adjustfontsize[x]
+              choices = c(10:200),
+              selected = lab_fontper[x]
             ),
-            conditionalPanel(
-              condition = paste0("input.lab_adjustfontsize",x,"==2"),
-              numericInput(
-                inputId = paste0("lab_fontper",x),
-                value= lab_fontper[x], 
-                label = NULL,
-                min=30, 
-                max=120,
-                step=1
-              )
-            ),
-            
             colourInput(
               inputId = paste0("lab_fontcol",x),
               label = tags$div(
@@ -5001,38 +5070,25 @@ server <- function(input, output,session) {
               max=1,
               step=0.01
             ),
-            pickerInput(
-              inputId = paste0("lab_adjustfontsize",x),
+            sliderTextInput(
+              inputId = paste0("lab_fontper",x),
               label = tags$div(
                 HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
                 bs4Dash::tooltip(
                   actionButton(
-                    inputId = paste0("datvie_tip_lab_adjustfontsize",x), 
-                    label="" , 
+                    inputId = paste0("datvie_tip_lab_adjustfontsize",x),
+                    label="" ,
                     icon=icon("question"),
                     status="info",
                     size = "xs"
                   ),
-                  title = "'Adaptive' means the font size is adaptive according to the height of the label track. 'Custom' means the percentage of the font relative to the adaptive size.",
+                  title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
                   placement = "right"
                 )
               ),
-              choices = c("Adaptive" = 1, "Custom" = 2),
-              selected = lab_adjustfontsize[x]
+              choices = c(10:200),
+              selected = lab_fontper[x]
             ),
-            conditionalPanel(
-              condition = paste0("input.lab_adjustfontsize",x,"==2"),
-              numericInput(
-                inputId = paste0("lab_fontper",x),
-                value= lab_fontper[x], 
-                label = NULL,
-                min=30, 
-                max=120,
-                step=1
-              )
-            ),
-            
-            
             
             
             
@@ -5314,6 +5370,18 @@ server <- function(input, output,session) {
           sizeplot <- c(750,750)
         }
         sizeplot <- sizeplot*plotsize*0.01
+        
+      
+        if(!is.null(data.T)){
+          tratypeunlist <- unlist(tra_type)
+          for (l in 1:length(tra_type)) {
+            if(!(tratypeunlist[l] == "point"|tratypeunlist[l] == "line"|tratypeunlist[l] == "bar")){
+              tra_yaxis[l] <<-  "2"
+            }
+          }
+        }
+        
+        
         if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
           if(ncol(data.C) == 3){
             data.CC <- rbind(data.C,c("add",1,round(0.025*sum(data.C[,3]))))

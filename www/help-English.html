@@ -2852,33 +2852,33 @@
                             <p class="p">
                                 Start an R session with RStudio and run the following lines:
                             </p>
-                            <pre><code>
-                    # try an http CRAN mirror if https CRAN mirror doesn't work
-                    install.packages("shiny")
-                    install.packages("circlize")
-                    install.packages("bs4Dash")
-                    install.packages("DT")
-                    install.packages("RColorBrewer")
-                    install.packages("shinyWidgets")
-                    install.packages("data.table")
-                    install.packages("shinyBS")
-                    install.packages("sortable")
-                    install.packages("shinyjqui")
-                    install.packages("shinycssloaders")
-                    install.packages("colourpicker")
-                    install.packages("gridBase")
-                    install.packages("BiocManager")
-                    BiocManager::install("ComplexHeatmap")
-                            </code></pre>
+                            <pre>
+    # try an http CRAN mirror if https CRAN mirror doesn't work
+    install.packages("shiny")
+    install.packages("circlize")
+    install.packages("bs4Dash")
+    install.packages("DT")
+    install.packages("RColorBrewer")
+    install.packages("shinyWidgets")
+    install.packages("data.table")
+    install.packages("shinyBS")
+    install.packages("sortable")
+    install.packages("shinyjqui")
+    install.packages("shinycssloaders")
+    install.packages("colourpicker")
+    install.packages("gridBase")
+    install.packages("BiocManager")
+    BiocManager::install("ComplexHeatmap")
+                            </pre>
                         </div>
                         <div id="div3.3.3">
                             <h3 class="a">Step 3. Run the shinyCircos-V2.0 application</h3>
                             <p class="p">
                                 Start an R session with RStudio and run the following lines:
                             </p>
-                            <pre><code>
-                    shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
-                            </code></pre>
+                            <pre>
+    shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
+                            </pre>
                             <p class="p">
                                 This command will download the source code of shinyCircos-V2.0 from GitHub to a temporary directory on your computer, then launch the shinyCircos-V2.0 application in a web browser. <span style="color: red;" >The downloaded shinyCircos-V2.0 code will be deleted from your computer once the web browser is closed. The next time you run this command in RStudio, it will download the source code of shinyCircos-V2.0 from GitHub again to a temporary directory. </span>This process is cumbersome because it takes some time to download the shinyCircos-V2.0 code from GitHub.
                             </p>
@@ -2891,10 +2891,10 @@
                                     Download the source code of shinyCircos-V2.0 from GitHub.
                                 </p>
                             </p>
-                            <pre><code>
-                                library(shiny)
-                                runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
-                            </code></pre>
+                            <pre>
+        library(shiny)
+        runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
+                            </pre>
                             <p class="p">
                                 The shinyCircos-V2.0 application will then be opened in your computer's default browser.
                             </p>

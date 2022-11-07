@@ -2814,33 +2814,33 @@
                             <p class="p">
                                 使用RStudio启动一个R会话并运行以下代码行 ：
                             </p>
-                            <pre><code>
-                    # try an http CRAN mirror if https CRAN mirror doesn't work
-                    install.packages("shiny")
-                    install.packages("circlize")
-                    install.packages("bs4Dash")
-                    install.packages("DT")
-                    install.packages("RColorBrewer")
-                    install.packages("shinyWidgets")
-                    install.packages("data.table")
-                    install.packages("shinyBS")
-                    install.packages("sortable")
-                    install.packages("shinyjqui")
-                    install.packages("shinycssloaders")
-                    install.packages("colourpicker")
-                    install.packages("gridBase")
-                    install.packages("BiocManager")
-                    BiocManager::install("ComplexHeatmap")
-                            </code></pre>
+                            <pre>
+        # try an http CRAN mirror if https CRAN mirror doesn't work
+        install.packages("shiny")
+        install.packages("circlize")
+        install.packages("bs4Dash")
+        install.packages("DT")
+        install.packages("RColorBrewer")
+        install.packages("shinyWidgets")
+        install.packages("data.table")
+        install.packages("shinyBS")
+        install.packages("sortable")
+        install.packages("shinyjqui")
+        install.packages("shinycssloaders")
+        install.packages("colourpicker")
+        install.packages("gridBase")
+        install.packages("BiocManager")
+        BiocManager::install("ComplexHeatmap")
+                            </pre>
                         </div>
                         <div id="divc3.3.3">
                             <h3 class="a">步骤3：运行shinyCircos-V2.0应用程序</h3>
                             <p class="p">
                                 使用RStudio启动R会话并运行以下代码行：
                             </p>
-                            <pre><code>
-                    shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
-                            </code></pre>
+                            <pre>
+        shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
+                            </pre>
                             <p class="p">
                                 此命令将从GitHub下载shinyCircos-V2.0的源代码到您计算机的临时目录中，然后在web浏览器中启动shinyCircos-V2.0应用程序。<span style="color: red;" >一旦网页浏览器关闭，下载的shinyCircos-V2.0代码将从您的电脑中删除。下次在RStudio中运行这个命令时，它将再次从GitHub下载shinyCircos-V2.0的源代码到一个临时目录。</span>这个过程十分麻烦，因为从GitHub下载shinyCircos-V2.0的代码需要一些时间。
                             </p>
@@ -2853,10 +2853,10 @@
                                     从GitHub下载源代码
                                 </p>
                             </p>
-                            <pre><code>
-                    library(shiny)
-                    runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
-                            </code></pre>
+                            <pre>
+        library(shiny)
+        runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
+                            </pre>
                             <p class="p">
                                 然后，shinyCircos-V2.0应用程序将在计算机的默认浏览器中打开。
                             </p>

@@ -404,7 +404,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
       
       
       
-      
       if(0 %in% labels_inf[,1]){
         lsb_tra_index <- labels_inf[,1] %in% 0
         labels_inf_chr <- labels_inf[lsb_tra_index,]
@@ -423,6 +422,12 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     repnumgap <- round(length(unique(data.C[,1]))/length(gap.width))+1
     gap.width <- rep(gap.width, repnumgap)[1:length(unique(data.C[,1]))]
     gap.width <- as.numeric(gap.width)
+    
+    
+    
+    
+    
+    
     if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
       if(1 %in% unlist(tra_yaxis) & trac_index == "Yes"){
         gap.width[(length(unique(data.C[,1]))-1):length(unique(data.C[,1]))] <- c(1,2)
@@ -1562,27 +1567,26 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             circos.genomicLink(data.L1, data.L2, rou = rou, col = colLinks, border = NA , reduce_to_mid_line = midplot)
             lgdcol <- data.LC[,c("color","cols")]
             lgdcol <- lgdcol[order(lgdcol[,1]),]
-            if(legendpos == "Right"){
-              lgdplot[[length(lgdplot)+1]] <<- Legend(
-                at = unique(lgdcol[,1]),
-                legend_gp = gpar(fill = unique(lgdcol[,2])),
-                nrow = 6,
-                title = paste0("links")
-              )
-              
-            }else{
-              lgdplot[[length(lgdplot)+1]] <<- Legend(
-                at = unique(lgdcol[,1]),
-                legend_gp = gpar(fill = unique(lgdcol[,2])),
-                ncol = 4,
-                by_row = TRUE,
-                title = paste0("links"),
-                direction = "horizontal"
-              )
-              
+            if(colformatLinks == 2){
+              if(legendpos == "Right"){
+                lgdplot[[length(lgdplot)+1]] <<- Legend(
+                  at = unique(lgdcol[,1]),
+                  legend_gp = gpar(fill = unique(lgdcol[,2])),
+                  nrow = 6,
+                  title = paste0("links")
+                )
+              }else{
+                lgdplot[[length(lgdplot)+1]] <<- Legend(
+                  at = unique(lgdcol[,1]),
+                  legend_gp = gpar(fill = unique(lgdcol[,2])),
+                  ncol = 4,
+                  by_row = TRUE,
+                  title = paste0("links"),
+                  direction = "horizontal"
+                )
+                
+              }
             }
-            
-            
           }else{
             linkscolor.export <<- rand_color(nrow(data.L1), transparency = 1-transparencyLinks)
             circos.genomicLink(data.L1, data.L2, rou = rou, col = linkscolor.export, border = NA , reduce_to_mid_line = midplot)
