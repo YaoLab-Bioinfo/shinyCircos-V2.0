@@ -343,7 +343,7 @@ body <- bs4DashBody(
                      pickerInput(
                        inputId = "trackChr",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
+                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip3", 
@@ -363,7 +363,7 @@ body <- bs4DashBody(
                        textInput(
                          inputId = "colorChr",
                          label = tags$div(
-                           HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
+                           HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
                            bs4Dash::tooltip(
                              actionButton(
                                inputId = "datvie_tip4", 
@@ -381,7 +381,7 @@ body <- bs4DashBody(
                        numericInput(
                          inputId = "heightChr",
                          label = tags$div(
-                           HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
+                           HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                            bs4Dash::tooltip(
                              actionButton(
                                inputId = "datvie_tip5", 
@@ -406,7 +406,7 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "heightChr_cyt",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
+                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip6", 
@@ -471,7 +471,7 @@ body <- bs4DashBody(
                    pickerInput(
                      inputId = "labelChr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
+                       HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip8", 
@@ -491,7 +491,7 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "labelChr_size",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
+                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip9", 
@@ -531,7 +531,7 @@ body <- bs4DashBody(
                    numericInput(
                      inputId = "distance_Chr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
+                       HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
                        bs4Dash::tooltip(
                          actionButton(
                            inputId = "datvie_tip13", 
@@ -540,7 +540,7 @@ body <- bs4DashBody(
                            status="info",
                            size = "xs"
                          ),
-                         title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
+                         title = "This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
                          placement = "bottom"
                        )
                      ),
@@ -661,21 +661,56 @@ body <- bs4DashBody(
                          )
                        ),
                        hr(),
-                       sliderTextInput(
-                         inputId = "plotmultiples",
-                         label = tags$div(
-                           HTML('<font><h4><i class="fa-solid fa-play"></i> Zoom the plot (%)</font>')
+                       
+                       fluidRow(
+                         column(width=6,
+                                sliderTextInput(
+                                  inputId = "plotmultiples",
+                                  label = tags$div(
+                                    HTML('<font><h4><i class="fa-solid fa-play"></i> Zoom the plot (%)</font>')
+                                  ),
+                                  choices = c(50:300),
+                                  selected = 100
+                                )
                          ),
-                         choices = c(50:300),
-                         selected = 100
+                         column(width=6,
+                                pickerInput(
+                                  inputId = "trac_index",
+                                  label = tags$div(
+                                    HTML('<font><h4><i class="fa-solid fa-play"></i> Add track index?</font>'),
+                                    bs4Dash::tooltip(
+                                      actionButton(
+                                        inputId = "cirplo_leg_tip3",
+                                        label="" ,
+                                        icon=icon("question"),
+                                        status="info",
+                                        size = "xs"
+                                      ),
+                                      title = "Display or hide the index of each track?",
+                                      placement = "bottom"
+                                    )
+                                  ),
+                                  choices = c("Yes", "No"),
+                                  selected = "No"
+                                )
+                         )
                        ),
+                       
                        hr(),
+                       
+                       fluidRow(
+                         column(width=12,
+                                tags$div(
+                                  HTML('<font><h4><i class="fa-solid fa-play"></i> Highlight user-specified genomic regions</font>')
+                                )
+                         )
+                       ),
                        
                        fluidRow(
                          column(
                            width = 6,
                            tags$div(
-                             HTML('<font><h4><i class="fa-solid fa-play"></i> Highlight genomic regions with input data pasted below:</font>'),
+                             HTML('<font><h5><i class="fa-solid fa-circle"></i> Paste input genomic regions below:</font>'),
                              bs4Dash::tooltip(
                                actionButton(
                                  inputId = "cirplo_highlight",
@@ -693,7 +728,7 @@ body <- bs4DashBody(
                            width = 6,
                            tags$div(
                              style = "with:1200px;",
-                             HTML('<font><h4><i class="fa-solid fa-circle"></i> Transparency (%)</font>'),
+                             HTML('<font><h5><i class="fa-solid fa-circle"></i> Color transparency (%)</font>'),
                              br()
                            )
                          )
@@ -703,7 +738,7 @@ body <- bs4DashBody(
                            width = 6,
                            tags$textarea(
                              id = "hltData",
-                             rows = 2,
+                             rows = 4,
                              cols = 40,
                              ""
                            )
@@ -735,30 +770,11 @@ body <- bs4DashBody(
                          size = "sm"
                        ),
                        hr(),
-                       pickerInput(
-                         inputId = "trac_index",
-                         label = tags$div(
-                           HTML('<font><h4><i class="fa-solid fa-play"></i> Add track index?</font>'),
-                           bs4Dash::tooltip(
-                             actionButton(
-                               inputId = "cirplo_leg_tip3",
-                               label="" ,
-                               icon=icon("question"),
-                               status="info",
-                               size = "xs"
-                             ),
-                             title = "Display or hide the index of each track?",
-                             placement = "bottom"
-                           )
-                         ),
-                         choices = c("Yes", "No"),
-                         selected = "No"
-                       ),
-                       hr(),
+                       
                        bs4Dash::tooltip(
                          actionBttn(
                            inputId = "updateplot",
-                           label = "Update",
+                           label = "Update!",
                            style = "unite",
                            color = "success"
                          ),
@@ -822,7 +838,7 @@ body <- bs4DashBody(
            pickerInput(
              inputId = "helplan",
              label = NULL,
-             choices = c("English" = 1,"简体中文" = 2),
+             choices = c("English" = 1, "简体中文" = 2),
              selected = 1
            )
          ),

@@ -954,7 +954,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "sam_trackChr",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
+                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_trachr", 
@@ -975,7 +975,7 @@ server <- function(input, output,session) {
                     textInput(
                       inputId = "sam_colorChr",
                       label = tags$div(
-                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
+                        HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = "datvie_sam_chrcol", 
@@ -996,7 +996,7 @@ server <- function(input, output,session) {
                     numericInput(
                       inputId = "sam_heightChr",
                       label = tags$div(
-                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
+                        HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                         bs4Dash::tooltip(
                           actionButton(
                             inputId = "datvie_sam_heichr1", 
@@ -1021,7 +1021,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_heightChr",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
+                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_heichr2", 
@@ -1087,7 +1087,7 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_labelChr",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
+                    HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_sam_labelchr", 
@@ -1108,7 +1108,7 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_labelChr_size",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the chromosome IDs</b></font>'),
+                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Font size of the chromosome IDs</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_sam_labsize_tip", 
@@ -1148,7 +1148,7 @@ server <- function(input, output,session) {
                 numericInput(
                   inputId = "sam_distance_Chr",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
+                    HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
                     bs4Dash::tooltip(
                       actionButton(
                         inputId = "datvie_tip_sam_dischr", 
@@ -1157,7 +1157,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
+                      title = "This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
                       placement = "bottom"
                     )
                   ),
@@ -1392,7 +1392,7 @@ server <- function(input, output,session) {
                                 )
                               ),
                               
-                              choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
+                              choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3"),
                               selected = sam_tra_coltype[x]
                             ),
                             conditionalPanel(
@@ -1431,7 +1431,7 @@ server <- function(input, output,session) {
                                     placement = "right"
                                   )
                                 ),
-                                choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-group" = "3"),
+                                choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-groups" = "3"),
                                 selected = tra_coltype[x]
                               ),
                               conditionalPanel(
@@ -2169,7 +2169,7 @@ server <- function(input, output,session) {
                         sliderTextInput(
                           inputId = paste0("sam_lab_fontper",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
+                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size (%)</b></font>'),
                             bs4Dash::tooltip(
                               actionButton(
                                 inputId = paste0("sam_datvie_tip_lab_adjustfontsize",x),
@@ -2178,7 +2178,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
+                              title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
                               placement = "right"
                             )
                           ),
@@ -2271,7 +2271,7 @@ server <- function(input, output,session) {
                         size = "xs"
                       ),
                       title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without a color column'. 
-	For data with 7 columns, user should select 'Data with multi-group' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
+	For data with 7 columns, user should select 'Data with multi-groups' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
 	For data with 7 columns, user should select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
                       placement = "bottom"
                     )
@@ -2310,7 +2310,7 @@ server <- function(input, output,session) {
                       pickerInput(
                         inputId = "sam_colformatLinks",
                         label = NULL,
-                        choices = c("Data without a 'color' column" = "1","Data with multi-group" = "2", "Data with gradual values" = "3"),
+                        choices = c("Data without a 'color' column" = "1","Data with multi-groups" = "2", "Data with gradual values" = "3"),
                         selected = sam_colformatLinks
                       )
                     ),
@@ -2588,8 +2588,8 @@ server <- function(input, output,session) {
     }else{
       sendSweetAlert(
         session = session,
-        title = "",
-        text = "Input datasets saved and you can add more datasets by repeating Step 2.\n You can also finish data uploading and move to Step 3.",
+        title = NULL,
+        text = tags$div(HTML("<div style='white-space: pre-wrap;'>Input datasets saved and you can add more datasets by repeating Step 2.<br/>You can also finish data uploading and move to Step 3.</div>")),
         type = "success"
       )
     }  
@@ -2603,7 +2603,7 @@ server <- function(input, output,session) {
       sendSweetAlert(
         session = session,
         title = "",
-        text = "Duplicated datasets found, please drag the duplicated datasets into the 'Garbage' area.",
+        text = "Duplicated datasets found. Please drag the duplicated datasets into the 'Garbage' area.",
         type = "error"
       )
     }else{
@@ -2648,16 +2648,16 @@ server <- function(input, output,session) {
           
           data.C <<- fread(chrfil,data.table = FALSE,stringsAsFactors = F)
           tra_a <- length(tradatas)
-          if(tra_a >= 1){
-            trafil <- lapply(1:tra_a,function(x){
-              alldatapath[which(alldatapath[1] == tradatas[x]),4]
+          if(tra_a >= 1) {
+            trafil <- lapply(1:tra_a, function(x) {
+              alldatapath[which(alldatapath[1] == tradatas[x]), 4]
             })
             trafil <- unlist(trafil)
-            data.T <<- lapply(1:tra_a,function(x){
+            data.T <<- lapply(1:tra_a, function(x) {
               tra_b <- trafil[[x]]
-              data.frame(fread(tra_b),stringsAsFactors = F)
+              data.frame(fread(tra_b), stringsAsFactors = F)
             })
-          }else{
+          } else{
             data.T <<- NULL
           }
           
@@ -2666,74 +2666,78 @@ server <- function(input, output,session) {
             alldatapath[which(alldatapath[1] == lindatas[x]),4]
           })
           linfil <- unlist(linfil)
-          if(lin_a >= 1){
+          if(lin_a >= 1) {
             lin_b <- linfil[[1]]
-            data.L <<- data.frame(fread(lin_b),stringsAsFactors = F)
-          }else{
+            data.L <<- data.frame(fread(lin_b), stringsAsFactors = F)
+          } else{
             data.L <<- NULL
           }
-          # 
+          #
           lab_a <- length(labdatas)
-          labfil <- lapply(1:lab_a,function(x){
-            alldatapath[which(alldatapath[1] == labdatas[x]),4]
+          labfil <- lapply(1:lab_a, function(x) {
+            alldatapath[which(alldatapath[1] == labdatas[x]), 4]
           })
           labfil <- unlist(labfil)
-          if(lab_a >= 1){
-            data.N <<- lapply(1:lab_a,function(x){
+          if (lab_a >= 1) {
+            data.N <<- lapply(1:lab_a, function(x) {
               lab_b <- labfil[[x]]
-              data.frame(fread(lab_b),stringsAsFactors = F)
+              data.frame(fread(lab_b), stringsAsFactors = F)
             })
-          }else{
+          } else{
             data.N <<- NULL
           }
           #
           unichr <- unique(data.C[,1])
-          if(tra_a >= 1){
-            unitra <- unique(unlist(lapply(1:length(data.T), function(x){
-              data.T[[x]][,1]
+          if(tra_a >= 1) {
+            unitra <- unique(unlist(lapply(1:length(data.T), function(x) {
+              data.T[[x]][, 1]
             })))
-          }else{
+          } else{
             unitra <- NULL
           }
-          if(lab_a >= 1){
-            unilab <- unique(unlist(lapply(1:length(data.N), function(x){
-              data.N[[x]][,1]
+          if (lab_a >= 1) {
+            unilab <- unique(unlist(lapply(1:length(data.N), function(x) {
+              data.N[[x]][, 1]
             })))
-          }else{
+          } else{
             unilab <- NULL
           }
-          if(!is.null(data.L)){
-            unilin <- unique(data.L[,1])
-          }else{
+          if (!is.null(data.L)) {
+            unilin <- unique(data.L[, 1])
+          } else{
             unilin <- NULL
           }
           uniall <- unique(c(unitra,unilab,unilin))
           
           alldatalist <- c(list(data.C),data.T,list(data.L),data.N)
           alldatalist <- alldatalist[!sapply(alldatalist, is.null)]
+          names(alldatalist) <- dataall
           
           primessage <- sapply(alldatalist, function(x){
             
-            
-            if(!all(is.character(x[,1]))){
-              return("The first column of data should be characters")
-            }else if(!all(is.numeric(x[,3]),is.numeric(x[,2]))){
-              return("Columns 2 and 3 of the data should be numbers")
-            }else if(!all(x[,2] > 0)){
-              return("The value of the start column should be greater than 0")
-            }else if(!all((x[,3] > x[,2]) == TRUE)){
-              return("The value of the end column should not be greater than the start column")
-            }else{
+            if (!all(is.character(x[, 1]))) {
+              return("The first column should be characters.")
+            } else if (!all(is.numeric(x[, 3]), is.numeric(x[, 2]))) {
+              return("The 2nd and 3rd columns of the data should be numeric.")
+            } else if (!all(x[, 2] > 0)) {
+              return("Values of the 'start' column should be larger than 0.")
+            } else if (!all((x[, 3] > x[, 2]) == TRUE)) {
+              return("Values of the 'end' column should be larger than the 'start' column.")
+            } else{
               return("success")
             }
           })
           if(!all(primessage == "success")){
             wrongdata <- dataall[primessage != "success"]
             wrongtext <- primessage[primessage != "success"]
+            
+            wrong.message <- paste(wrongdata, wrongtext, sep=": ")
+            wrong.message <- paste0(wrong.message, collapse = "<br/>")
+            wrong.message <- paste0("<div style='white-space: pre-wrap;'>", wrong.message, "</div>")
             sendSweetAlert(
               session = session,
-              title = paste0("Wrong data:",paste0(wrongdata,collapse = ",")),
-              text = paste0(wrongtext,collapse = ";"),
+              title = NULL,
+              text = tags$div(HTML(wrong.message)),
               type = "error"
             )
           }else if(!all(uniall %in% unichr)){
@@ -2979,7 +2983,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Name of the uploaded file.",
+                  title = "Name of the uploaded files.",
                   placement = "bottom"
                 )
               )
@@ -3241,7 +3245,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Name of the uploaded file.",
+                  title = "Name of the uploaded files.",
                   placement = "bottom"
                 )
               )
@@ -3258,9 +3262,9 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without a color column'. 
-                  For data with 7 columns, user should select 'Data with multi-group' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
-                  For data with 7 columns, user should select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
+                  title = "The format of links data specified by the user. For data with 6 columns, please select 'Data without a color column'. 
+                  For data with 7 columns, please select 'Data with multi-groups' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
+                  For data with 7 columns, please select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
                   placement = "bottom"
                 )
               )
@@ -3298,7 +3302,7 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "colformatLinks",
                     label = NULL,
-                    choices = c("Data without a 'color' column" = "1", "Data with multi-group" = "2", "Data with gradual values" = "3"),
+                    choices = c("Data without a 'color' column" = "1", "Data with multi-groups" = "2", "Data with gradual values" = "3"),
                     selected="1"
                   )
                 ),
@@ -3654,33 +3658,33 @@ server <- function(input, output,session) {
           tra_inf[k] <- 0
           if(setequal(grep("value",names(data_TT)),integer(0))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "no value column" 
+            tra_inf_word[k] <- "The data value column was missing from the input data." 
           }
           if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "value column should be numeric" 
+            tra_inf_word[k] <- "The value column should be numeric."
           }
           if("color" %in% colnames(data_TT)){
           	if(!all(is.character(data_TT[,"color"]))){
             	tra_inf[k] <- 1
-              	tra_inf_word[k] <- "The 'color' column should be a character vector." 
+              	tra_inf_word[k] <- "The 'color' column should be a character vector."
             }
           }
           if("Cex" %in% colnames(data_TT)){
             if(!all(is.numeric(data_TT[,"cex"]))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'cex' column should be a numeric vector." 
+              tra_inf_word[k] <- "The 'cex' column should be a numeric vector."
             }
           }
           if("pch" %in% colnames(data_TT)){
             if(!all(data_TT[,"pch"] %in% 1:25)){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The Pch value should be integers in 1-25. Please refer to the help manual for more details." 
+              tra_inf_word[k] <- "The 'Pch' value should be integers in 1-25. Please refer to the help manual for more details." 
             }
           }
           if("stack" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type to for the input data of this track." 
+            tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
           }
           if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
             tra_inf[k] <- 1
@@ -3727,7 +3731,7 @@ server <- function(input, output,session) {
           }
           if(sum(dataif) != (ncol(data_TT)-3)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "All columns except for the first 3 columns should be characters." 
+            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3739,7 +3743,7 @@ server <- function(input, output,session) {
           }
           if(sum(dataif) != (ncol(data_TT)-1)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "All columns except for the first column should be numeric values." 
+            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-gradual should be a numeric vector." 
           }else{
             tra_inf[k] <- 0
             tra_inf_word[k] <- NULL
@@ -3797,7 +3801,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of Data with multi-group should be characters.",
+              text = "The 7th column of Data with multi-groups should be characters.",
               type = "error"
             )
           }else{
@@ -3817,7 +3821,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of Data with gradual value should be a numeric vector.",
+              text = "The 7th column of 'Data with gradual values' should be a numeric vector.",
               type = "error"
             )
           }else{
@@ -3873,7 +3877,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of Data with multi-group should be characters.",
+              text = "The 7th column of Data with multi-groups should be characters.",
               type = "error"
             )
           }
@@ -3891,7 +3895,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of Data with gradual value should be a numeric vector.",
+              text = "The 7th column of 'Data with gradual values' should be a numeric vector.",
               type = "error"
             )
           }
@@ -3909,14 +3913,14 @@ server <- function(input, output,session) {
     #   sendSweetAlert(
     #     session = session,
     #     title = "",
-    #     text = "The seventh column of Data with multi-group should be character.",
+    #     text = "The seventh column of Data with multi-groups should be character.",
     #     type = "error"
     #   )
     # }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
     #   sendSweetAlert(
     #     session = session,
     #     title = "",
-    #     text = "The seventh column of Data with gradual value should be numeric.",
+    #     text = "The seventh column of 'Data with gradual values' should be numeric.",
     #     type = "error"
     #   )
     # }
@@ -4086,11 +4090,11 @@ server <- function(input, output,session) {
       }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
         if(setequal(grep("value",names(data_TT)),integer(0))){
           tra_inf <- 1
-          tra_inf_word <- "no value column" 
+          tra_inf_word <- "The data value column is missing from the input data."
         }
         if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
           tra_inf <- 1
-          tra_inf_word <- "value column should be numeric" 
+          tra_inf_word <- "The value column should be numeric." 
         }
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
@@ -4139,7 +4143,7 @@ server <- function(input, output,session) {
           tra_inf_word <- "The rect-discrete data should contain 4 columns." 
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'group' columns of rect-discrete data should be characters." 
+          tra_inf_word <- "The 4th column of rect-discrete data should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4150,7 +4154,7 @@ server <- function(input, output,session) {
           tra_inf_word <- "The rect-gradual data should contain 4 columns." 
         }else if(!is.numeric(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'value' columns of rect-gradual data should be a numeric vector." 
+          tra_inf_word <- "The 4th column of rect-gradual data should be a numeric vector." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4162,7 +4166,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "The 'group' column should be characters." 
+          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4174,7 +4178,7 @@ server <- function(input, output,session) {
         }
         if(sum(dataif) != (ncol(data_TT)-3)){
           tra_inf <- 1
-          tra_inf_word <- "The 'value' column should be a numeric vector." 
+          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-gradual should be a numeric vector." 
         }else{
           tra_inf <- 0
           tra_inf_word <- NULL
@@ -4264,7 +4268,7 @@ server <- function(input, output,session) {
                       placement = "right"
                     )
                   ),
-                  choices = c("Random" = "1", "Custom for data with multi-group" = "3"),
+                  choices = c("Random" = "1", "Custom for data with multi-groups" = "3"),
                   selected = tra_coltype[x]
                 ),
                 conditionalPanel(
@@ -4299,7 +4303,7 @@ server <- function(input, output,session) {
                         placement = "right"
                       )
                     ),
-                    choices = c("Random" = "1", "Custom for data with multi-column" = "2", "Custom for data with multi-group" = "3"),
+                    choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3"),
                     selected = tra_coltype[x]
                   ),
                   conditionalPanel(
@@ -4338,7 +4342,7 @@ server <- function(input, output,session) {
                           placement = "right"
                         )
                       ),
-                      choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-group" = "3"),
+                      choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-groups" = "3"),
                       selected = tra_coltype[x]
                     ),
                     conditionalPanel(
@@ -4818,7 +4822,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
+                  title = "This parameter can also be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
                   placement = "right"
                 )
               ),
@@ -4979,7 +4983,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Height of the track occupied by the label.",
+                  title = "Height of the track occupied by the label data.",
                   placement = "right"
                 )
               ),
@@ -5000,7 +5004,7 @@ server <- function(input, output,session) {
                       status="info",
                       size = "xs"
                     ),
-                    title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
+                    title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
                     placement = "right"
                   )
               ),
@@ -5082,7 +5086,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "The font size is automatically adjusted according to the height of the Label. If the font is abnormal, you can adjust the font size here as a percentage of the adaptive size.",
+                  title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
                   placement = "right"
                 )
               ),
@@ -5104,7 +5108,7 @@ server <- function(input, output,session) {
                     status="info",
                     size = "xs"
                   ),
-                  title = "Place the labels in the inner or the outer of the track?",
+                  title = "Place the labels in the inner or the outer of the specified track?",
                   placement = "right"
                 )
               ),
@@ -5642,7 +5646,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "Please click the 'Update' button to update the Circos plot!",
+              text = "Please click the 'Update!' button to update the Circos plot!",
               type = "success"
             )
             for (k in 1:nrow(hlt_data1)) {
@@ -5664,7 +5668,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "Please click the 'Update' button to update the image!",
+              text = "Please click the 'Update!' button to update the Circos plot!",
               type = "success"
             )
             for (k in 1:nrow(hlt_data1)) {
