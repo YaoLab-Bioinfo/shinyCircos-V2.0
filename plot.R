@@ -1,63 +1,110 @@
 #source("server.R")
 
 
-legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
-  if(tktype == "heatmap-gradual"){
-    break1 <- min(as.numeric(as.matrix(data.TT[,-c(1:3)])))
-    break2 <- max(as.numeric(as.matrix(data.TT[,-c(1:3)])))
-    midpoint <- (break1+break2)/2
-    hmapcols <- gsub('\\"',"",hmapcols)
-    hmapcols <- unlist(strsplit(hmapcols,"\\."))
-    f <- colorRamp2(breaks = c(break1, midpoint, break2), colors = hmapcols)
-    if(legendpos == "Right"){
-      return(
-        Legend(
-          col_fun = f,
-          title = paste0("track",i)
+legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor,addlegend){
+  if(addlegend =="Yes"){
+    if(tktype == "heatmap-gradual"){
+      break1 <- min(as.numeric(as.matrix(data.TT[,-c(1:3)])))
+      break2 <- max(as.numeric(as.matrix(data.TT[,-c(1:3)])))
+      midpoint <- (break1+break2)/2
+      hmapcols <- gsub('\\"',"",hmapcols)
+      hmapcols <- unlist(strsplit(hmapcols,"\\."))
+      f <- colorRamp2(breaks = c(break1, midpoint, break2), colors = hmapcols)
+      if(legendpos == "Right"){
+        return(
+          Legend(
+            col_fun = f,
+            title = paste0("track",i)
+          )
         )
-      )
-    }else{
-      return(
-        Legend(
-          col_fun = f,
-          title = paste0("track",i),
-          direction = "horizontal"
+      }else{
+        return(
+          Legend(
+            col_fun = f,
+            title = paste0("track",i),
+            direction = "horizontal"
+          )
         )
-      )
-    }
-    
-  }else if(tktype == "rect-gradual"){
-    f <- colorRamp2(breaks = c(min(data.TT[,4]), mean(data.TT[,4]), max(data.TT[,4])), colors = rectcols)
-    if(legendpos == "Right"){
-      return(
-        Legend(
-          col_fun = f,
-          title = paste0("track",i)
+      }
+    }else if(tktype == "rect-gradual"){
+      f <- colorRamp2(breaks = c(min(data.TT[,4]), mean(data.TT[,4]), max(data.TT[,4])), colors = rectcols)
+      if(legendpos == "Right"){
+        return(
+          Legend(
+            col_fun = f,
+            title = paste0("track",i)
+          )
         )
-      )
-    }else{
-      return(
-        Legend(
-          col_fun = f,
-          title = paste0("track",i),
-          direction = "horizontal"
+      }else{
+        return(
+          Legend(
+            col_fun = f,
+            title = paste0("track",i),
+            direction = "horizontal"
+          )
         )
-      )
-    }
-  }else if(tktype == "rect-discrete"){
-    lgdcol <- cbind(unique(data.TT_old[,4]),unique(data.TT[,4]))
-    lgdcol <- lgdcol[order(lgdcol[,1]),]
-    if(legendpos == "Right"){
-      return(
-        Legend(
-          at = lgdcol[,1],
-          legend_gp = gpar(fill = lgdcol[,2]),
-          nrow = 6,
-          title = paste0("track",i)
+      }
+    }else if(tktype == "rect-discrete"){
+      lgdcol <- cbind(unique(data.TT_old[,4]),unique(data.TT[,4]))
+      lgdcol <- lgdcol[order(lgdcol[,1]),]
+      if(legendpos == "Right"){
+        return(
+          Legend(
+            at = lgdcol[,1],
+            legend_gp = gpar(fill = lgdcol[,2]),
+            nrow = 6,
+            title = paste0("track",i)
+          )
         )
-      )
-    }else{
-      return(
+      }else{
+        return(
+          Legend(
+            at = lgdcol[,1],
+            legend_gp = gpar(fill = lgdcol[,2]),
+            ncol = 4,
+            by_row = TRUE,
+            title = paste0("track",i),
+            direction = "horizontal"
+          )
+        )
+      }
+    }else if(tktype == "heatmap-discrete"){
+      lgdcol <- cbind(unique(c(t(data.TT_old[,4:length(data.TT_old)]))),unique(c(t(data.TT))))
+      lgdcol <- lgdcol[order(lgdcol[,1]),]
+      if(legendpos == "Right"){
+        return(
+          Legend(
+            at = lgdcol[,1],
+            legend_gp = gpar(fill = lgdcol[,2]),
+            nrow = 6,
+            title = paste0("track",i)
+          )
+        )
+      }else{
+        return(
+          Legend(
+            at = lgdcol[,1],
+            legend_gp = gpar(fill = lgdcol[,2]),
+            ncol = 4,
+            by_row = TRUE,
+            title = paste0("track",i),
+            direction = "horizontal"
+          )
+        )
+      }
+    }else if("stack" %in% colnames(data.TT_old)){
+      lgdcol <- cbind(unique(data.TT_old[,4],fromLast = TRUE),tkcolor)
+      lgdcol <- lgdcol[order(lgdcol[,1]),]
+      if(legendpos == "Right"){
+        return(
+          Legend(
+            at = lgdcol[,1],
+            legend_gp = gpar(fill = lgdcol[,2]),
+            nrow = 6,
+            title = paste0("track",i)
+          )
+        )
+      }else{
         Legend(
           at = lgdcol[,1],
           legend_gp = gpar(fill = lgdcol[,2]),
@@ -66,63 +113,9 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor){
           title = paste0("track",i),
           direction = "horizontal"
         )
-      )
-    }
-    
-  }else if(tktype == "heatmap-discrete"){
-    lgdcol <- cbind(unique(c(t(data.TT_old[,4:length(data.TT_old)]))),unique(c(t(data.TT))))
-    lgdcol <- lgdcol[order(lgdcol[,1]),]
-    
-    
-    if(legendpos == "Right"){
-      return(
-        Legend(
-          at = lgdcol[,1],
-          legend_gp = gpar(fill = lgdcol[,2]),
-          nrow = 6,
-          title = paste0("track",i)
-        )
-      )
-    }else{
-      return(
-        Legend(
-          at = lgdcol[,1],
-          legend_gp = gpar(fill = lgdcol[,2]),
-          ncol = 4,
-          by_row = TRUE,
-          title = paste0("track",i),
-          direction = "horizontal"
-        )
-      )
-    }
-    
-  }else if("stack" %in% colnames(data.TT_old)){
-    lgdcol <- cbind(unique(data.TT_old[,4],fromLast = TRUE),tkcolor)
-    lgdcol <- lgdcol[order(lgdcol[,1]),]
-    
-    
-    
-    if(legendpos == "Right"){
-      return(
-        Legend(
-          at = lgdcol[,1],
-          legend_gp = gpar(fill = lgdcol[,2]),
-          nrow = 6,
-          title = paste0("track",i)
-        )
-      )
-    }else{
-      Legend(
-        at = lgdcol[,1],
-        legend_gp = gpar(fill = lgdcol[,2]),
-        ncol = 4,
-        by_row = TRUE,
-        title = paste0("track",i),
-        direction = "horizontal"
-      )
-    }
+      }
+    }else{NULL}
   }else{NULL}
-  
 }
 
 
@@ -156,6 +149,7 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
   }
   
   circos.genomicTrackPlotRegion(ylim = c(0, 1) , bg.col = colorChr, bg.border = NA , track.height = chr_height , track.margin = c(dis_Chr,gapgap))
+  
   if(plotother != 0){
     circos.updatePlotRegion(
       sector.index = x[,1][nrow(x)],
@@ -216,6 +210,13 @@ plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr 
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
       }else{
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "inside")
+      }
+    }
+    if(labels_inf_chr[[2]]=="outside"){
+      if(ncol(data.CN) == 4){
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+      }else{
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
       }
     }
   }
@@ -1499,7 +1500,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
           }
         }
-        lgdplot[[i]] <<- legendplot(tktype = tktype,data.TT = data.TT,data.TT_old = data.TT_old,i=i,legendpos = legendpos,tkcolor = tkcolor)
+        lgdplot[[i]] <<- legendplot(tktype = tktype,data.TT = data.TT,data.TT_old = data.TT_old,i=i,legendpos = legendpos,tkcolor = tkcolor , addlegend = addlegend)
         progress$set(value = i)
       }
     }
@@ -1530,22 +1531,24 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             colLinks <- adjustcolor(data.LC$cols, alpha.f = transparencyLinks)
             lgdcol <- data.LC[,c("color","cols")]
             lgdcol <- lgdcol[order(lgdcol[,1]),]
-            if(legendpos == "Right"){
-              lgdplot[[length(lgdplot)+1]] <<- Legend(
-                at = unique(lgdcol[,1]),
-                legend_gp = gpar(fill = unique(lgdcol[,2])),
-                nrow = 6,
-                title = paste0("links")
-              )
-            }else{
-              lgdplot[[length(lgdplot)+1]] <<- Legend(
-                at = unique(lgdcol[,1]),
-                legend_gp = gpar(fill = unique(lgdcol[,2])),
-                ncol = 4,
-                by_row = TRUE,
-                title = paste0("links"),
-                direction = "horizontal"
-              )
+            if(addlegend == "Yes"){
+              if(legendpos == "Right"){
+                lgdplot[[length(lgdplot)+1]] <<- Legend(
+                  at = unique(lgdcol[,1]),
+                  legend_gp = gpar(fill = unique(lgdcol[,2])),
+                  nrow = 6,
+                  title = paste0("links")
+                )
+              }else{
+                lgdplot[[length(lgdplot)+1]] <<- Legend(
+                  at = unique(lgdcol[,1]),
+                  legend_gp = gpar(fill = unique(lgdcol[,2])),
+                  ncol = 4,
+                  by_row = TRUE,
+                  title = paste0("links"),
+                  direction = "horizontal"
+                )
+              }
             }
           }else if((ncol(data.L)==6 | ncol(data.L)==7) && !splitcol){
             colLinks <- adjustcolor(selcolorLinks[1], alpha.f = transparencyLinks)
@@ -1568,23 +1571,24 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             lgdcol <- data.LC[,c("color","cols")]
             lgdcol <- lgdcol[order(lgdcol[,1]),]
             if(colformatLinks == 2){
-              if(legendpos == "Right"){
-                lgdplot[[length(lgdplot)+1]] <<- Legend(
-                  at = unique(lgdcol[,1]),
-                  legend_gp = gpar(fill = unique(lgdcol[,2])),
-                  nrow = 6,
-                  title = paste0("links")
-                )
-              }else{
-                lgdplot[[length(lgdplot)+1]] <<- Legend(
-                  at = unique(lgdcol[,1]),
-                  legend_gp = gpar(fill = unique(lgdcol[,2])),
-                  ncol = 4,
-                  by_row = TRUE,
-                  title = paste0("links"),
-                  direction = "horizontal"
-                )
-                
+              if(addlegend == "Yes"){
+                if(legendpos == "Right"){
+                  lgdplot[[length(lgdplot)+1]] <<- Legend(
+                    at = unique(lgdcol[,1]),
+                    legend_gp = gpar(fill = unique(lgdcol[,2])),
+                    nrow = 6,
+                    title = paste0("links")
+                  )
+                }else{
+                  lgdplot[[length(lgdplot)+1]] <<- Legend(
+                    at = unique(lgdcol[,1]),
+                    legend_gp = gpar(fill = unique(lgdcol[,2])),
+                    ncol = 4,
+                    by_row = TRUE,
+                    title = paste0("links"),
+                    direction = "horizontal"
+                  )
+                }
               }
             }
           }else{
@@ -1610,22 +1614,21 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           data.L2 <- data.L[,c(4:6)]
           circos.genomicLink(data.L1, data.L2, rou = rou, col = colLinks, border = NA , reduce_to_mid_line = midplot)
         }
-        if(legendpos == "Right"){
-          lgdplot[[length(lgdplot)+1]] <<- Legend(
-            col_fun = f,
-            title = paste0("links")
-          )
-        }else{
-          lgdplot[[length(lgdplot)+1]] <<- Legend(
-            col_fun = f,
-            title = paste0("links"),
-            direction = "horizontal"
-          )
+        if(addlegend == "Yes"){
+          if(legendpos == "Right"){
+            lgdplot[[length(lgdplot)+1]] <<- Legend(
+              col_fun = f,
+              title = paste0("links")
+            )
+          }else{
+            lgdplot[[length(lgdplot)+1]] <<- Legend(
+              col_fun = f,
+              title = paste0("links"),
+              direction = "horizontal"
+            )
+          }
         }
       }
-      
-      
-      
     }
     
     lgdplot_cache <- NULL

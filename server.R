@@ -233,7 +233,7 @@ server <- function(input, output,session) {
       sam_lowColinks <<- "#0016DB"
       sam_midColinks <<- "#FFFFFF"
       sam_highColinks <<- "#FFFF00"
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -294,7 +294,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(1,1,2)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -355,7 +355,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(1,1,1)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Right"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -415,7 +415,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(2,2,2)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "yes"
+      sam_addlegend <<- "Yes"
       sam_legendpos <<- "Right"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(850,750)
@@ -477,7 +477,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(1,1,1,2)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -560,7 +560,7 @@ server <- function(input, output,session) {
       sam_lowColinks <<- "#0016DB"
       sam_midColinks <<- "#FFFFFF"
       sam_highColinks <<- "#FFFF00"
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -631,7 +631,7 @@ server <- function(input, output,session) {
       sam_lowColinks <<- "#0016DB"
       sam_midColinks <<- "#FFFFFF"
       sam_highColinks <<- "#FFFF00"
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -662,7 +662,7 @@ server <- function(input, output,session) {
       sam_lowColinks <<- "#0016DB"
       sam_midColinks <<- "#FFFFFF"
       sam_highColinks <<- "#FFFF00"
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -703,7 +703,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(2,2,2,2)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "yes"
+      sam_addlegend <<- "Yes"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(650,750)
@@ -738,7 +738,7 @@ server <- function(input, output,session) {
       sam_tra_yaxis <<- c(2)
       sam_data.N <<- NULL
       sam_data.L <<- NULL
-      sam_addlegend <<- "no"
+      sam_addlegend <<- "No"
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
@@ -1431,12 +1431,17 @@ server <- function(input, output,session) {
                                     placement = "right"
                                   )
                                 ),
-                                choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-groups" = "3"),
-                                selected = tra_coltype[x]
+                                choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3"),
+                                selected = sam_tra_coltype[x]
                               ),
                               conditionalPanel(
-                                condition = paste0("input.tra_coltype",x,"== '2'"),
-                                textInput(paste0("tra_colcol",x), NULL, value=tra_colcol[x])
+                                condition = paste0("input.sam_tra_coltype",x,"== '2'"),
+                                colourInput(
+                                  inputId = paste0("sam_tra_colcol",x),
+                                  label = NULL,
+                                  value = sam_tra_colcol[x],
+                                  returnName = TRUE
+                                )
                               ),
                               conditionalPanel(
                                 condition = paste0("input.sam_tra_coltype",x," == '3'"),
@@ -3359,9 +3364,9 @@ server <- function(input, output,session) {
                   selected = FALSE
                 ),
                 conditionalPanel(
-                  condition="input.colformatLinks=='1' | input.colformatLinks=='2'",
+                  condition = "input.colformatLinks=='1'",
                   pickerInput(
-                    inputId = "colorLinks",
+                    inputId = "colorLinks1",
                     label = tags$div(
                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
                       bs4Dash::tooltip(
@@ -3380,15 +3385,59 @@ server <- function(input, output,session) {
                     selected="1"
                   ),
                   conditionalPanel(
-                    condition="input.colorLinks==2 && input.colformatLinks=='1'",
-                    textInput(
+                    condition="input.colorLinks1==2",
+                    colourInput(
                       inputId = "selcolorLinks1",
                       label = NULL,
-                      value="yellowgreen"
+                      value = "yellowgreen",
+                      returnName = TRUE
                     )
                   ),
+                  numericInput(
+                    inputId = "transparencyLinks",
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = "datvie_link_tip4", 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
+                        placement = "bottom"
+                      )
+                    ),
+                    value=0.5,
+                    min=0,
+                    max=1,
+                    step=0.1
+                  )
+                ),
+                conditionalPanel(
+                  condition="input.colformatLinks=='2'",
+                  pickerInput(
+                    inputId = "colorLinks2",
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = "datvie_link_tip3", 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as 'red' or 'green' is supported. For data with 7 columns, format of specified color as 'a:red;b:green;c:blue' is supported. 'a', 'b', 'c' represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as 'grey'.",
+                        placement = "bottom"
+                      )
+                    ),
+                    c("Random" = "1", "Custom" = "2"),
+                    selected="1"
+                  ),
                   conditionalPanel(
-                    condition="input.colorLinks==2 && input.colformatLinks=='2'",
+                    condition="input.colorLinks2=='2'",
                     textInput(
                       inputId = "selcolorLinks2",
                       label = NULL,
@@ -3514,7 +3563,7 @@ server <- function(input, output,session) {
       return("1")
     })
     tra_colcol <<- lapply(1:length(tradatas), function(x){
-      return("red,blue")
+      return("red")
     })
     tra_colorcus <<- lapply(1:length(tradatas), function(x){
       return("a:red;b:blue;c:cyan")
@@ -4222,23 +4271,34 @@ server <- function(input, output,session) {
                 ),
                 conditionalPanel(
                   condition= paste0("input.tra_bar_direction",x,"== '2'"),
-                  numericInput(
-                    inputId = paste0("tra_bar_Boundary",x),
-                    label = "Boundary value:",
-                    value=tra_bar_Boundary[x],
-                    step=0.01
-                  ),
-                  colourInput(
-                    inputId = paste0("tra_bar_coldir1",x),
-                    label = "Outer color:",
-                    value = tra_bar_coldir1[x],
-                    returnName = TRUE
-                  ),
-                  colourInput(
-                    inputId = paste0("tra_bar_coldir2",x),
-                    label = "Inner color:",
-                    value = tra_bar_coldir2[x],
-                    returnName = TRUE
+                  fluidRow(
+                    column(
+                      width = 4,
+                      numericInput(
+                        inputId = paste0("tra_bar_Boundary",x),
+                        label = "Boundary value:",
+                        value=tra_bar_Boundary[x],
+                        step=0.01
+                      )
+                    ),
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("tra_bar_coldir1",x),
+                        label = "Outer bar color:",
+                        value = tra_bar_coldir1[x],
+                        returnName = TRUE
+                      )
+                    ),
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("tra_bar_coldir2",x),
+                        label = "Inner bar color:",
+                        value = tra_bar_coldir2[x],
+                        returnName = TRUE
+                      )
+                    )
                   )
                 )
               )
@@ -4342,12 +4402,17 @@ server <- function(input, output,session) {
                           placement = "right"
                         )
                       ),
-                      choices = c("Random" = "1", "Specific color" = "3","Custom for data with multi-groups" = "3"),
+                      choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3"),
                       selected = tra_coltype[x]
                     ),
                     conditionalPanel(
                       condition = paste0("input.tra_coltype",x,"== '2'"),
-                      textInput(paste0("tra_colcol",x), NULL, value=tra_colcol[x])
+                      colourInput(
+                        inputId = paste0("tra_colcol",x),
+                        label = NULL,
+                        value = tra_colcol[x],
+                        returnName = TRUE
+                      )
                     ),
                     conditionalPanel(
                       condition = paste0("input.tra_coltype",x," == '3'"),
@@ -4472,10 +4537,11 @@ server <- function(input, output,session) {
                 inputId = paste0("tra_transparency",x),
                 label = tags$div(
                   HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
+                  
                   bs4Dash::tooltip(
                     actionButton(
-                      inputId = paste0("datvie_tip_tra_trans",x), 
-                      label="" , 
+                      inputId = paste0("datvie_tip_tra_trans",x),
+                      label="" ,
                       icon=icon("question"),
                       status="info",
                       size = "xs"
@@ -5341,11 +5407,13 @@ server <- function(input, output,session) {
         })
         if(length(data.L)!= 0){
           colformatLinks <<- input$colformatLinks
-          colorLinks <<- input$colorLinks
+          
           if(colformatLinks == 1){
             selcolorLinks <<- input$selcolorLinks1
+            colorLinks <<- input$colorLinks1
           }else{
             selcolorLinks <<- input$selcolorLinks2
+            colorLinks <<- input$colorLinks2
           }
           transparencyLinks <<- input$transparencyLinks
         }

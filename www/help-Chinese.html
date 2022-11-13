@@ -15,12 +15,12 @@
                 line-height: 150%;
                 font-family: Arial, Helvetica, sans-serif;
             }
-            .a{
+            .head_zh{
                 font-size: 25px;
                 font-family: Arial, Helvetica, sans-serif;
                 font-weight: bolder;
-                margin-bottom: 30px;
-                margin-top: 25px;
+                margin-bottom: 5px;
+                margin-top: 0px;
             }
             .content{
                 font-size: 20px;
@@ -100,7 +100,7 @@
         <div class="global-div">
             <div class = "content-left">
                 <div id="divc1">
-                    <h2 class="a">1.简介</h2>
+                    <h2 class="head_zh">1.简介</h2>
                     <p class="p_help_Chinese">
                         shinyCircos-V2.0是一个可交互式创建Circos图的R/shiny应用程序。
                     </p>
@@ -137,7 +137,7 @@
                     
                 </div>
                 <div id="divc2">
-                    <h2 class="a">2.输入数据格式</h2>
+                    <h2 class="head_zh">2.输入数据格式</h2>
                     <p class="p_help_Chinese">
                         如果您是第一次接触shinyCircos-V2.0，那么我建议您仔细阅读输入数据格式说明，否则可能会出现未知的错误。
                     </p>
@@ -146,13 +146,13 @@
                        接下来我将会详细的展示不同输入数据的不同格式。
                     </p>
                     <div id="divc2.1">
-                        <h3 class="a">2.1 Chromosome data（用于定义 Circos 图的染色体）</h3>
+                        <h3 class="head_zh">2.1 Chromosome data（用于定义 Circos 图的染色体）</h3>
                             <p class="p_help_Chinese">
                                 Chromosome data是绘图时必不可少的一部分，它决定了不同的sector的名称和比例，没有它shinyCircos-V2.0将无法绘制出图形。
                                 Chromosome data一共有两种，分别是General data和Cytoband data，它们的格式并不相同。
                             </p>
                             <div id="divc2.1.1">
-                                <h4 class="a">2.1.1 具有3列的general data</h4>
+                                <h4 class="head_zh">2.1.1 具有3列的general data</h4>
                                 <p class="p_help_Chinese">
                                     general data包含三列，分别是chr、start、end。如下图所示：
                                 </p>
@@ -222,7 +222,7 @@
                             </div>
                             
                             <div id="divc2.1.2">
-                                <h4 class="a">2.1.2 具有5列的cytoband data</h4>
+                                <h4 class="head_zh">2.1.2 具有5列的cytoband data</h4>
                                 <p class="p_help_Chinese">
                                     cytoband data包含五列,分别是chr、start、end、value1、value2，如下图所示：
                                 </p>
@@ -310,12 +310,12 @@
                             
                     </div>
                     <div id="divc2.2">
-                        <h3 class="a">2.2 Track data（显示在 Circos 图的不同"Track"中）</h3>
+                        <h3 class="head_zh">2.2 Track data（显示在 Circos 图的不同"Track"中）</h3>
                         <p class="p_help_Chinese">
                             Track data用来在Circos图中绘制不同的Track，不同类型的Track往往具有不同的输入格式，但是数据的前三列是固定的，分别是chr、strat、end。接下来将会展示不同类型的Track data。
                         </p>
                         <div id="divc2.2.1">
-                            <h4 class="a">2.2.1 bar</h4>
+                            <h4 class="head_zh">2.2.1 bar</h4>
                             <p class="p_help_Chinese">
                                 用来绘制柱形图的数据应该至少有四列，分别是chr、start、end和value，值得注意的是第四列的值可以是正数也可以是负数，柱形图有两种绘图类型，分别是Unidirectional和Bidirectional，
                                 同时还支持输入数据中再添加一列颜色分类值，具体的区别见下方讲解。
@@ -552,7 +552,7 @@
             
             
                         <div id="divc2.2.2">
-                            <h4 class="a">2.2.2 line</h4>
+                            <h4 class="head_zh">2.2.2 line</h4>
                             <p class="p_help_Chinese">
                                 绘制折线图的数据应该至少包含四列，除此之外还可以添加其他的列来丰富折线图的绘制。
                             </p>
@@ -790,7 +790,7 @@
                         
             
                         <div id="divc2.2.3">
-                            <h4 class="a">2.2.3 point</h4>
+                            <h4 class="head_zh">2.2.3 point</h4>
                             <p class="p_help_Chinese">
                                 绘制散点图的数据和绘制折线图的数据类似。
                             </p>
@@ -1563,7 +1563,7 @@
                         
             
                         <div id="divc2.2.4">
-                            <h4 class="a">2.2.4 ideogram</h4>
+                            <h4 class="head_zh">2.2.4 ideogram</h4>
                             <p class="p_help_Chinese">
                                 shinyCircos-V2.0也可以将染色体条带绘制在任意“Track”上，染色体条带数据的格式和绘制染色体的<a href="#div2.1.2">细胞带数据</a>数据是一样的
                             </p>
@@ -1648,7 +1648,7 @@
                         
             
                         <div id="divc2.2.5">
-                            <h4 class="a">2.2.5 rect-discrete</h4>
+                            <h4 class="head_zh">2.2.5 rect-discrete</h4>
                             <p class="p_help_Chinese">
                                 矩形图可以理解为单行的热图，离散型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
                             </p>
@@ -1724,7 +1724,7 @@
                         
             
                         <div id="divc2.2.6">
-                            <h4 class="a">2.2.6 rect-gradual</h4>
+                            <h4 class="head_zh">2.2.6 rect-gradual</h4>
                             <p class="p_help_Chinese">
                                 连续型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
                             </p>
@@ -1800,7 +1800,7 @@
                         
             
                         <div id="divc2.2.7">
-                            <h4 class="a">2.2.7 heatmap-discrete</h4>
+                            <h4 class="head_zh">2.2.7 heatmap-discrete</h4>
                             <p class="p_help_Chinese">
                                 离散型的热图数据至少包含四列，分别为：chr、strat、end和group1，group列可以有多个，如下图所示
                             </p>
@@ -1957,7 +1957,7 @@
             
             
                         <div id="divc2.2.8">
-                            <h4 class="a">2.2.8 heatmap-gradual</h4>
+                            <h4 class="head_zh">2.2.8 heatmap-gradual</h4>
                             <p class="p_help_Chinese">
                                 连续型的热图数据至少包含四列，分别为：chr、strat、end和value1，value列可以有多个，如下图所示
                             </p>
@@ -2115,7 +2115,7 @@
             
             
                         <div id="divc2.2.9">
-                            <h4 class="a">2.2.9 stack-point</h4>
+                            <h4 class="head_zh">2.2.9 stack-point</h4>
                             <p class="p_help_Chinese">
                                 shinyCircos-V2.0还可以绘制堆叠的散点图，其数据应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
                             </p>
@@ -2191,7 +2191,7 @@
             
             
                         <div id="divc2.2.10">
-                            <h4 class="a">2.2.10 stack-line</h4>
+                            <h4 class="head_zh">2.2.10 stack-line</h4>
                             <p class="p_help_Chinese">
                                 堆叠的线图和堆叠的散点图类似，其数据也应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
                             </p>
@@ -2267,7 +2267,7 @@
             
                     </div>
                     <div id="divc2.3">
-                        <h3 class="a">2.3 Label data</h3>
+                        <h3 class="head_zh">2.3 Label data</h3>
                         <p class="p_help_Chinese">
                             标签数据是用来注释基因组或解释track的数据，将在在图上呈现出一个个的标签，其数据应该包含四列或五列,如下图所示
                         </p>
@@ -2427,7 +2427,7 @@
                         </p>
                     </div>
                     <div id="divc2.4">
-                        <h3 class="a">2.4 Links data</h3>
+                        <h3 class="head_zh">2.4 Links data</h3>
                         <p class="p_help_Chinese">
                             link数据至少应该包含六列，分别代表着连接线的头和尾，具体格式如下图所示
                         </p>
@@ -2715,17 +2715,17 @@
                     </div>
                 </div>
                 <div id="divc3">
-                    <h2 class="a">3.在线或在本地计算机上使用shinyCircos</h2>
+                    <h2 class="head_zh">3.在线或在本地计算机上使用shinyCircos</h2>
                     
                     <div id="divc3.1">
-                        <h3 class="a">3.1 在线使用shinyCircos-V2.0</h3>
+                        <h3 class="head_zh">3.1 在线使用shinyCircos-V2.0</h3>
                         <p class="p_help_Chinese">
                             在线使用shinyCircos-V2.0的网址是<a href="https://venyao.xyz/shinyCircos-V2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>。当用户首次访问shinyCircos-V2.0的时候，网站的载入速度可能会比较慢，一方面可能是网络的问题，另一方面，服务器为了节约资源，在网站处于非活动状态时，
                             shinyCircos-V2.0会进入休眠节约资源，这就导致了一段时间后的首次访问加载速度会比较慢。因此，第一次访问可能需要一些时间，一旦网站被激活，shinyCircos-V2.0就可以被流畅、方便地使用。
                         </p>
                     </div>
                     <div id="divc3.2">
-                        <h3 class="a">3.2 shinyCircos-V2.0的界面</h3>
+                        <h3 class="head_zh">3.2 shinyCircos-V2.0的界面</h3>
                         <p class="p_help_Chinese">
                             shinyCircos-V2.0应用程序包含8个主菜单：“shinyCircos-V2.0”，“Data Upload”，“Circos Parameters”，“Circos Plot”，“Gallery”，“Help”，“About”和“Contact”（见下图）。“shinyCircos-V2.0”菜单列出了shinyCircos-V2.0应用程序当前版本已经对Circos图的基本介绍。
                         </p>
@@ -2818,18 +2818,18 @@
                         </p>
                     </div>
                     <div id="divc3.3">
-                        <h3 class="a">3.3 在个人电脑上安装使用shinyCircos-V2.0</h3>
+                        <h3 class="head_zh">3.3 在个人电脑上安装使用shinyCircos-V2.0</h3>
                         <p class="p_help_Chinese">
                             用户可以选择在个人电脑(Windows、Mac或Linux)上安装和运行shinyCircos-V2.0，而无需将数据上传到在线服务器。shinyCircos-V2.0是跨平台的应用，即shinyCircos-V2.0可以安装在任何具有可用R环境的平台上。shinyCircos-V2.0的安装包括三个步骤。
                         </p>
                         <div id="divc3.3.1">
-                            <h3 class="a">步骤1：安装R和RStudio</h3>
+                            <h3 class="head_zh">步骤1：安装R和RStudio</h3>
                             <p class="p_help_Chinese">
                                 请查看CRAN (<a href="https://cran.r-project.org/">https://cran.r-project.org/</a>)以了解R的安装过程。
                             </p>
                         </div>
                         <div id="divc3.3.2">
-                            <h3 class="a">步骤2：安装R/Shiny包和shinyCircos-V2.0需要的其他R包</h3>
+                            <h3 class="head_zh">步骤2：安装R/Shiny包和shinyCircos-V2.0需要的其他R包</h3>
                             <p class="p_help_Chinese">
                                 使用RStudio启动一个R会话并运行以下代码行 ：
                             </p>
@@ -2853,7 +2853,7 @@
                             </pre>
                         </div>
                         <div id="divc3.3.3">
-                            <h3 class="a">步骤3：运行shinyCircos-V2.0应用程序</h3>
+                            <h3 class="head_zh">步骤3：运行shinyCircos-V2.0应用程序</h3>
                             <p class="p_help_Chinese">
                                 使用RStudio启动R会话并运行以下代码行：
                             </p>
@@ -2883,15 +2883,15 @@
                     </div>
                 </div>
                 <div id="divc4">
-                    <h3 class="a">4 利用shinyCircos-V2.0绘制Circos图的步骤</h3>
+                    <h3 class="head_zh">4 利用shinyCircos-V2.0绘制Circos图的步骤</h3>
                     <p class="p_help_Chinese">
                         用户可以使用shinyCircos-V2.0 应用程序来创建Circos图。制作Circos图时，必须输入定义基因组中每条染色体长度的文件，以及若干个沿基因组排布的输入数据。在本节中，我们将演示使用shinyCircos-V2.0 中的示例数据集，创建Circos图的所有基本步骤。
                     </p>
                     <div id="divc4.1">
-                        <h3 class="a">4.1 利用shinyCircos-V2.0绘制Circos图的基本步骤</h3>
+                        <h3 class="head_zh">4.1 利用shinyCircos-V2.0绘制Circos图的基本步骤</h3>
                         
                         <div id="divc4.1.1">
-                            <h3 class="a">步骤1：准备并上传定义基因组长度的“Chromosom data”</h3>
+                            <h3 class="head_zh">步骤1：准备并上传定义基因组长度的“Chromosom data”</h3>
                             <p class="p_help_Chinese">
                                 基因组数据是必须输入的文件，它定义了Circos图的框架即“Sector”的比例（示例数据集可以在解压后的源文件www\example_data中获得)。
                                 基因组数据是一个包含<span style="color: red;">三列或五列</span>的文本文件，一般数据为三列，细胞带数据为五列。
@@ -2909,7 +2909,7 @@
                             </p>
                         </div>
                         <div id="divc4.1.2">
-                            <h3 class="a">步骤2：上传环形排布的“Track data”</h3>
+                            <h3 class="head_zh">步骤2：上传环形排布的“Track data”</h3>
                             <p class="p_help_Chinese">
                                 用户可以上传若干个数据集，沿着步骤1中上传的基因组数据环形排布。“Data Upload”菜单的分类框中的“Track data”框就是为了这个目的而提供的（见上图）。
                                 在这里，我们使用两个输入数据集(barplot.csv和line.csv) 来演示这个过程。用来创建不同类型“Track”的输入文件的详细格式前文的“<a href="#div2">输入数据格式</a>”部分中有详细说明。首先，我们准备了两个文件并将它们存储在磁盘上（例如，windows上的“E:/”）。
@@ -2917,7 +2917,7 @@
                             </p>
                         </div>
                         <div id="divc4.1.3">
-                            <h3 class="a">步骤3：为每个输入数据集设置“Track”位置和绘图类型</h3>
+                            <h3 class="head_zh">步骤3：为每个输入数据集设置“Track”位置和绘图类型</h3>
                             <p class="p_help_Chinese">
                                 默认情况下，拖拽入选择框的顺序就是绘制“Track”的顺序，每个输入数据集的默认绘图类型为“point”。
                                 因为我们希望使用文件“barplot.csv”创建条形图，所以我们需要将文件“barplot.csv”对应的“Plot type”设置为“bar” (如下图)，同样的“line.csv”对应的“Plot type”设置为“line”。
@@ -2930,7 +2930,7 @@
                             </p>
                         </div>
                         <div id="divc4.1.4">
-                            <h3 class="a">步骤4：点击“Submit!”按钮绘制图形</h3>
+                            <h3 class="head_zh">步骤4：点击“Submit!”按钮绘制图形</h3>
                             <p class="p_help_Chinese">
                                 所有输入数据集成功上传到shinyCircos-V2.0 应用程序并正确设置轨道位置和绘图类型后，我们需要单击“Circos Parameters” 菜单底部的“Submit!”按钮，告诉shinyCircos-V2.0去绘制图形。
                                 <span style="color: red;">默认情况下，在绘制图形时，shinyCircos-V2.0将使用随机颜色或者预定义的颜色</span>。
@@ -2939,7 +2939,7 @@
                         </div>
                     </div>
                     <div id="divc4.2">
-                        <h3 class="a">4.2 通过替换一个或多个输入数据集来更新 Circos 图</h3>
+                        <h3 class="head_zh">4.2 通过替换一个或多个输入数据集来更新 Circos 图</h3>
                         <p class="p_help_Chinese">
                             Circos图通常由分布在不同轨道上的几种基本类型的图形组成。每个图形都是使用用户上传的输入数据集创建的。
                             有时，我们可能需要替换其中一个或多个输入文件，这样我们就可以更新单个基因组图形的某些组成部分，而无需重新创建整个图形。
@@ -2950,7 +2950,7 @@
                         </p>
                     </div>
                     <div id="divc4.3">
-                        <h3 class="a">4.3 以PDF或SVG格式下载创建的单个基因组图形</h3>
+                        <h3 class="head_zh">4.3 以PDF或SVG格式下载创建的单个基因组图形</h3>
                         <p class="p_help_Chinese">
                             生成Circos图形后，用户可以使用“Circos Plot”菜单面板上方的小部件“Download PDF-file”和“Download SVG-file”下载PDF或SVG格式的绘图结果(如下图)。默认情况下，下载的两个文件分别命名为“shinyCircos.pdf”和“shinyCircos.svg”。
                             下载的PDF文件“shinyCircos.pdf”可以在Adobe Acrobat中打开，下载的SVG文件“shinyCircos.svg”可以在Google Chrome浏览器中打开，我们不建议您直接右键保存图片，为了保证清晰度，我们建议您使用PDF文件存储图像然后再转换为位图。
@@ -2963,13 +2963,13 @@
                         </p>
                     </div>
                     <div id="divc4.4">
-                        <h3 class="a">4.4 利用shinyCircos-V2.0绘制复杂Circos图的完整步骤</h3>
+                        <h3 class="head_zh">4.4 利用shinyCircos-V2.0绘制复杂Circos图的完整步骤</h3>
                         <p class="p_help_Chinese">
                             使用shinyCircos-V2.0可以创建10种不同类型的图形，包括point, line, bar, stack-line,stack-point,rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete 和 ideogram。要创建有Circos图，至少需要一个输入数据文件，即定义基因组长度的基因组数据文件，这样输出的图形只有染色体部分。在这一节中，我们将展示绘制Circos图的关键步骤（如下图）。不同的绘图类型和具体的绘图参数在此不做赘述，用户可以参考示例数据进行学习。
                         </p>
 
                         <div id="divc4.4.1">
-                            <h3 class="a">步骤1：</h3>
+                            <h3 class="head_zh">步骤1：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/1.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -2978,7 +2978,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.2">
-                            <h3 class="a">步骤2：</h3>
+                            <h3 class="head_zh">步骤2：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/2.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -2987,7 +2987,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.3">
-                            <h3 class="a">步骤3：</h3>
+                            <h3 class="head_zh">步骤3：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/3.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -2996,7 +2996,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.4">
-                            <h3 class="a">步骤4：</h3>
+                            <h3 class="head_zh">步骤4：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/4.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -3005,7 +3005,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.5">
-                            <h3 class="a">步骤5：</h3>
+                            <h3 class="head_zh">步骤5：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/5.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -3014,7 +3014,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.6">
-                            <h3 class="a">步骤6：</h3>
+                            <h3 class="head_zh">步骤6：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/6.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -3023,7 +3023,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.7">
-                            <h3 class="a">步骤7：</h3>
+                            <h3 class="head_zh">步骤7：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/7.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -3032,7 +3032,7 @@
                             </p>
                         </div>
                         <div id="divc4.4.8">
-                            <h3 class="a">步骤8：</h3>
+                            <h3 class="head_zh">步骤8：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/8.jpg" width="60%">
                                 <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
@@ -3045,12 +3045,12 @@
                     
                 </div>
                 <div id="divc5">
-                    <h3 class="a">5 修饰Circos图的绘图选项</h3>
+                    <h3 class="head_zh">5 修饰Circos图的绘图选项</h3>
                     <p class="p_help_Chinese">
                         “Circos Parameters”菜单的每行数据的右侧小齿轮按钮，用户点击后将会弹出具体参数的提示框，用户可以进行个性化设置，比如Track的高度、间隔、各部分的颜色等等。下面将演示其中一些选项的设置。
                     </p>
                     <div id="divc5.1">
-                        <h3 class="a">5.1 Track高度</h3>
+                        <h3 class="head_zh">5.1 Track高度</h3>
                         <p class="p_help_Chinese">
                             shinyCircos-V2.0的默认Track高度只有0.1，即为单位圆半径的5%，这个数值可能并不合适，所以需要用户进行调整，Track高度的调整非常简单，只需要用户点击对应Track数据后的齿轮图标，在弹出式菜单中将“Track height”进行调整即可(如下图)。
                         </p>
@@ -3062,7 +3062,7 @@
                         </p>
                     </div>
                     <div id="divc5.2">
-                        <h3 class="a">5.2 y坐标轴</h3>
+                        <h3 class="head_zh">5.2 y坐标轴</h3>
                         <p class="p_help_Chinese">
                             shinyCircos-V2.0增加了在track上添加y轴的功能，这样可以显示出y轴的范围，用户可以在弹出参数框中的“Add y-axis”中选择“yes”然后更新绘图即可得到添加过y坐标轴的图像（如下图）。
                         </p>
@@ -3080,7 +3080,7 @@
                         </p>
                     </div>
                     <div id="divc5.3">
-                        <h3 class="a">5.3 设置不同“Track”之间的间隔</h3>
+                        <h3 class="head_zh">5.3 设置不同“Track”之间的间隔</h3>
                         <p class="p_help_Chinese">
                             在使用shinyCircos-V2.0的过程中，用户可以根据需要对不同track的间距进行调整，用户可以在弹出参数框中的“Distance to the next track”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
                         </p>
@@ -3098,7 +3098,7 @@
                         </p>
                     </div>
                     <div id="divc5.4">
-                        <h3 class="a">5.4 添加“Cell”的边框</h3>
+                        <h3 class="head_zh">5.4 添加“Cell”的边框</h3>
                         <p class="p_help_Chinese">
                             在shinyCircos-V2.0中，用户可以给不同的“Track”添加边框，以此来强调某个“Track”，用户可以在弹出参数框中的“Add borders”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
                         </p>
@@ -3116,7 +3116,7 @@
                         </p>
                     </div>
                     <div id="divc5.5">
-                        <h3 class="a">5.5 修改“Track”的背景颜色</h3>
+                        <h3 class="head_zh">5.5 修改“Track”的背景颜色</h3>
                         <p class="p_help_Chinese">
                             在shinyCircos-V2.0中，用户可以调整不同的“Track”的背景颜色（部分绘图类型不支持背景颜色的调整），以此来给“Track”分组，用户可以在弹出参数框中的“Background color(s)”中选择适当的颜色或是输入适当的数值来调整“Track”的颜色，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
                         </p>
@@ -3134,7 +3134,7 @@
                         </p>
                     </div>
                     <div id="divc5.6">
-                        <h3 class="a">5.6 设置不同“Sector”之间的间距</h3>
+                        <h3 class="head_zh">5.6 设置不同“Sector”之间的间距</h3>
                         <p class="p_help_Chinese">
                             在shinyCircos-V2.0中，用户可以在染色体数据的参数调整页面调整每个“Sector”之间的间距，只需要输入数值就可以很灵活的调整每个“Sector”之间的间距，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
                         </p>
@@ -3153,12 +3153,12 @@
                     </div>
                 </div>
                 <div id="divc6">
-                    <h3 class="a">6 高级功能</h3>
+                    <h3 class="head_zh">6 高级功能</h3>
                     <p class="p_help_Chinese">
                         相对于旧版的shinyCircos，除了界面和使用逻辑上的改动，我们还对部分功能进行了改进，增加了部分图形图例的支持，支持了高亮区域等。
                     </p>
                     <div id="divc6.1">
-                        <h3 class="a">6.1 添加图例</h3>
+                        <h3 class="head_zh">6.1 添加图例</h3>
                         <p class="p_help_Chinese">
                             当用户绘制了“stack-line”、“stack-point”、“heatmap-gradual”、“heatmap-discrete”、“rect-gradual”和“rect-discrete”这六种类型的“Track”时，用户可以点击“Circos Plot”菜单的“Advance”按钮来添加图例，支持将图例绘制在Circos图的底部或右侧（见下图）。
                         </p>
@@ -3176,7 +3176,7 @@
                         </p>
                     </div>
                     <div id="divc6.2">
-                        <h3 class="a">6.2 高亮特定基因组区域</h3>
+                        <h3 class="head_zh">6.2 高亮特定基因组区域</h3>
                         <p class="p_help_Chinese">
                             新版的shinyCircos-V2.0支持高亮部分区域，帮助用户着重显示部分区域或是分类部分“Sector”，有助于用户用户按照自己的需要展示自己的数据。用户可以点击“Circos Plot”菜单的“Advance”按钮来添加高亮显示区域。如图所示，支持三种颜色输入格式，当输入带有透明度的16进制颜色代码时，下方的透明度选择将不被套用。
                         </p>
@@ -3194,7 +3194,7 @@
                         </p>
                     </div>
                     <div id="divc6.3">
-                        <h3 class="a">6.3 调整图像大小</h3>
+                        <h3 class="head_zh">6.3 调整图像大小</h3>
                         <p class="p_help_Chinese">
                             shinyCircos-V2.0支持对图像的大小进行调整，用户可以很轻松的调整图像的高和宽。（如下图）
                         </p>
@@ -3206,7 +3206,7 @@
                         </p>
                     </div>
                     <div id="divc6.4">
-                        <h3 class="a">6.4 添加“Track index”</h3>
+                        <h3 class="head_zh">6.4 添加“Track index”</h3>
                         <p class="p_help_Chinese">
                             “Track index”是“Track”的索引，可以为不同的“Track”添加标号方便用户进行后续的注释。用户可以点击“Circos Plot”菜单的“Advance”按钮然后在“Add track index”处选择是否添加“Track”的索引（如下图）。
                         </p>
@@ -3232,7 +3232,7 @@
 
             </div>
             <div class = "content-right">
-                <h2 class="a">目录</h2>
+                <h2 class="head_zh">目录</h2>
                 <p style="line-height: 23px;">
                     <a href="#divc1"><span class="content"> 1.简介</span></a>
                 

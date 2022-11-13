@@ -21,6 +21,22 @@ sidebar <- bs4DashSidebar(
     bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
     bs4SidebarMenuItem("About",tabName = "about", icon = icon("info",lib = "font-awesome")),
     bs4SidebarMenuItem("Contact",tabName = "contact", icon = icon("compass"))
+    # bs4SidebarMenuItem(
+    #   text = "ShinyCircos-V1.0",
+    #   tabName = "11111",
+    #   
+    #   #href = "https://venyao.xyz/shinyCircos/", 
+    #   icon = icon("link",lib = "font-awesome"),
+    #   #newTab = TRUE,
+    #   bs4SidebarMenuSubItem(
+    #     text = "1111",
+    #     tabName = NULL,
+    #     href = "https://venyao.xyz/shinyCircos/", 
+    #     newTab = TRUE,
+    #     icon = shiny::icon("angles-right"),
+    #     selected = NULL
+    #   )
+    # )
   )
 )
 #******#main body
@@ -719,7 +735,7 @@ body <- bs4DashBody(
                                  status="info",
                                  size = "xs"
                                ),
-                               title = "Each row should contain five values separated by commas indicating the start genomic position, the end genomic position, start track index, end track index, and the color. For example, 'chr1,1,10000,'#FF0000'.",
+                               title = "Each row should contain four values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, 'chr1,1,10000,'#FF0000'.",
                                placement = "bottom"
                              )
                            )
