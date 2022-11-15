@@ -1080,7 +1080,7 @@ server <- function(input, output,session) {
                     ),
                     value = sam_outAxis_size,
                     min = 0.1,
-                    max = 3, 
+                    max = 2, 
                     step = 0.1
                   )
                 ),
@@ -1125,6 +1125,25 @@ server <- function(input, output,session) {
                     min = 0.1,
                     max = 3, 
                     step = 0.1
+                  ),
+                  sliderTextInput(
+                    inputId = "sam_outergap",
+                    label = tags$div(
+                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Gap between the IDs and axis</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = "datvie_tip90", 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "The distance between the chromosome ID and the next part (the next part can be Track or the coordinate axis), this value is the percentage of the font size of the chromosome ID.",
+                        placement = "bottom"
+                      )
+                    ),
+                    choices = 0:200,
+                    grid = FALSE
                   )
                 ),
                 textInput(
@@ -1338,14 +1357,17 @@ server <- function(input, output,session) {
                           ),
                           conditionalPanel(
                             condition= paste0("input.sam_tra_bar_direction",x,"== '2'"),
-                            numericInput(
-                              inputId = paste0("sam_tra_bar_Boundary",x),
-                              label = "Boundary value:",
-                              value=sam_tra_bar_Boundary[x],
-                              step=0.01
-                            ),
                             fluidRow(
-                              column(6,
+                              column(
+                                width = 4,
+                                numericInput(
+                                  inputId = paste0("sam_tra_bar_Boundary",x),
+                                  label = "Boundary value:",
+                                  value=sam_tra_bar_Boundary[x],
+                                  step=0.01
+                                )
+                              ),
+                              column(4,
                                      colourInput(
                                        inputId = paste0("sam_tra_bar_coldir1",x),
                                        label = "Outward bar color:",
@@ -1353,7 +1375,7 @@ server <- function(input, output,session) {
                                        returnName = TRUE
                                      )
                               ),
-                              column(6,
+                              column(4,
                                      colourInput(
                                        inputId = paste0("sam_tra_bar_coldir2",x),
                                        label = "Inward bar color:",
@@ -2472,13 +2494,14 @@ server <- function(input, output,session) {
     sam_colorChr_in <- gsub("\\s","",strsplit(sam_colorChr,",")[[1]])
     sam_pospos <- 1:length(sam_data.T)
     sam_midplot <- FALSE
+    sam_outergap <- 0
     sam_trac_index <- "No"
     plotfig(input = input, output = output,session=session,data.C = sam_data.C , dis_Chr = sam_distance_Chr , data.T = sam_data.T , data.L = sam_data.L, data.N = sam_data.N , tra_Margin = sam_Tra_margin , labels_inf = sam_labels_inf , labelChr = sam_labelChr,colorChr=sam_colorChr_in , tra_hmap_typcolhmap = sam_tra_hmap_typcolhmap , tra_border = sam_tra_border , tra_yaxis = sam_tra_yaxis ,
             trackChr = sam_trackChr ,tratype = sam_tratype,source_data = sam_source_data,chr_height = sam_heightChr, heightTra = sam_heightTraus , datatypeChr = sam_datatypeChr, tra_poi_poisiz = sam_tra_poi_poisiz , heatmapcols = sam_heatmapcols , tra_bgcol = sam_tra_bgcol , gap.width = sam_gapChr ,
             tra_hmap_poslines = sam_tra_hmap_poslines , tra_hmap_poslinhei = sam_tra_hmap_poslinhei , tra_hmap_cellbord = sam_tra_hmap_cellbord , tra_hmap_cellbord_col = sam_tra_hmap_cellbord_col , tra_hmap_heatmapcol = sam_tra_hmap_heatmapcol , plotsize = sam_plotsize ,
             tra_rect_rectcol = sam_tra_rect_rectcol , tra_trct_colrect = sam_tra_trct_colrect , tra_rect_rectcoldis = sam_tra_rect_rectcoldis , tra_rect_rectcoldiscus = sam_tra_rect_rectcoldiscus , tra_transparency = sam_tra_transparency , tra_coltype = sam_tra_coltype , tra_colcol = sam_tra_colcol , tra_heatcol_dis = sam_tra_heatcol_dis , tra_heat_heatcoldiscus = sam_tra_heat_heatcoldiscus,
             tra_colorcus = sam_tra_colorcus , tra_line_fillarea = sam_tra_line_fillarea , tra_poipch = sam_tra_poipch , tra_colorline = sam_tra_colorline , tra_baseline = sam_tra_baseline , outAxis = sam_outAxis , fontSize = fontSize , outAxis_size = sam_outAxis_size , labelChr_size = sam_labelChr_size , tra_bar_direction = sam_tra_bar_direction ,
-            tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks ,
+            tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks , outergap = sam_outergap ,
             selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos , trac_index = sam_trac_index)
     
     
@@ -3563,6 +3586,9 @@ server <- function(input, output,session) {
       return("1")
     })
     tra_colcol <<- lapply(1:length(tradatas), function(x){
+      return("red,blue")
+    })
+    tra_colcol_bar <<- lapply(1:length(tradatas), function(x){
       return("red")
     })
     tra_colorcus <<- lapply(1:length(tradatas), function(x){
@@ -4009,6 +4035,9 @@ server <- function(input, output,session) {
       if(!is.null(input[[paste0("tra_colcol",x)]])){
         tra_colcol[x] <<- input[[paste0("tra_colcol",x)]]
       }
+      if(!is.null(input[[paste0("tra_colcol_bar",x)]])){
+        tra_colcol_bar[x] <<- input[[paste0("tra_colcol_bar",x)]]
+      }
       if(!is.null(input[[paste0("tra_colorcus",x)]])){
         tra_colorcus[x] <<- input[[paste0("tra_colorcus",x)]]
       }
@@ -4408,9 +4437,9 @@ server <- function(input, output,session) {
                     conditionalPanel(
                       condition = paste0("input.tra_coltype",x,"== '2'"),
                       colourInput(
-                        inputId = paste0("tra_colcol",x),
+                        inputId = paste0("tra_colcol_bar",x),
                         label = NULL,
-                        value = tra_colcol[x],
+                        value = tra_colcol_bar[x],
                         returnName = TRUE
                       )
                     ),
@@ -5301,6 +5330,9 @@ server <- function(input, output,session) {
           if(!is.null(input[[paste0("tra_colcol",x)]])){
             tra_colcol[pospos[x]] <<- input[[paste0("tra_colcol",x)]]
           }
+          if(!is.null(input[[paste0("tra_colcol_bar",x)]])){
+            tra_colcol_bar[pospos[x]] <<- input[[paste0("tra_colcol_bar",x)]]
+          }
           if(!is.null(input[[paste0("tra_colorcus",x)]])){
             tra_colorcus[pospos[x]] <<- input[[paste0("tra_colorcus",x)]]
           }
@@ -5464,13 +5496,21 @@ server <- function(input, output,session) {
         }else{
           data.CC <- data.C
         }
+        for(k in which(unlist(tra_type)=="bar")){
+          if(tra_coltype[[k]] == "2"){
+            tra_colcol[[k]] = tra_colcol_bar[[k]]
+          }
+        }
+        
+        outergap <- input$outergap
+        
         plotfig(input = input, output = output,session=session,data.C = data.CC , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
                 trackChr = trackChr ,tratype = tra_type,source_data = source_data,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , gap.width = gap.width ,
                 tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot ,
                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
                 tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , fontSize = fontSize , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
                 tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
-                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index
+                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index , outergap = outergap
         )
       }
     })
@@ -5479,11 +5519,6 @@ server <- function(input, output,session) {
     list(input$dat_vie_ok,input$updateplot,input$sam_dat_vie_ok)
   })
   observeEvent(toListenpdf(),ignoreNULL = TRUE,{
-    
-    
-    
-    
-    
     plotsize <- input$plotmultiples
     if(input$addlegend == "Yes"){
       if(input$legendpos == "Right"){

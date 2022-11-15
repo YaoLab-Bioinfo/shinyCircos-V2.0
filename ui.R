@@ -480,7 +480,7 @@ body <- bs4DashBody(
                        ),
                        value=0.7,
                        min=0.1,
-                       max=3, 
+                       max=2, 
                        step=0.1
                      )
                    ),
@@ -524,6 +524,25 @@ body <- bs4DashBody(
                        min=0.1,
                        max=3, 
                        step=0.1
+                     ),
+                     sliderTextInput(
+                       inputId = "outergap",
+                       label = tags$div(
+                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Gap between the IDs and axis</b></font>'),
+                         bs4Dash::tooltip(
+                           actionButton(
+                             inputId = "datvie_tip90", 
+                             label="" , 
+                             icon=icon("question"),
+                             status="info",
+                             size = "xs"
+                           ),
+                           title = "The distance between the chromosome ID and the next part (the next part can be Track or the coordinate axis), this value is the percentage of the font size of the chromosome ID.",
+                           placement = "bottom"
+                         )
+                       ),
+                       choices = 0:200,
+                       grid = FALSE
                      )
                    ),
                    textInput(

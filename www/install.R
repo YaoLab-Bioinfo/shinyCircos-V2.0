@@ -12,4 +12,5 @@ install.packages("shinycssloaders")
 install.packages("colourpicker")
 install.packages("gridBase")
 install.packages("BiocManager")
+
 BiocManager::install("ComplexHeatmap")

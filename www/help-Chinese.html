@@ -79,6 +79,7 @@
             .table_text{
                 font-size: 20px;
                 text-align: center;
+                color: #0000FF;
 
             }
             .pic_text{
@@ -86,9 +87,23 @@
                 text-align: center;
                 margin-top: -10px;
                 margin-bottom: 25px;
+                color: #0000FF;
 
             }
-            
+
+            .block_global {
+                background-color: #f4f6f9;
+                border-left: 5px solid #ccc;
+                margin: 0.1em 3px;
+                padding: 0.1em 8px;
+            }
+
+
+
+
+            .code_zh{
+                font-size: 20px;
+            }
         </style>
         <title>shinyCircos2.0 帮助</title>
 
@@ -101,27 +116,34 @@
             <div class = "content-left">
                 <div id="divc1">
                     <h2 class="head_zh">1.简介</h2>
-                    <p class="p_help_Chinese">
-                        shinyCircos-V2.0是一个可交互式创建Circos图的R/shiny应用程序。
-                    </p>
-                    <p style="font-size: 21px;">
-                        &emsp;&emsp;&emsp;<b>源代码：</b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
-                        <br>
-                        &emsp;&emsp;&emsp;<b>在线使用：</b><a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>
-                        <br>
-                        &emsp;&emsp;&emsp;<b>联系方式：</b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
-                    </p>
-                    <p class="p_help_Chinese">
-                        <a href="https://venyao.xyz/shinycircos/" target="_blank">shinyCircos</a> 是由 <a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu等人</a>于 2017 年开发的用于绘制 Circos 图的网页应用程序，其交互界面和易用性得到了许多用户的认可。
-                        shinyCircos-V2.0 是<a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>的更新版本. 
-                        在shinyCircos-V2.0 中，我们开发了一些高级功能，设计了全新的用户界面，并修复了在shinyCircos 中检测到的错误。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            shinyCircos-V2.0是一个可交互式创建Circos图的R/shiny应用程序。
+                        </p>
+                        <p style="font-size: 21px;">
+                            &emsp;&emsp;&emsp;<b>源代码：</b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
+                            <br>
+                            &emsp;&emsp;&emsp;<b>在线使用：</b><a href="https://venyao.xyz/shinyCircos-V2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>
+                            <br>
+                            &emsp;&emsp;&emsp;<b>联系方式：</b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
+                        </p>
+                        <p class="p_help_Chinese">
+                            <a href="https://venyao.xyz/shinycircos/" target="_blank">shinyCircos</a> 是由 <a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu等人</a>于 2017 年开发的用于绘制 Circos 图的网页应用程序，其交互界面和易用性得到了许多用户的认可。
+                            shinyCircos-V2.0 是<a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>的更新版本. 
+                            在shinyCircos-V2.0 中，我们开发了一些高级功能，设计了全新的用户界面，并修复了在shinyCircos 中检测到的错误。
+                        </p>
+                    </blockquote>
+                    
+                    
                     <p style="text-align: center;">
                         <img src="./helpfigures/main.jpg" width="90%">
                     </p>
-                    <p class="p_help_Chinese">
-                        在使用shinyCircos-V2.0之前，我们需要了解一个典型的Circos的结构，请您仔细阅读并熟悉图像各部分的名字，这样有助于您继续阅读并理解该帮助手册。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            在使用shinyCircos-V2.0之前，我们需要了解一个典型的Circos的结构，请您仔细阅读并熟悉图像各部分的名字，这样有助于您继续阅读并理解该帮助手册。
+                        </p>
+                    </blockquote>
+                    
                     <p style="text-align: center;">
                         <img src="./helpfigures/circosintroduce/1.jpg" width="60%">
                         <p class="pic_text">
@@ -138,192 +160,196 @@
                 </div>
                 <div id="divc2">
                     <h2 class="head_zh">2.输入数据格式</h2>
-                    <p class="p_help_Chinese">
-                        如果您是第一次接触shinyCircos-V2.0，那么我建议您仔细阅读输入数据格式说明，否则可能会出现未知的错误。
-                    </p>
-                    <p class="p_help_Chinese">
-                       我们建议您上传".csv"格式的文件到shinyCircos-V2.0中，因为相对于其他的文本文件，".csv"文件具有比较明确的标准,不容易在读取时产生问题。值得一提的是，<span style="color: red;" >列名对于shinyCircos-V2.0来说是十分重要的，并且前三列应为chr、start、end，分别代表染色体ID、起始位置、终止位置</span>，
-                       接下来我将会详细的展示不同输入数据的不同格式。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            如果您是第一次接触shinyCircos-V2.0，那么我建议您仔细阅读输入数据格式说明，否则可能会出现未知的错误。
+                        </p>
+                        <p class="p_help_Chinese">
+                           我们建议您上传".csv"格式的文件到shinyCircos-V2.0中，因为相对于其他的文本文件，".csv"文件具有比较明确的标准,不容易在读取时产生问题。值得一提的是，<span style="color: red;" >列名对于shinyCircos-V2.0来说是十分重要的，并且前三列应为chr、start、end，分别代表染色体ID、起始位置、终止位置</span>，
+                           接下来我将会详细的展示不同输入数据的不同格式。
+                        </p>
+                    </blockquote>
+                    
                     <div id="divc2.1">
                         <h3 class="head_zh">2.1 Chromosome data（用于定义 Circos 图的染色体）</h3>
+                        <blockquote class="block_global">
                             <p class="p_help_Chinese">
                                 Chromosome data是绘图时必不可少的一部分，它决定了不同的sector的名称和比例，没有它shinyCircos-V2.0将无法绘制出图形。
                                 Chromosome data一共有两种，分别是General data和Cytoband data，它们的格式并不相同。
                             </p>
-                            <div id="divc2.1.1">
-                                <h4 class="head_zh">2.1.1 具有3列的general data</h4>
+                        </blockquote>
+                        <div id="divc2.1.1">
+                            <h4 class="head_zh">2.1.1 具有3列的general data</h4>
+                            <blockquote class="block_global">
                                 <p class="p_help_Chinese">
                                     general data包含三列，分别是chr、start、end。如下图所示：
                                 </p>
-                                <div class="div-tabledata">
-                                    <table class="table-style">
-                                        <tr>
-                                            <th>chr</th>
-                                            <th>start</th>
-                                            <th>end</th>
-                                        </tr>
-                                        <tr>
-                                            <td>chr1</td>
-                                            <td>1</td>
-                                            <td>249250621</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr2</td>
-                                            <td>1</td>
-                                            <td>243199373</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr3</td>
-                                            <td>1</td>
-                                            <td>198022430</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr4</td>
-                                            <td>1</td>
-                                            <td>191154276</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr5</td>
-                                            <td>1</td>
-                                            <td>180915260</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr6</td>
-                                            <td>1</td>
-                                            <td>171115067</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr7</td>
-                                            <td>1</td>
-                                            <td>159138663</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr8</td>
-                                            <td>1</td>
-                                            <td>146364022</td>
-                                        </tr>
-                                        
-                                    </table>
-                                </div>
-                                <p class="table_text">
-                                    general data
-                                    <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
-                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1</td>
+                                        <td>249250621</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>1</td>
+                                        <td>243199373</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1</td>
+                                        <td>198022430</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>1</td>
+                                        <td>191154276</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>1</td>
+                                        <td>180915260</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr6</td>
+                                        <td>1</td>
+                                        <td>171115067</td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                general data
+                                <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <blockquote class="block_global">
                                 <p class="p_help_Chinese">
                                     使用general data绘图时shinyCircos-V2.0默认会用灰色的track表示不同的染色体，在最外侧会展示染色体的名字和刻度标识：
                                 </p>
-                                <p style="text-align: center;">
-                                    <img src="./helpfigures/chrosome/gen.jpg" width="60%">
-                                    <p class="pic_text">
-                                        输入数据为general data时的灰色track
-                                    </p>
-                                </p>
-                            </div>
+                            </blockquote>
                             
-                            <div id="divc2.1.2">
-                                <h4 class="head_zh">2.1.2 具有5列的cytoband data</h4>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/chrosome/gen.jpg" width="60%">
+                                <p class="pic_text">
+                                    输入数据为general data时的灰色track
+                                </p>
+                            </p>
+                        </div>
+                            
+                            
+                            
+                        <div id="divc2.1.2">
+                            <h4 class="head_zh">2.1.2 具有5列的cytoband data</h4>
+                            <blockquote class="block_global">
                                 <p class="p_help_Chinese">
                                     cytoband data包含五列,分别是chr、start、end、value1、value2，如下图所示：
                                 </p>
-                                <div class="div-tabledata">
-                                    <table class="table-style">
-                                        <tr>
-                                            <th>chr</th>
-                                            <th>start</th>
-                                            <th>end</th>
-                                            <th>value1</th>
-                                            <th>value2</th>
-                                        </tr>
-                                        <tr>
-                                            <td>chr1</td>
-                                            <td>1</td>
-                                            <td>2300000</td>
-                                            <td>p36.33</td>
-                                            <td>geng</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr1</td>
-                                            <td>2300000</td>
-                                            <td>5400000</td>
-                                            <td>p36.32</td>
-                                            <td>gpos25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr2</td>
-                                            <td>1</td>
-                                            <td>4400000</td>
-                                            <td>p25.3</td>
-                                            <td>geng</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr2</td>
-                                            <td>4400000</td>
-                                            <td>7100000</td>
-                                            <td>p25.2</td>
-                                            <td>gpos50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr3</td>
-                                            <td>1</td>
-                                            <td>2800000</td>
-                                            <td>p26.3</td>
-                                            <td>gpos50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr3</td>
-                                            <td>2800000</td>
-                                            <td>4000000</td>
-                                            <td>p26.2</td>
-                                            <td>geng</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr4</td>
-                                            <td>1</td>
-                                            <td>4500000</td>
-                                            <td>p16.3</td>
-                                            <td>gneg</td>
-                                        </tr>
-                                        <tr>
-                                            <td>chr4</td>
-                                            <td>4500000</td>
-                                            <td>6000000</td>
-                                            <td>p16.2</td>
-                                            <td>gpos25</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <p class="table_text">
-                                    cytoband data
-                                    <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
-                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                        <th>value2</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1</td>
+                                        <td>2300000</td>
+                                        <td>p36.33</td>
+                                        <td>geng</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>2300000</td>
+                                        <td>5400000</td>
+                                        <td>p36.32</td>
+                                        <td>gpos25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>1</td>
+                                        <td>4400000</td>
+                                        <td>p25.3</td>
+                                        <td>geng</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>4400000</td>
+                                        <td>7100000</td>
+                                        <td>p25.2</td>
+                                        <td>gpos50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1</td>
+                                        <td>2800000</td>
+                                        <td>p26.3</td>
+                                        <td>gpos50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>2800000</td>
+                                        <td>4000000</td>
+                                        <td>p26.2</td>
+                                        <td>geng</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                cytoband data
+                                <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <blockquote class="block_global">
                                 <p class="p_help_Chinese">
                                     cytoband data绘图时将会添加一个Ideogram track
                                 </p>
-                                <p style="text-align: center;">
-                                    <img src="./helpfigures/chrosome/cyt.jpg" width="60%">
-                                    <p class="pic_text">
-                                        输入数据为cytoband data时的Ideogram track
-                                    </p>
+                            </blockquote>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/chrosome/cyt.jpg" width="60%">
+                                <p class="pic_text">
+                                    输入数据为cytoband data时的Ideogram track
                                 </p>
-                            </div>
+                            </p>
+                        </div>
                             
                     </div>
                     <div id="divc2.2">
                         <h3 class="head_zh">2.2 Track data（显示在 Circos 图的不同"Track"中）</h3>
-                        <p class="p_help_Chinese">
-                            Track data用来在Circos图中绘制不同的Track，不同类型的Track往往具有不同的输入格式，但是数据的前三列是固定的，分别是chr、strat、end。接下来将会展示不同类型的Track data。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                Track data用来在Circos图中绘制不同的Track，不同类型的Track往往具有不同的输入格式，但是数据的前三列是固定的，分别是chr、strat、end。接下来将会展示不同类型的Track data。
+                            </p>
+                        </blockquote>
+                        
                         <div id="divc2.2.1">
                             <h4 class="head_zh">2.2.1 bar</h4>
-                            <p class="p_help_Chinese">
-                                用来绘制柱形图的数据应该至少有四列，分别是chr、start、end和value，值得注意的是第四列的值可以是正数也可以是负数，柱形图有两种绘图类型，分别是Unidirectional和Bidirectional，
-                                同时还支持输入数据中再添加一列颜色分类值，具体的区别见下方讲解。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    用来绘制柱形图的数据应该至少有四列，分别是chr、start、end和value，值得注意的是第四列的值可以是正数也可以是负数，柱形图有两种绘图类型，分别是Unidirectional和Bidirectional，
+                                    同时还支持输入数据中再添加一列颜色分类值，具体的区别见下方讲解。
+                                </p>
+                            </blockquote>
+                            
                             <hr>
-                            <p class="p_help_Chinese">
-                                Unidirectional数据可以用来绘制单向的柱形图，柱子的最小值就是value的最小值，可以为负数，即纵坐标的起始位点可以是任何值，如下图所示：
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    Unidirectional数据可以用来绘制单向的柱形图，柱子的最小值就是value的最小值，可以为负数，即纵坐标的起始位点可以是任何值，如下图所示：
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -368,18 +394,6 @@
                                         <td>11789212</td>
                                         <td>0.636</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>8617827</td>
-                                        <td>16885659</td>
-                                        <td>-0.831</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>18135416</td>
-                                        <td>25567929</td>
-                                        <td>0.239</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -392,9 +406,12 @@
                                     单向柱形图
                                 </p>
                             </p>
-                            <p class="p_help_Chinese">
-                                Bidirectional数据用来绘制双向的柱状图，一般来说，同一个区间往往有两个value，柱子默认从0开始绘制，如下图所示：
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    Bidirectional数据用来绘制双向的柱状图，一般来说，同一个区间往往有两个value，柱子默认从0开始绘制，如下图所示：
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -439,18 +456,6 @@
                                         <td>8367346</td>
                                         <td>-0.326</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>4969470</td>
-                                        <td>11023301</td>
-                                        <td>0.664</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>4969470</td>
-                                        <td>11023301</td>
-                                        <td>-0.164</td>
-                                    </tr>
                                 </table>
                             </div>
 
@@ -464,9 +469,12 @@
                                     双向柱形图
                                 </p>
                             </p>
-                            <p class="p_help_Chinese">
-                                颜色列代表着颜色的分组，比如a、b、c、d
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    颜色列代表着颜色的分组，比如a、b、c、d
+                                </p>
+                            </blockquote>
+                            
 
 
                             <div class="div-tabledata">
@@ -490,20 +498,6 @@
                                         <td>43812694</td>
                                         <td>44287183</td>
                                         <td>0.101162224</td>
-                                        <td>a</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr3</td>
-                                        <td>10094726</td>
-                                        <td>13041378</td>
-                                        <td>-0.117686062</td>
-                                        <td>a</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr3</td>
-                                        <td>17700130</td>
-                                        <td>17853399</td>
-                                        <td>0.229028492</td>
                                         <td>a</td>
                                     </tr>
                                     <tr>
@@ -553,13 +547,19 @@
             
                         <div id="divc2.2.2">
                             <h4 class="head_zh">2.2.2 line</h4>
-                            <p class="p_help_Chinese">
-                                绘制折线图的数据应该至少包含四列，除此之外还可以添加其他的列来丰富折线图的绘制。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    绘制折线图的数据应该至少包含四列，除此之外还可以添加其他的列来丰富折线图的绘制。
+                                </p>
+                            </blockquote>
+                            
                             <hr>
-                            <p class="p_help_Chinese">
-                                标准的折线图数据应该包含四列，分别是chr、start、end和value1，如下图所示：
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    标准的折线图数据应该包含四列，分别是chr、start、end和value1，如下图所示：
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -604,18 +604,6 @@
                                         <td>11980906</td>
                                         <td>-0.096</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>61966</td>
-                                        <td>10528434</td>
-                                        <td>-1.224</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>14526642</td>
-                                        <td>19266615</td>
-                                        <td>0.231</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -628,10 +616,12 @@
                                     标准折线图
                                 </p>
                             </p>
-            
-                            <p class="p_help_Chinese">
-                                除了标准的四列数据外，还可以添加颜色列或是再添加一列value来在同一条track上绘制多条线。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    除了标准的四列数据外，还可以添加颜色列或是再添加一列value来在同一条track上绘制多条线。
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -682,20 +672,6 @@
                                         <td>100917700</td>
                                         <td>-0.366</td>
                                         <td>c</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr15</td>
-                                        <td>2898612</td>
-                                        <td>7858243</td>
-                                        <td>0.917</td>
-                                        <td>d</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr15</td>
-                                        <td>14718550</td>
-                                        <td>26144439</td>
-                                        <td>-0.526</td>
-                                        <td>d</td>
                                     </tr>
                                 </table>
                             </div>
@@ -760,20 +736,6 @@
                                         <td>0.226</td>
                                         <td>-0.185</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>859776</td>
-                                        <td>2929166</td>
-                                        <td>0.738</td>
-                                        <td>0.602</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>5923032</td>
-                                        <td>9091660</td>
-                                        <td>-0.2</td>
-                                        <td>-0.384</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -791,13 +753,19 @@
             
                         <div id="divc2.2.3">
                             <h4 class="head_zh">2.2.3 point</h4>
-                            <p class="p_help_Chinese">
-                                绘制散点图的数据和绘制折线图的数据类似。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    绘制散点图的数据和绘制折线图的数据类似。
+                                </p>
+                            </blockquote>
+                            
                             <hr>
-                            <p class="p_help_Chinese">
-                                标准的散点图数据应该包含四列，分别为chr、start、end和value1，如下图所示：
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    标准的散点图数据应该包含四列，分别为chr、start、end和value1，如下图所示：
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -842,18 +810,6 @@
                                         <td>12874260</td>
                                         <td>-0.032</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>3571886</td>
-                                        <td>7801048</td>
-                                        <td>-0.436</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>24973615</td>
-                                        <td>30857176</td>
-                                        <td>-0.106</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -866,10 +822,12 @@
                                     标准的散点图
                                 </p>
                             </p>
-            
-                            <p class="p_help_Chinese">
-                                数据中可以包含一列用来调控点的大小（过大的值可以会产生不可预料的后果）
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    数据中可以包含一列用来调控点的大小（过大的值可以会产生不可预料的后果）
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -921,20 +879,6 @@
                                         <td>0.315</td>
                                         <td>0.6</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>8327054</td>
-                                        <td>16538974</td>
-                                        <td>0.448</td>
-                                        <td>0.5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>29870261</td>
-                                        <td>39830090</td>
-                                        <td>-0.005</td>
-                                        <td>1</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -947,10 +891,12 @@
                                     具有不同大小的点的散点图
                                 </p>
                             </p>
-            
-                            <p class="p_help_Chinese">
-                                同样的，散点图一样支持使用颜色列来调控不同点的颜色（请使用合规的颜色值）
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    同样的，散点图一样支持使用颜色列来调控不同点的颜色（请使用合规的颜色值）
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -959,13 +905,6 @@
                                         <th>end</th>
                                         <th>value</th>
                                         <th>color</th>
-                                    </tr>
-                                    <tr>
-                                        <td>chr1</td>
-                                        <td>6098636</td>
-                                        <td>13915642</td>
-                                        <td>0.372</td>
-                                        <td>a</td>
                                     </tr>
                                     <tr>
                                         <td>chr1</td>
@@ -980,13 +919,6 @@
                                         <td>96656317</td>
                                         <td>-0.148</td>
                                         <td>a</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>107125173</td>
-                                        <td>107125346</td>
-                                        <td>0.75</td>
-                                        <td>b</td>
                                     </tr>
                                     <tr>
                                         <td>chr9</td>
@@ -1028,16 +960,18 @@
                                     具有不同颜色的点的散点图
                                 </p>
                             </p>
-            
-                            <p class="p_help_Chinese">
-                                也可以添加一列来控制点的类型（pch的不同取值情况如下图）
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    也可以添加一列来控制点的类型（pch的不同取值情况如下图）
+                                </p>
+                            </blockquote>
+                            
                             <p style="text-align: center;">
                                 <img src="./helpfigures/point/pch.png" width="40%">
-                                <p style="font-size: 25px;text-align: center;margin-top:-10px;margin-bottom: 25px;">
+                                <p style="font-size: 20px;text-align: center;margin-top:-10px;margin-bottom: 25px;color: #0000FF;">
                                     pch的参考值
                                 </p>
-                                <p style="font-size: 25px;text-align: center;margin-top: -25px;margin-bottom: 25px;">
+                                <p style="font-size: 20px;text-align: center;margin-top: -25px;margin-bottom: 25px;">
                                     (图片来源：<a href="http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html">http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html</a>)
                                 </p>
                             </p>
@@ -1058,25 +992,11 @@
                                         <td>1</td>
                                     </tr>
                                     <tr>
-                                        <td>chr1</td>
-                                        <td>22124150</td>
-                                        <td>36435838</td>
-                                        <td>0.905</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
                                         <td>chr3</td>
                                         <td>121395059</td>
                                         <td>124720880</td>
                                         <td>0.269</td>
                                         <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr3</td>
-                                        <td>126119336</td>
-                                        <td>134480084</td>
-                                        <td>0.947</td>
-                                        <td>8</td>
                                     </tr>
                                     <tr>
                                         <td>chr7</td>
@@ -1118,10 +1038,12 @@
                                     具有不同类型的点的散点图
                                 </p>
                             </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    这几个类型的调控列也可以任意组合
+                                </p>
+                            </blockquote>
                             
-                            <p class="p_help_Chinese">
-                                这几个类型的调控列也可以任意组合
-                            </p>
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -1150,27 +1072,11 @@
                                     </tr>
                                     <tr>
                                         <td>chr4</td>
-                                        <td>72761399</td>
-                                        <td>91691619</td>
-                                        <td>0.134</td>
-                                        <td>17</td>
-                                        <td>0.4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
                                         <td>101737149</td>
                                         <td>102799485</td>
                                         <td>-0.025</td>
                                         <td>17</td>
                                         <td>0.9</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>4065399</td>
-                                        <td>7750398</td>
-                                        <td>-0.327</td>
-                                        <td>17</td>
-                                        <td>0.6</td>
                                     </tr>
                                     <tr>
                                         <td>chr7</td>
@@ -1266,22 +1172,6 @@
                                         <td>b</td>
                                         <td>1</td>
                                     </tr>
-                                    <tr>
-                                        <td>chrY</td>
-                                        <td>48564458</td>
-                                        <td>48770305</td>
-                                        <td>0.208</td>
-                                        <td>d</td>
-                                        <td>0.3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chrY</td>
-                                        <td>50570091</td>
-                                        <td>52373385</td>
-                                        <td>0.231</td>
-                                        <td>d</td>
-                                        <td>0.4</td>
-                                    </tr>
                                 </table>
                             </div>
             
@@ -1351,22 +1241,6 @@
                                         <td>40556634</td>
                                         <td>47770670</td>
                                         <td>-0.011</td>
-                                        <td>c</td>
-                                        <td>17</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chrY</td>
-                                        <td>30674719</td>
-                                        <td>39836594</td>
-                                        <td>0.101</td>
-                                        <td>c</td>
-                                        <td>17</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chrY</td>
-                                        <td>52737371</td>
-                                        <td>53903116</td>
-                                        <td>-0.003</td>
                                         <td>c</td>
                                         <td>17</td>
                                     </tr>
@@ -1448,24 +1322,6 @@
                                         <td>6</td>
                                         <td>1.1</td>
                                     </tr>
-                                    <tr>
-                                        <td>chrX</td>
-                                        <td>143579620</td>
-                                        <td>144650695</td>
-                                        <td>-0.388</td>
-                                        <td>e</td>
-                                        <td>20</td>
-                                        <td>0.7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chrX</td>
-                                        <td>147326182</td>
-                                        <td>151556373</td>
-                                        <td>-0.386</td>
-                                        <td>e</td>
-                                        <td>20</td>
-                                        <td>0.7</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1478,10 +1334,12 @@
                                     同时具有不同颜色、不同类型和不同大小的点的散点图
                                 </p>
                             </p>
-            
-                            <p class="p_help_Chinese">
-                                当然，散点图也能像折线图一样同时绘制多列数据
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    当然，散点图也能像折线图一样同时绘制多列数据
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -1533,20 +1391,6 @@
                                         <td>0.28</td>
                                         <td>-0.262</td>
                                     </tr>
-                                    <tr>
-                                        <td>chrX</td>
-                                        <td>110739650</td>
-                                        <td>115294899</td>
-                                        <td>0.388</td>
-                                        <td>1.074</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chrX</td>
-                                        <td>118586060</td>
-                                        <td>119613523</td>
-                                        <td>0.151</td>
-                                        <td>0.784</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1564,9 +1408,12 @@
             
                         <div id="divc2.2.4">
                             <h4 class="head_zh">2.2.4 ideogram</h4>
-                            <p class="p_help_Chinese">
-                                shinyCircos-V2.0也可以将染色体条带绘制在任意“Track”上，染色体条带数据的格式和绘制染色体的<a href="#div2.1.2">细胞带数据</a>数据是一样的
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    shinyCircos-V2.0也可以将染色体条带绘制在任意“Track”上，染色体条带数据的格式和绘制染色体的<a href="#div2.1.2">细胞带数据</a>数据是一样的
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -1618,20 +1465,6 @@
                                         <td>p26.2</td>
                                         <td>gneg</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>1</td>
-                                        <td>4500000</td>
-                                        <td>p16.3</td>
-                                        <td>gneg</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr4</td>
-                                        <td>4500000</td>
-                                        <td>6000000</td>
-                                        <td>p16.2</td>
-                                        <td>gpos25</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1649,9 +1482,12 @@
             
                         <div id="divc2.2.5">
                             <h4 class="head_zh">2.2.5 rect-discrete</h4>
-                            <p class="p_help_Chinese">
-                                矩形图可以理解为单行的热图，离散型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    矩形图可以理解为单行的热图，离散型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -1696,18 +1532,6 @@
                                         <td>9370038</td>
                                         <td>c</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>146</td>
-                                        <td>4643362</td>
-                                        <td>e</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>4723845</td>
-                                        <td>16418898</td>
-                                        <td>e</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1725,9 +1549,12 @@
             
                         <div id="divc2.2.6">
                             <h4 class="head_zh">2.2.6 rect-gradual</h4>
-                            <p class="p_help_Chinese">
-                                连续型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    连续型的矩形图数据包含四列，分别为：chr、strat、end和group，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -1772,18 +1599,6 @@
                                         <td>32303717</td>
                                         <td>0.485</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>3226</td>
-                                        <td>7227722</td>
-                                        <td>-0.482</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>7387758</td>
-                                        <td>13632289</td>
-                                        <td>0.496</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1801,9 +1616,12 @@
             
                         <div id="divc2.2.7">
                             <h4 class="head_zh">2.2.7 heatmap-discrete</h4>
-                            <p class="p_help_Chinese">
-                                离散型的热图数据至少包含四列，分别为：chr、strat、end和group1，group列可以有多个，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    离散型的热图数据至少包含四列，分别为：chr、strat、end和group1，group列可以有多个，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div style="overflow-x: auto;">
                                 <table class="table-style">
                                     <tr>
@@ -1911,36 +1729,6 @@
                                         <td>h</td>
                                         <td>c</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>9333245</td>
-                                        <td>11185543</td>
-                                        <td>e</td>
-                                        <td>e</td>
-                                        <td>g</td>
-                                        <td>d</td>
-                                        <td>c</td>
-                                        <td>f</td>
-                                        <td>h</td>
-                                        <td>f</td>
-                                        <td>f</td>
-                                        <td>d</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>12717294</td>
-                                        <td>27297461</td>
-                                        <td>g</td>
-                                        <td>a</td>
-                                        <td>b</td>
-                                        <td>d</td>
-                                        <td>a</td>
-                                        <td>d</td>
-                                        <td>a</td>
-                                        <td>g</td>
-                                        <td>f</td>
-                                        <td>g</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -1958,9 +1746,12 @@
             
                         <div id="divc2.2.8">
                             <h4 class="head_zh">2.2.8 heatmap-gradual</h4>
-                            <p class="p_help_Chinese">
-                                连续型的热图数据至少包含四列，分别为：chr、strat、end和value1，value列可以有多个，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    连续型的热图数据至少包含四列，分别为：chr、strat、end和value1，value列可以有多个，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div style="overflow-x: auto;">
                                 <table class="table-style">
                                     <tr>
@@ -2068,36 +1859,6 @@
                                         <td>0.219</td>
                                         <td>-0.422</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>9333245</td>
-                                        <td>11185543</td>
-                                        <td>0.442</td>
-                                        <td>0.38</td>
-                                        <td>-1.139</td>
-                                        <td>-0.352</td>
-                                        <td>-0.338</td>
-                                        <td>-0.021</td>
-                                        <td>-0.118</td>
-                                        <td>-0.11</td>
-                                        <td>0.379</td>
-                                        <td>-0.38</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr7</td>
-                                        <td>12717294</td>
-                                        <td>27297461</td>
-                                        <td>-0.404</td>
-                                        <td>0.264</td>
-                                        <td>0.131</td>
-                                        <td>0.24</td>
-                                        <td>-0.565</td>
-                                        <td>0.092</td>
-                                        <td>0.21</td>
-                                        <td>-0.739</td>
-                                        <td>0.855</td>
-                                        <td>0.785</td>
-                                    </tr>
                                 </table>
 
                             </div>
@@ -2116,9 +1877,12 @@
             
                         <div id="divc2.2.9">
                             <h4 class="head_zh">2.2.9 stack-point</h4>
-                            <p class="p_help_Chinese">
-                                shinyCircos-V2.0还可以绘制堆叠的散点图，其数据应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    shinyCircos-V2.0还可以绘制堆叠的散点图，其数据应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -2163,18 +1927,6 @@
                                         <td>89776607</td>
                                         <td>b</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr5</td>
-                                        <td>6608219</td>
-                                        <td>8525932</td>
-                                        <td>b</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr5</td>
-                                        <td>39324082</td>
-                                        <td>40131031</td>
-                                        <td>b</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -2192,9 +1944,12 @@
             
                         <div id="divc2.2.10">
                             <h4 class="head_zh">2.2.10 stack-line</h4>
-                            <p class="p_help_Chinese">
-                                堆叠的线图和堆叠的散点图类似，其数据也应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    堆叠的线图和堆叠的散点图类似，其数据也应包含四列，分别的：chr、start、end和stack，值得注意的是，stack列代表了数据的分组情况，同一组会被绘制在一行，如下图所示
+                                </p>
+                            </blockquote>
+                            
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -2239,18 +1994,6 @@
                                         <td>46679748</td>
                                         <td>b</td>
                                     </tr>
-                                    <tr>
-                                        <td>chr9</td>
-                                        <td>29528190</td>
-                                        <td>72792793</td>
-                                        <td>b</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr13</td>
-                                        <td>22993703</td>
-                                        <td>23901290</td>
-                                        <td>b</td>
-                                    </tr>
                                 </table>
                             </div>
                             <p class="table_text">
@@ -2268,13 +2011,16 @@
                     </div>
                     <div id="divc2.3">
                         <h3 class="head_zh">2.3 Label data</h3>
-                        <p class="p_help_Chinese">
-                            标签数据是用来注释基因组或解释track的数据，将在在图上呈现出一个个的标签，其数据应该包含四列或五列,如下图所示
-                        </p>
-
-                        <p class="p_help_Chinese">
-                            四列标签数据用于绘制一般的lable，他们的颜色是统一的
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                标签数据是用来注释基因组或解释track的数据，将在在图上呈现出一个个的标签，其数据应该包含四列或五列,如下图所示
+                            </p>
+    
+                            <p class="p_help_Chinese">
+                                四列标签数据用于绘制一般的lable，他们的颜色是统一的
+                            </p>
+                        </blockquote>
+                        
                         <div class="div-tabledata">
 
                             <table class="table-style">
@@ -2320,18 +2066,6 @@
                                     <td>21975133</td>
                                     <td>CDKN2A</td>
                                 </tr>
-                                <tr>
-                                    <td>chr11</td>
-                                    <td>34438925</td>
-                                    <td>34472060</td>
-                                    <td>CAT</td>
-                                </tr>
-                                <tr>
-                                    <td>chr11</td>
-                                    <td>108222832</td>
-                                    <td>108369099</td>
-                                    <td>ATM</td>
-                                </tr>
                             </table>
                         </div>
                         <p class="table_text">
@@ -2344,10 +2078,12 @@
                                 Circos图的label
                             </p>
                         </p>
-
-                        <p class="p_help_Chinese">
-                            五列的label data用于绘制复杂的标签，它们的颜色与颜色列的颜色值一一对应
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                五列的label data用于绘制复杂的标签，它们的颜色与颜色列的颜色值一一对应
+                            </p>
+                        </blockquote>
+                        
                         <div class="div-tabledata">
                             <table class="table-style">
                                 <tr>
@@ -2399,20 +2135,6 @@
                                     <td>CDKN2A</td>
                                     <td>green</td>
                                 </tr>
-                                <tr>
-                                    <td>chr13</td>
-                                    <td>48303747</td>
-                                    <td>48481890</td>
-                                    <td>RB1</td>
-                                    <td>green</td>
-                                </tr>
-                                <tr>
-                                    <td>chr14</td>
-                                    <td>75278778</td>
-                                    <td>75282234</td>
-                                    <td>FOS</td>
-                                    <td>green</td>
-                                </tr>
                             </table>
                         </div>
                         <p class="table_text">
@@ -2428,9 +2150,12 @@
                     </div>
                     <div id="divc2.4">
                         <h3 class="head_zh">2.4 Links data</h3>
-                        <p class="p_help_Chinese">
-                            link数据至少应该包含六列，分别代表着连接线的头和尾，具体格式如下图所示
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                link数据至少应该包含六列，分别代表着连接线的头和尾，具体格式如下图所示
+                            </p>
+                        </blockquote>
+                        
                         <div class="div-tabledata">
 
                             <table class="table-style">
@@ -2490,22 +2215,6 @@
                                     <td>83790329</td>
                                     <td>119443216</td>
                                 </tr>
-                                <tr>
-                                    <td>chr19</td>
-                                    <td>4720005</td>
-                                    <td>9699881</td>
-                                    <td>chr5</td>
-                                    <td>128543229</td>
-                                    <td>133838939</td>
-                                </tr>
-                                <tr>
-                                    <td>chr7</td>
-                                    <td>69144425</td>
-                                    <td>82831719</td>
-                                    <td>chr14</td>
-                                    <td>31274513</td>
-                                    <td>45025723</td>
-                                </tr>
                             </table>
                         </div>
                         <p class="table_text">
@@ -2518,9 +2227,12 @@
                                 Circos图的link
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            除了必要的六列数据外，还可以再加一列用来控制link的颜色，支持两种格式来调整link的颜色，离散值和连续值，如下图所示
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                除了必要的六列数据外，还可以再加一列用来控制link的颜色，支持两种格式来调整link的颜色，离散值和连续值，如下图所示
+                            </p>
+                        </blockquote>
+                        
                         <div class="div-tabledata">
                             <table class="table-style">
                                 <tr>
@@ -2585,24 +2297,6 @@
                                     <td>83790329</td>
                                     <td>119443216</td>
                                     <td>b</td>
-                                </tr>
-                                <tr>
-                                    <td>chr19</td>
-                                    <td>4720005</td>
-                                    <td>9699881</td>
-                                    <td>chr5</td>
-                                    <td>128543229</td>
-                                    <td>133838939</td>
-                                    <td>b</td>
-                                </tr>
-                                <tr>
-                                    <td>chr7</td>
-                                    <td>69144425</td>
-                                    <td>82831719</td>
-                                    <td>chr14</td>
-                                    <td>31274513</td>
-                                    <td>45025723</td>
-                                    <td>c</td>
                                 </tr>
                             </table>
                         </div>
@@ -2682,24 +2376,6 @@
                                     <td>119443216</td>
                                     <td>161</td>
                                 </tr>
-                                <tr>
-                                    <td>chr19</td>
-                                    <td>4720005</td>
-                                    <td>9699881</td>
-                                    <td>chr5</td>
-                                    <td>128543229</td>
-                                    <td>133838939</td>
-                                    <td>89</td>
-                                </tr>
-                                <tr>
-                                    <td>chr7</td>
-                                    <td>69144425</td>
-                                    <td>82831719</td>
-                                    <td>chr14</td>
-                                    <td>31274513</td>
-                                    <td>45025723</td>
-                                    <td>13</td>
-                                </tr>
                             </table>
                         </div>
                         <p class="table_text">
@@ -2719,260 +2395,333 @@
                     
                     <div id="divc3.1">
                         <h3 class="head_zh">3.1 在线使用shinyCircos-V2.0</h3>
-                        <p class="p_help_Chinese">
-                            在线使用shinyCircos-V2.0的网址是<a href="https://venyao.xyz/shinyCircos-V2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>。当用户首次访问shinyCircos-V2.0的时候，网站的载入速度可能会比较慢，一方面可能是网络的问题，另一方面，服务器为了节约资源，在网站处于非活动状态时，
-                            shinyCircos-V2.0会进入休眠节约资源，这就导致了一段时间后的首次访问加载速度会比较慢。因此，第一次访问可能需要一些时间，一旦网站被激活，shinyCircos-V2.0就可以被流畅、方便地使用。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在线使用shinyCircos-V2.0的网址是<a href="https://venyao.xyz/shinyCircos-V2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>。当用户首次访问shinyCircos-V2.0的时候，网站的载入速度可能会比较慢，一方面可能是网络的问题，另一方面，服务器为了节约资源，在网站处于非活动状态时，
+                                shinyCircos-V2.0会进入休眠节约资源，这就导致了一段时间后的首次访问加载速度会比较慢。因此，第一次访问可能需要一些时间，一旦网站被激活，shinyCircos-V2.0就可以被流畅、方便地使用。
+                            </p>
+                        </blockquote>
+                        
                     </div>
                     <div id="divc3.2">
                         <h3 class="head_zh">3.2 shinyCircos-V2.0的界面</h3>
-                        <p class="p_help_Chinese">
-                            shinyCircos-V2.0应用程序包含8个主菜单：“shinyCircos-V2.0”，“Data Upload”，“Circos Parameters”，“Circos Plot”，“Gallery”，“Help”，“About”和“Contact”（见下图）。“shinyCircos-V2.0”菜单列出了shinyCircos-V2.0应用程序当前版本已经对Circos图的基本介绍。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0应用程序包含8个主菜单：“shinyCircos-V2.0”，“Data Upload”，“Circos Parameters”，“Circos Plot”，“Gallery”，“Help”，“About”和“Contact”（见下图）。“shinyCircos-V2.0”菜单列出了shinyCircos-V2.0应用程序当前版本已经对Circos图的基本介绍。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/main.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 shinyCircos-V2.0的主页面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            “Data Upload”菜单允许用户上传输入数据或是载入示例数据（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                “Data Upload”菜单允许用户上传输入数据或是载入示例数据（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/circosinterface/datasource.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 选择数据来源
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            不同的输入数据将会呈现不同的界面，若选择“upload data”，上传数据后将会呈现数据分类界面（如下图），将数据拖拽入合适的框中后，点击“Save data”，接下来可以继续上传数据或是点击“Submit！”，应用将会在检查数据无误后跳转到下一个界面。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                不同的输入数据将会呈现不同的界面，若选择“upload data”，上传数据后将会呈现数据分类界面（如下图），将数据拖拽入合适的框中后，点击“Save data”，接下来可以继续上传数据或是点击“Submit！”，应用将会在检查数据无误后跳转到下一个界面。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/circosinterface/datasource2.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 自行上传数据
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            若选择“sample data”，则用户可以选择示例数据集点击“Submit！”(如下图)，应用将会跳转到下一个界面。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                若选择“sample data”，则用户可以选择示例数据集点击“Submit！”(如下图)，应用将会跳转到下一个界面。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/circosinterface/datasource1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 使用示例数据
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            “Circos Parameters”菜单将会罗列所有用户上传的数据或是加载的示例数据(如下图)，加载示例数据时也会一并加载参数配置，Circos Parameters”菜单有四个板块，分别是Chromosome data、Track data、Label data、Links data，对应上一个页面不同的分类框，用户可以点击文件名后的小眼睛预览数据，也可以点击每一行最后的那个小齿轮来进行参数的配置，所有参数配置完毕后用户可以点击“Submit！”按钮进行绘图，同时应用程序将检查参数配置是否合理，如无错误则跳转到“Circos Plot”菜单（注：跳转的过程可能不会很流畅，这是因为程序已经开始绘制图像了）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                “Circos Parameters”菜单将会罗列所有用户上传的数据或是加载的示例数据(如下图)，加载示例数据时也会一并加载参数配置，Circos Parameters”菜单有四个板块，分别是Chromosome data、Track data、Label data、Links data，对应上一个页面不同的分类框，用户可以点击文件名后的小眼睛预览数据，也可以点击每一行最后的那个小齿轮来进行参数的配置，所有参数配置完毕后用户可以点击“Submit！”按钮进行绘图，同时应用程序将检查参数配置是否合理，如无错误则跳转到“Circos Plot”菜单（注：跳转的过程可能不会很流畅，这是因为程序已经开始绘制图像了）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/circospar.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Circos Parameters界面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            “Circos Plot”菜单会根据用户的输入数据和参数选择输出对应图像，并且提供下载和微调参数，用户可以最后对图像进行调整，如添加图例，高亮区域等(如下图)，调整后不要忘了点击“Updata”更新图像。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                “Circos Plot”菜单会根据用户的输入数据和参数选择输出对应图像，并且提供下载和微调参数，用户可以最后对图像进行调整，如添加图例，高亮区域等(如下图)，调整后不要忘了点击“Updata”更新图像。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/CircosPlot.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Circos Plot界面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            在shinyCircos-V2.0应用程序的“Gallery”菜单中列出了30个使用shinyCircos-V2.0创建的示例图形(如下图)。同时提供了用于生成每个示例图的数据集以供下载，其中包含所有输入文件，每个输入文件都被合理命名，指示了数据集中每个文件对应的轨道和绘图类型。<span style="color: red;" >前十个示例图形的示例数据和“Data Upload”界面提供的示例文件配置相同</span>。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0应用程序的“Gallery”菜单中列出了30个使用shinyCircos-V2.0创建的示例图形(如下图)。同时提供了用于生成每个示例图的数据集以供下载，其中包含所有输入文件，每个输入文件都被合理命名，指示了数据集中每个文件对应的轨道和绘图类型。<span style="color: red;" >前十个示例图形的示例数据和“Data Upload”界面提供的示例文件配置相同</span>。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/gallery.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Gallery界面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            在shinyCircos-V2.0应用程序的“Help”菜单中我们详细编写了软件的帮助文档，用户可根据目录查阅对应的部分进行学习，支持中英文切换，同时也支持下载。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0应用程序的“Help”菜单中我们详细编写了软件的帮助文档，用户可根据目录查阅对应的部分进行学习，支持中英文切换，同时也支持下载。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/help_Chinese.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Help界面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            shinyCircos-V2.0的“About”菜单中我们声明了所使用的R软件包以及我们的详细信息。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0的“About”菜单中我们声明了所使用的R软件包以及我们的详细信息。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/about.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 About界面
                             </p>
                         </p>
-                        <p class="p_help_Chinese">
-                            用户可以在shinyCircos-V2.0的“Contact”菜单中找到我们的联系方式。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                用户可以在shinyCircos-V2.0的“Contact”菜单中找到我们的联系方式。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/contact.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Contact界面
                             </p>
                         </p>
                     </div>
                     <div id="divc3.3">
                         <h3 class="head_zh">3.3 在个人电脑上安装使用shinyCircos-V2.0</h3>
-                        <p class="p_help_Chinese">
-                            用户可以选择在个人电脑(Windows、Mac或Linux)上安装和运行shinyCircos-V2.0，而无需将数据上传到在线服务器。shinyCircos-V2.0是跨平台的应用，即shinyCircos-V2.0可以安装在任何具有可用R环境的平台上。shinyCircos-V2.0的安装包括三个步骤。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                用户可以选择在个人电脑(Windows、Mac或Linux)上安装和运行shinyCircos-V2.0，而无需将数据上传到在线服务器。shinyCircos-V2.0是跨平台的应用，即shinyCircos-V2.0可以安装在任何具有可用R环境的平台上。shinyCircos-V2.0的安装包括三个步骤。
+                            </p>
+                        </blockquote>
+                        
                         <div id="divc3.3.1">
                             <h3 class="head_zh">步骤1：安装R和RStudio</h3>
-                            <p class="p_help_Chinese">
-                                请查看CRAN (<a href="https://cran.r-project.org/">https://cran.r-project.org/</a>)以了解R的安装过程。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    请查看CRAN (<a href="https://cran.r-project.org/">https://cran.r-project.org/</a>)以了解R的安装过程。
+                                </p>
+                            </blockquote>
+                            
                         </div>
                         <div id="divc3.3.2">
                             <h3 class="head_zh">步骤2：安装R/Shiny包和shinyCircos-V2.0需要的其他R包</h3>
-                            <p class="p_help_Chinese">
-                                使用RStudio启动一个R会话并运行以下代码行 ：
-                            </p>
-                            <pre>
-        # try an http CRAN mirror if https CRAN mirror doesn't work
-        install.packages("shiny")
-        install.packages("circlize")
-        install.packages("bs4Dash")
-        install.packages("DT")
-        install.packages("RColorBrewer")
-        install.packages("shinyWidgets")
-        install.packages("data.table")
-        install.packages("shinyBS")
-        install.packages("sortable")
-        install.packages("shinyjqui")
-        install.packages("shinycssloaders")
-        install.packages("colourpicker")
-        install.packages("gridBase")
-        install.packages("BiocManager")
-        BiocManager::install("ComplexHeatmap")
-                            </pre>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    使用RStudio启动一个R会话并运行以下代码行 ：
+                                </p>
+                                <pre class="code_zh">
+    # try an http CRAN mirror if https CRAN mirror doesn't work
+    install.packages("shiny")
+    install.packages("circlize")
+    install.packages("bs4Dash")
+    install.packages("DT")
+    install.packages("RColorBrewer")
+    install.packages("shinyWidgets")
+    install.packages("data.table")
+    install.packages("shinyBS")
+    install.packages("sortable")
+    install.packages("shinyjqui")
+    install.packages("shinycssloaders")
+    install.packages("colourpicker")
+    install.packages("gridBase")
+    install.packages("BiocManager")
+    BiocManager::install("ComplexHeatmap")</pre>
+                                <p class="p_help_Chinese">
+                                    确保以上包都正确被安装。
+                                </p>
+                            </blockquote>
+                            
                         </div>
                         <div id="divc3.3.3">
                             <h3 class="head_zh">步骤3：运行shinyCircos-V2.0应用程序</h3>
-                            <p class="p_help_Chinese">
-                                使用RStudio启动R会话并运行以下代码行：
-                            </p>
-                            <pre>
-        shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
-                            </pre>
-                            <p class="p_help_Chinese">
-                                此命令将从GitHub下载shinyCircos-V2.0的源代码到您计算机的临时目录中，然后在web浏览器中启动shinyCircos-V2.0应用程序。<span style="color: red;" >一旦网页浏览器关闭，下载的shinyCircos-V2.0代码将从您的电脑中删除。下次在RStudio中运行这个命令时，它将再次从GitHub下载shinyCircos-V2.0的源代码到一个临时目录。</span>这个过程十分麻烦，因为从GitHub下载shinyCircos-V2.0的代码需要一些时间。
-                            </p>
-                            <p class="p_help_Chinese">
-                                建议用户将shinyCircos-V2.0的源代码从GitHub下载到您电脑的一个固定目录，如Windows上的“E:\apps”，按照<b>下图</b>所示的步骤，一个名为“shinyCircos-V2.0-master.zip”的zip文件将下载到您的计算机中。将此文件移动到“E:\apps”并解压缩此文件。然后在“E:\apps”中会生成一个名为“shinyCircos-V2.0-master”的目录。脚本“server.R”和“ui.R”可以在“E:\apps\ shinyCircos-V2.0-master”中找到。然后，您可以通过在RStudio中运行以下几行脚本来启动shinyCircos-V2.0应用程序。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    使用RStudio启动R会话并运行以下代码行：
+                                </p>
+                                <pre class="code_zh">
+    shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")
+                                </pre>
+                                <p class="p_help_Chinese">
+                                    此命令将从GitHub下载shinyCircos-V2.0的源代码到您计算机的临时目录中，然后在web浏览器中启动shinyCircos-V2.0应用程序。<span style="color: red;" >一旦网页浏览器关闭，下载的shinyCircos-V2.0代码将从您的电脑中删除。下次在RStudio中运行这个命令时，它将再次从GitHub下载shinyCircos-V2.0的源代码到一个临时目录。</span>这个过程十分麻烦，因为从GitHub下载shinyCircos-V2.0的代码需要一些时间。
+                                </p>
+                                <p class="p_help_Chinese">
+                                    建议用户将shinyCircos-V2.0的源代码从GitHub下载到您电脑的一个固定目录，如Windows上的“E:\apps”，按照<b>下图</b>所示的步骤，一个名为“shinyCircos-V2.0-master.zip”的zip文件将下载到您的计算机中。将此文件移动到“E:\apps”并解压缩此文件。然后在“E:\apps”中会生成一个名为“shinyCircos-V2.0-master”的目录。脚本“server.R”和“ui.R”可以在“E:\apps\ shinyCircos-V2.0-master”中找到。然后，您可以通过在RStudio中运行以下几行脚本来启动shinyCircos-V2.0应用程序。
+                                </p>
+                            </blockquote>
+                            
                             <p style="text-align: center;">
                                 <img src="./helpfigures/downcode.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     从GitHub下载源代码
                                 </p>
                             </p>
-                            <pre>
-        library(shiny)
-        runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
-                            </pre>
+                            <blockquote class="block_global">
+                                <pre class="code_zh">
+    library(shiny)
+    runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)</pre>
                             <p class="p_help_Chinese">
                                 然后，shinyCircos-V2.0应用程序将在计算机的默认浏览器中打开。
                             </p>
+                            </blockquote>
+                            
                         </div>
                     </div>
                 </div>
                 <div id="divc4">
                     <h3 class="head_zh">4 利用shinyCircos-V2.0绘制Circos图的步骤</h3>
-                    <p class="p_help_Chinese">
-                        用户可以使用shinyCircos-V2.0 应用程序来创建Circos图。制作Circos图时，必须输入定义基因组中每条染色体长度的文件，以及若干个沿基因组排布的输入数据。在本节中，我们将演示使用shinyCircos-V2.0 中的示例数据集，创建Circos图的所有基本步骤。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            用户可以使用shinyCircos-V2.0 应用程序来创建Circos图。制作Circos图时，必须输入定义基因组中每条染色体长度的文件，以及若干个沿基因组排布的输入数据。在本节中，我们将演示使用shinyCircos-V2.0 中的示例数据集，创建Circos图的所有基本步骤。
+                        </p>
+                    </blockquote>
+                    
                     <div id="divc4.1">
                         <h3 class="head_zh">4.1 利用shinyCircos-V2.0绘制Circos图的基本步骤</h3>
                         
                         <div id="divc4.1.1">
                             <h3 class="head_zh">步骤1：准备并上传定义基因组长度的“Chromosom data”</h3>
-                            <p class="p_help_Chinese">
-                                基因组数据是必须输入的文件，它定义了Circos图的框架即“Sector”的比例（示例数据集可以在解压后的源文件www\example_data中获得)。
-                                基因组数据是一个包含<span style="color: red;">三列或五列</span>的文本文件，一般数据为三列，细胞带数据为五列。
-                                基因组数据的详细格式在前文的“<a href="#div2">输入数据格式</a>”部分中有详细说明。
-                            </p>
-                            <p class="p_help_Chinese">
-                                现在，我们已经准备好了这个文件并将它存储在磁盘上（例如Windows上的“E:/”）。
-                                接下来，我们需要通过shinyCircos-V2.0应用程序中“Data Upload”菜单将此文件上传到shinyCircos-V2.0应用程序中，数据来源选择“upload data”（如下图）。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    基因组数据是必须输入的文件，它定义了Circos图的框架即“Sector”的比例（示例数据集可以在解压后的源文件www\example_data中获得)。
+                                    基因组数据是一个包含<span style="color: red;">三列或五列</span>的文本文件，一般数据为三列，细胞带数据为五列。
+                                    基因组数据的详细格式在前文的“<a href="#div2">输入数据格式</a>”部分中有详细说明。
+                                </p>
+                                <p class="p_help_Chinese">
+                                    现在，我们已经准备好了这个文件并将它存储在磁盘上（例如Windows上的“E:/”）。
+                                    接下来，我们需要通过shinyCircos-V2.0应用程序中“Data Upload”菜单将此文件上传到shinyCircos-V2.0应用程序中，数据来源选择“upload data”（如下图）。
+                                </p>
+                            </blockquote>
+                            
                             <p style="text-align: center;">
                                 <img src="./helpfigures/uploaddata/1.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     上传染色体数据
                                 </p>
                             </p>
                         </div>
                         <div id="divc4.1.2">
                             <h3 class="head_zh">步骤2：上传环形排布的“Track data”</h3>
-                            <p class="p_help_Chinese">
-                                用户可以上传若干个数据集，沿着步骤1中上传的基因组数据环形排布。“Data Upload”菜单的分类框中的“Track data”框就是为了这个目的而提供的（见上图）。
-                                在这里，我们使用两个输入数据集(barplot.csv和line.csv) 来演示这个过程。用来创建不同类型“Track”的输入文件的详细格式前文的“<a href="#div2">输入数据格式</a>”部分中有详细说明。首先，我们准备了两个文件并将它们存储在磁盘上（例如，windows上的“E:/”）。
-                                要将文件“barplot.csv”和“line.csv”上传到软件中，然后将其拖拽到“Track data”中，<span style="color: red;">依次点击</span>“Save data”和 “Submit！”。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    用户可以上传若干个数据集，沿着步骤1中上传的基因组数据环形排布。“Data Upload”菜单的分类框中的“Track data”框就是为了这个目的而提供的（见上图）。
+                                    在这里，我们使用两个输入数据集(barplot.csv和line.csv) 来演示这个过程。用来创建不同类型“Track”的输入文件的详细格式前文的“<a href="#div2">输入数据格式</a>”部分中有详细说明。首先，我们准备了两个文件并将它们存储在磁盘上（例如，windows上的“E:/”）。
+                                    要将文件“barplot.csv”和“line.csv”上传到软件中，然后将其拖拽到“Track data”中，<span style="color: red;">依次点击</span>“Save data”和 “Submit！”。
+                                </p>
+                            </blockquote>
+                            
                         </div>
                         <div id="divc4.1.3">
                             <h3 class="head_zh">步骤3：为每个输入数据集设置“Track”位置和绘图类型</h3>
-                            <p class="p_help_Chinese">
-                                默认情况下，拖拽入选择框的顺序就是绘制“Track”的顺序，每个输入数据集的默认绘图类型为“point”。
-                                因为我们希望使用文件“barplot.csv”创建条形图，所以我们需要将文件“barplot.csv”对应的“Plot type”设置为“bar” (如下图)，同样的“line.csv”对应的“Plot type”设置为“line”。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    默认情况下，拖拽入选择框的顺序就是绘制“Track”的顺序，每个输入数据集的默认绘图类型为“point”。
+                                    因为我们希望使用文件“barplot.csv”创建条形图，所以我们需要将文件“barplot.csv”对应的“Plot type”设置为“bar” (如下图)，同样的“line.csv”对应的“Plot type”设置为“line”。
+                                </p>
+                            </blockquote>
+                            
                             <p style="text-align: center;">
                                 <img src="./helpfigures/uploaddata/2.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     shinyCircos-V2.0的参数设置界面
                                 </p>
                             </p>
                         </div>
                         <div id="divc4.1.4">
                             <h3 class="head_zh">步骤4：点击“Submit!”按钮绘制图形</h3>
-                            <p class="p_help_Chinese">
-                                所有输入数据集成功上传到shinyCircos-V2.0 应用程序并正确设置轨道位置和绘图类型后，我们需要单击“Circos Parameters” 菜单底部的“Submit!”按钮，告诉shinyCircos-V2.0去绘制图形。
-                                <span style="color: red;">默认情况下，在绘制图形时，shinyCircos-V2.0将使用随机颜色或者预定义的颜色</span>。
-                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    所有输入数据集成功上传到shinyCircos-V2.0 应用程序并正确设置轨道位置和绘图类型后，我们需要单击“Circos Parameters” 菜单底部的“Submit!”按钮，告诉shinyCircos-V2.0去绘制图形。
+                                    <span style="color: red;">默认情况下，在绘制图形时，shinyCircos-V2.0将使用随机颜色或者预定义的颜色</span>。
+                                </p>
+                            </blockquote>
+                            
         
                         </div>
                     </div>
                     <div id="divc4.2">
                         <h3 class="head_zh">4.2 通过替换一个或多个输入数据集来更新 Circos 图</h3>
-                        <p class="p_help_Chinese">
-                            Circos图通常由分布在不同轨道上的几种基本类型的图形组成。每个图形都是使用用户上传的输入数据集创建的。
-                            有时，我们可能需要替换其中一个或多个输入文件，这样我们就可以更新单个基因组图形的某些组成部分，而无需重新创建整个图形。
-                            例如，我们想用一个新的输入文件“rect_discrete.csv”来替换Track2的“line.csv”来创建离散型矩形图。
-                            为了达到这个目的，我们可以前往“Data Upload”中将“rect_discrete.csv”上传到软件中，将“Track data”分类框中的“line.csv”将替换为“rect_discrete.csv”，将原本的“line.csv”拖动到“Garbage”分类框中，然后依次点击“Save data” 、“Submit！”。
-                            同时，我们需要将新导入的数据的绘图类型设置为“rect_discrete”。
-                            最后，我们需要点击“Circos Parameters”面板底部的“Go!”按钮，告诉shinyCircos-V2.0更新相应的绘图结果。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                Circos图通常由分布在不同轨道上的几种基本类型的图形组成。每个图形都是使用用户上传的输入数据集创建的。
+                                有时，我们可能需要替换其中一个或多个输入文件，这样我们就可以更新单个基因组图形的某些组成部分，而无需重新创建整个图形。
+                                例如，我们想用一个新的输入文件“rect_discrete.csv”来替换Track2的“line.csv”来创建离散型矩形图。
+                                为了达到这个目的，我们可以前往“Data Upload”中将“rect_discrete.csv”上传到软件中，将“Track data”分类框中的“line.csv”将替换为“rect_discrete.csv”，将原本的“line.csv”拖动到“Garbage”分类框中，然后依次点击“Save data” 、“Submit！”。
+                                同时，我们需要将新导入的数据的绘图类型设置为“rect_discrete”。
+                                最后，我们需要点击“Circos Parameters”面板底部的“Go!”按钮，告诉shinyCircos-V2.0更新相应的绘图结果。
+                            </p>
+                        </blockquote>
+                        
                     </div>
                     <div id="divc4.3">
                         <h3 class="head_zh">4.3 以PDF或SVG格式下载创建的单个基因组图形</h3>
-                        <p class="p_help_Chinese">
-                            生成Circos图形后，用户可以使用“Circos Plot”菜单面板上方的小部件“Download PDF-file”和“Download SVG-file”下载PDF或SVG格式的绘图结果(如下图)。默认情况下，下载的两个文件分别命名为“shinyCircos.pdf”和“shinyCircos.svg”。
-                            下载的PDF文件“shinyCircos.pdf”可以在Adobe Acrobat中打开，下载的SVG文件“shinyCircos.svg”可以在Google Chrome浏览器中打开，我们不建议您直接右键保存图片，为了保证清晰度，我们建议您使用PDF文件存储图像然后再转换为位图。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                生成Circos图形后，用户可以使用“Circos Plot”菜单面板上方的小部件“Download PDF-file”和“Download SVG-file”下载PDF或SVG格式的绘图结果(如下图)。默认情况下，下载的两个文件分别命名为“shinyCircos.pdf”和“shinyCircos.svg”。
+                                下载的PDF文件“shinyCircos.pdf”可以在Adobe Acrobat中打开，下载的SVG文件“shinyCircos.svg”可以在Google Chrome浏览器中打开，我们不建议您直接右键保存图片，为了保证清晰度，我们建议您使用PDF文件存储图像然后再转换为位图。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/download/1.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 图片下载
                             </p>
                         </p>
                     </div>
                     <div id="divc4.4">
                         <h3 class="head_zh">4.4 利用shinyCircos-V2.0绘制复杂Circos图的完整步骤</h3>
-                        <p class="p_help_Chinese">
-                            使用shinyCircos-V2.0可以创建10种不同类型的图形，包括point, line, bar, stack-line,stack-point,rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete 和 ideogram。要创建有Circos图，至少需要一个输入数据文件，即定义基因组长度的基因组数据文件，这样输出的图形只有染色体部分。在这一节中，我们将展示绘制Circos图的关键步骤（如下图）。不同的绘图类型和具体的绘图参数在此不做赘述，用户可以参考示例数据进行学习。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                使用shinyCircos-V2.0可以创建10种不同类型的图形，包括point, line, bar, stack-line,stack-point,rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete 和 ideogram。要创建有Circos图，至少需要一个输入数据文件，即定义基因组长度的基因组数据文件，这样输出的图形只有染色体部分。在这一节中，我们将展示绘制Circos图的关键步骤（如下图）。不同的绘图类型和具体的绘图参数在此不做赘述，用户可以参考示例数据进行学习。
+                            </p>
+                        </blockquote>
+                        
 
                         <div id="divc4.4.1">
                             <h3 class="head_zh">步骤1：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/1.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     上传所有数据并正确归类
                                 </p>
                             </p>
@@ -2981,7 +2730,7 @@
                             <h3 class="head_zh">步骤2：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/2.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     为相应的数据选择正确的数据类型
                                 </p>
                             </p>
@@ -2990,7 +2739,7 @@
                             <h3 class="head_zh">步骤3：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/3.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     在弹出菜单中为柱状图选择绘制纵坐标轴，设之完成后进行绘图
                                 </p>
                             </p>
@@ -2999,7 +2748,7 @@
                             <h3 class="head_zh">步骤4：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/4.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     得到Circos图后对其进行高级设置
                                 </p>
                             </p>
@@ -3008,7 +2757,7 @@
                             <h3 class="head_zh">步骤5：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/5.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     为Circos图选择添加图例且图例在右侧，然后选择添加Track索引，之后点击“Updata”更新Circos图
                                 </p>
                             </p>
@@ -3017,7 +2766,7 @@
                             <h3 class="head_zh">步骤6：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/6.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     得到带有索引和图例的Circos图
                                 </p>
                             </p>
@@ -3026,7 +2775,7 @@
                             <h3 class="head_zh">步骤7：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/7.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     继续在“Advanced options”菜单中设置高亮区域，在左侧文本框中输入想要高亮显示的位置，然后选择透明度，点击“SAVE”按钮检测输入数据是否合规，没有问题后点击“Update”更新Circos图
                                 </p>
                             </p>
@@ -3035,7 +2784,7 @@
                             <h3 class="head_zh">步骤8：</h3>
                             <p style="text-align: center;">
                                 <img src="./helpfigures/plot_complex/8.jpg" width="60%">
-                                <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                                <p class="pic_text">
                                     最后，得到一个复杂的Circos图，此时可以将Circos图保存为PDF或SVG
                                 </p>
                             </p>
@@ -3046,107 +2795,128 @@
                 </div>
                 <div id="divc5">
                     <h3 class="head_zh">5 修饰Circos图的绘图选项</h3>
-                    <p class="p_help_Chinese">
-                        “Circos Parameters”菜单的每行数据的右侧小齿轮按钮，用户点击后将会弹出具体参数的提示框，用户可以进行个性化设置，比如Track的高度、间隔、各部分的颜色等等。下面将演示其中一些选项的设置。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            “Circos Parameters”菜单的每行数据的右侧小齿轮按钮，用户点击后将会弹出具体参数的提示框，用户可以进行个性化设置，比如Track的高度、间隔、各部分的颜色等等。下面将演示其中一些选项的设置。
+                        </p>
+                    </blockquote>
+                    
                     <div id="divc5.1">
                         <h3 class="head_zh">5.1 Track高度</h3>
-                        <p class="p_help_Chinese">
-                            shinyCircos-V2.0的默认Track高度只有0.1，即为单位圆半径的5%，这个数值可能并不合适，所以需要用户进行调整，Track高度的调整非常简单，只需要用户点击对应Track数据后的齿轮图标，在弹出式菜单中将“Track height”进行调整即可(如下图)。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0的默认Track高度只有0.1，即为单位圆半径的5%，这个数值可能并不合适，所以需要用户进行调整，Track高度的调整非常简单，只需要用户点击对应Track数据后的齿轮图标，在弹出式菜单中将“Track height”进行调整即可(如下图)。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/track_height/1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 调整“Track”的高度
                             </p>
                         </p>
                     </div>
                     <div id="divc5.2">
                         <h3 class="head_zh">5.2 y坐标轴</h3>
-                        <p class="p_help_Chinese">
-                            shinyCircos-V2.0增加了在track上添加y轴的功能，这样可以显示出y轴的范围，用户可以在弹出参数框中的“Add y-axis”中选择“yes”然后更新绘图即可得到添加过y坐标轴的图像（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0增加了在track上添加y轴的功能，这样可以显示出y轴的范围，用户可以在弹出参数框中的“Add y-axis”中选择“yes”然后更新绘图即可得到添加过y坐标轴的图像（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/yaxis/1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 添加y坐标轴
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/yaxis/2.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 带有y坐标轴的Circos图
                             </p>
                         </p>
                     </div>
                     <div id="divc5.3">
                         <h3 class="head_zh">5.3 设置不同“Track”之间的间隔</h3>
-                        <p class="p_help_Chinese">
-                            在使用shinyCircos-V2.0的过程中，用户可以根据需要对不同track的间距进行调整，用户可以在弹出参数框中的“Distance to the next track”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在使用shinyCircos-V2.0的过程中，用户可以根据需要对不同track的间距进行调整，用户可以在弹出参数框中的“Distance to the next track”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/gap_track/1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 调整“Track”间隙
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/gap_track/2.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 不同的track间隙
                             </p>
                         </p>
                     </div>
                     <div id="divc5.4">
                         <h3 class="head_zh">5.4 添加“Cell”的边框</h3>
-                        <p class="p_help_Chinese">
-                            在shinyCircos-V2.0中，用户可以给不同的“Track”添加边框，以此来强调某个“Track”，用户可以在弹出参数框中的“Add borders”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0中，用户可以给不同的“Track”添加边框，以此来强调某个“Track”，用户可以在弹出参数框中的“Add borders”中输入适当数值后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/cell_border/1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 添加单元格边框
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/cell_border/2.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 带有边框的“Cell”
                             </p>
                         </p>
                     </div>
                     <div id="divc5.5">
                         <h3 class="head_zh">5.5 修改“Track”的背景颜色</h3>
-                        <p class="p_help_Chinese">
-                            在shinyCircos-V2.0中，用户可以调整不同的“Track”的背景颜色（部分绘图类型不支持背景颜色的调整），以此来给“Track”分组，用户可以在弹出参数框中的“Background color(s)”中选择适当的颜色或是输入适当的数值来调整“Track”的颜色，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0中，用户可以调整不同的“Track”的背景颜色（部分绘图类型不支持背景颜色的调整），以此来给“Track”分组，用户可以在弹出参数框中的“Background color(s)”中选择适当的颜色或是输入适当的数值来调整“Track”的颜色，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/tra_bgcol/1.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 更改“Track”的背景颜色
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/tra_bgcol/2.jpg" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 不同背景颜色的“Track”
                             </p>
                         </p>
                     </div>
                     <div id="divc5.6">
                         <h3 class="head_zh">5.6 设置不同“Sector”之间的间距</h3>
-                        <p class="p_help_Chinese">
-                            在shinyCircos-V2.0中，用户可以在染色体数据的参数调整页面调整每个“Sector”之间的间距，只需要输入数值就可以很灵活的调整每个“Sector”之间的间距，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0中，用户可以在染色体数据的参数调整页面调整每个“Sector”之间的间距，只需要输入数值就可以很灵活的调整每个“Sector”之间的间距，调整完毕后点击“SUSBMIT！！”按钮按照当前配置绘图（如下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/sec_gap/1.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 调整Circos图的“Gap”宽度
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/sec_gap/2.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Circos图的“Gap”
                             </p>
                         </p>
@@ -3154,71 +2924,86 @@
                 </div>
                 <div id="divc6">
                     <h3 class="head_zh">6 高级功能</h3>
-                    <p class="p_help_Chinese">
-                        相对于旧版的shinyCircos，除了界面和使用逻辑上的改动，我们还对部分功能进行了改进，增加了部分图形图例的支持，支持了高亮区域等。
-                    </p>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            相对于旧版的shinyCircos，除了界面和使用逻辑上的改动，我们还对部分功能进行了改进，增加了部分图形图例的支持，支持了高亮区域等。
+                        </p>
+                    </blockquote>
+                    
                     <div id="divc6.1">
                         <h3 class="head_zh">6.1 添加图例</h3>
-                        <p class="p_help_Chinese">
-                            当用户绘制了“stack-line”、“stack-point”、“heatmap-gradual”、“heatmap-discrete”、“rect-gradual”和“rect-discrete”这六种类型的“Track”时，用户可以点击“Circos Plot”菜单的“Advance”按钮来添加图例，支持将图例绘制在Circos图的底部或右侧（见下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                当用户绘制了“stack-line”、“stack-point”、“heatmap-gradual”、“heatmap-discrete”、“rect-gradual”和“rect-discrete”这六种类型的“Track”时，用户可以点击“Circos Plot”菜单的“Advance”按钮来添加图例，支持将图例绘制在Circos图的底部或右侧（见下图）。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/legend/1.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 添加图例
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/legend/2.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 Circos图的图例
                             </p>
                         </p>
                     </div>
                     <div id="divc6.2">
                         <h3 class="head_zh">6.2 高亮特定基因组区域</h3>
-                        <p class="p_help_Chinese">
-                            新版的shinyCircos-V2.0支持高亮部分区域，帮助用户着重显示部分区域或是分类部分“Sector”，有助于用户用户按照自己的需要展示自己的数据。用户可以点击“Circos Plot”菜单的“Advance”按钮来添加高亮显示区域。如图所示，支持三种颜色输入格式，当输入带有透明度的16进制颜色代码时，下方的透明度选择将不被套用。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                新版的shinyCircos-V2.0支持高亮部分区域，帮助用户着重显示部分区域或是分类部分“Sector”，有助于用户用户按照自己的需要展示自己的数据。用户可以点击“Circos Plot”菜单的“Advance”按钮来添加高亮显示区域。如图所示，支持三种颜色输入格式，当输入带有透明度的16进制颜色代码时，下方的透明度选择将不被套用。
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/highlight/1_Chinese.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 添加高亮区域
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/highlight/2.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 带有高亮区域的Circos图
                             </p>
                         </p>
                     </div>
                     <div id="divc6.3">
                         <h3 class="head_zh">6.3 调整图像大小</h3>
-                        <p class="p_help_Chinese">
-                            shinyCircos-V2.0支持对图像的大小进行调整，用户可以很轻松的调整图像的高和宽。（如下图）
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0支持对图像的大小进行调整，用户可以很轻松的调整图像的高和宽。（如下图）
+                            </p>
+                        </blockquote>
+                        
                         <p style="text-align: center;">
                             <img src="./helpfigures/plotsize/1.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 调整Circos图的大小
                             </p>
                         </p>
                     </div>
                     <div id="divc6.4">
                         <h3 class="head_zh">6.4 添加“Track index”</h3>
-                        <p class="p_help_Chinese">
-                            “Track index”是“Track”的索引，可以为不同的“Track”添加标号方便用户进行后续的注释。用户可以点击“Circos Plot”菜单的“Advance”按钮然后在“Add track index”处选择是否添加“Track”的索引（如下图）。
-                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                “Track index”是“Track”的索引，可以为不同的“Track”添加标号方便用户进行后续的注释。用户可以点击“Circos Plot”菜单的“Advance”按钮然后在“Add track index”处选择是否添加“Track”的索引（如下图）。
+                            </p>
+                        </blockquote>
+                       
                         <p style="text-align: center;">
                             <img src="./helpfigures/tra_index/1.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 添加“Track index”
                             </p>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/tra_index/2.png" width="60%">
-                            <p style="font-size: 25px;text-align: center;margin-top: 0px;margin-bottom: 80px;">
+                            <p class="pic_text">
                                 带有“Track index”的Circos图
                             </p>
                         </p>

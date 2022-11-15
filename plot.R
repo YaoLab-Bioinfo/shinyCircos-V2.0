@@ -1,4 +1,125 @@
-#source("server.R")
+source("server.R")
+convert_unit_in_canvas_coordinate = function(x, unit = c("mm", "cm", "inches")) {
+  
+  pin = par("pin")
+  usr = par("usr")
+  
+  unit = match.arg(unit)
+  
+  pt_per_inche1 = (usr[2] - usr[1])/pin[1]
+  pt_per_inche2 = (usr[4] - usr[3])/pin[2]
+  
+  if(abs(pt_per_inche1 - pt_per_inche2) > 1e-3) {
+    warning_wrap("`convert_unit_in_data_coordinate()` only works when aspect of the coordinate is 1.")
+  }
+  
+  inche_per_mm = 0.0393700787401575
+  # length in the data coordinate
+  if(unit == "inches") {
+    len = x * pt_per_inche1
+  } else if(unit == "mm") {
+    len = x * pt_per_inche1 * inche_per_mm
+  } else if(unit == "cm") {
+    len = x * pt_per_inche1 * inche_per_mm * 10
+  }
+  return(len)
+}
+circos.genomicInitialize.new = function(
+    data, 
+    sector.names = NULL, 
+    major.by = NULL,
+    plotType = c("axis", "labels"), 
+    tickLabelsStartFromZero = TRUE,
+    axis.labels.cex = 0.4*par("cex"), 
+    labels.cex = 0.8*par("cex"), 
+    track.height = NULL, 
+    labels_inf_chr =NULL,
+    data.CN = NULL,
+    outergap = 1,
+    ...) {
+  
+  outergap <- outergap*0.01
+  
+  if(is.factor(data[[1]])) {
+    fa = levels(data[[1]])
+  } else {
+    fa = unique(data[[1]])
+  }
+  
+  if(!is.null(sector.names)) {
+    if(length(sector.names) != length(fa)) {
+      stop_wrap("length of `sector.names` and length of sectors differ.")
+    }
+  } else {
+    sector.names = fa
+  }
+  
+  names(sector.names) = fa
+  
+  # calculate xlim
+  x1 = tapply(data[[2]], data[[1]], min)[fa]
+  x2 = tapply(data[[3]], data[[1]], max)[fa]
+  
+  op = circos.par("cell.padding")
+  ow = circos.par("points.overflow.warning")
+  circos.par(cell.padding = c(0, 0, 0, 0), points.overflow.warning = FALSE)
+  circos.initialize(factor(fa, levels = fa), xlim = cbind(x1, x2), ...)
+  
+  if(circos.par$ring) {
+    op = c(op[1], 0, op[3], 0)
+    ow = FALSE
+  }
+  
+  if(is.null(track.height)) {
+    if(all(c("axis", "labels") %in% plotType)) {
+      track.height = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = axis.labels.cex) + 
+        convert_unit_in_canvas_coordinate(0.5, "mm") + strheight("chr", cex = labels.cex) + strheight("chr", cex = labels.cex)*outergap
+    } else if("labels" %in% plotType) {
+      track.height = strheight("chr", cex = labels.cex)*outergap + strheight("chr", cex = labels.cex)
+    } else if("axis" %in% plotType) {
+      track.height = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = axis.labels.cex)
+    } else {
+      track.height = convert_height(3, "mm")
+    }
+  }
+  #label 
+  
+  
+  if(!is.null(labels_inf_chr)){
+    if(labels_inf_chr[[2]]=="outside"){
+      if(ncol(data.CN) == 4){
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+      }else{
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+      }
+    }
+  }
+  
+  
+  
+  # axis and chromosome names
+  if(any(plotType %in% c("axis", "labels"))) {
+    circos.genomicTrackPlotRegion(data, ylim = c(0, 1), bg.border = "#00FF00", track.height = track.height,
+                                  panel.fun = function(region, value, ...) {
+                                    sector.index = get.cell.meta.data("sector.index")
+                                    xlim = get.cell.meta.data("xlim")
+                                    
+                                    if(all(c("axis", "labels") %in% plotType)) {
+                                      circos.genomicAxis(h = "bottom", major.by = major.by, tickLabelsStartFromZero = tickLabelsStartFromZero, labels.cex = axis.labels.cex)
+                                      circos.text(mean(xlim), convert_y(1.5, "mm") + convert_y(strheight("chr", cex = labels.cex), "canvas")*outergap + convert_y(strheight("chr", cex = axis.labels.cex), "canvas") + convert_y(0.5, "mm"), 
+                                                  labels = sector.names[sector.index], cex = labels.cex, adj = c(0.5, 0), niceFacing = TRUE)
+                                    } else if("labels" %in% plotType) {
+                                      circos.text(mean(xlim), convert_y(strheight("chr", cex = labels.cex), "canvas")*outergap , labels = sector.names[sector.index], cex = labels.cex, adj = c(0.5, 0), niceFacing = TRUE)
+                                    } else if("axis" %in% plotType) {
+                                      circos.genomicAxis(h = "bottom", major.by = major.by, tickLabelsStartFromZero = tickLabelsStartFromZero,labels.cex = axis.labels.cex)
+                                    }
+                                  }
+    )
+  }
+  
+  circos.par("cell.padding" = op, "points.overflow.warning" = ow)
+  return(invisible(NULL))
+}
 
 
 legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor,addlegend){
@@ -120,9 +241,9 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor,addlegend)
 
 
 
-plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
+plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree" = 90 - rotation , "gap.degree" = gap.width , cell.padding=c(0,0,0,0) , track.margin=c(0,0))
-  circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
   if(plotother != 0){
     if(!is.null(plotTypes)){
       circos.updatePlotRegion(
@@ -133,15 +254,15 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
       )
     }
   }
-  if(!is.null(labels_inf_chr)){
-    if(labels_inf_chr[[2]]=="outside"){
-      if(ncol(data.CN) == 4){
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
-      }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
-      }
-    }
-  }
+  # if(!is.null(labels_inf_chr)){
+  #   if(labels_inf_chr[[2]]=="outside"){
+  #     if(ncol(data.CN) == 4){
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+  #     }else{
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+  #     }
+  #   }
+  # }
   if("labels" %in% plotTypes && !("axis" %in% plotTypes)){
     gapgap <- 0.02
   }else{
@@ -191,9 +312,9 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
   }
 }
 
-plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
+plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
-  circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
   if(plotother != 0){
     if(!is.null(plotTypes)){
       circos.updatePlotRegion(
@@ -212,20 +333,20 @@ plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr 
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "inside")
       }
     }
-    if(labels_inf_chr[[2]]=="outside"){
-      if(ncol(data.CN) == 4){
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
-      }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
-      }
-    }
+    # if(labels_inf_chr[[2]]=="outside"){
+    #   if(ncol(data.CN) == 4){
+    #     circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+    #   }else{
+    #     circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+    #   }
+    # }
   }
   
 }
 
-plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother){
+plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
-  circos.genomicInitialize(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size)
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
   if(plotother != 0){
     if(!is.null(plotTypes)){
       circos.updatePlotRegion(
@@ -236,15 +357,15 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
       )
     }
   }
-  if(!is.null(labels_inf_chr)){
-    if(labels_inf_chr[[2]]=="outside"){
-      if(ncol(data.CN) == 4){
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
-      }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
-      }
-    }
-  }
+  # if(!is.null(labels_inf_chr)){
+  #   if(labels_inf_chr[[2]]=="outside"){
+  #     if(ncol(data.CN) == 4){
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
+  #     }else{
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+  #     }
+  #   }
+  # }
   if("labels" %in% plotTypes && !("axis" %in% plotTypes)){
     gapgap <- 0.02
   }else{
@@ -297,7 +418,7 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
 
 plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.L , data.N , colorChr , tra_Margin , labels_inf , labelChr , tra_hmap_typcolhmap , tra_border , tra_heatcol_dis , tra_heat_heatcoldiscus ,
                     trackChr , tratype ,  chr_height , datatypeChr , heightTra , source_data , tra_poi_poisiz , heatmapcols , tra_bgcol , gap.width , tra_yaxis,
-                    tra_hmap_poslines , tra_hmap_poslinhei , tra_hmap_cellbord , tra_hmap_cellbord_col , tra_hmap_heatmapcol , plotsize ,
+                    tra_hmap_poslines , tra_hmap_poslinhei , tra_hmap_cellbord , tra_hmap_cellbord_col , tra_hmap_heatmapcol , plotsize , outergap ,
                     tra_rect_rectcol , tra_trct_colrect , tra_rect_rectcoldis , tra_rect_rectcoldiscus , tra_transparency , tra_coltype , tra_colcol ,
                     tra_colorcus , tra_line_fillarea , tra_poipch , tra_colorline , tra_baseline , outAxis , fontSize , outAxis_size , labelChr_size , tra_bar_direction ,
                     tra_bar_Boundary , tra_bar_coldir1 , tra_bar_coldir2 , hltTrack.List , hltdata.List , tra_line_selrea , tra_bar_borderarea , colformatLinks , colorLinks ,
@@ -323,10 +444,31 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
   }else{
     heightTra <- list()
   }
-  allheight <- sum(heihat,tramar,dis_Chr,heilab,as.numeric(chr_height),sum(as.numeric(unlist(heightTra))))
+  if(outAxis == 1 && labelChr == 1){
+    plotTypes <- c("labels","axis")
+  }else if(outAxis == 1 && labelChr == 2){
+    plotTypes <- "axis"
+  }else if(outAxis == 2 && labelChr == 1){
+    plotTypes <- "labels"
+  }else{
+    plotTypes <- NULL
+  }
+  # if(all(c("axis", "labels") %in% plotTypes)) {
+  #   track.height_out = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = outAxis_size) + 
+  #     convert_unit_in_canvas_coordinate(0.5, "mm") + strheight("chr", cex = labelChr_size) + strheight("chr", cex = labelChr_size)*outergap
+  # } else if("labels" %in% plotTypes) {
+  #   track.height_out = strheight("chr", cex = labelChr_size)*outergap + strheight("chr", cex = labelChr_size)
+  # } else if("axis" %in% plotTypes) {
+  #   track.height_out = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = outAxis_size)
+  # } else {
+  #   track.height_out = convert_height(3, "mm")
+  # }
+  # print(convert_height(3, "mm"))
+  # print(track.height_out)
+  allheight <- sum(heihat , tramar , dis_Chr , heilab , as.numeric(chr_height) , sum(as.numeric(unlist(heightTra))))
   if(!is.null(data.L)){
     if(allheight > 0.7){
-      if(!is.null(data.T)){
+      if(!is.null(data.T)) {
         for (k in 1:length(data.T)) {
           if(tratype[[k]] == "heatmap-gradual"|tratype[[k]] =="heatmap-discrete"){
             tra_hmap_poslinhei[[k]] <- 0.7*tra_hmap_poslinhei[[k]]/allheight
@@ -450,15 +592,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     colorChr <- rep(colorChr, repnumcol)[1:length(unique(data.C[,1]))]
     
     
-    if(outAxis == 1 && labelChr == 1){
-      plotTypes <- c("labels","axis")
-    }else if(outAxis == 1 && labelChr == 2){
-      plotTypes <- "axis"
-    }else if(outAxis == 2 && labelChr == 1){
-      plotTypes <- "labels"
-    }else{
-      plotTypes <- NULL
-    }
+    
     if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
       if(1 %in% unlist(tra_yaxis) & trac_index != "Yes"){
         plotother <- 2.1
@@ -475,25 +609,25 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
       if(datatypeChr == "1"){ # general
         if(trackChr == "track"){ #Chromosome band show
           #trackChr : "Show" = "track", "Hide" = ""
-          plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr ,
+          plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , outergap = outergap ,
                      data.CN = data.CN , rotation = rotation , gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
         }else if(trackChr!="track"){
-          plotcircos.notrack(data.C , plotTypes = plotTypes , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,
+          plotcircos.notrack(data.C , plotTypes = plotTypes , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width , outergap = outergap ,
                              outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
         }
       }else if(datatypeChr == "2"){# cytoband
-        plotcircos.cyto(data.C , plotTypes=plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr ,
+        plotcircos.cyto(data.C , plotTypes=plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , outergap = outergap ,
                         data.CN = data.CN , rotation = rotation , gap.width = gap.width ,  outAxis_size = outAxis_size , labelChr_size = labelChr_size ,
                         plotother = plotother)
         
       }
     }else if(source_data == "b"){ #sample
       if(datatypeChr == "1"){
-        plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , 
+        plotcircos(data.C , colorChr = colorChr , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , outergap = outergap ,
                    gap.width = gap.width , outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
       }else{
         plotcircos.cyto(data.C , plotTypes = plotTypes , chr_height = chr_height , dis_Chr = dis_Chr , labels_inf_chr = labels_inf_chr , data.CN = data.CN , rotation = rotation , gap.width = gap.width ,
-                        outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother)
+                        outAxis_size = outAxis_size , labelChr_size = labelChr_size , plotother = plotother , outergap = outergap)
         
       }
     }
