@@ -10,7 +10,7 @@
             }
 
             .p_help_English{
-                text-indent: 2em;
+                text-indent: 0em;
                 font-size: 21px;
                 line-height: 150%;
                 font-family: Arial, Helvetica, sans-serif;
@@ -114,19 +114,19 @@
                     <p class="head">1 Introduction</p>
                     <blockquote class="block_global">
                         <p class="p_help_English">
-                            shinyCircos-V2.0 is an R/shiny application for interactive creation of Circos diagrams.
+                            shinyCircos-V2.0 is a web application developed using R/Shiny for interactive creation of Circos diagrams.
                         </p>
                         <p style="font-size: 21px;">
-                            &emsp;&emsp;&emsp;<b>Source code: </b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
+                            &emsp;&emsp;<b>Source code: </b><a href="https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0">https://github.com/YaoLab-Bioinfo/shinyCircos-V2.0</a>
                             <br>
-                            &emsp;&emsp;&emsp;<b>Online use: </b><a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>
+                            &emsp;&emsp;<b>Online use: </b><a href="https://venyao.xyz/shinyCircos2.0/">https://venyao.xyz/shinyCircos-V2.0/</a>
                             <br>
-                            &emsp;&emsp;&emsp;<b>Contact: </b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
+                            &emsp;&emsp;<b>Contact: </b><a href="mailto:gentelmanwang@gmail.com">gentelmanwang@gmail.com</a> or <a href="mailto:yaowen@henau.edu.cn">yaowen@henau.edu.cn</a>
                         </p>
                         <p class="p_help_English">
                             <a href="https://venyao.xyz/shinycircos/" target="_blank">shinyCircos</a> is a web application for creation of Circos plot developed by <a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al in 2017</a>, which has been recognized by many users for its graphical user interface and ease of use.
                             shinyCircos-V2.0 is the updated version of <a href="https://venyao.xyz/shinyCircos/">shinyCircos</a>. 
-                            In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
+                            In shinyCircos-V2.0, we <font color="red">developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos</font>.
                         </p>
 
                     </blockquote>
@@ -137,7 +137,7 @@
                     </p>
                     <blockquote class="block_global">
                         <p class="p_help_English">
-                            Before using shinyCircos-V2.0, we need to understand the structure of a typical Circos plot. Please check the names of each component of a typical Circos plot, which will help you go through this manual.
+                            Before using shinyCircos-V2.0, we need to understand <font color="red">the structure of a typical Circos plot</font>. Please check the names of each component of a typical Circos plot, which will help you go through this manual.
                         </p>
                     </blockquote>
                     
@@ -172,14 +172,14 @@
 
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. Two types of Chromosome data are accepted by shinyCircos-V2.0, the General chromosome data, and the Cytoband data.
+                                A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. Two types of Chromosome data are accepted by shinyCircos-V2.0, <font color="red">the General chromosome data</font>, and <font color="red">the Cytoband chromosome data</font>.
                             </p>
                         </blockquote>
                         <div id="div2.1.1">
-                            <h4 class="head">2.1.1 General data with three columns</h4>
+                            <h4 class="head">2.1.1 General chromosome data with three columns</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Chromosomes data can be a general chromosome data with three columns: the chromosome ID, the start and end coordinates of different genomic regions.
+                                    Chromosomes data can be a general chromosome data with <font color="red">three columns in fixed order</font>: the chromosome ID, the start and end coordinates of different genomic regions. <font color="red">Column names are optional, and can be any valid names accepted by R</font>.
                                 </p>
                             </blockquote>
                             
@@ -225,7 +225,7 @@
                             </div>
                             
                             <p class="table_text">
-                                A general chromosome data.
+                                An example general chromosome data.
                                 <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
                             </p>
                             <blockquote class="block_global">
@@ -245,10 +245,10 @@
                             
                             
                             <div id="div2.1.2">
-                                <h4 class="head">2.1.2 Cytoband data with five columns</h4>
+                                <h4 class="head">2.1.2 Cytoband chromosome data with five columns</h4>
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
-                                        Cytoband data contains five columns: the chromosome ID, the start and end coordinates of different genomic regions, the name of cytogenetic band, and Giemsa stain results.
+                                        Cytoband data contains <font color="red">five columns in fixed order</font>: the chromosome ID, the start and end coordinates of different genomic regions, the name of cytogenetic band, and Giemsa stain results. <font color="red">Column names are optional, and can be any valid names accepted by R</font>.
                                     </p>
                                 </blockquote>
                                 
@@ -306,12 +306,12 @@
                                     </table>
                                 </div>
                                 <p class="table_text">
-                                    A cytoband chromosome data.
+                                    An example cytoband chromosome data.
                                     <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
                                 </p>
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
-                                        A Circos plot with Ideogram chromosome will be created when cytoband data is used.
+                                        A Circos plot with Ideogram chromosome will be created when cytoband chromosome data is used.
                                     </p>
                                 </blockquote>
                                 
@@ -328,7 +328,7 @@
                         <h3 class="head">2.2 Track data (to be displayed in different tracks of a Circos plot)</h3>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. The first three columns of the input data for any type of plot are fixed, namely the chromosome, the strat and end coordinates of genomic regions.
+                                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. <font color="red">Order of the first three columns of the input data for any type of plot are fixed, namely the chromosome, the strat and end coordinates of genomic regions.</font>
                             </p>
                         </blockquote>
                         
@@ -336,20 +336,13 @@
                             <h4 class="head">2.2.1 Tarck data to plot bars</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to make bar plot in a Circos diagram should contain at least four columns, the chromosome, the strat and end coordinates of genomic regions, and a fourth column with data values. Please note that the fourth column must be positive or negative numeric real numers. Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
+                                    The input data to make bar plot in a Circos diagram should contain <font color="red">at least four columns in fixed order</font>: the chromosome, the strat and end coordinates of genomic regions, and a fourth column with data values. Please note that <font color="red">the fourth column must be positive or negative numeric real numers</font>. <font color="red">Names of the first four columns are optional, and can be any valid names accepted by R</font>.
+                                </p>
+								<p class="p_help_English">
+                                    Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
                                 </p>
                             </blockquote>
                             
-                            <hr>
-                            <blockquote class="block_global">
-                                <p class="p_help_English">
-                                    For unidirectional bar plot, the minimum value of the fourth column will be used as the starting point of all bars, as shown in the following figure.
-                                </p>
-                            </blockquote>
-                            
-
-
-
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -400,77 +393,26 @@
                                 Input data to make unidirectional bars.
                                 <a href="./example_data/track/barplot.csv" download="barplot.csv"><img src="download.png" height="2%" width="2%" /></a>
                             </p>
+							
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    For <font color="red">unidirectional bar plot</font>, the minimum value of the fourth column will be used as the starting point of all bars, as shown in the following image. By default, <font color="red">the color of all bars are randomly assigned by shinyCircos</font>.
+                                </p>
+                            </blockquote>
+							
                             <p style="text-align: center;">
                                 <img src="./helpfigures/bar/unidirectionbar.jpg" width="60%">
                                 <p class="pic_text">
                                     A circos plot with unidirectional bars.
                                 </p>
                             </p>
-                            <blockquote class="block_global">
+							
+							<blockquote class="block_global">
                                 <p class="p_help_English">
-                                    For bidirectional bars, the 4th column which contains the data values will be divided into two groups based on the boundary value. The default boundary value is set as zero, which can be modified by the user.
+                                    For <font color="red">unidirectional bar plot</font>, <font color="red">an additional 'color' column can be added in the input data to make colored bars in shinyCircos-V2.0.</font> Name of the 'color' column must be explicitly specified as 'color'.
                                 </p>
-                            </blockquote>
-                            
-                            <div class="div-tabledata">
-                                <table class="table-style">
-                                    <tr>
-                                        <th>chr</th>
-                                        <th>start</th>
-                                        <th>end</th>
-                                        <th>value</th>
-                                    </tr>
-                                    <tr>
-                                        <td>chr1</td>
-                                        <td>5622039</td>
-                                        <td>9110831</td>
-                                        <td>0.095</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr1</td>
-                                        <td>5622039</td>
-                                        <td>9110831</td>
-                                        <td>-0.405</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr2</td>
-                                        <td>13669568</td>
-                                        <td>16275459</td>
-                                        <td>0.936</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr2</td>
-                                        <td>13669568</td>
-                                        <td>16275459</td>
-                                        <td>-0.436</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr3</td>
-                                        <td>4777699</td>
-                                        <td>8367346</td>
-                                        <td>0.174</td>
-                                    </tr>
-                                    <tr>
-                                        <td>chr3</td>
-                                        <td>4777699</td>
-                                        <td>8367346</td>
-                                        <td>-0.326</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <p class="table_text">
-                                Input data to make bidirectional bars.
-                                <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
-                            </p>
-                            <p style="text-align: center;">
-                                <img src="./helpfigures/bar/bidbar.jpg" width="60%">
-                                <p class="pic_text">
-                                    A circos plot with bidirectional bars.
-                                </p>
-                            </p>
-                            <blockquote class="block_global">
-                                <p class="p_help_English">
-                                    An additional color column can be added in the input data to make colored bars in shinyCircos-V2.0. To customize color for data with multiple columns, users should provide a character string representing one or multiple colors separated by commas. For example, 'red' or 'red,orange,blue'. To customize color for data with multiple groups, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
+								<p class="p_help_English">
+                                    <font color="red">To customize color for data with multiple groups</font>, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
                                 </p>
                             </blockquote>
                             
@@ -538,17 +480,78 @@
                                 </p>
                             </p>
                         </div>
-            
-            
+							
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    For <font color="red">bidirectional bars</font>, the 4th column which contains the data values will be divided into two groups based on the boundary value. The default boundary value is set as zero, which can be modified by the user.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>5622039</td>
+                                        <td>9110831</td>
+                                        <td>0.095</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>5622039</td>
+                                        <td>9110831</td>
+                                        <td>-0.405</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>13669568</td>
+                                        <td>16275459</td>
+                                        <td>0.936</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>13669568</td>
+                                        <td>16275459</td>
+                                        <td>-0.436</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>4777699</td>
+                                        <td>8367346</td>
+                                        <td>0.174</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>4777699</td>
+                                        <td>8367346</td>
+                                        <td>-0.326</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to make bidirectional bars.
+                                <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/bidbar.jpg" width="60%">
+                                <p class="pic_text">
+                                    A circos plot with bidirectional bars.
+                                </p>
+                            </p>
+                            
                         <div id="div2.2.2">
                             <h4 class="head">2.2.2 Tarck data to plot lines</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to make line chart should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
+                                    The input data to make line chart should contain <font color="red">at least four columns in fixed order</font>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <font color="red">the fourth column must be positive or negative numeric real numers</font>. <font color="red">Names of the first four columns are optional, and can be any valid names accepted by R</font>. By default, <font color="red">the color of all lines are randomly assigned by shinyCircos</font>.
                                 </p>
                             </blockquote>
                             
-                            <hr>
                             <div class="div-tabledata">
                                 <table class="table-style">
                                     <tr>
@@ -607,7 +610,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    An additional 'color' column can be added in the input dataset to assign colors to lines of different groups on the same track.
+                                    An additional 'color' column can be added in the input dataset to assign colors to lines of different groups on the same track. <font color="red">Name of the 'color' column must be explicitly specified as 'color'</font>.
                                 </p>
                             </blockquote>
             
@@ -677,7 +680,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset.
+                                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset. For this type of input data, all column names are optional, and can be any valid names accepted by R.
                                 </p>
                             </blockquote>
             
@@ -756,10 +759,9 @@
                                 </p>
                             </blockquote>
                            
-                            <hr>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot points should contain at least four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be positive or negative numeric real numers.
+                                    The input data to plot points should contain <font color="red">at least four columns in fixed order</font>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <font color="red">the fourth column must be positive or negative numeric real numers</font>. <font color="red">Names of the first four columns are optional, and can be any valid names accepted by R</font>. By default, <font color="red">the color of all points are randomly assigned by shinyCircos</font>.
                                 </p>
                             </blockquote>
                             
@@ -822,7 +824,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    An additional 'cex' column can be added in the input data to control the size of the points. The 'cex' column should be positive numeric numbers.
+                                    An additional 'cex' column can be added in the input data to control the size of the points. The 'cex' column should be positive numeric numbers. <font color="red"> Name of the 'cex' column must be explicitly specified as 'cex'</font>.
                                 </p>
                             </blockquote>
                             
@@ -891,7 +893,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Similarly, an additional 'color' column can be added in the input data to assign colors to points of different groups on the same track.
+                                    Similarly, an additional 'color' column can be added in the input data to assign colors to points of different groups on the same track. <font color="red"> Name of the 'color' column must be explicitly specified as 'color'</font>.
                                 </p>
                             </blockquote>
                             
@@ -960,21 +962,19 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Moreover, an additional 'pch' column can be added in the input data to control the shapes of points for different groups on the same track.
+                                    Moreover, an additional 'pch' column can be added in the input data to control the shapes of points for different groups on the same track. <font color="red"> Name of the 'pch' column must be explicitly specified as 'pch'</font>.
                                 </p>
                             </blockquote>
             
                             
 
-
-                            
                             <p style="text-align: center;">
                                 <img src="./helpfigures/point/pch.png" width="40%">
                                 <p style="font-size: 20px;text-align: center;margin-top: -10px;margin-bottom: 25px;color: #0000ff;">
                                     Different point shapes defined by the pch parameter in R.
                                 </p>
                                 <p style="font-size: 20px;text-align: center;margin-top: -25px;margin-bottom: 25px;">
-                                    (Image Source:<a href="http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html">http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html</a>)
+                                    (Image Source: <a href="http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html">http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html</a>)
                                 </p>
                             </p>
 
@@ -1341,7 +1341,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data.
+                                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data. For this type of input data, all column names are optional, and can be any valid names accepted by R.
                                 </p>
                             </blockquote>
                             
@@ -1418,7 +1418,7 @@
                             <blockquote class="block_global">
                                 <p class="p_help_English">
                                     An ideogram is a graphical representation of chromosomes.
-                                    In shinyCircos-V2.0, we can draw ideogram on any Track. The format of input data to create ideogram is the same as that of the <a href="#div2.1.2"> Cytoband data with five columns</a>.
+                                    In shinyCircos-V2.0, we can draw ideogram on any Track. The format of input data to create ideogram is the same as that of the <a href="#div2.1.2"> Cytoband chromosome data with five columns</a>.
                                 </p>
                             </blockquote>
                             
@@ -1493,7 +1493,7 @@
                             <h4 class="head">2.2.5 Tarck data to plot discrete rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot discrete rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column must be a chracter vector.
+                                    The input data to plot discrete rectangles should <font color="red">contain only four columns in fixed order</font>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <font color="red">The fourth column must be a chracter vector</font>. <font color="red">Names of the first four columns are optional, and can be any valid names accepted by R</font>.
                                 </p>
                             </blockquote>
                            
@@ -1560,7 +1560,7 @@
                             <h4 class="head">2.2.6 Tarck data to plot gradual rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot gradual rectangles should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that the fourth column must be real numbers.
+                                    The input data to plot gradual rectangles should <font color="red">contain only four columns in fixed order</font>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <font color="red">the fourth column must be real numbers</font>. <font color="red">Names of the first four columns are optional, and can be any valid names accepted by R</font>.
                                 </p>
                             </blockquote>
                             
@@ -1627,7 +1627,7 @@
                             <h4 class="head">2.2.7 Tarck data to plot discrete heatmaps</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a chracter vector.
+                                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <font color="red">Each of the rest columns should be a chracter vector</font>. <font color="red">All column names are optional, and can be any valid names accepted by R</font>.
                                 </p>
                             </blockquote>
                             
@@ -1757,7 +1757,7 @@
                             <h4 class="head">2.2.8 Tarck data to plot gradual heatmaps</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. Each of the rest columns should be a numeric vector.
+                                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <font color="red">Each of the rest columns should be a numeric vector</font>. <font color="red">All column names are optional, and can be any valid names accepted by R</font>.
                                 </p>
                             </blockquote>
                             
@@ -1888,7 +1888,7 @@
                             <h4 class="head">2.2.9 Tarck data to plot stack-point</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should contain four columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth stack column represents the group of different data values. And data values of the same group will be plotted on the same line.
+                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <font color="red">contain only four columns in fixed order</font>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <font color="red">The fourth 'stack' column represents the group of different data values</font>. And data values of the same group will be plotted on the same line. <font color="red">Name of the 'stack' column must be explicitly specified as 'stack'</font>.
                                 </p>
                             </blockquote>
                             
@@ -1955,7 +1955,7 @@
                             <h4 class="head">2.2.10 Tarck data to plot stack-line</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Similarly, we can also create stack line chart using shinyCircos-V2.0. The input data format is the same as the input data of stack-point.
+                                    Similarly, we can also create stack line chart using shinyCircos-V2.0. The input data format is the same as the input data for stack-point.
                                 </p>
                             </blockquote>
                             
@@ -2006,10 +2006,6 @@
                                 </table>
 
 
-
-
-
-
                             </div>
                             <p class="table_text">
                                 An example dataset to create stack lines.
@@ -2031,11 +2027,11 @@
                         <h3 class="head">2.3 Label data (used to label elements in a track)</h3>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                Label data is used to annotate the elements in a specified track with text labels. The input data should contain four or five columns, as shown in the figure below.
+                                Label data is used to annotate the elements in a specified track with text labels. The input data should <font color="red">contain four or five columns</font>, as shown in the figure below.
                             </p>
     
                             <p class="p_help_English">
-                                The four-column label data is used to draw general labels, and their colors are uniform.
+                                The four-column label data is used to draw labels with a uniform color. <font color="red">By default, the color is randomly assigned by shinyCircos, which can be specified by the user with a widget implemented in shinyCircos.</font>
                             </p>
                         </blockquote>
                         
@@ -2087,7 +2083,7 @@
                             </table>
                         </div>
                         <p class="table_text">
-                            An example label data.
+                            An example four-column label data.
                             <a href="./example_data/label/gene_label.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
                         </p>
                         <p style="text-align: center;">
@@ -2098,7 +2094,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                The five-column label data is used to draw complex labels, and their colors correspond one-to-one with the color values of the color columns.
+                                The five-column label data is used to draw labels with varying colors specified by the user, using an additional 'color' column. <font color="red">Name of the 'color' column must be explicitly specified as 'color'</font>.
                             </p>
                         </blockquote>
 
@@ -2157,13 +2153,13 @@
                             </table>
                         </div>
                         <p class="table_text">
-                            An example label data with a color column.
+                            An example label data with a 'color' column.
                             <a href="./example_data/label/gene_label_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
                         </p>
                         <p style="text-align: center;">
                             <img src="./helpfigures/label/label-color-pic.jpg" width="60%">
                             <p class="pic_text">
-                                An example Circos diagrams with labels of different colors.
+                                An example Circos diagrams with label text in different colors.
                             </p>
                         </p>
                     </div>
@@ -2171,7 +2167,7 @@
                         <h3 class="head">2.4 Links data</h3>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                The links data should contain at least six columns. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. Links will be created between all pairs of genomic regions in the same line of the input dataset.
+                                The links data should contain <font color="red">at least six columns</font>. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. <font color="red">Links will be created between all pairs of genomic regions in the same line of the input dataset</font>. By default, <font color="red">the color of all links are randomly assigned by shinyCircos</font>.
                             </p>
 
                         </blockquote>
@@ -2244,7 +2240,7 @@
 
                         </div>
                         <p class="table_text">
-                            An example links dataset.
+                            An example links input data.
                             <a href="./example_data/links/links.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
                         </p>
                         <p style="text-align: center;">
@@ -2255,7 +2251,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                An additional color column can be added in the input dataset to control the color of the links. The color column can be a character vector or a numeric vector.
+                                An additional 'color' column can be added in the input dataset to control the color of the links. The 'color' column can be a character vector or a numeric vector.
                             </p>
                         </blockquote>
                         
@@ -2458,7 +2454,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                You can upload multiple datasets at the same time or upload them separately. Remember to save the uploaded data timely.
+                                You can upload multiple datasets at the same time or upload them separately. <font color="red">Remember to save the uploaded data timely</font>.
                                 When all input datasets were properly uploaded, please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then Click the 'Save uploaded data' button.
                             </p>
                         </blockquote>
@@ -2471,7 +2467,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                The users can also choose to load example datasets from shinyCircos. A total of 10 different example datasets were stored in shinyCircos.
+                                The users can also choose to load example datasets stored in shinyCircos. A total of 10 different example datasets are stored in shinyCircos.
                             </p>
                         </blockquote>
                         
@@ -2526,7 +2522,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                Help documents on the usage of shinyCircos-V2.0 are provided in the Help page.
+                                Help tutorials on the usage of shinyCircos-V2.0 are provided in the Help page.
                             </p>
                         </blockquote>
                         
@@ -2567,7 +2563,7 @@
                         <h3 class="head">3.3 Install and use shinyCircos-V2.0 on local computers</h3>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                Users can choose to install and run shinyCircos-V2.0 on a personal computer (Windows, Mac or Linux) without uploading data to an online server. shinyCircos-V2.0 is a cross-platform application, i.e. shinyCircos-V2.0 can be installed on any platform with an available R environment. The installation of shinyCircos-V2.0 consists of three steps.
+                                Users can choose to install and run shinyCircos-V2.0 on a personal computer (Windows, Mac or Linux) without uploading data to the server of shinyCircos-V2.0. shinyCircos-V2.0 is a cross-platform application, i.e. shinyCircos-V2.0 can be installed on any platform with an available R environment. The installation of shinyCircos-V2.0 consists of three steps.
                             </p>
                         </blockquote>
                         
@@ -2605,7 +2601,7 @@
     install.packages("BiocManager")
     BiocManager::install("ComplexHeatmap")</pre>
                                 <p class="p_help_English">
-                                    Make sure the above packages are installed correctly.
+                                    Make sure all the packages are installed correctly.
                                 </p>
                             </blockquote>
                             
@@ -2637,7 +2633,7 @@
     library(shiny)
     runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)</pre>
                             <p class="p_help_English">
-                                The shinyCircos-V2.0 application will then be opened in your computer's default browser.
+                                The shinyCircos-V2.0 application will then be opened in your computer's default web browser.
                             </p>
                             </blockquote>
                         </div>
@@ -2659,7 +2655,7 @@
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
                                         A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. 
-                                        The detailed format of a Chromosome data is described in the "<a href="#div2">Input Data Format</a>" section.
+                                        The detailed format of a Chromosome data is described in the "<a href="#div2">2 Input data format</a>" section.
                                     </p>
                                     <p class="p_help_English">
                                         A file named as 'chromosome_general.csv' was uploaded from the local disk to to shinyCircos-V2.0 using the data upload widget implemented in the "Data Upload" menu of the shinyCircos-V2.0 application, as shown in the figure below.
@@ -2678,9 +2674,9 @@
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
                                         Except for a Chromosome data, one or multiple other input datasets can be uploaded to shinyCircos-V2.0, to be displayed in different trakcs of a Circos plot.
-                                        The detailed format of input files to make different types of plot is detailed in the "<a href="#div2">Input Data Format</a>" section. 
+                                        The detailed format of input files to make different types of plot is detailed in the "<a href="#div2">2 Input data format</a>" section. 
                                         Here, two files named as "barplot.csv" and "line.csv" were uploaded from local disk to shinyCircos-V2.0.
-                                        Both datasets were distributed into the 'Track data' box. Remember to save the uploaded data timely.
+                                        Both datasets were distributed into the 'Track data' box. <font color="red">Remember to save the uploaded data timely</font>.
                                     </p>
                                 </blockquote>
                                 
@@ -2689,8 +2685,8 @@
                                 <h3 class="head">Step 3. Set the "Track" index and plot type for each input dataset</h3>
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
-                                        By default, the track index for the input datasets were determined by the order of uploading. And the default plot type for all input datasets were set as point.
-                                        Here, the plot type for "barplot.csv" was set as 'bar', and the plot type for "line.csv" was set as 'line'.
+                                        By default, the track index for the input datasets were determined by the order of uploading. And <font color="red">the default plot type for all input datasets were set as 'point'</font>.
+                                        Here, we need to set the plot type for "barplot.csv" as 'bar', and set the plot type for "line.csv" as 'line'.
                                     </p>
                                 </blockquote>
                                 
@@ -2719,9 +2715,15 @@
                                 <p class="p_help_English">
                                     A track of a Circos plot is usually defined by a single input dataset. And a typical Circos plot usually contains multiple tracks defined by multiple input datasets.
                                     From time to time, we may want to replace one or more of these input files so that we can update some tracks of a Circos plot without recreating the entire plot.
+                                </p>
+								<p class="p_help_English">
                                     For example, we want to create a Circos plot with discrete rectangles by replacing Track2's "line.csv" with a new input file "rect_discrete.csv".
+                                </p>
+								<p class="p_help_English">
                                     To achieve this, we can go to the "Data Upload" page and upload "rect_discrete.csv" to shinyCircos-V2.0, distribute the "rect_discrete.csv" file into the "Track data" box, and move the "line.csv" file to the "Garbage" box. After that, we should click the "Step 2.2. Save uploaded data" button.
                                     At the same time, we need to change the plot type of the newly uploaded dataset from 'line' to "rect_discrete".
+                                </p>
+								<p class="p_help_English">
                                     Finally, we need to click the "Step 4. Submit the plot parameters to make the Circos plot!" button at the bottom of the "Circos Parameters" panel to update the Circos plot.
                                 </p>
                             </blockquote>
@@ -2747,82 +2749,89 @@
                             <h3 class="head">4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</h3>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Using shinyCircos-V2.0, 10 different types of graphs, including point, line, bar, stack-line, stack-point, rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete and ideogram, can be created. 
+                                    Using shinyCircos-V2.0, <font color="red">10 different types of graphs, including point, line, bar, stack-line, stack-point, rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete and ideogram</font>, can be created. 
                                     To create a Circos graph, at least one input data file is required, that is, a Chromosome data file that defines the length of the genome.
+                                </p>
+								<p class="p_help_English">
                                     In this section, we will show the steps to create a complex Circos diagram with shinyCircos-V2.0.
                                 </p>
                             </blockquote>
                             
                             
                             <div id="div4.4.1">
-                                <h3 class="head">Step 1.</h3>
+                                <h3 class="head">Step 1. Upload all input data and distribute each dataset to proper box.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/1.jpg" width="60%">
                                     <p class="pic_text">
-                                        All data uploaded and categorized correctly
+                                        Upload all input data and distribute each dataset to proper box.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.2">
-                                <h3 class="head">Step 2.</h3>
+                                <h3 class="head">Step 2. Set plot type and track index for each input data.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/2.jpg" width="60%">
                                     <p class="pic_text">
-                                        Select the correct data type for the corresponding data
+                                        Set plot type and track index for each input data.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.3">
-                                <h3 class="head">Step 3.</h3>
+                                <h3 class="head">Step 3. Set parameters for each input data.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/3.jpg" width="60%">
                                     <p class="pic_text">
-                                        In the pop-up menu, choose to draw the vertical axis for the histogram, and then draw it after the setting is complete.
+                                        Ser parameters for a bar plot.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.4">
-                                <h3 class="head">Step 4.</h3>
+                                <h3 class="head">Step 4. Set advanced parameters.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/4.jpg" width="60%">
                                     <p class="pic_text">
-                                        After getting the Circos diagram, make advanced settings for it
+                                        The 'Advanced options' widget in the 'Circos plot' menu.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.5">
-                                <h3 class="head">Step 5.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/5.jpg" width="60%">
                                     <p class="pic_text">
-                                        Select Add Legend for the Circos diagram and the legend is on the right, then select Add Track Index, then click "Updata" to update the Circos diagram
+                                        Advanced options implemented in shinyCircos-V2.0.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.6">
-                                <h3 class="head">Step 6.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/6.jpg" width="60%">
                                     <p class="pic_text">
-                                        Get Circos plot with Track index and legend
+                                        A Circos plot with Track index and figure legend.
                                     </p>
                                 </p>
                             </div>
                             <div id="div4.4.7">
-                                <h3 class="head">Step 7.</h3>
+                                <h3 class="head">Step 5. Highlight a genomic region.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/7.jpg" width="60%">
                                     <p class="pic_text">
-                                        Continue to set the highlighted area in the "Advanced options" menu, enter the position you want to highlight in the left text box, then select the transparency, click the "SAVE" button to check whether the input data is compliant, and click "Update" after there is no problem "Update Circos Diagram
+                                        The widget implemented in shinyCircos-V2.0 to highlight one or multiple user-input genomic regions.
                                     </p>
                                 </p>
                             </div>
+							
+							<blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Remember to click the "SAVE" button to input the genomic regions and check the data format.
+									Remember to click "Update!" button to bring all the set advanced options into effect.
+                                </p>
+                            </blockquote>
+							
                             <div id="div4.4.8">
-                                <h3 class="head">Step 8.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/8.jpg" width="60%">
                                     <p class="pic_text">
-                                        Finally, get a complex Circos diagram, at which point you can save the Circos diagram as PDF or SVG
+                                        A circos plot with a user-input genomic region highlighted.
                                     </p>
                                 </p>
                             </div>
@@ -2894,23 +2903,23 @@
                                 </p>
                             </div>
                             <div id="div5.4">
-                                <h3 class="head">5.4 Cell border</h3>
+                                <h3 class="head">5.4 Sector border</h3>
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
-                                        shinyCircos-V2.0 also supporting adding cell borders to one or multiple "Tracks" to emphasize these Tracks.
+                                        shinyCircos-V2.0 also supporting adding sector borders to one or multiple "Tracks" to emphasize these Tracks.
                                     </p>
                                 </blockquote>
                                 
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/cell_border/1.jpg" width="60%">
                                     <p class="pic_text">
-                                        Options to add cell borders.
+                                        Options to add sector borders.
                                     </p>
                                 </p>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/cell_border/2.jpg" width="60%">
                                     <p class="pic_text">
-                                        A Circos plot with cell borders.
+                                        A Circos plot with sector borders.
                                     </p>
                                 </p>
                             </div>
@@ -2993,7 +3002,7 @@
                             <h3 class="head">6.2 Highlight specific genomic regions</h3>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    shinyCircos-V2.0 supports highlighting one or multiple Sectors of a Circos plot. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
+                                    shinyCircos-V2.0 supports highlighting one or multiple genomic regions of a Circos plot. This functionality is implemented in the "Advanced options" button of the "Circos Plot" menu.
                                 </p>
                             </blockquote>
                             

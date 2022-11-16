@@ -1011,7 +1011,7 @@ server <- function(input, output,session) {
                       ),
                       value = sam_heightChr, 
                       min = 0.01, 
-                      max = 0.9,
+                      max = 0.5,
                       step = 0.01
                     )
                   )
@@ -1036,7 +1036,7 @@ server <- function(input, output,session) {
                     ),
                     value = sam_heightChr, 
                     min = 0.01, 
-                    max = 0.9,
+                    max = 0.5,
                     step = 0.01
                   )
                 ),
@@ -1129,7 +1129,7 @@ server <- function(input, output,session) {
                   sliderTextInput(
                     inputId = "sam_outergap",
                     label = tags$div(
-                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Gap between the IDs and axis</b></font>'),
+                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance between chromosome IDs and chromosome axis</b></font>'),
                       bs4Dash::tooltip(
                         actionButton(
                           inputId = "datvie_tip90", 
@@ -1138,7 +1138,7 @@ server <- function(input, output,session) {
                           status="info",
                           size = "xs"
                         ),
-                        title = "The distance between the chromosome ID and the next part (the next part can be Track or the coordinate axis), this value is the percentage of the font size of the chromosome ID.",
+                        title = "Distance between the chromosome IDs and the chromosome axis for genomic positions.",
                         placement = "bottom"
                       )
                     ),
@@ -1158,7 +1158,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Gaps between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the gap between the first and the second sector.",
+                      title = "Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the distance between the first and the second sector.",
                       placement = "bottom"
                     )
                   ),
@@ -1934,7 +1934,7 @@ server <- function(input, output,session) {
                         ),
                         value = sam_heightTraus[x],
                         min=0.01,
-                        max=0.9,
+                        max=0.8,
                         step=0.01
                       ),
                       if(x < tra_len){
@@ -2190,7 +2190,7 @@ server <- function(input, output,session) {
                           ),
                           value= sam_lab_fontsize[x], 
                           min=0.1, 
-                          max=1,
+                          max=0.8,
                           step=0.1
                         ),
                         sliderTextInput(
@@ -4901,7 +4901,7 @@ server <- function(input, output,session) {
               ),
               value = heightTra[x],
               min=0.01,
-              max=0.9,
+              max=0.8,
               step=0.01
             ),
             
@@ -5084,7 +5084,7 @@ server <- function(input, output,session) {
               ),
               value= lab_fontsize[x], 
               min=0.01, 
-              max=1,
+              max=0.8,
               step=0.01
             ),
             sliderTextInput(
@@ -5166,7 +5166,7 @@ server <- function(input, output,session) {
               ),
               value= lab_fontsize[x], 
               min=0.01, 
-              max=1,
+              max=0.8,
               step=0.01
             ),
             sliderTextInput(

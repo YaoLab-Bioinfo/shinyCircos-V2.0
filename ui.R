@@ -412,7 +412,7 @@ body <- bs4DashBody(
                          ),
                          value=0.02, 
                          min=0.01, 
-                         max=0.9,
+                         max=0.5,
                          step=0.01
                        )
                      )
@@ -437,7 +437,7 @@ body <- bs4DashBody(
                        ),
                        value=0.05, 
                        min=0.01, 
-                       max=0.9,
+                       max=0.5,
                        step=0.01
                      )
                    ),
@@ -480,7 +480,7 @@ body <- bs4DashBody(
                        ),
                        value=0.7,
                        min=0.1,
-                       max=2, 
+                       max=1.5, 
                        step=0.1
                      )
                    ),
@@ -522,13 +522,13 @@ body <- bs4DashBody(
                        ),
                        value=1.2,
                        min=0.1,
-                       max=3, 
+                       max=2, 
                        step=0.1
                      ),
                      sliderTextInput(
                        inputId = "outergap",
                        label = tags$div(
-                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Gap between the IDs and axis</b></font>'),
+                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance between chromosome IDs and chromosome axis</b></font>'),
                          bs4Dash::tooltip(
                            actionButton(
                              inputId = "datvie_tip90", 
@@ -537,11 +537,11 @@ body <- bs4DashBody(
                              status="info",
                              size = "xs"
                            ),
-                           title = "The distance between the chromosome ID and the next part (the next part can be Track or the coordinate axis), this value is the percentage of the font size of the chromosome ID.",
+                           title = "Distance between the chromosome IDs and the chromosome axis for genomic positions.",
                            placement = "bottom"
                          )
                        ),
-                       choices = 0:200,
+                       choices = 0:100,
                        grid = FALSE
                      )
                    ),
@@ -557,7 +557,7 @@ body <- bs4DashBody(
                            status="info",
                            size = "xs"
                          ),
-                         title = "Gaps between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the gap between the first and the second sector.",
+                         title = "Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the distance between the first and the second sector.",
                          placement = "bottom"
                        )
                      ),

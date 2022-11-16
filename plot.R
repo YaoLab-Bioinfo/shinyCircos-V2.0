@@ -73,15 +73,18 @@ circos.genomicInitialize.new = function(
   if(is.null(track.height)) {
     if(all(c("axis", "labels") %in% plotType)) {
       track.height = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = axis.labels.cex) + 
-        convert_unit_in_canvas_coordinate(0.5, "mm") + strheight("chr", cex = labels.cex) + strheight("chr", cex = labels.cex)*outergap
+        convert_unit_in_canvas_coordinate(0.5, "mm") + strheight("chr", cex = labels.cex) + strheight("chr", cex = 1)*outergap
     } else if("labels" %in% plotType) {
-      track.height = strheight("chr", cex = labels.cex)*outergap + strheight("chr", cex = labels.cex)
+      track.height = strheight("chr", cex = 1)*outergap + strheight("chr", cex = labels.cex)
     } else if("axis" %in% plotType) {
       track.height = convert_unit_in_canvas_coordinate(1.5, "mm") + strheight("0", cex = axis.labels.cex)
     } else {
       track.height = convert_height(3, "mm")
     }
   }
+  
+  
+  
   #label 
   
   
@@ -99,17 +102,17 @@ circos.genomicInitialize.new = function(
   
   # axis and chromosome names
   if(any(plotType %in% c("axis", "labels"))) {
-    circos.genomicTrackPlotRegion(data, ylim = c(0, 1), bg.border = "#00FF00", track.height = track.height,
+    circos.genomicTrackPlotRegion(data, ylim = c(0, 1), bg.border = NA, track.height = track.height,
                                   panel.fun = function(region, value, ...) {
                                     sector.index = get.cell.meta.data("sector.index")
                                     xlim = get.cell.meta.data("xlim")
                                     
                                     if(all(c("axis", "labels") %in% plotType)) {
                                       circos.genomicAxis(h = "bottom", major.by = major.by, tickLabelsStartFromZero = tickLabelsStartFromZero, labels.cex = axis.labels.cex)
-                                      circos.text(mean(xlim), convert_y(1.5, "mm") + convert_y(strheight("chr", cex = labels.cex), "canvas")*outergap + convert_y(strheight("chr", cex = axis.labels.cex), "canvas") + convert_y(0.5, "mm"), 
+                                      circos.text(mean(xlim), convert_y(1.5, "mm") + convert_y(strheight("chr", cex = 1), "canvas")*outergap + convert_y(strheight("chr", cex = axis.labels.cex), "canvas") + convert_y(0.5, "mm"), 
                                                   labels = sector.names[sector.index], cex = labels.cex, adj = c(0.5, 0), niceFacing = TRUE)
                                     } else if("labels" %in% plotType) {
-                                      circos.text(mean(xlim), convert_y(strheight("chr", cex = labels.cex), "canvas")*outergap , labels = sector.names[sector.index], cex = labels.cex, adj = c(0.5, 0), niceFacing = TRUE)
+                                      circos.text(mean(xlim), convert_y(strheight("chr", cex = 1), "canvas")*outergap , labels = sector.names[sector.index], cex = labels.cex, adj = c(0.5, 0), niceFacing = TRUE)
                                     } else if("axis" %in% plotType) {
                                       circos.genomicAxis(h = "bottom", major.by = major.by, tickLabelsStartFromZero = tickLabelsStartFromZero,labels.cex = axis.labels.cex)
                                     }
@@ -486,27 +489,25 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
       chr_height <- 0.7*chr_height/allheight
     }
   }else{
-    if(allheight > 0.9){
+    if(allheight > 0.8){
       if(!is.null(data.T)){
         for (k in 1:length(data.T)) {
           if(tratype[[k]] == "heatmap-gradual"|tratype[[k]] =="heatmap-discrete"){
-            tra_hmap_poslinhei[[k]] <- 0.9*tra_hmap_poslinhei[[k]]/allheight
+            tra_hmap_poslinhei[[k]] <- 0.8*tra_hmap_poslinhei[[k]]/allheight
           }
-          heightTra[[k]] <- 0.9*heightTra[[k]]/allheight
-          tra_Margin[[k]] <- 0.9*tra_Margin[[k]]/allheight
+          heightTra[[k]] <- 0.8*heightTra[[k]]/allheight
+          tra_Margin[[k]] <- 0.8*tra_Margin[[k]]/allheight
         }
       }
-      dis_Chr <- 0.9*dis_Chr/allheight
+      dis_Chr <- 0.8*dis_Chr/allheight
       if(!is.null(data.N)){
         for (k in 1:length(data.N)){
-          labels_inf[k,3] <- 0.9*as.numeric(labels_inf[k,3])/allheight
+          labels_inf[k,3] <- 0.8*as.numeric(labels_inf[k,3])/allheight
         }
       }
-      chr_height <- 0.9*chr_height/allheight
+      chr_height <- 0.8*chr_height/allheight
     }
   }
-  
-  
   
   
   
