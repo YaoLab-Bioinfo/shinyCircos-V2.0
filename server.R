@@ -1561,7 +1561,7 @@ server <- function(input, output,session) {
                                     status="info",
                                     size = "xs"
                                   ),
-                                  title = "Color used for the filled area, which can be identical with lines color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
+                                  title = "Color used for the filled area, which can be identical with lines' color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
                                   placement = "right"
                                 )
                               ),
@@ -1975,7 +1975,7 @@ server <- function(input, output,session) {
                                   status="info",
                                   size = "xs"
                                 ),
-                                title = "Add borders to the heatmap grids, which can be used to separate cells from each other.",
+                                title = "Add borders to the heatmap grids, which can be used to separate different cells from each other.",
                                 placement = "right"
                               )
                             ),
@@ -2772,7 +2772,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "Wrong data format!",
-              text = "The chr column of the chromosome data is inconsistent with the chr column of other datasets.",
+              text = "The 'chromosome' column of the chromosome data is inconsistent with the 'chromosome' column of other datasets.",
               type = "error"
             )
           }else if(!(ncol(data.C)==3 | (ncol(data.C)==5 && is.character(data.C[,4]) && is.character(data.C[,5])))){
@@ -2828,7 +2828,7 @@ server <- function(input, output,session) {
                     color_label <- data.nn$color
                     if(any(color_label == "" | is.na(color_label))){
                       datan_info[nn] <- 1
-                      datan_info_text[nn] <- "Null values found in the color column!"
+                      datan_info_text[nn] <- "Null values found in the 'color' column!"
                     }else{
                       if(length(grep("#",color_label))!=0){
                         color_label16 <- color_label[grep("#",color_label)]
@@ -3737,7 +3737,7 @@ server <- function(input, output,session) {
           }
           if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The value column should be numeric."
+            tra_inf_word[k] <- "The data value column should be numeric."
           }
           if("color" %in% colnames(data_TT)){
           	if(!all(is.character(data_TT[,"color"]))){
@@ -4157,7 +4157,7 @@ server <- function(input, output,session) {
       }else if(tratype == "stack-point" | tratype == "stack-line"){
         if(!"stack" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "The stack column was missing in the input data." 
+          tra_inf_word <- "The 'stack' column was missing in the input data." 
         }else if(!all(is.character(data_TT[,"stack"]))){
           tra_inf <- 1
           tra_inf_word <- "The 'stack' column of the input data should be characters." 
@@ -4172,7 +4172,7 @@ server <- function(input, output,session) {
         }
         if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
           tra_inf <- 1
-          tra_inf_word <- "The value column should be numeric." 
+          tra_inf_word <- "The data value column should be numeric." 
         }
         if("color" %in% colnames(data_TT)){
           if(!all(is.character(data_TT[,"color"]))){
@@ -4941,7 +4941,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "Add borders to the heatmap grids, which can be used to separate cells from each other.",
+                      title = "Add borders to the heatmap grids, which can be used to separate different cells from each other.",
                       placement = "right"
                     )
                   ),
@@ -5033,10 +5033,6 @@ server <- function(input, output,session) {
       })
       x <- which((unlist(lab_setlist)- unlist(lab_setlist_old))==1)
       lab_setlist_old <<- lab_setlist
-      
-      
-      
-      
       
       if(!is.null(input[[paste0("lab_fontsize",x)]])){
         lab_fontsize[x] <<- input[[paste0("lab_fontsize",x)]]
@@ -5270,8 +5266,6 @@ server <- function(input, output,session) {
           input[[paste0("labpos",x)]]
         })
         if(length(labdatas) != 0){
-          
-          
           
           lapply(1:length(labdatas),function(x){
             
@@ -5536,7 +5530,6 @@ server <- function(input, output,session) {
       plotsizepdf <<- sam_plotsize
     }
     
-    
     output$sortable_plot <<- renderUI({
       tagList(
         div(
@@ -5550,8 +5543,6 @@ server <- function(input, output,session) {
         )
       )
     })
-    
-    
     
   })
  

@@ -1494,7 +1494,7 @@
                             <h4 class="head">2.2.5 Tarck data to plot discrete rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot discrete rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth column must be a chracter vector</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot discrete rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth column must be a chracter vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                            
@@ -1561,7 +1561,7 @@
                             <h4 class="head">2.2.6 Tarck data to plot gradual rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot gradual rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be real numbers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot gradual rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be real numbers</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                             
@@ -1889,7 +1889,7 @@
                             <h4 class="head">2.2.9 Tarck data to plot stack-point</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth 'stack' column represents the group of different data values</span>. And data values of the same group will be plotted on the same line. <span class="redlight_en">Name of the 'stack' column must be explicitly specified as 'stack'</span>.
+                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth 'stack' column represents the group of different data values</span>. And data values of the same group will be plotted on the same line. <span class="redlight_en">Column names are essential. The names of the first three columns can be any valid names accepted by R. Name of the 4th 'stack' column must be explicitly specified as 'stack'</span>.
                                 </p>
                             </blockquote>
                             
@@ -2032,7 +2032,7 @@
                             </p>
     
                             <p class="p_help_English">
-                                The four-column label data is used to draw labels with a uniform color. <span class="redlight_en">By default, the color is randomly assigned by shinyCircos, which can be specified by the user with a widget implemented in shinyCircos.</span>
+                                The four-column label data is used to draw labels with a uniform color. <span class="redlight_en">By default, the color is randomly assigned by shinyCircos, which can be specified by the user with a widget implemented in shinyCircos.</span> Column names for four-column label data is optional, and can be any valid names accepted by R.
                             </p>
                         </blockquote>
                         
@@ -2095,7 +2095,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                The five-column label data is used to draw labels with varying colors specified by the user, using an additional 'color' column. <span class="redlight_en">Name of the 'color' column must be explicitly specified as 'color'</span>.
+                                The five-column label data is used to draw labels with varying colors specified by the user, using an additional 'color' column. <span class="redlight_en">Column names for five-column label data is essential. Names of the first four columns can be any valid names accepted by R. Name of the fifth 'color' column must be explicitly specified as 'color'</span>.
                             </p>
                         </blockquote>
 
@@ -2170,7 +2170,13 @@
                             <p class="p_help_English">
                                 The links data should contain <span class="redlight_en">at least six columns</span>. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. <span class="redlight_en">Links will be created between all pairs of genomic regions in the same line of the input dataset</span>. By default, <span class="redlight_en">the color of all links are randomly assigned by shinyCircos</span>.
                             </p>
-
+                        </blockquote>
+						
+						<blockquote class="block_global">
+                            <p class="p_help_English">
+                                For six-columns links input data, <span class="redlight_en">column names is optional, and can be any valid names accepted by R</span>.
+								For seven-columns links input data, <span class="redlight_en">column names is essential</span>. Names of the first six columns can be any valid names accepted by R. <span class="redlight_en">Name of the 7th column must be explicitly specified as 'color'</span>.
+                            </p>
                         </blockquote>
                         
                         <div class="div-tabledata">
