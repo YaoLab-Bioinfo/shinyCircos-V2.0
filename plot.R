@@ -1642,15 +1642,19 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
     
     if(!is.null(data.L)){
       
-      
+      if(ncol(data.L)==7){
+        names(data.L)[7] <- "color"
+      }
       rou <- get_most_inside_radius()
       # rou <- rou[1]+0.05
       rou <- rou[1]
       if(colformatLinks!=3){ #not gradual color
         if(colorLinks==2){ #specific color
           splitcol <- ":" %in% unlist(strsplit(selcolorLinks,""))
-          if(ncol(data.L)==7 && colnames(data.L)[7]=="color" && splitcol){
+          if(ncol(data.L)==7 && splitcol){
+          #if(ncol(data.L)==7 && colnames(data.L)[7]=="color" && splitcol){
             data.L$num <- 1:nrow(data.L)
+            
             selcolorLinks <- unlist(strsplit(selcolorLinks,";"))
             selcolorLinks <- data.frame(id=selcolorLinks,stringsAsFactors=F)
             selcolorLinks$group <- gsub("\\:.*","",selcolorLinks$id)
