@@ -835,6 +835,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             
             data_TT_col <- data_ht_col[,4:length(data_ht_col)]
           }
+          data_TT_col <- as.matrix(data_TT_col)
         }
         if(tktype == "rect-gradual" | tktype == "rect-discrete"){
           ## *** The data color ***
@@ -1431,15 +1432,32 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         }else if(tktype == "heatmap-discrete"){
           data.TT$num <- NULL
           #no cell borders
-          if(tra_hmap_poslines[[i]] == "2"){ #no position lines
-            circos.genomicHeatmap(
-              data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL
-            )
-          }else{
-            circos.genomicHeatmap(
-              data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines
-            )
+          if(is.na(tkbordercol)){
+            if(tra_hmap_poslines[[i]] == "2"){ #no position lines
+              circos.genomicHeatmap(
+                data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL
+              )
+            }else{
+              circos.genomicHeatmap(
+                data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines
+              )
+            }
+          } else {
+            
+            if(tra_hmap_poslines[[i]] == "2"){ #no position lines
+              
+              print(tkbordercol)
+              
+              circos.genomicHeatmap(
+                data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL , border = tkbordercol , border_lwd = 0.1
+              )
+            }else{
+              circos.genomicHeatmap(
+                data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = heightlines , border = tkbordercol , border_lwd = 0.1
+              )
+            }
           }
+          
           data.TT <- data_TT_col
         }else if(tktype == "ideogram"){
           circos.genomicIdeogram(data.TT,track.height = tkheight, track.margin = c(tkmargin,0))

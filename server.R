@@ -2825,41 +2825,47 @@ server <- function(input, output,session) {
                     datan_info[nn] <- 1
                     datan_info_text[nn] <- "Null values found in the 2nd or the 3rd column!"
                   }else if(ncol(data.nn) == 5){
-                    color_label <- data.nn$color
-                    if(any(color_label == "" | is.na(color_label))){
-                      datan_info[nn] <- 1
-                      datan_info_text[nn] <- "Null values found in the 'color' column!"
-                    }else{
-                      if(length(grep("#",color_label))!=0){
-                        color_label16 <- color_label[grep("#",color_label)]
-                        color_label7 <- color_label16[which(nchar(color_label16) == 7)]
-                        color_label9 <- color_label16[which(nchar(color_label16) == 9)]
-                        if(!all(nchar(color_label16) == 7| nchar(color_label16) == 9)){
-                          datan_info[nn] <- 1
-                          datan_info_text[nn] <- "Wrong RGB error!"
-                        }else if(!any(grepl("^#([0-9a-fA-F]{6})$",color_label7)) & length(color_label7) != 0){
-                          datan_info[nn] <- 1
-                          datan_info_text[nn] <- "Wrong RGB error!"
-                        }else if(!any(grepl("^#([0-9a-fA-F]{8})$",color_label9)) & length(color_label9) != 0){
-                          datan_info[nn] <- 1
-                          datan_info_text[nn] <- "Wrong RGB error!"
-                        }else if(!all(color_label[-grep("#",color_label)] %in% colors())){
-                          datan_info[nn] <- 1
-                          datan_info_text[nn] <- "Wrong color input!"
-                        }else{
-                          datan_info[nn] <- 0
-                          datan_info_text[nn] <- ""
-                        }
+                    if("color" %in% names(data.nn)){
+                      color_label <- data.nn$color
+                      if(any(color_label == "" | is.na(color_label))){
+                        datan_info[nn] <- 1
+                        datan_info_text[nn] <- "Null values found in the 'color' column!"
                       }else{
-                        if(!all(color_label %in% colors())){
-                          datan_info[nn] <- 1
-                          datan_info_text[nn] <- "Wrong color input!"
+                        if(length(grep("#",color_label))!=0){
+                          color_label16 <- color_label[grep("#",color_label)]
+                          color_label7 <- color_label16[which(nchar(color_label16) == 7)]
+                          color_label9 <- color_label16[which(nchar(color_label16) == 9)]
+                          if(!all(nchar(color_label16) == 7| nchar(color_label16) == 9)){
+                            datan_info[nn] <- 1
+                            datan_info_text[nn] <- "Wrong RGB error!"
+                          }else if(!any(grepl("^#([0-9a-fA-F]{6})$",color_label7)) & length(color_label7) != 0){
+                            datan_info[nn] <- 1
+                            datan_info_text[nn] <- "Wrong RGB error!"
+                          }else if(!any(grepl("^#([0-9a-fA-F]{8})$",color_label9)) & length(color_label9) != 0){
+                            datan_info[nn] <- 1
+                            datan_info_text[nn] <- "Wrong RGB error!"
+                          }else if(!all(color_label[-grep("#",color_label)] %in% colors())){
+                            datan_info[nn] <- 1
+                            datan_info_text[nn] <- "Wrong color input!"
+                          }else{
+                            datan_info[nn] <- 0
+                            datan_info_text[nn] <- ""
+                          }
                         }else{
-                          datan_info[nn] <- 0
-                          datan_info_text[nn] <- ""
+                          if(!all(color_label %in% colors())){
+                            datan_info[nn] <- 1
+                            datan_info_text[nn] <- "Wrong color input!"
+                          }else{
+                            datan_info[nn] <- 0
+                            datan_info_text[nn] <- ""
+                          }
                         }
                       }
+                    }else{
+                      datan_info[nn] <- 1
+                      datan_info_text[nn] <- "The column name for column 5 should be 'color'!"
                     }
+                    
                   }else if(ncol(data.nn) == 4){
                     datan_info[nn] <- 0
                     datan_info_text[nn] <- ""
@@ -3701,6 +3707,23 @@ server <- function(input, output,session) {
     letplotgo <<- 0
     chr_type <- input$chr_type
     link_type <- input$colformatLinks
+    # if(!is.null(data.N)){
+    #   lab_inf <- NULL
+    #   lab_inf_word <- NULL
+    #   for (k in 1:length(data.N)) {
+    #     data_NN <- data.T[[k]]
+    #     
+    #     
+    #     
+    #     
+    #     
+    #     
+    #   }
+    # }
+    
+    
+    
+    
     if(!is.null(data.T)){
       tra_inf <- NULL
       tra_inf_word <- NULL
@@ -3719,15 +3742,15 @@ server <- function(input, output,session) {
             tra_inf_word[k] <- NULL
           }
         }else if(tratype == "stack-point" | tratype == "stack-line"){
+          
           if(!"stack" %in% colnames(data_TT)){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 'stack' column is missing in the input data." 
-          }else if(!all(is.character(data_TT[,"stack"]))){
+          }else if(!is.character(data_TT$stack)){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 'stack' column should be a character vector." 
           }else{
             tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
           }
         }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
           tra_inf[k] <- 0
@@ -3742,7 +3765,7 @@ server <- function(input, output,session) {
           if("color" %in% colnames(data_TT)){
           	if(!all(is.character(data_TT[,"color"]))){
             	tra_inf[k] <- 1
-              	tra_inf_word[k] <- "The 'color' column should be a character vector."
+              tra_inf_word[k] <- "The 'color' column should be a character vector."
             }
           }
           if("Cex" %in% colnames(data_TT)){
@@ -4927,7 +4950,7 @@ server <- function(input, output,session) {
               step=0.01
             ),
             
-            if(tra_type[[x]] == "heatmap-gradual"){
+            if(tra_type[[x]] == "heatmap-gradual" | tra_type[[x]] == "heatmap-discrete"){
               tagList(
                 pickerInput(
                   inputId = paste0("tra_hmap_cellbord",x),
