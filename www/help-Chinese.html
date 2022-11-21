@@ -342,7 +342,10 @@
                             <h4 class="head_zh">2.2.1 用于绘制bar plot的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用来绘制柱状图的数据应该<span class="redlight">至少包含四列数据</span>，分别是chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）和表示数据值的第四列。<span class="redlight">第四列的列名应为vlaue，它的值必须是数字</span>。shinyCircos-V2.0可用于绘制两种不同的柱状图，分别是Unidirectional柱状图和Bidirectional柱状图。
+                                    用来绘制柱状图的数据应该<span class="redlight">至少包含四列数据</span>，分别是chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）和表示数据值的第四列。<span class="redlight">第四列的值必须是数字</span>。前4列的列名不是必需的，任何R语言中合法的列名都可以。
+                                </p>
+								<p class="p_help_Chinese">
+                                    shinyCircos-V2.0可用于绘制两种不同的柱状图，分别是Unidirectional柱状图和Bidirectional柱状图。
                                 </p>
                             </blockquote>
                             
@@ -563,7 +566,8 @@
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
                                     绘制折线图的输入数据应<span class="redlight">至少包含四列</span>，<span class="redlight">并按固定顺序排列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。
-                                    第四列是所有基因组区域的数据值。请注意，<span class="redlight">第四列必须是数字且列名应为'value'</span>。默认情况下，<span class="redlight">所有线条的颜色由shinyCircos随机分配</span>。
+                                    第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字</span>。前4列的列名不是必需的，任何R语言中合法的列名都可以。
+									默认情况下，<span class="redlight">所有线条的颜色由shinyCircos随机分配</span>。
                                 </p>
                             </blockquote>
                             
@@ -1499,7 +1503,7 @@
                             <h4 class="head_zh">2.2.5 用于绘制rect-discrete的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制rect-discrete的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 strat 和 end 坐标。<span class="redlight">第四列必须是字符向量</span>。所有四列的名称都是可选的，可以是R接受的任何有效名称。
+                                    用于绘制rect-discrete的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 strat 和 end 坐标。<span class="redlight">第四列必须是字符向量</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
                                 </p>
                             </blockquote>
                             
@@ -1566,7 +1570,7 @@
                             <h4 class="head_zh">2.2.6 用于绘制rect-gradual的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制rect-gradual的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字且列名必须是value</span>。前三列的名称可以是R接受的任何有效名称。
+                                    用于绘制rect-gradual的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
                                 </p>
                             </blockquote>
                             
@@ -1633,7 +1637,7 @@
                             <h4 class="head_zh">2.2.7 用于绘制heatmap-discrete的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制离散型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end 坐标。<span class="redlight">其余的每一列都应该是一个字符向量。所有列名都不是必需的，也可以是R接受的任何有效名称</span>。
+                                    用于绘制离散型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end 坐标。<span class="redlight">其余的每一列都应该是一个字符向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
                                 </p>
                             </blockquote>
                             
@@ -1763,7 +1767,7 @@
                             <h4 class="head_zh">2.2.8 用于绘制heatmap-gradual的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制连续型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">其余的每一列都应该是一个数字向量。所有列名都不是必需的，也可以是R接受的任何有效名称</span>。
+                                    用于绘制连续型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">其余的每一列都应该是一个数字向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
                                 </p>
                             </blockquote>
                             
@@ -1894,7 +1898,7 @@
                             <h4 class="head_zh">2.2.9 用于绘制stack-point的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    使用shinyCircos-V2.0，我们还可以创建堆栈点图表（stack point）。输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">第四列“stack”列表示包含不同分组的数据值</span>。同一组的数据值将绘制在同一行上。<span class="redlight">“stack”列的名称必须明确指定为“stack”</span>。
+                                    使用shinyCircos-V2.0，我们还可以创建堆栈点图表（stack point）。输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">第四列“stack”列表示包含不同分组的数据值</span>。同一组的数据值将绘制在同一行上。<span class="redlight">所有列的列名都是必需的。前三列的列名可以是R语言中任何合法的列名。第四列“stack”列的名称必须明确指定为“stack”</span>。
                                 </p>
                             </blockquote>
                             
@@ -2028,11 +2032,11 @@
                         <h3 class="head_zh">2.3 Label data（用于标记Track data中的元素）</h3>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                label data主要用于注释指定轨道中的元素。输入数据应包含四列或五列，前四列的列名没有强制要求，可以是 R 接受的任何有效名称，如下图所示：
+                                label data主要用于注释指定轨道中的元素。输入数据应包含四列或五列，如下表所示。
                             </p>
     
                             <p class="p_help_Chinese">
-                                包含四列数据的label data用于绘制单一颜色的label。<span class="redlight">默认情况下，使用的颜色是黑色，用户可以使用在shinyCircos中的功能指定颜色。</span>
+                                包含四列数据的label data用于绘制单一颜色的label。<span class="redlight">默认情况下，使用的颜色是黑色，用户可以使用shinyCircos中的功能模块指定颜色。所有四列的列名都不是必需的，任何R语言中合法的列名都可以。</span>
                             </p>
                         </blockquote>
                         
@@ -2095,7 +2099,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                包含五列数据的label data可以用于绘制不同颜色的label，用户需要提供一个额外的“color”列。<span class="redlight">“color”列的名称必须明确指定为“color”。“color”列的值必须是有效的颜色名字</span>。
+                                包含五列数据的label data可以用于绘制不同颜色的label，用户需要提供一个额外的“color”列。<span class="redlight">列名是必需的，前四列的列名可以是R语言中任何合法的列名。“color”列的名称必须明确指定为“color”。“color”列的值必须是有效的颜色名字</span>。
                             </p>
                         </blockquote>
                         
@@ -2167,7 +2171,17 @@
                         <h3 class="head_zh">2.4 Links data</h3>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                用于绘制Links是数据应<span class="redlight">至少包含六列</span>。列名没有强制要求，可有可无，可以是 R 接受的任何有效名称。前三列定义了染色体、多个基因组区域的开始和结束坐标。输入数据的第4-6列定义了另一组基因组区域的染色体、开始和结束坐标。shinyCircos<span class="redlight">将在输入数据的同一行中的两个基因组区域之间创建link</span>。默认情况下，<span class="redlight">所有link的颜色由shinyCircos随机分配</span>。
+                                用于绘制Links的输入数据应包含<span class="redlight">六列或者七列</span>。前三列定义了染色体、多个基因组区域的开始和结束坐标。输入数据的第4-6列定义了另一组基因组区域的染色体、开始和结束坐标。shinyCircos<span class="redlight">将在输入数据的同一行中的两个基因组区域之间创建link</span>。默认情况下，<span class="redlight">所有link的颜色由shinyCircos随机分配</span>。
+							</p>
+                        </blockquote>
+						
+						<blockquote class="block_global">
+							<p class="p_help_Chinese">
+                                对于包含6列的links输入数据，<span class="redlight">列名不是必需的，任何R语言中合法的列名都可以</span>。
+							</p>
+							<p class="p_help_Chinese">
+                                对于包含7列的links输入数据，<span class="redlight">列名是必需的。前6列的列名可以是R语言中任何合法的列名。第7列的列名必须明确指定为“color”</span>。
+							</p>
                         </blockquote>
                         
                         <div class="div-tabledata">
@@ -2243,7 +2257,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                用户还可以在输入数据中添加一个额外的“color”列来控制links的颜色。“color”列可以是字符向量或数值向量。<span class="redlight">“color”列的名称必须明确指定为“color”</span>。
+                                对于包含7列的links输入数据，第7列“color”列可以是字符向量或数值向量。
                             </p>
                         </blockquote>
                         
