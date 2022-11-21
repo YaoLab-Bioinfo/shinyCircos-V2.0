@@ -3752,7 +3752,48 @@ server <- function(input, output,session) {
           }else{
             tra_inf[k] <- 0
           }
-        }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
+        } else if ( tratype == "bar" ) {
+          tra_inf[k] <- 0
+          if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
+            if("stack" %in% colnames(data_TT)){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
+            } else if ("cex" %in% colnames(data_TT)){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
+            } else if ("pch" %in% colnames(data_TT)){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
+            } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
+            } else if(!is.numeric(data_TT[,4])){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "The fourth column of data should be numeric"
+            } else if(ncol(data_TT) == 5){
+              if(!"color" %in% colnames(data_TT)){
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "five columns of input data with missing color column" 
+              }else{
+                if(!all(is.character(data_TT[,"color"]))){
+                  tra_inf[k] <- 1
+                  tra_inf_word[k] <- "The 'color' column should be a character vector."
+                }
+              }
+            }
+            
+          } else {
+            tra_inf[k] <- 1
+            tra_inf_word[k] <- "The input data of 'bar' only supports four or five columns" 
+          }
+          
+        }else if(tratype == "point" | tratype == "line" ){
+          
+          
+          
+          
+          
+          
           tra_inf[k] <- 0
           if(setequal(grep("value",names(data_TT)),integer(0))){
             tra_inf[k] <- 1
@@ -3768,7 +3809,7 @@ server <- function(input, output,session) {
               tra_inf_word[k] <- "The 'color' column should be a character vector."
             }
           }
-          if("Cex" %in% colnames(data_TT)){
+          if("cex" %in% colnames(data_TT)){
             if(!all(is.numeric(data_TT[,"cex"]))){
               tra_inf[k] <- 1
               tra_inf_word[k] <- "The 'cex' column should be a numeric vector."
@@ -4188,7 +4229,40 @@ server <- function(input, output,session) {
           tra_inf <- 0
           tra_inf_word <- NULL
         }
-      }else if(tratype == "point" | tratype == "line" | tratype == "bar"){
+      }else if ( tratype == "bar" ) {
+        if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
+          if("stack" %in% colnames(data_TT)){
+            tra_inf <- 1
+            tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
+          } else if ("cex" %in% colnames(data_TT)){
+            tra_inf <- 1
+            tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+          } else if ("pch" %in% colnames(data_TT)){
+            tra_inf <- 1
+            tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+          } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
+            tra_inf <- 1
+            tra_inf_word <- "A 'group' column was found in the input dataset. Please choose another plot type." 
+          } else if(!is.numeric(data_TT[,4])){
+            tra_inf <- 1
+            tra_inf_word <- "The fourth column of data should be numeric"
+          } else if(ncol(data_TT) == 5){
+            if(!"color" %in% colnames(data_TT)){
+              tra_inf <- 1
+              tra_inf_word <- "five columns of input data with missing color column" 
+            }else{
+              if(!all(is.character(data_TT[,"color"]))){
+                tra_inf <- 1
+                tra_inf_word <- "The 'color' column should be a character vector."
+              }
+            }
+          }
+        } else {
+          tra_inf <- 1
+          tra_inf_word <- "The input data of 'bar' only supports four or five columns" 
+        }
+        
+      }else if(tratype == "point" | tratype == "line"){
         if(setequal(grep("value",names(data_TT)),integer(0))){
           tra_inf <- 1
           tra_inf_word <- "The data value column is missing from the input data."
