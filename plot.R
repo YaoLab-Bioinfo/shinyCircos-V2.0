@@ -216,7 +216,8 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor,addlegend)
           )
         )
       }
-    }else if("stack" %in% colnames(data.TT_old)){
+    #}else if("stack" %in% colnames(data.TT_old)){
+    }else if(tktype == "stack-point" | tktype == "stack-line"){
       lgdcol <- cbind(unique(data.TT_old[,4],fromLast = TRUE),tkcolor)
       lgdcol <- lgdcol[order(lgdcol[,1]),]
       if(legendpos == "Right"){
@@ -421,7 +422,7 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
 
 plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.L , data.N , colorChr , tra_Margin , labels_inf , labelChr , tra_hmap_typcolhmap , tra_border , tra_heatcol_dis , tra_heat_heatcoldiscus ,
                     trackChr , tratype ,  chr_height , datatypeChr , heightTra , source_data , tra_poi_poisiz , heatmapcols , tra_bgcol , gap.width , tra_yaxis,
-                    tra_hmap_poslines , tra_hmap_poslinhei , tra_hmap_cellbord , tra_hmap_cellbord_col , tra_hmap_heatmapcol , plotsize , outergap ,
+                    tra_hmap_poslines , tra_hmap_poslinhei , tra_hmap_cellbord , tra_hmap_cellbord_col , tra_hmap_heatmapcol , plotsize , outergap , rect_gra_3Col = c("red","blue","green") ,
                     tra_rect_rectcol , tra_trct_colrect , tra_rect_rectcoldis , tra_rect_rectcoldiscus , tra_transparency , tra_coltype , tra_colcol ,
                     tra_colorcus , tra_line_fillarea , tra_poipch , tra_colorline , tra_baseline , outAxis , fontSize , outAxis_size , labelChr_size , tra_bar_direction ,
                     tra_bar_Boundary , tra_bar_coldir1 , tra_bar_coldir2 , hltTrack.List , hltdata.List , tra_line_selrea , tra_bar_borderarea , colformatLinks , colorLinks ,
@@ -656,54 +657,87 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
         if(tktype!="rect-discrete" && tktype!="rect-gradual" && tktype!="heatmap-gradual" && tktype!="heatmap-discrete"  && tktype!="ideogram"){
           data.TT$num <- 1:nrow(data.TT)
           data.TTC <- NULL
-          coltypeTrack <- tra_coltype[[i]]
-          if(coltypeTrack == 2){
-            tkcolor <- tra_colcol[[i]]
-            tkcolor <- gsub("\\s","",strsplit(tkcolor,",")[[1]])
-            tkcolor <- gsub('\\"',"",tkcolor)
-            tkcolor <- gsub("0x","#", tkcolor)
-          }else if((coltypeTrack==3 && ("color" %in% colnames(data.TT))) | (coltypeTrack==3 && ncol(data.TT_old)==4 && colnames(data.TT)[4]=="stack")){
-            tkcolor <- tra_colorcus[[i]]
-            tkcolor <- unlist(strsplit(tkcolor,";"))
-            tkcolor <- data.frame(id=tkcolor,stringsAsFactors=F)
-            tkcolor$group <- gsub("\\:.*","",tkcolor$id)
-            tkcolor$cols <- gsub(".*\\:","",tkcolor$id)
-            tkcolor$group <- gsub(" ","",tkcolor$group)
-            tkcolor$cols <- gsub(" ","",tkcolor$cols)
-            colname <- colnames(data.TT)
-            if("color" %in% colnames(data.TT)){
-              data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
-            }else if(colnames(data.TT)[4]=="stack"){
+          coltypeTrack <- as.numeric(tra_coltype[[i]]) 
+          if(tktype == "stack-point" | tktype == "stack-line"){
+            names(data.TT)[4] <- "stack"
+            names(data.TT_old) <- c("chr","start","end","stack")
+            if(coltypeTrack==1){
+              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              tkcolor <- sample(selcols,length(unique(data.TT$stack)))
+              tkcolor <- data.frame(group=unique(data.TT$stack),cols=tkcolor,stringsAsFactors=F)
+              colname <- colnames(data.TT)
               data.TTC <- merge(data.TT,tkcolor,by.x="stack",by.y="group",all.x=T)
+              data.TTC <- data.TTC[,c(colname,"cols")]
+              data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
+              tkcolor <- unique(data.TTC$cols)
+              data.TT <- data.TT[,1:4]
+            }else if(coltypeTrack == 2){
+              tkcolor <- tra_colcol[[i]]
+            }else if(coltypeTrack==3){
+              tkcolor <- tra_colorcus[[i]]
+              tkcolor <- unlist(strsplit(tkcolor,";"))
+              tkcolor <- data.frame(id=tkcolor,stringsAsFactors=F)
+              tkcolor$group <- gsub("\\:.*","",tkcolor$id)
+              tkcolor$cols <- gsub(".*\\:","",tkcolor$id)
+              tkcolor$group <- gsub(" ","",tkcolor$group)
+              tkcolor$cols <- gsub(" ","",tkcolor$cols)
+              colname <- colnames(data.TT)
+              if("color" %in% colnames(data.TT)){
+                data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
+              }else if(colnames(data.TT)[4]=="stack"){
+                data.TTC <- merge(data.TT,tkcolor,by.x="stack",by.y="group",all.x=T)
+              }
+              data.TTC <- data.TTC[c(colname,"cols")]
+              data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
+              tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
+              data.TT <- data.TT[,1:4]
             }
-            data.TTC <- data.TTC[c(colname,"cols")]
-            data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
-            tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
-            data.TT <- data.TT[,1:4]
-          }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT))){
-            selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
-            tkcolor <- sample(selcols,length(unique(data.TT$color)))
-            tkcolor <- data.frame(group=unique(data.TT$color),cols=tkcolor,stringsAsFactors=F)
-            colname <- colnames(data.TT)
-            data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
-            data.TTC <- data.TTC[c(colname,"cols")]
-            data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
-            tkcolor <- unique(data.TTC$cols)
-            data.TT <- data.TT[,1:4]
-          }else if(coltypeTrack==1 && ncol(data.TT_old)==4 && colnames(data.TT)[4]=="stack"){
-            selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
-            tkcolor <- sample(selcols,length(unique(data.TT$stack)))
-            tkcolor <- data.frame(group=unique(data.TT$stack),cols=tkcolor,stringsAsFactors=F)
-            colname <- colnames(data.TT)
-            data.TTC <- merge(data.TT,tkcolor,by.x="stack",by.y="group",all.x=T)
-            data.TTC <- data.TTC[c(colname,"cols")]
-            data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
-            tkcolor <- unique(data.TTC$cols)
-            data.TT <- data.TT[,1:4]
+            
+            
+            
+            
+            
           }else{
-            selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
-            tkcolor <- sample(selcols,ncol(data.TT_old)-3)
+            if(coltypeTrack == 2){
+              tkcolor <- tra_colcol[[i]]
+              tkcolor <- gsub("\\s","",strsplit(tkcolor,",")[[1]])
+              tkcolor <- gsub('\\"',"",tkcolor)
+              tkcolor <- gsub("0x","#", tkcolor)
+            }else if((coltypeTrack==3 && ("color" %in% colnames(data.TT)))){
+              tkcolor <- tra_colorcus[[i]]
+              tkcolor <- unlist(strsplit(tkcolor,";"))
+              tkcolor <- data.frame(id=tkcolor,stringsAsFactors=F)
+              tkcolor$group <- gsub("\\:.*","",tkcolor$id)
+              tkcolor$cols <- gsub(".*\\:","",tkcolor$id)
+              tkcolor$group <- gsub(" ","",tkcolor$group)
+              tkcolor$cols <- gsub(" ","",tkcolor$cols)
+              colname <- colnames(data.TT)
+              if("color" %in% colnames(data.TT)){
+                data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
+              }else if(colnames(data.TT)[4]=="stack"){
+                data.TTC <- merge(data.TT,tkcolor,by.x="stack",by.y="group",all.x=T)
+              }
+              data.TTC <- data.TTC[c(colname,"cols")]
+              data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
+              tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
+              data.TT <- data.TT[,1:4]
+            }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT))){
+              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              tkcolor <- sample(selcols,length(unique(data.TT$color)))
+              tkcolor <- data.frame(group=unique(data.TT$color),cols=tkcolor,stringsAsFactors=F)
+              colname <- colnames(data.TT)
+              data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
+              data.TTC <- data.TTC[c(colname,"cols")]
+              data.TTC$cols[is.na(data.TTC$cols)] <- "grey"
+              tkcolor <- unique(data.TTC$cols)
+              data.TT <- data.TT[,1:4]
+            }else{
+              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              tkcolor <- sample(selcols,ncol(data.TT_old)-3)
+            }
           }
+          
+          
           if(!is.null(data.TTC)){
             data.TTC <- data.TTC[order(data.TTC$num),]
             rownames(data.TTC) <- NULL
@@ -812,9 +846,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             heat_dis_cols$group <- gsub(" ","",heat_dis_cols$group)
             heat_dis_cols$cols <- gsub(" ","",heat_dis_cols$cols)
             heat_dis_cols[,2] <- as.numeric(as.factor(heat_dis_cols[,2]))
-            if(length(data.TT_hat_dis) == 4){
-              data.TT_hat_dis[,length(data.TT_hat_dis)+1] <- data.TT_hat_dis[,4]
-            }
             data_TT_col <- apply(data.TT_hat_dis[,4:length(data.TT_hat_dis)], MARGIN = c(1,2), function(x){
               if(length(which(heat_dis_cols[,2] == x)) != 0){
                 heat_dis_cols[which(heat_dis_cols[,2] == x),3]
@@ -825,9 +856,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           }else{
             cols <- c(brewer.pal(11,'Set3'),brewer.pal(9,'Set1')[c(-1,-3,-6)],brewer.pal(8,'Dark2'),"chartreuse","aquamarine","cornflowerblue","blue","cyan","bisque1","darkorchid2","firebrick1","gold1","magenta1","olivedrab1","navy","maroon1","tan","yellow3","black","bisque4","seagreen3","plum2","yellow1","springgreen","slateblue1","lightsteelblue1","lightseagreen","limegreen")
             selcol <- sample(cols,length(unique(unlist(data.TT_hat_dis[,4:length(data.TT_hat_dis)]))),replace = TRUE)
-            if(length(data.TT_hat_dis) == 4){
-              data.TT_hat_dis[,length(data.TT_hat_dis)+1] <- data.TT_hat_dis[,4]
-            }
             data_ht_col <- data.TT_hat_dis
             for(ki in 4:length(data.TT_hat_dis)){
               data_ht_col[,ki] <- selcol[data.TT_hat_dis[,ki]]
@@ -837,12 +865,10 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           }
           data_TT_col <- as.matrix(data_TT_col)
         }
-        if(tktype == "rect-gradual" | tktype == "rect-discrete"){
-          ## *** The data color ***
-          tkrectcol <-  tktype
-          ## *** Select color ***
-          selrectcol <- tra_rect_rectcol[[i]]
-          if(tkrectcol=="rect-gradual"){
+        ## *** Two kinds of rect  plot type color ***
+        selrectcol <- tra_rect_rectcol[[i]]
+        if(tktype == "rect-gradual"){
+          if(selrectcol==1){
             rectcol <- tra_trct_colrect[[i]]
             if(rectcol=="blue"){
               rectcols <<- c("#EDEDFD","#6969F5","#00008B")
@@ -885,10 +911,14 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }else if(rectcol=="green.red"){
               rectcols <<- c("#00EE00","#757800","#EE0000")
             }
-          }else if(tkrectcol== "rect-discrete" && selrectcol==2){
+          }else if(selrectcol==2){
+            rectcols <- rect_gra_3Col[i,]
+          }
+        }else if(tktype == "rect-discrete"){
+          if(selrectcol==2){
             rectcols <- tra_rect_rectcoldis[[i]]
             data.TT[,4] <- rectcols
-          }else if(tkrectcol== "rect-discrete" && selrectcol==3){
+          }else if(selrectcol==3){
             rectcols <- tra_rect_rectcoldiscus[[i]]
             rectcols <- unlist(strsplit(rectcols,";"))
             rectcols <- data.frame(id=rectcols,stringsAsFactors=F)
@@ -1123,6 +1153,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           }
         }else if(tktype == "stack-line"){
           bed_list <- lapply(unique(data.TT_old[,4],fromLast = TRUE),function(x){
+            
             if(coltypeTrack==2){
               data.TT[data.TT[,4] %in% x,1:3]
             }else{
@@ -1133,6 +1164,8 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             ii = getI(...)
             if(coltypeTrack==1){
               circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
+            }else if(coltypeTrack==2){
+              circos.genomicLines(region, value, col=tkcolor, lty=1, ...)
             }else if(coltypeTrack==3){
               circos.genomicLines(region, value, col=tkcolor[ii], lty=1, ...)
             }
@@ -1150,6 +1183,9 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             if(coltypeTrack==1){
               circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii])
               circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
+            }else if(coltypeTrack==2){
+              circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii])
+              circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor,...)
             }else if(coltypeTrack==3){
               circos.lines(CELL_META$cell.xlim, c(ii, ii), lty = 2, col = tklinecol[ii]) #  "#808080" "#808080"
               circos.genomicPoints(region, value, pch = symboltype[ii], cex = pointsize, col = tkcolor[ii],...)
@@ -1381,7 +1417,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             }
           }
         }else if(tktype == "rect-discrete" | tktype == "rect-gradual"){
-          if(tkrectcol== "rect-discrete"){
+          if(tktype== "rect-discrete"){
             if(selrectcol==1){
               data.TT[,4] <- as.numeric(as.factor(data.TT[,4]))
               cols <- c(brewer.pal(11,'Set3'),brewer.pal(9,'Set1')[c(-1,-3,-6)],brewer.pal(8,'Dark2'),"chartreuse","aquamarine","cornflowerblue","blue","cyan","bisque1","darkorchid2","firebrick1","gold1","magenta1","olivedrab1","navy","maroon1","tan","yellow3","black","bisque4","seagreen3","plum2","yellow1","springgreen","slateblue1","lightsteelblue1","lightseagreen","limegreen")
@@ -1446,7 +1482,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             
             if(tra_hmap_poslines[[i]] == "2"){ #no position lines
               
-              print(tkbordercol)
               
               circos.genomicHeatmap(
                 data.TT_hat_dis, col = data_TT_col, side = "inside" , heatmap_height = tkheight , numeric.column = 4:length(data.TT_hat_dis) ,  track.margin = c(tkmargin,0) , connection_height = NULL , border = tkbordercol , border_lwd = 0.1

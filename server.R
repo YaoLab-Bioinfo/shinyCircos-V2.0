@@ -44,7 +44,10 @@ server <- function(input, output,session) {
   tra_rect_rectcol  <<- list() 
   tra_rect_rectcoldis  <<- list() 
   tra_rect_rectcoldiscus  <<- list() 
-  tra_trct_colrect  <<- list() 
+  tra_trct_colrect  <<- list()
+  rect_gra_lowCol  <<- list()
+  rect_gra_midCol  <<- list()
+  rect_gra_highCol  <<- list()
   tra_line_selrea  <<- list() 
   tra_bar_borderarea  <<- list() 
   tra_transparency  <<- list() 
@@ -3594,7 +3597,7 @@ server <- function(input, output,session) {
     tra_colcol <<- lapply(1:length(tradatas), function(x){
       return("red,blue")
     })
-    tra_colcol_bar <<- lapply(1:length(tradatas), function(x){
+    tra_colcol_spec <<- lapply(1:length(tradatas), function(x){
       return("red")
     })
     tra_colorcus <<- lapply(1:length(tradatas), function(x){
@@ -3615,6 +3618,16 @@ server <- function(input, output,session) {
     tra_trct_colrect <<- lapply(1:length(tradatas), function(x){
       return("blue")
     })
+    rect_gra_lowCol <<- lapply(1:length(tradatas), function(x){
+      return("#FF6666")
+    })
+    rect_gra_midCol <<- lapply(1:length(tradatas), function(x){
+      return("yellow")
+    })
+    rect_gra_highCol <<- lapply(1:length(tradatas), function(x){
+      return("#0066CC")
+    })
+    
     
     tra_line_selrea <<- lapply(1:length(tradatas), function(x){
       return("1")
@@ -3730,35 +3743,28 @@ server <- function(input, output,session) {
       for (k in 1:length(data.T)) { #"point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line"
         tratype <- input[[paste0("tratype",k)]]
         data_TT <- data.T[[k]]
+        tra_inf[k] <- 0
+        tra_inf_word[k] <- NULL
         if(tratype == "ideogram"){
           if(ncol(data_TT) != 5){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The ideogram data should contain 5 columns." 
+            tra_inf_word[k] <- "The ideogram data should contain 5 columns."
           }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The last 2 columns of the ideogram data should be characters." 
-          }else{
-            tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
           }
         }else if(tratype == "stack-point" | tratype == "stack-line"){
-          
-          if(!"stack" %in% colnames(data_TT)){
+          if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'stack' column is missing in the input data." 
-          }else if(!is.character(data_TT$stack)){
+            tra_inf_word[k] <- "The 'stack-point(stack-line)' data can only be four columns."
+          }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'stack' column should be a character vector." 
-          }else{
-            tra_inf[k] <- 0
+            tra_inf_word[k] <- "The fourth column of data should be a character vector."
           }
         } else if ( tratype == "bar" ) {
           tra_inf[k] <- 0
           if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
-            if("stack" %in% colnames(data_TT)){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
-            } else if ("cex" %in% colnames(data_TT)){
+            if ("cex" %in% colnames(data_TT)){
               tra_inf[k] <- 1
               tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
             } else if ("pch" %in% colnames(data_TT)){
@@ -3781,64 +3787,65 @@ server <- function(input, output,session) {
                 }
               }
             }
-            
           } else {
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The input data of 'bar' only supports four or five columns" 
           }
           
-        }else if(tratype == "point" | tratype == "line" ){
-          
-          
-          
-          
-          
-          
-          tra_inf[k] <- 0
-          if(setequal(grep("value",names(data_TT)),integer(0))){
+        }else if(tratype == "line"){
+          if ("cex" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The data value column was missing from the input data." 
-          }
-          if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
+            tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
+          } else if ("pch" %in% colnames(data_TT)){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The data value column should be numeric."
-          }
-          if("color" %in% colnames(data_TT)){
-          	if(!all(is.character(data_TT[,"color"]))){
-            	tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'color' column should be a character vector."
-            }
-          }
-          if("cex" %in% colnames(data_TT)){
-            if(!all(is.numeric(data_TT[,"cex"]))){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'cex' column should be a numeric vector."
-            }
-          }
-          if("pch" %in% colnames(data_TT)){
-            if(!all(data_TT[,"pch"] %in% 1:25)){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "The 'Pch' value should be integers in 1-25. Please refer to the help manual for more details." 
-            }
-          }
-          if("stack" %in% colnames(data_TT)){
-            tra_inf[k] <- 1
-            tra_inf_word[k] <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
-          }
-          if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
+            tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
+          } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
-          }
-          if(tratype != "bar"){
-            if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
-              dataif <- NULL
-              for (l in 1:(ncol(data_TT)-3)) {
-                dataif[l] <- is.numeric(data_TT[,l+3])
-              }
-              if(sum(dataif) != (ncol(data_TT)-3)){
+          } else if ("color" %in% colnames(data_TT)){
+            if(ncol(data_TT) != 5){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "The data containing the 'color' column should only have 5 columns" 
+            } else {
+              if (!is.numeric(data_TT[,4])) {
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "All columns excecpt for the first 3 columns of data with multiple columns should be numeric." 
+                tra_inf_word[k] <- "The fourth column of data should be numeric"
+              } else if(!all(is.character(data_TT[,"color"]))){
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "The 'color' column should be a character vector."
               }
+            }
+          } else if (!"color" %in% colnames(data_TT)){
+            if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Data from the fourth column onwards should be numeric." 
+            }
+          }
+        }else if(tratype == "point"){
+          if("color" %in% colnames(data_TT) | "cex" %in% colnames(data_TT) | "pch" %in% colnames(data_TT)){
+            if(!all(tail(names(data_TT),n = -4) %in% c("cex","pch","color"))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "If the 'cex', 'pch', 'color' columns are included, multiple columns of values cannot be included."
+            }else if("color" %in% colnames(data_TT)){
+              if(!is.character(data_TT$color)){
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "The 'color' column should be characters."
+              }
+            }else if("cex" %in% colnames(data_TT)){
+              if(!is.numeric(data_TT$cex)){
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "The 'cex' column should be a numeric vector." 
+              }
+            }else if("pch" %in% colnames(data_TT)){
+              if(!all(data_TT$pch %in% 1:25)){
+                tra_inf[k] <- 1
+                tra_inf_word[k] <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
+              }
+            }
+          }else{
+            if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
+              tra_inf[k] <- 1
+              tra_inf_word[k] <- "Data from the fourth column onwards should be numeric."
             }
           }
         }else if(tratype == "rect-discrete"){
@@ -3848,9 +3855,6 @@ server <- function(input, output,session) {
           }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 4th column of the rect-discrete data should be characters." 
-          }else{
-            tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
           }
         }else if(tratype == "rect-gradual"){
           if(ncol(data_TT) != 4){
@@ -3859,39 +3863,19 @@ server <- function(input, output,session) {
           }else if(!is.numeric(data_TT[,4])){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The 4th column of the rect-gradual data should be numeric values." 
-          }else{
-            tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
           }
         }else if(tratype == "heatmap-discrete"){
-          dataif <- NULL
-          for (l in 1:(ncol(data_TT)-3)) {
-            dataif[l] <- is.character(data_TT[,l+3])
-          }
-          if(sum(dataif) != (ncol(data_TT)-3)){
+          if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.character(x)}))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters." 
-          }else{
-            tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
+            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
           }
         }else if(tratype == "heatmap-gradual"){
-          dataif <- NULL
-          for (l in 1:(ncol(data_TT)-1)) {
-            dataif[l] <- is.numeric(data_TT[,l+1])
-          }
-          if(sum(dataif) != (ncol(data_TT)-1)){
+          if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-gradual should be a numeric vector." 
-          }else{
-            tra_inf[k] <- 0
-            tra_inf_word[k] <- NULL
+            tra_inf_word[k] <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
           }
         }
       }
-    }else{
-      tra_inf <- 0
-      tra_inf_word <- NULL
     }
     # if(chr_type == 1 && ncol(data.C) != 3){
     #   sendSweetAlert(
@@ -4099,8 +4083,8 @@ server <- function(input, output,session) {
       if(!is.null(input[[paste0("tra_colcol",x)]])){
         tra_colcol[x] <<- input[[paste0("tra_colcol",x)]]
       }
-      if(!is.null(input[[paste0("tra_colcol_bar",x)]])){
-        tra_colcol_bar[x] <<- input[[paste0("tra_colcol_bar",x)]]
+      if(!is.null(input[[paste0("tra_colcol_spec",x)]])){
+        tra_colcol_spec[x] <<- input[[paste0("tra_colcol_spec",x)]]
       }
       if(!is.null(input[[paste0("tra_colorcus",x)]])){
         tra_colorcus[x] <<- input[[paste0("tra_colorcus",x)]]
@@ -4120,6 +4104,16 @@ server <- function(input, output,session) {
       if(!is.null(input[[paste0("tra_trct_colrect",x)]])){
         tra_trct_colrect[x] <<- input[[paste0("tra_trct_colrect",x)]]
       }
+      if(!is.null(input[[paste0("rect_gra_lowCol",x)]])){
+        rect_gra_lowCol[x] <<- input[[paste0("rect_gra_lowCol",x)]]
+      }
+      if(!is.null(input[[paste0("rect_gra_midCol",x)]])){
+        rect_gra_midCol[x] <<- input[[paste0("rect_gra_midCol",x)]]
+      }
+      if(!is.null(input[[paste0("rect_gra_highCol",x)]])){
+        rect_gra_highCol[x] <<- input[[paste0("rect_gra_highCol",x)]]
+      }
+      
       if(!is.null(input[[paste0("tra_line_selrea",x)]])){
         tra_line_selrea[x] <<- input[[paste0("tra_line_selrea",x)]]
       }
@@ -4207,6 +4201,7 @@ server <- function(input, output,session) {
       tratype <- input[[paste0("tratype",whichchangechrset)]]
       data_TT <- data.T[[whichchangechrset]]
       tra_inf <- 0
+      tra_inf_word <- NULL
       if(tratype == "ideogram"){
         if(ncol(data_TT) != 5){
           tra_inf <- 1
@@ -4214,36 +4209,24 @@ server <- function(input, output,session) {
         }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
           tra_inf <- 1
           tra_inf_word <- "The last 2 columns of the ideogram data should be characters." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
         }
       }else if(tratype == "stack-point" | tratype == "stack-line"){
-        if(!"stack" %in% colnames(data_TT)){
+        if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The 'stack' column was missing in the input data." 
-        }else if(!all(is.character(data_TT[,"stack"]))){
+          tra_inf_word <- "The 'stack-point(stack-line)' data can only be four columns."
+        }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 'stack' column of the input data should be characters." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
+          tra_inf_word <- "The fourth column of data should be a character vector."
         }
       }else if ( tratype == "bar" ) {
         if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
-          if("stack" %in% colnames(data_TT)){
-            tra_inf <- 1
-            tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
-          } else if ("cex" %in% colnames(data_TT)){
+          if ("cex" %in% colnames(data_TT)){
             tra_inf <- 1
             tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
           } else if ("pch" %in% colnames(data_TT)){
             tra_inf <- 1
             tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
-          } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
-            tra_inf <- 1
-            tra_inf_word <- "A 'group' column was found in the input dataset. Please choose another plot type." 
-          } else if(!is.numeric(data_TT[,4])){
+          }  else if(!is.numeric(data_TT[,4])){
             tra_inf <- 1
             tra_inf_word <- "The fourth column of data should be numeric"
           } else if(ncol(data_TT) == 5){
@@ -4261,57 +4244,59 @@ server <- function(input, output,session) {
           tra_inf <- 1
           tra_inf_word <- "The input data of 'bar' only supports four or five columns" 
         }
-        
-      }else if(tratype == "point" | tratype == "line"){
-        if(setequal(grep("value",names(data_TT)),integer(0))){
+      } else if (tratype == "line"){
+        if ("cex" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "The data value column is missing from the input data."
-        }
-        if(!all(sapply(data_TT[,grep("value",names(data_TT))], is.numeric) == TRUE)){
+          tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+        } else if ("pch" %in% colnames(data_TT)){
           tra_inf <- 1
-          tra_inf_word <- "The data value column should be numeric." 
-        }
-        if("color" %in% colnames(data_TT)){
-          if(!all(is.character(data_TT[,"color"]))){
+          tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+        }  else if ("color" %in% colnames(data_TT)){
+          if(ncol(data_TT) != 5){
             tra_inf <- 1
-            tra_inf_word <- "The 'color' column should be characters." 
-          }
-        }
-        if("cex" %in% colnames(data_TT)){
-          if(!all(is.numeric(data_TT[,"cex"]))){
-            tra_inf <- 1
-            tra_inf_word <- "The 'cex' column should be a numeric vector." 
-          }
-        }
-        if("pch" %in% colnames(data_TT)){
-          if(!all(data_TT[,"pch"] %in% 1:25)){
-            tra_inf <- 1
-            tra_inf_word <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
-          }
-        }
-        if("stack" %in% colnames(data_TT)){
-          tra_inf <- 1
-          tra_inf_word <- "Please select the 'stack-point' or 'stack-line' plot type for the input data of this track." 
-        }
-        if(any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
-          tra_inf <- 1
-          tra_inf_word <- "A 'group' column was found in the input dataset. Please choose another plot type." 
-        }
-        
-        
-        if(tratype != "bar"){
-          if(all(grepl("value",colnames(data_TT)[4:ncol(data_TT)]))){
-            dataif <- NULL
-            for (l in 1:(ncol(data_TT)-3)) {
-              dataif[l] <- is.numeric(data_TT[,l+3])
-            }
-            if(sum(dataif) != (ncol(data_TT)-3)){
+            tra_inf_word <- "The data containing the 'color' column should only have 5 columns" 
+          } else {
+            if (!is.numeric(data_TT[,4])) {
               tra_inf <- 1
-              tra_inf_word <- "All columns excecpt for the first 3 columns of data with multiple columns should be numeric." 
+              tra_inf_word <- "The fourth column of data should be numeric"
+            } else if(!all(is.character(data_TT[,"color"]))){
+              tra_inf <- 1
+              tra_inf_word <- "The 'color' column should be a character vector."
             }
           }
+        } else if (!"color" %in% colnames(data_TT)){
+          if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
+            tra_inf <- 1
+            tra_inf_word <- "Data from the fourth column onwards should be numeric." 
+          }
         }
-        
+      } else if (tratype == "point"){
+        if("color" %in% colnames(data_TT) | "cex" %in% colnames(data_TT) | "pch" %in% colnames(data_TT)){
+          if(!all(tail(names(data_TT),n = -4) %in% c("cex","pch","color"))){
+            tra_inf <- 1
+            tra_inf_word <- "If the 'cex', 'pch', 'color' columns are included, multiple columns of values cannot be included."
+          }else if("color" %in% colnames(data_TT)){
+            if(!is.character(data_TT$color)){
+              tra_inf <- 1
+              tra_inf_word <- "The 'color' column should be characters."
+            }
+          }else if("cex" %in% colnames(data_TT)){
+            if(!is.numeric(data_TT$cex)){
+              tra_inf <- 1
+              tra_inf_word <- "The 'cex' column should be a numeric vector." 
+            }
+          }else if("pch" %in% colnames(data_TT)){
+            if(!all(data_TT$pch %in% 1:25)){
+              tra_inf <- 1
+              tra_inf_word <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
+            }
+          }
+        }else{
+          if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
+            tra_inf <- 1
+            tra_inf_word <- "Data from the fourth column onwards should be numeric."
+          }
+        }
       }else if(tratype == "rect-discrete"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
@@ -4319,9 +4304,6 @@ server <- function(input, output,session) {
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
           tra_inf_word <- "The 4th column of rect-discrete data should be characters." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
         }
       }else if(tratype == "rect-gradual"){
         if(ncol(data_TT) != 4){
@@ -4330,37 +4312,19 @@ server <- function(input, output,session) {
         }else if(!is.numeric(data_TT[,4])){
           tra_inf <- 1
           tra_inf_word <- "The 4th column of rect-gradual data should be a numeric vector." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
         }
       }else if(tratype == "heatmap-discrete"){
-        dataif <- NULL
-        for (l in 1:(ncol(data_TT)-3)) {
-          dataif[l] <- is.character(data_TT[,l+3])
-        }
-        if(sum(dataif) != (ncol(data_TT)-3)){
+        if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.character(x)}))){
           tra_inf <- 1
-          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
+          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
         }
       }else if(tratype == "heatmap-gradual"){
-        dataif <- NULL
-        for (l in 1:(ncol(data_TT)-3)) {
-          dataif[l] <- is.numeric(data_TT[,l+3])
-        }
-        if(sum(dataif) != (ncol(data_TT)-3)){
+        if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
           tra_inf <- 1
-          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-gradual should be a numeric vector." 
-        }else{
-          tra_inf <- 0
-          tra_inf_word <- NULL
+          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
         }
       }
       if(tra_inf != 0){
-        tra_inf_word <- na.omit(tra_inf_word)
         sendSweetAlert(
           session = session,
           title = "",
@@ -4429,7 +4393,7 @@ server <- function(input, output,session) {
                 )
               )
             },
-            if(tra_type[[x]] == "stack-point" | tra_type[[x]] == "stack-line"){
+            if(tra_type[[x]] == "stack-line" | tra_type[[x]] == "stack-point"){
               tagList(
                 pickerInput(
                   inputId = paste0("tra_coltype",x),
@@ -4454,8 +4418,17 @@ server <- function(input, output,session) {
                       placement = "right"
                     )
                   ),
-                  choices = c("Random" = "1", "Custom for data with multi-groups" = "3"),
+                  choices = c("Random" = "1", "Specific color" = "2" , "Custom for data with multi-groups" = "3"),
                   selected = tra_coltype[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_coltype",x,"== '2'"),
+                  colourInput(
+                    inputId = paste0("tra_colcol_spec",x),
+                    label = NULL,
+                    value = tra_colcol_spec[x],
+                    returnName = TRUE
+                  )
                 ),
                 conditionalPanel(
                   condition = paste0("input.tra_coltype",x," == '3'"),
@@ -4534,9 +4507,9 @@ server <- function(input, output,session) {
                     conditionalPanel(
                       condition = paste0("input.tra_coltype",x,"== '2'"),
                       colourInput(
-                        inputId = paste0("tra_colcol_bar",x),
+                        inputId = paste0("tra_colcol_spec",x),
                         label = NULL,
-                        value = tra_colcol_bar[x],
+                        value = tra_colcol_spec[x],
                         returnName = TRUE
                       )
                     ),
@@ -4548,7 +4521,7 @@ server <- function(input, output,session) {
                 )
               }
             },
-            if(tra_type[[x]] == "line" && !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
+            if(tra_type[[x]] == "line"){
               pickerInput(
                 inputId = paste0("tra_line_fillarea",x),
                 label = tags$div(
@@ -4572,13 +4545,73 @@ server <- function(input, output,session) {
             if(tra_type[[x]] == "rect-gradual"){
               tagList(
                 pickerInput(
-                  inputId = paste0("tra_trct_colrect",x),
+                  inputId = paste0("tra_rect_rectcol",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color presets</b></font>')
+                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
+                    bs4Dash::tooltip(
+                      actionButton(
+                        inputId = paste0("datvie_tip_rect_rectcol",x), 
+                        label="" , 
+                        icon=icon("question"),
+                        status="info",
+                        size = "xs"
+                      ),
+                      title = "The color used to plot the data, you can use the preset color, or you can customize the color",
+                      placement = "right"
+                    )
                   ),
-                  choices = c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "olivedrab", "gold", "lightblue", "navy.yellow", "purple.seagreen", "navy.orange", "navy.cyan", "blue.red", "green.red"),
-                  selected = tra_trct_colrect[x]
+                  
+                  choices = c("Presets" = "1", "Customize" = "2"),
+                  selected = tra_rect_rectcol[x]
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_rect_rectcol",x," == '1'"),
+                  pickerInput(
+                    inputId = paste0("tra_trct_colrect",x),
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color presets</b></font>')
+                    ),
+                    choices = c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "olivedrab", "gold", "lightblue", "navy.yellow", "purple.seagreen", "navy.orange", "navy.cyan", "blue.red", "green.red"),
+                    selected = tra_trct_colrect[x]
+                  )
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_rect_rectcol",x," == '2'"),
+                  
+                  fluidRow(
+                    column(
+                      width = 4,
+                      colourInput(
+                        inputId = paste0("rect_gra_lowCol",x),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
+                        value = rect_gra_lowCol[x],
+                        returnName = TRUE
+                      )
+                    ),
+                    column(
+                      4,
+                      colourInput(
+                        inputId = paste0("rect_gra_midCol",x),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Middle Color</strong></font></p>'),
+                        value = rect_gra_midCol[x],
+                        returnName = TRUE
+                      )
+                    ),
+                    column(
+                      4,
+                      colourInput(
+                        inputId = paste0("rect_gra_highCol",x),
+                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> High Color</strong></font></p>'),
+                        value = rect_gra_highCol[x],
+                        returnName = TRUE
+                      )
+                    )
+                  )
+                  
+                  
+                  
                 )
+                
               )
             },
             if(tra_type[[x]] == "rect-discrete"){
@@ -4623,7 +4656,7 @@ server <- function(input, output,session) {
                 )
               )
             },
-            if(tra_type[[x]] == "line" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
+            if(tra_type[[x]] == "line"){
               tagList(
                 conditionalPanel(
                   condition = paste0("input.tra_line_fillarea",x,"== 'add'"),
@@ -4746,46 +4779,71 @@ server <- function(input, output,session) {
                 step=0.1
               )
             },
-            if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & !(ncol(data.T[[x]])==4 && colnames(data.T[[x]])[4]=="stack")){
-              tagList(
-                textInput(
-                  inputId = paste0("tra_baseline",x),
-                  label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_baseline",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
-                      placement = "right"
-                    )
-                  ),
-                  value=tra_baseline[x]
-                ),
-                colourInput(
-                  inputId = paste0("tra_colorline",x),
-                  label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_baselinecol",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
-                      placement = "right"
-                    )
-                  ),
-                  value = tra_colorline[x],
-                  returnName = TRUE
+            if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram" & tra_type[[x]] != "stack-line"){
+              if(tra_type[[x]] == "stack-point"){
+                tagList(
+                  colourInput(
+                    inputId = paste0("tra_colorline",x),
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_baselinecol",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
+                        placement = "right"
+                      )
+                    ),
+                    value = tra_colorline[x],
+                    returnName = TRUE
+                  )
                 )
-              )
+                
+              }else{
+                tagList(
+                  textInput(
+                    inputId = paste0("tra_baseline",x),
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_baseline",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
+                        placement = "right"
+                      )
+                    ),
+                    value=tra_baseline[x]
+                  ),
+                  colourInput(
+                    inputId = paste0("tra_colorline",x),
+                    label = tags$div(
+                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
+                      bs4Dash::tooltip(
+                        actionButton(
+                          inputId = paste0("datvie_tip_baselinecol",x), 
+                          label="" , 
+                          icon=icon("question"),
+                          status="info",
+                          size = "xs"
+                        ),
+                        title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
+                        placement = "right"
+                      )
+                    ),
+                    value = tra_colorline[x],
+                    returnName = TRUE
+                  )
+                )
+              }
             },
             if(tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"){
               colourInput(
@@ -5421,8 +5479,8 @@ server <- function(input, output,session) {
           if(!is.null(input[[paste0("tra_colcol",x)]])){
             tra_colcol[pospos[x]] <<- input[[paste0("tra_colcol",x)]]
           }
-          if(!is.null(input[[paste0("tra_colcol_bar",x)]])){
-            tra_colcol_bar[pospos[x]] <<- input[[paste0("tra_colcol_bar",x)]]
+          if(!is.null(input[[paste0("tra_colcol_spec",x)]])){
+            tra_colcol_spec[pospos[x]] <<- input[[paste0("tra_colcol_spec",x)]]
           }
           if(!is.null(input[[paste0("tra_colorcus",x)]])){
             tra_colorcus[pospos[x]] <<- input[[paste0("tra_colorcus",x)]]
@@ -5566,12 +5624,28 @@ server <- function(input, output,session) {
         }
         sizeplot <- sizeplot*plotsize*0.01
         
+        
       
         if(!is.null(data.T)){
+          rect_gra_3Col <- matrix(nrow = length(tra_type),ncol = 3)
           tratypeunlist <- unlist(tra_type)
+          tra_rect_rectcolunlist <- unlist(tra_rect_rectcol)
           for (l in 1:length(tra_type)) {
             if(!(tratypeunlist[l] == "point"|tratypeunlist[l] == "line"|tratypeunlist[l] == "bar")){
               tra_yaxis[l] <<-  "2"
+            }
+            if(tratypeunlist[l] == "rect-gradual" & tra_rect_rectcolunlist[l] == "2"){
+              rect_gra_3Col[l,] <- c(rect_gra_lowCol[[l]],rect_gra_midCol[[l]],rect_gra_highCol[[l]])
+            }
+            
+            
+            
+            
+            
+          }
+          for(k in which(tratypeunlist=="bar" | tratypeunlist=="stack-point" | tratypeunlist=="stack-line")){
+            if(tra_coltype[[k]] == "2"){
+              tra_colcol[[k]] = tra_colcol_spec[[k]]
             }
           }
         }
@@ -5587,17 +5661,12 @@ server <- function(input, output,session) {
         }else{
           data.CC <- data.C
         }
-        for(k in which(unlist(tra_type)=="bar")){
-          if(tra_coltype[[k]] == "2"){
-            tra_colcol[[k]] = tra_colcol_bar[[k]]
-          }
-        }
         
         outergap <- input$outergap
         
         plotfig(input = input, output = output,session=session,data.C = data.CC , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
                 trackChr = trackChr ,tratype = tra_type,source_data = source_data,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , gap.width = gap.width ,
-                tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot ,
+                tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot , rect_gra_3Col = rect_gra_3Col,
                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
                 tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , fontSize = fontSize , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
                 tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
