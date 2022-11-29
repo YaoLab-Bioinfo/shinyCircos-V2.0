@@ -7,7 +7,7 @@ Welcome to the telegram group https://t.me/+NadFeZazBBc2Y2U1.
 
 #	Use shinyCircos-V2.0 online
 
-shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a>, <a href="https://venyao.shinyapps.io/shinyCircos/" target="_blank">https://venyao.shinyapps.io/shinyCircos/</a> and <a href="https://yimingyu.shinyapps.io/shinycircos/" target="_blank">https://yimingyu.shinyapps.io/shinycircos/</a> for online use.  
+shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a>, and <a href="https://yimingyu.shinyapps.io/shinycircos/" target="_blank">https://yimingyu.shinyapps.io/shinycircos/</a> for online use.  
 
 #	<font color="red">Launch shinyCircos-V2.0 directly from R and GitHub</font>
 
@@ -44,15 +44,15 @@ BiocManager::install("ComplexHeatmap")
 
 Start an R session using RStudio and run these lines:  
 ```
-shiny::runGitHub("shinyCircos", "venyao")  
+shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo")  
 ```
 This command will download the code of shinyCircos from GitHub to a temporary directory of your computer and then launch the shinyCircos app in the web browser. Once the web browser was closed, the downloaded code of shinyCircos would be deleted from your computer. Next time when you run this command in RStudio, it will download the source code of shinyCircos from GitHub to a temporary directory again. This process is frustrating since it takes some time to download the code of shinyCircos from GitHub.  
 
-Users are suggested to download the source code of shinyCircos from GitHub to a fixed directory of your computer, such as 'E:\\apps' on Windows. Following the procedure illustrated in the following figure, a zip file named 'shinyCircos-master.zip' would be downloaded to the disk of your computer. Move this file to 'E:\\apps' and unzip this file. Then a directory named 'shinyCircos-master' would be generated in 'E:\\apps'. The scripts 'server.R' and 'ui.R' could be found in 'E:\\apps\\shinyCircos-master'.  
+Users are suggested to download the source code of shinyCircos from GitHub to a fixed directory of your computer, such as 'E:\\apps' on Windows. Following the procedure illustrated in the following figure, a zip file named 'shinyCircos-master.zip' would be downloaded to the disk of your computer. Move this file to 'E:\\apps' and unzip this file. Then a directory named 'shinyCircos-master' would be generated in 'E:\\apps'. The scripts 'server.R' and 'ui.R' could be found in 'E:\\apps\\shinyCircos-V2.0-master'.  
 
 Then you can start the shinyCircos app by running these lines in RStudio.  
 ```
 library(shiny)
-runApp("E:/apps/shinyCircos-master", launch.browser = TRUE)
+runApp("E:/apps/shinyCircos-V2.0-master", launch.browser = TRUE)
 ```
 
