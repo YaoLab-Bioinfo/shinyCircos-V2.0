@@ -3779,7 +3779,7 @@ server <- function(input, output,session) {
             } else if(ncol(data_TT) == 5){
               if(!"color" %in% colnames(data_TT)){
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "The 5th column of input data should be explicitly names as 'column'." 
+                tra_inf_word[k] <- "The 5th column of input data should be explicitly named as 'color'." 
               }else{
                 if(!all(is.character(data_TT[,"color"]))){
                   tra_inf[k] <- 1
@@ -4232,7 +4232,7 @@ server <- function(input, output,session) {
           } else if(ncol(data_TT) == 5){
             if(!"color" %in% colnames(data_TT)){
               tra_inf <- 1
-              tra_inf_word <- "The 5th column of input data should be explicitly names as 'column'." 
+              tra_inf_word <- "The 5th column of input data should be explicitly named as 'color'." 
             }else{
               if(!all(is.character(data_TT[,"color"]))){
                 tra_inf <- 1
