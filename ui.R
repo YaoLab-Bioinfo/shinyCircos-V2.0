@@ -160,7 +160,7 @@ body <- bs4DashBody(
                          color = "success",
                          icon = icon("forward")
                        ),
-                       title = "Click this button to submit the uploaded data and go to the next page for parameters setting.",
+                       title = "Click this button to submit the uploaded data and go to the 'Circos Parameters' page for parameters setting.",
                        placement = "bottom"
                      )
                    )
@@ -218,7 +218,7 @@ body <- bs4DashBody(
              color = "success",
              icon = icon("forward")
            ),
-           title = "Click this button to submit the chosen example datasets and go to the next page to view the example data and the pre-set parameters.",
+           title = "Click this button to submit the chosen example datasets and go to the 'Circos Parameters' page to view the example data and the pre-set parameters.",
            placement = "bottom"
          )
        )
@@ -754,7 +754,7 @@ body <- bs4DashBody(
                                  status="info",
                                  size = "xs"
                                ),
-                               title = "Each row should contain four values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, 'chr1,1,10000,'#FF0000'.",
+                               title = "Each row should contain 4 values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, 'chr1,1,10000,'#FF0000'.",
                                placement = "bottom"
                              )
                            )

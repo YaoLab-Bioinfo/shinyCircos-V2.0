@@ -238,7 +238,7 @@
                             <p style="text-align: center;">
                                 <img src="./helpfigures/chrosome/gen.jpg" width="60%">
                                 <p class="pic_text">
-                                    A Circos plot created with a General chromosome data.
+                                    A Circos plot created with a general chromosome data.
                                 </p>
                             </p>
                         </div>
@@ -329,7 +329,7 @@
                         <h3 class="head">2.2 Track data (to be displayed in different tracks of a Circos plot)</h3>
                         <blockquote class="block_global">
                             <p class="p_help_English">
-                                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. <span class="redlight_en">Order of the first three columns of the input data for any type of plot are fixed, namely the chromosome, the strat and end coordinates of genomic regions.</span>
+                                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. <span class="redlight_en">Order of the first three columns of the input data for any type of plot are fixed, namely the chromosome, the start and end coordinates of genomic regions.</span>
                             </p>
                         </blockquote>
                         
@@ -337,7 +337,7 @@
                             <h4 class="head">2.2.1 Tarck data to plot bars</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to make bar plot in a Circos diagram should contain <span class="redlight_en">at least four columns in fixed order</span>: the chromosome, the strat and end coordinates of genomic regions, and a fourth column with data values. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>.
+                                    The input data to make bar plot in a Circos diagram should contain <span class="redlight_en">at least four columns in fixed order</span>: the chromosome, the start and end coordinates of genomic regions, and a fourth column with data values. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>.
                                 </p>
 								<p class="p_help_English">
                                     Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
@@ -410,7 +410,7 @@
 							
 							<blockquote class="block_global">
                                 <p class="p_help_English">
-                                    For <span class="redlight_en">unidirectional bar plot</span>, <span class="redlight_en">an additional 'color' column can be added in the input data to make colored bars in shinyCircos-V2.0.</span> Name of the 'color' column must be explicitly specified as 'color'.
+                                    For <span class="redlight_en">unidirectional bar plot</span>, <span class="redlight_en">an additional 'color' column can be added</span> in the input data to make colored bars in shinyCircos-V2.0. <span class="redlight_en">Name of the 'color' column must be explicitly specified as 'color'</span>.
                                 </p>
 								<p class="p_help_English">
                                     <span class="redlight_en">To customize color for data with multiple groups</span>, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
@@ -549,7 +549,7 @@
                             <h4 class="head">2.2.2 Tarck data to plot lines</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to make line chart should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all lines are randomly assigned by shinyCircos</span>.
+                                    The input data to make line chart should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all lines are randomly assigned by shinyCircos</span>.
                                 </p>
                             </blockquote>
                             
@@ -681,7 +681,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset. For this type of input data, all column names are optional, and can be any valid names accepted by R.
+                                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset. For this type of input data, <span class="redlight_en">all column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
             
@@ -762,7 +762,7 @@
                            
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot points should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all points are randomly assigned by shinyCircos</span>.
+                                    The input data to plot points should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are optional, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all points are randomly assigned by shinyCircos</span>.
                                 </p>
                             </blockquote>
                             
@@ -1342,7 +1342,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data. For this type of input data, all column names are optional, and can be any valid names accepted by R.
+                                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data. For this type of input data, <span class="redlight_en">all column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                             
@@ -1494,7 +1494,7 @@
                             <h4 class="head">2.2.5 Tarck data to plot discrete rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot discrete rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth column must be a chracter vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot discrete rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">The fourth column must be a chracter vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                            
@@ -1561,7 +1561,7 @@
                             <h4 class="head">2.2.6 Tarck data to plot gradual rectangles</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot gradual rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be real numbers</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot gradual rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be real numbers</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                             
@@ -1628,7 +1628,7 @@
                             <h4 class="head">2.2.7 Tarck data to plot discrete heatmaps</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a chracter vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a chracter vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                             
@@ -1758,7 +1758,7 @@
                             <h4 class="head">2.2.8 Tarck data to plot gradual heatmaps</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a numeric vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
+                                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a numeric vector</span>. <span class="redlight_en">All column names are optional, and can be any valid names accepted by R</span>.
                                 </p>
                             </blockquote>
                             
@@ -1889,7 +1889,7 @@
                             <h4 class="head">2.2.9 Tarck data to plot stack-point</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
-                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the strat and end coordinates of these genomic regions. <span class="redlight_en">The fourth 'stack' column represents the group of different data values</span>. And data values of the same group will be plotted on the same line. <span class="redlight_en">Column names are indispensable. The names of the first three columns can be any valid names accepted by R. Name of the 4th 'stack' column must be explicitly specified as 'stack'</span>.
+                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">The fourth column represents the group of different data values</span>. And data values of the same group will be plotted on the same line. <span class="redlight_en">Column names are optional, which can also be any valid names accepted by R.</span>.
                                 </p>
                             </blockquote>
                             
@@ -2726,7 +2726,7 @@
                                     From time to time, we may want to replace one or more of these input files so that we can update some tracks of a Circos plot without recreating the entire plot.
                                 </p>
 								<p class="p_help_English">
-                                    For example, we want to create a Circos plot with discrete rectangles by replacing Track2's "line.csv" with a new input file "rect_discrete.csv".
+                                    For example, we want to create a Circos plot with discrete rectangles by replacing "line.csv" in Track 2 (Section 4.1) with a new input file "rect_discrete.csv".
                                 </p>
 								<p class="p_help_English">
                                     To achieve this, we can go to the "Data Upload" page and upload "rect_discrete.csv" to shinyCircos-V2.0, distribute the "rect_discrete.csv" file into the "Track data" box, and move the "line.csv" file to the "Garbage" box. After that, we should click the "Step 2.2. Save uploaded data" button.
@@ -2768,11 +2768,11 @@
                             
                             
                             <div id="div4.4.1">
-                                <h3 class="head">Step 1. Upload all input data and distribute each dataset to proper box.</h3>
+                                <h3 class="head">Step 1. Upload all input data and distribute each dataset to appropriate data groups.</h3>
                                 <p style="text-align: center;">
                                     <img src="./helpfigures/plot_complex/1.jpg" width="60%">
                                     <p class="pic_text">
-                                        Upload all input data and distribute each dataset to proper box.
+                                        Upload all input data and distribute each dataset to appropriate data groups.
                                     </p>
                                 </p>
                             </div>
@@ -2830,7 +2830,7 @@
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
                                         Remember to click the "SAVE" button to input the genomic regions and check the data format.
-                                        Remember to click "Update!" button to bring all the set advanced options into effect.
+                                        Remember to click the "Update!" button to bring all the set advanced options into effect.
                                     </p>
                                 </blockquote>
                                 <p style="text-align: center;">
@@ -2911,7 +2911,7 @@
                                 <h3 class="head">5.4 Sector border</h3>
                                 <blockquote class="block_global">
                                     <p class="p_help_English">
-                                        shinyCircos-V2.0 also supporting adding sector borders to one or multiple "Tracks" to emphasize these Tracks.
+                                        shinyCircos-V2.0 also supports adding sector borders to one or multiple "Tracks" to emphasize these Tracks.
                                     </p>
                                 </blockquote>
                                 
@@ -3025,7 +3025,7 @@
                             </p>
                         </div>
                         <div id="div6.3">
-                            <h3 class="head">6.3 Adjust plotsize</h3>
+                            <h3 class="head">6.3 Adjust plot size</h3>
                             <blockquote class="block_global">
                                 <p class="p_help_English">
                                     shinyCircos-V2.0 supports resizing of a created Circos plot, using the widget shown below.
@@ -3135,7 +3135,7 @@
                     <br>
                     &emsp;<a href="#div4.4"><span class="content"> 4.4 Steps to make a complex Circos diagram with shinyCircos-V2.0</span></a>
                     <br>
-                    &emsp;&emsp;<a href="#div4.4.1"><span class="content"> Step 1. Upload all input data and distribute each dataset to proper box</span></a>
+                    &emsp;&emsp;<a href="#div4.4.1"><span class="content"> Step 1. Upload all input data and distribute each dataset to appropriate data groups</span></a>
                     <br>
                     &emsp;&emsp;<a href="#div4.4.2"><span class="content"> Step 2. Set plot type and track index for each input data</span></a>
                     <br>
@@ -3153,7 +3153,7 @@
                     <br>
                     &emsp;<a href="#div5.3"><span class="content"> 5.3 Distances between adjacent tracks</span></a>
                     <br>
-                    &emsp;<a href="#div5.4"><span class="content"> 5.4 Cell border</span></a>
+                    &emsp;<a href="#div5.4"><span class="content"> 5.4 Sector border</span></a>
                     <br>
                     &emsp;<a href="#div5.5"><span class="content"> 5.5 Background color of a "Track"</span></a>
                     <br>

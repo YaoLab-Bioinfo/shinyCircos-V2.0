@@ -166,10 +166,10 @@
                     <h2 class="head_zh">2.输入数据格式</h2>
                     <blockquote class="block_global">
                         <p class="p_help_Chinese">
-                            要使用 shinyCircos-V2.0，必须以正确的格式准备输入数据集。
+                            要使用 shinyCircos-V2.0，必须以正确的格式准备输入数据。
                         </p>
                         <p class="p_help_Chinese">
-                            我们建议以".csv"格式上传输入文件，因为".csv"文件具有明确的格式，常用于数据存储和分析。<span class="redlight">shinyCircos-V2.0的所有输入数据前三列的顺序是固定的，分别为chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）。</span>
+                            我们建议以".csv"格式上传输入文件，因为".csv"文件具有明确的格式，常用于数据存储和分析。<span class="redlight">shinyCircos-V2.0的所有输入数据前三列的顺序都是固定的，分别为chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）。</span>
                         </p>
                         
                     </blockquote>
@@ -334,7 +334,7 @@
                         <h3 class="head_zh">2.2 Track data（用于展示在 Circos 图不同"Track"中的数据）</h3>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                用户可以上传一个或多个输入数据集并展示在 Circos 图的不同Track中。不同类型的数据集可用于创建不同类型的图。<span class="redlight">一个Track data的前三列的顺序是固定的，分别是chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）</span>。
+                                用户可以上传一个或多个输入数据集并展示在 Circos 图的不同Track中。不同类型的数据集可用于创建不同类型的图形。<span class="redlight">所有Track data的前三列的顺序是固定的，分别是chr（染色体）、start（基因组区间的起始位置）、end（基因组区间的终止位置）</span>。
                             </p>
                         </blockquote>
                         
@@ -421,7 +421,7 @@
 
 
                                 <p class="p_help_Chinese">
-                                    <span class="redlight">要为包含多个分组的数据指定颜色</span>，应将包含分组信息的列命名为“color”。 用户还需要提供一个字符串来指定每个组的颜色。 例如'a:red;b:green;c:blue'，其中'a b c'代表不同的数据组。 没有分配颜色的数据组的颜色将被设置为“grey”。
+                                    <span class="redlight">要为包含多个分组的数据指定颜色</span>，应将包含分组信息的第5列命名为“color”。 用户还需要提供一个字符串来指定每个组的颜色， 例如'a:red;b:green;c:blue'，其中'a b c'代表不同的数据组。 没有分配颜色的数据组的颜色将被设置为“grey”。
                                 </p>
                             </blockquote>
 
@@ -565,7 +565,7 @@
                             <h4 class="head_zh">2.2.2 用于绘制line的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    绘制折线图的输入数据应<span class="redlight">至少包含四列</span>，<span class="redlight">并按固定顺序排列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。
+                                    绘制折线图的输入数据应<span class="redlight">至少包含四列</span>，<span class="redlight">并按固定顺序排列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的start和end坐标。
                                     第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字</span>。前4列的列名不是必需的，任何R语言中合法的列名都可以。
 									默认情况下，<span class="redlight">所有线条的颜色由shinyCircos随机分配</span>。
                                 </p>
@@ -699,7 +699,7 @@
 							
 							<blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    通过在输入数据中添加多列数据值，可以在同一Track上绘制多条折线。 对于这种类型的输入数据，<span class="redlight">从第四列开始，您应该用“value*”来命名不同的列，如value1,value2,vlaue3等。从第四列开始的每一列都必须是数字</span>。
+                                    通过在输入数据中添加多列数据值，可以在同一Track上绘制多条折线。 对于这种类型的输入数据，<span class="redlight">所有列的列名都不是必需的，任何R语言中合法的列名都可以。从第四列开始的每一列都必须是数字</span>。
                                 </p>
                             </blockquote>
 							
@@ -780,8 +780,8 @@
                             
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制散点图的输入数据应至少包含四列，并按固定顺序排列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 strat 和 end 坐标。第四列是所有基因组区域的数据值。
-                                    请注意，<span class="redlight">第四列必须是数字且列名应为'value'。前三列的名字可以是 R 中任何合法的名字</span>。默认情况下，<span class="redlight">所有点的颜色由 shinyCircos 随机分配</span>。
+                                    用于绘制散点图的输入数据应至少包含四列，并按固定顺序排列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 start 和 end 坐标。第四列是所有基因组区域的数据值。
+                                    请注意，<span class="redlight">第四列必须是数字。前4列的名字不是必需的，可以是 R 中任何合法的名字</span>。默认情况下，<span class="redlight">所有点的颜色由 shinyCircos 随机分配</span>。
                                 </p>
                             </blockquote>
                             
@@ -1355,7 +1355,7 @@
                             </p>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    同样，我们也可以通过在输入数据中加入多列数据值来绘制多组点图。对于这种类型的输入数据，<span class="redlight">从第四列开始，您应该用“value*”来命名，如value1,value2,vlaue3等。从第四列开始的每一列都必须是数字</span>。
+                                    同样，我们也可以通过在输入数据中加入多列数据值来绘制多组点图。对于这种类型的输入数据，<span class="redlight">所有列的名字都不是必需的，可以是 R 中任何合法的名字。从第四列开始的每一列都必须是数字</span>。
                                 </p>
                             </blockquote>
                             
@@ -1503,7 +1503,7 @@
                             <h4 class="head_zh">2.2.5 用于绘制rect-discrete的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制rect-discrete的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 strat 和 end 坐标。<span class="redlight">第四列必须是字符向量</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
+                                    用于绘制rect-discrete的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的 start 和 end 坐标。<span class="redlight">第四列必须是字符向量</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
                                 </p>
                             </blockquote>
                             
@@ -1570,7 +1570,7 @@
                             <h4 class="head_zh">2.2.6 用于绘制rect-gradual的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制rect-gradual的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
+                                    用于绘制rect-gradual的输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的start和end坐标。第四列是所有基因组区域的数据值。<span class="redlight">第四列必须是数字</span>。所有四列的名称都不是必需的，任何R语言中合法的列名都可以。
                                 </p>
                             </blockquote>
                             
@@ -1637,7 +1637,7 @@
                             <h4 class="head_zh">2.2.7 用于绘制heatmap-discrete的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制离散型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end 坐标。<span class="redlight">其余的每一列都应该是一个字符向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
+                                    用于绘制离散型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的start和end 坐标。<span class="redlight">其余的每一列都应该是一个字符向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
                                 </p>
                             </blockquote>
                             
@@ -1767,7 +1767,7 @@
                             <h4 class="head_zh">2.2.8 用于绘制heatmap-gradual的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    用于绘制连续型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">其余的每一列都应该是一个数字向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
+                                    用于绘制连续型热图的输入数据应包含≥4列。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的start和end坐标。<span class="redlight">其余的每一列都应该是一个数字向量。所有列的列名都不是必需的，任何R语言中合法的列名都可以</span>。
                                 </p>
                             </blockquote>
                             
@@ -1898,7 +1898,7 @@
                             <h4 class="head_zh">2.2.9 用于绘制stack-point的Track data</h4>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    使用shinyCircos-V2.0，我们还可以创建堆栈点图表（stack point）。输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的strat和end坐标。<span class="redlight">第四列“stack”列表示包含不同分组的数据值</span>。同一组的数据值将绘制在同一行上。<span class="redlight">所有列的列名都是必需的。前三列的列名可以是R语言中任何合法的列名。第四列“stack”列的名称必须明确指定为“stack”</span>。
+                                    使用shinyCircos-V2.0，我们还可以创建堆栈点图表（stack point）。输入数据应<span class="redlight">仅包含顺序固定的四列</span>。第一列定义了多个基因组区域的染色体。第二和第三列定义了这些基因组区域的start和end坐标。<span class="redlight">第四列包含不同分组的数据值</span>。同一组的数据值将绘制在同一行上。<span class="redlight">所有列的列名都不是必需的，可以是R语言中任何合法的列名</span>。
                                 </p>
                             </blockquote>
                             
@@ -2099,7 +2099,7 @@
                         </p>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                包含五列数据的label data可以用于绘制不同颜色的label，用户需要提供一个额外的“color”列。<span class="redlight">列名是必需的，前四列的列名可以是R语言中任何合法的列名。“color”列的名称必须明确指定为“color”。“color”列的值必须是有效的颜色名字</span>。
+                                包含五列数据的label data可以用于绘制不同颜色的label，用户需要提供一个额外的“color”列。这种情况下，<span class="redlight">列名是必需的，前四列的列名可以是R语言中任何合法的列名。“color”列的名称必须明确指定为“color”。“color”列的值必须是有效的颜色名字</span>。
                             </p>
                         </blockquote>
                         
@@ -2667,7 +2667,7 @@
                             <h3 class="head_zh">步骤2：上传一个或多个输入数据集以展示在不同的Tracks中</h3>
                             <blockquote class="block_global">
                                 <p class="p_help_Chinese">
-                                    除了染色体数据，用户还可以上传一个或多个其它类型的输入数据，以展示在Circos图的不同Tracks中。制作不同类型图的输入文件的详细格式在“<a href="#div2">2 输入数据格式</a>”部分有详细说明。
+                                    除了染色体数据，用户还可以上传一个或多个其它类型的输入数据，以展示在Circos图的不同Tracks中。制作不同类型图形的输入文件的详细格式在“<a href="#div2">2 输入数据格式</a>”部分有详细说明。
                                     现在我们将两个名为“barplot.csv”和“line.csv”的文件从本地磁盘上传到 shinyCircos-V2.0中。两个数据集都需要分发到“Track data”框中。<span class="redlight" >记得及时保存上传的数据</span>。
                                 </p>
                             </blockquote>
@@ -2889,7 +2889,7 @@
                         <h3 class="head_zh">5.4 “Sector”的边框</h3>
                         <blockquote class="block_global">
                             <p class="p_help_Chinese">
-                                shinyCircos-V2.0 还支持为一个或多个“Tracks”添加边框。
+                                shinyCircos-V2.0 还支持为一个或多个“Track”中的sector添加边框。
                             </p>
                         </blockquote>
                         
@@ -2953,7 +2953,7 @@
                     <h3 class="head_zh">6 高级功能</h3>
                     <blockquote class="block_global">
                         <p class="p_help_Chinese">
-                            与shinyCircos相比，我们在shinyCircos-V2.0中开发了多项高级功能。
+                            与shinyCircos相比，我们在shinyCircos-V2.0中开发了多个高级功能。
                         </p>
                     </blockquote>
                     

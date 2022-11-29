@@ -1703,7 +1703,7 @@ server <- function(input, output,session) {
                                 status="info",
                                 size = "xs"
                               ),
-                              title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'. Hex color codes as '#FF0000' are also supported.",
+                              title = "The color to be used for the baselines which can be NULL or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'. Hex color codes as '#FF0000' are also supported.",
                               placement = "right"
                             )
                           ),
@@ -2826,13 +2826,13 @@ server <- function(input, output,session) {
                     datan_info_text[nn] <- "The 2nd and the 3rd columns should be numeric vectors."
                   }else if(sum(is.na(data.nn[,2:3])) != 0){
                     datan_info[nn] <- 1
-                    datan_info_text[nn] <- "Null values found in the 2nd or the 3rd column!"
+                    datan_info_text[nn] <- "NULL values found in the 2nd or the 3rd column!"
                   }else if(ncol(data.nn) == 5){
                     if("color" %in% names(data.nn)){
                       color_label <- data.nn$color
                       if(any(color_label == "" | is.na(color_label))){
                         datan_info[nn] <- 1
-                        datan_info_text[nn] <- "Null values found in the 'color' column!"
+                        datan_info_text[nn] <- "NULL values found in the 'color' column!"
                       }else{
                         if(length(grep("#",color_label))!=0){
                           color_label16 <- color_label[grep("#",color_label)]
@@ -3290,7 +3290,7 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Linkdata format</font>'),
+                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Data format</font>'),
                 bs4Dash::tooltip(
                   actionButton(
                     inputId = "datvie_link_tip2", 
@@ -3756,10 +3756,10 @@ server <- function(input, output,session) {
         }else if(tratype == "stack-point" | tratype == "stack-line"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 'stack-point(stack-line)' data can only be four columns."
+            tra_inf_word[k] <- "The input data for 'stack-point' or 'stack-line' can only contain 4 columns."
           }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The fourth column of data should be a character vector."
+            tra_inf_word[k] <- "The 4th column of input data for 'stack-point' or 'stack-line' should be a character vector."
           }
         } else if ( tratype == "bar" ) {
           tra_inf[k] <- 0
@@ -3775,11 +3775,11 @@ server <- function(input, output,session) {
               tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
             } else if(!is.numeric(data_TT[,4])){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The fourth column of data should be numeric"
+              tra_inf_word[k] <- "The 4th column of input data should be numeric."
             } else if(ncol(data_TT) == 5){
               if(!"color" %in% colnames(data_TT)){
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "five columns of input data with missing color column" 
+                tra_inf_word[k] <- "The 5th column of input data should be explicitly names as 'column'." 
               }else{
                 if(!all(is.character(data_TT[,"color"]))){
                   tra_inf[k] <- 1
@@ -3789,7 +3789,7 @@ server <- function(input, output,session) {
             }
           } else {
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The input data of 'bar' only supports four or five columns" 
+            tra_inf_word[k] <- "The input data to create 'bar' plot can only contain 4 or 5 columns." 
           }
           
         }else if(tratype == "line"){
@@ -3805,11 +3805,11 @@ server <- function(input, output,session) {
           } else if ("color" %in% colnames(data_TT)){
             if(ncol(data_TT) != 5){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "The data containing the 'color' column should only have 5 columns" 
+              tra_inf_word[k] <- "Input data with a 'color' column should only contain 5 columns." 
             } else {
               if (!is.numeric(data_TT[,4])) {
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "The fourth column of data should be numeric"
+                tra_inf_word[k] <- "The 4th column of input data should be a numeric vector."
               } else if(!all(is.character(data_TT[,"color"]))){
                 tra_inf[k] <- 1
                 tra_inf_word[k] <- "The 'color' column should be a character vector."
@@ -3818,18 +3818,18 @@ server <- function(input, output,session) {
           } else if (!"color" %in% colnames(data_TT)){
             if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "Data from the fourth column onwards should be numeric." 
+              tra_inf_word[k] <- "All columns starting from the 4th column should be a numeric vector."
             }
           }
         }else if(tratype == "point"){
           if("color" %in% colnames(data_TT) | "cex" %in% colnames(data_TT) | "pch" %in% colnames(data_TT)){
             if(!all(tail(names(data_TT),n = -4) %in% c("cex","pch","color"))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "If the 'cex', 'pch', 'color' columns are included, multiple columns of values cannot be included."
+              tra_inf_word[k] <- "Only a single data value column should be included in the input data."
             }else if("color" %in% colnames(data_TT)){
               if(!is.character(data_TT$color)){
                 tra_inf[k] <- 1
-                tra_inf_word[k] <- "The 'color' column should be characters."
+                tra_inf_word[k] <- "The 'color' column should be a character vector."
               }
             }else if("cex" %in% colnames(data_TT)){
               if(!is.numeric(data_TT$cex)){
@@ -3845,24 +3845,24 @@ server <- function(input, output,session) {
           }else{
             if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
               tra_inf[k] <- 1
-              tra_inf_word[k] <- "Data from the fourth column onwards should be numeric."
+              tra_inf_word[k] <- "All columns starting from the 4th column should be a numeric vector."
             }
           }
         }else if(tratype == "rect-discrete"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-discrete data should contain 4 columns." 
+            tra_inf_word[k] <- "The rect-discrete data should only contain 4 columns." 
           }else if(!is.character(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 4th column of the rect-discrete data should be characters." 
+            tra_inf_word[k] <- "The 4th column of the rect-discrete data should be a character vector." 
           }
         }else if(tratype == "rect-gradual"){
           if(ncol(data_TT) != 4){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The rect-gradual data should contain 4 columns." 
+            tra_inf_word[k] <- "The rect-gradual data should only contain 4 columns." 
           }else if(!is.numeric(data_TT[,4])){
             tra_inf[k] <- 1
-            tra_inf_word[k] <- "The 4th column of the rect-gradual data should be numeric values." 
+            tra_inf_word[k] <- "The 4th column of the rect-gradual data should be a numeric vector."
           }
         }else if(tratype == "heatmap-discrete"){
           if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.character(x)}))){
@@ -4029,7 +4029,7 @@ server <- function(input, output,session) {
     #   sendSweetAlert(
     #     session = session,
     #     title = "",
-    #     text = "Data without a 'color' column should contain six columns.",
+    #     text = "Data without a 'color' column should contain 6 columns.",
     #     type = "error"
     #   )
     # }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
@@ -4213,10 +4213,10 @@ server <- function(input, output,session) {
       }else if(tratype == "stack-point" | tratype == "stack-line"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The 'stack-point(stack-line)' data can only be four columns."
+          tra_inf_word <- "The input data for 'stack-point' or 'stack-line' can only contain 4 columns."
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The fourth column of data should be a character vector."
+          tra_inf_word <- "The 4th column of input data for 'stack-point' or 'stack-line' should be a character vector."
         }
       }else if ( tratype == "bar" ) {
         if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
@@ -4228,11 +4228,11 @@ server <- function(input, output,session) {
             tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
           }  else if(!is.numeric(data_TT[,4])){
             tra_inf <- 1
-            tra_inf_word <- "The fourth column of data should be numeric"
+            tra_inf_word <- "The 4th column of input data should be numeric."
           } else if(ncol(data_TT) == 5){
             if(!"color" %in% colnames(data_TT)){
               tra_inf <- 1
-              tra_inf_word <- "five columns of input data with missing color column" 
+              tra_inf_word <- "The 5th column of input data should be explicitly names as 'column'." 
             }else{
               if(!all(is.character(data_TT[,"color"]))){
                 tra_inf <- 1
@@ -4242,7 +4242,7 @@ server <- function(input, output,session) {
           }
         } else {
           tra_inf <- 1
-          tra_inf_word <- "The input data of 'bar' only supports four or five columns" 
+          tra_inf_word <- "The input data to create 'bar' plot can only contain 4 or 5 columns." 
         }
       } else if (tratype == "line"){
         if ("cex" %in% colnames(data_TT)){
@@ -4254,11 +4254,11 @@ server <- function(input, output,session) {
         }  else if ("color" %in% colnames(data_TT)){
           if(ncol(data_TT) != 5){
             tra_inf <- 1
-            tra_inf_word <- "The data containing the 'color' column should only have 5 columns" 
+            tra_inf_word <- "Input data with a 'color' column should only contain 5 columns." 
           } else {
             if (!is.numeric(data_TT[,4])) {
               tra_inf <- 1
-              tra_inf_word <- "The fourth column of data should be numeric"
+              tra_inf_word <- "The 4th column of input data should be a numeric vector."
             } else if(!all(is.character(data_TT[,"color"]))){
               tra_inf <- 1
               tra_inf_word <- "The 'color' column should be a character vector."
@@ -4267,18 +4267,18 @@ server <- function(input, output,session) {
         } else if (!"color" %in% colnames(data_TT)){
           if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
             tra_inf <- 1
-            tra_inf_word <- "Data from the fourth column onwards should be numeric." 
+            tra_inf_word <- "All columns starting from the 4th column should be a numeric vector." 
           }
         }
       } else if (tratype == "point"){
         if("color" %in% colnames(data_TT) | "cex" %in% colnames(data_TT) | "pch" %in% colnames(data_TT)){
           if(!all(tail(names(data_TT),n = -4) %in% c("cex","pch","color"))){
             tra_inf <- 1
-            tra_inf_word <- "If the 'cex', 'pch', 'color' columns are included, multiple columns of values cannot be included."
+            tra_inf_word <- "Only a single data value column should be included in the input data."
           }else if("color" %in% colnames(data_TT)){
             if(!is.character(data_TT$color)){
               tra_inf <- 1
-              tra_inf_word <- "The 'color' column should be characters."
+              tra_inf_word <- "The 'color' column should be a character vector."
             }
           }else if("cex" %in% colnames(data_TT)){
             if(!is.numeric(data_TT$cex)){
@@ -4294,24 +4294,24 @@ server <- function(input, output,session) {
         }else{
           if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
             tra_inf <- 1
-            tra_inf_word <- "Data from the fourth column onwards should be numeric."
+            tra_inf_word <- "All columns starting from the 4th column should be a numeric vector."
           }
         }
       }else if(tratype == "rect-discrete"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-discrete data should contain 4 columns." 
+          tra_inf_word <- "The rect-discrete data should only contain 4 columns." 
         }else if(!is.character(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 4th column of rect-discrete data should be characters." 
+          tra_inf_word <- "The 4th column of the rect-discrete data should be a character vector." 
         }
       }else if(tratype == "rect-gradual"){
         if(ncol(data_TT) != 4){
           tra_inf <- 1
-          tra_inf_word <- "The rect-gradual data should contain 4 columns." 
+          tra_inf_word <- "The rect-gradual data should only contain 4 columns." 
         }else if(!is.numeric(data_TT[,4])){
           tra_inf <- 1
-          tra_inf_word <- "The 4th column of rect-gradual data should be a numeric vector." 
+          tra_inf_word <- "The 4th column of the rect-gradual data should be a numeric vector." 
         }
       }else if(tratype == "heatmap-discrete"){
         if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.character(x)}))){
@@ -4556,7 +4556,7 @@ server <- function(input, output,session) {
                         status="info",
                         size = "xs"
                       ),
-                      title = "The color used to plot the data, you can use the preset color, or you can customize the color",
+                      title = "The color used to plot the data, you can use the preset color, or you can customize the color.",
                       placement = "right"
                     )
                   ),
