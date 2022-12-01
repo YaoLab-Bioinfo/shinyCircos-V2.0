@@ -36,6 +36,7 @@ circos.genomicInitialize.new = function(
     labels_inf_chr =NULL,
     data.CN = NULL,
     outergap = 1,
+    plotother = 0,
     ...) {
   
   outergap <- outergap*0.01
@@ -118,6 +119,14 @@ circos.genomicInitialize.new = function(
                                     }
                                   }
     )
+    if(plotother != 0){
+      circos.updatePlotRegion(
+        sector.index = data[,1][nrow(data)],
+        track.index = get.current.track.index(),
+        bg.border = NA,
+        bg.col = NA
+      )
+    }
   }
   
   circos.par("cell.padding" = op, "points.overflow.warning" = ow)
@@ -247,17 +256,17 @@ legendplot <- function(tktype,data.TT,data.TT_old,i,legendpos,tkcolor,addlegend)
 
 plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree" = 90 - rotation , "gap.degree" = gap.width , cell.padding=c(0,0,0,0) , track.margin=c(0,0))
-  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
-  if(plotother != 0){
-    if(!is.null(plotTypes)){
-      circos.updatePlotRegion(
-        sector.index = x[,1][nrow(x)],
-        track.index = 1,
-        bg.border = NA,
-        bg.col = NA
-      )
-    }
-  }
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap , plotother = plotother)
+  # if(plotother != 0){
+  #   if(!is.null(plotTypes)){
+  #     circos.updatePlotRegion(
+  #       sector.index = x[,1][nrow(x)],
+  #       track.index = 1,
+  #       bg.border = NA,
+  #       bg.col = NA
+  #     )
+  #   }
+  # }
   # if(!is.null(labels_inf_chr)){
   #   if(labels_inf_chr[[2]]=="outside"){
   #     if(ncol(data.CN) == 4){
@@ -318,17 +327,17 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
 
 plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
-  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
-  if(plotother != 0){
-    if(!is.null(plotTypes)){
-      circos.updatePlotRegion(
-        sector.index = x[,1][nrow(x)],
-        track.index = 1,
-        bg.border = NA,
-        bg.col = NA
-      )
-    }
-  }
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap , plotother = plotother)
+  # if(plotother != 0){
+  #   if(!is.null(plotTypes)){
+  #     circos.updatePlotRegion(
+  #       sector.index = x[,1][nrow(x)],
+  #       track.index = 1,
+  #       bg.border = NA,
+  #       bg.col = NA
+  #     )
+  #   }
+  # }
   if(!is.null(labels_inf_chr)){
     if(labels_inf_chr[[2]]=="inside"){
       if(ncol(data.CN) == 4){
@@ -350,17 +359,17 @@ plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr 
 
 plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.CN , labels_inf_chr , rotation , gap.width , labelChr_size , outAxis_size , plotother , outergap){
   circos.par("start.degree"=90-rotation, "gap.degree"=gap.width, cell.padding=c(0,0,0,0), track.margin=c(0,0))
-  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap)
-  if(plotother != 0){
-    if(!is.null(plotTypes)){
-      circos.updatePlotRegion(
-        sector.index = x[,1][nrow(x)],
-        track.index = 1,
-        bg.border = NA,
-        bg.col = NA
-      )
-    }
-  }
+  circos.genomicInitialize.new(x,plotType = plotTypes , axis.labels.cex = outAxis_size , labels.cex = labelChr_size,data.CN = data.CN,labels_inf_chr = labels_inf_chr , outergap = outergap , plotother = plotother)
+  # if(plotother != 0){
+  #   if(!is.null(plotTypes)){
+  #     circos.updatePlotRegion(
+  #       sector.index = x[,1][nrow(x)],
+  #       track.index = 1,
+  #       bg.border = NA,
+  #       bg.col = NA
+  #     )
+  #   }
+  # }
   # if(!is.null(labels_inf_chr)){
   #   if(labels_inf_chr[[2]]=="outside"){
   #     if(ncol(data.CN) == 4){

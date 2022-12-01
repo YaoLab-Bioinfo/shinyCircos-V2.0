@@ -15,6 +15,7 @@ server <- function(input, output,session) {
   tra_Margin <- NULL
   tra_cirpar_setcho <<- NULL
   hlt_data <<- NULL
+  tra_inf <- NULL
   colorTrack <<- c()
   colorcusTrack <<- c()
   tra_poi_poisiz <<- c()
@@ -3738,13 +3739,11 @@ server <- function(input, output,session) {
     
     
     if(!is.null(data.T)){
-      tra_inf <- NULL
-      tra_inf_word <- NULL
+      tra_inf <- rep(0,length(data.T))
+      tra_inf_word <- rep(NA,length(data.T))
       for (k in 1:length(data.T)) { #"point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line"
         tratype <- input[[paste0("tratype",k)]]
         data_TT <- data.T[[k]]
-        tra_inf[k] <- 0
-        tra_inf_word[k] <- NULL
         if(tratype == "ideogram"){
           if(ncol(data_TT) != 5){
             tra_inf[k] <- 1
@@ -3762,7 +3761,6 @@ server <- function(input, output,session) {
             tra_inf_word[k] <- "The 4th column of input data for 'stack-point' or 'stack-line' should be a character vector."
           }
         } else if ( tratype == "bar" ) {
-          tra_inf[k] <- 0
           if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
             if ("cex" %in% colnames(data_TT)){
               tra_inf[k] <- 1
@@ -3791,7 +3789,6 @@ server <- function(input, output,session) {
             tra_inf[k] <- 1
             tra_inf_word[k] <- "The input data to create 'bar' plot can only contain 4 or 5 columns." 
           }
-          
         }else if(tratype == "line"){
           if ("cex" %in% colnames(data_TT)){
             tra_inf[k] <- 1
@@ -3892,15 +3889,17 @@ server <- function(input, output,session) {
         text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
-    }else if(sum(tra_inf) != 0){
-      tra_inf_word <- na.omit(tra_inf_word)
-      sendSweetAlert(
-        session = session,
-        title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
-        text = paste(tra_inf_word,collapse = ";"),
-        type = "error"
-      )
-    }else if(!is.null(data.L)){
+    } else if(!is.null(tra_inf)){
+      if(sum(tra_inf) != 0){
+        tra_inf_word <- na.omit(tra_inf_word)
+        sendSweetAlert(
+          session = session,
+          title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
+          text = paste(tra_inf_word,collapse = ";"),
+          type = "error"
+        )
+      }
+    } else if(!is.null(data.L)){
       if(link_type == 1){
         letplotgo <<- 1
         if(ncol(data.L) != 6 & ncol(data.L) != 7){
@@ -4200,135 +4199,135 @@ server <- function(input, output,session) {
     if(length(whichchangechrset) != 0){
       tratype <- input[[paste0("tratype",whichchangechrset)]]
       data_TT <- data.T[[whichchangechrset]]
-      tra_inf <- 0
-      tra_inf_word <- NULL
+      tra_inf1 <- 0
+      tra_inf1_word <- NULL
       if(tratype == "ideogram"){
         if(ncol(data_TT) != 5){
-          tra_inf <- 1
-          tra_inf_word <- "The ideogram data should contain 5 columns." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The ideogram data should contain 5 columns." 
         }else if(!all(is.character(data_TT[,4]),is.character(data_TT[,5]))){
-          tra_inf <- 1
-          tra_inf_word <- "The last 2 columns of the ideogram data should be characters." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The last 2 columns of the ideogram data should be characters." 
         }
       }else if(tratype == "stack-point" | tratype == "stack-line"){
         if(ncol(data_TT) != 4){
-          tra_inf <- 1
-          tra_inf_word <- "The input data for 'stack-point' or 'stack-line' can only contain 4 columns."
+          tra_inf1 <- 1
+          tra_inf1_word <- "The input data for 'stack-point' or 'stack-line' can only contain 4 columns."
         }else if(!is.character(data_TT[,4])){
-          tra_inf <- 1
-          tra_inf_word <- "The 4th column of input data for 'stack-point' or 'stack-line' should be a character vector."
+          tra_inf1 <- 1
+          tra_inf1_word <- "The 4th column of input data for 'stack-point' or 'stack-line' should be a character vector."
         }
       }else if ( tratype == "bar" ) {
         if (ncol(data_TT) == 4 | ncol(data_TT) == 5){
           if ("cex" %in% colnames(data_TT)){
-            tra_inf <- 1
-            tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+            tra_inf1 <- 1
+            tra_inf1_word <- "Please select the 'point' plot type for the input data of this track." 
           } else if ("pch" %in% colnames(data_TT)){
-            tra_inf <- 1
-            tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+            tra_inf1 <- 1
+            tra_inf1_word <- "Please select the 'point' plot type for the input data of this track." 
           }  else if(!is.numeric(data_TT[,4])){
-            tra_inf <- 1
-            tra_inf_word <- "The 4th column of input data should be numeric."
+            tra_inf1 <- 1
+            tra_inf1_word <- "The 4th column of input data should be numeric."
           } else if(ncol(data_TT) == 5){
             if(!"color" %in% colnames(data_TT)){
-              tra_inf <- 1
-              tra_inf_word <- "The 5th column of input data should be explicitly named as 'color'." 
+              tra_inf1 <- 1
+              tra_inf1_word <- "The 5th column of input data should be explicitly named as 'color'." 
             }else{
               if(!all(is.character(data_TT[,"color"]))){
-                tra_inf <- 1
-                tra_inf_word <- "The 'color' column should be a character vector."
+                tra_inf1 <- 1
+                tra_inf1_word <- "The 'color' column should be a character vector."
               }
             }
           }
         } else {
-          tra_inf <- 1
-          tra_inf_word <- "The input data to create 'bar' plot can only contain 4 or 5 columns." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The input data to create 'bar' plot can only contain 4 or 5 columns." 
         }
       } else if (tratype == "line"){
         if ("cex" %in% colnames(data_TT)){
-          tra_inf <- 1
-          tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "Please select the 'point' plot type for the input data of this track." 
         } else if ("pch" %in% colnames(data_TT)){
-          tra_inf <- 1
-          tra_inf_word <- "Please select the 'point' plot type for the input data of this track." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "Please select the 'point' plot type for the input data of this track." 
         }  else if ("color" %in% colnames(data_TT)){
           if(ncol(data_TT) != 5){
-            tra_inf <- 1
-            tra_inf_word <- "Input data with a 'color' column should only contain 5 columns." 
+            tra_inf1 <- 1
+            tra_inf1_word <- "Input data with a 'color' column should only contain 5 columns." 
           } else {
             if (!is.numeric(data_TT[,4])) {
-              tra_inf <- 1
-              tra_inf_word <- "The 4th column of input data should be a numeric vector."
+              tra_inf1 <- 1
+              tra_inf1_word <- "The 4th column of input data should be a numeric vector."
             } else if(!all(is.character(data_TT[,"color"]))){
-              tra_inf <- 1
-              tra_inf_word <- "The 'color' column should be a character vector."
+              tra_inf1 <- 1
+              tra_inf1_word <- "The 'color' column should be a character vector."
             }
           }
         } else if (!"color" %in% colnames(data_TT)){
           if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
-            tra_inf <- 1
-            tra_inf_word <- "All columns starting from the 4th column should be a numeric vector." 
+            tra_inf1 <- 1
+            tra_inf1_word <- "All columns starting from the 4th column should be a numeric vector." 
           }
         }
       } else if (tratype == "point"){
         if("color" %in% colnames(data_TT) | "cex" %in% colnames(data_TT) | "pch" %in% colnames(data_TT)){
           if(!all(tail(names(data_TT),n = -4) %in% c("cex","pch","color"))){
-            tra_inf <- 1
-            tra_inf_word <- "Only a single data value column should be included in the input data."
+            tra_inf1 <- 1
+            tra_inf1_word <- "Only a single data value column should be included in the input data."
           }else if("color" %in% colnames(data_TT)){
             if(!is.character(data_TT$color)){
-              tra_inf <- 1
-              tra_inf_word <- "The 'color' column should be a character vector."
+              tra_inf1 <- 1
+              tra_inf1_word <- "The 'color' column should be a character vector."
             }
           }else if("cex" %in% colnames(data_TT)){
             if(!is.numeric(data_TT$cex)){
-              tra_inf <- 1
-              tra_inf_word <- "The 'cex' column should be a numeric vector." 
+              tra_inf1 <- 1
+              tra_inf1_word <- "The 'cex' column should be a numeric vector." 
             }
           }else if("pch" %in% colnames(data_TT)){
             if(!all(data_TT$pch %in% 1:25)){
-              tra_inf <- 1
-              tra_inf_word <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
+              tra_inf1 <- 1
+              tra_inf1_word <- "Pch values should be integers in 1-25. Please refer to the help manual for more details." 
             }
           }
         }else{
           if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
-            tra_inf <- 1
-            tra_inf_word <- "All columns starting from the 4th column should be a numeric vector."
+            tra_inf1 <- 1
+            tra_inf1_word <- "All columns starting from the 4th column should be a numeric vector."
           }
         }
       }else if(tratype == "rect-discrete"){
         if(ncol(data_TT) != 4){
-          tra_inf <- 1
-          tra_inf_word <- "The rect-discrete data should only contain 4 columns." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The rect-discrete data should only contain 4 columns." 
         }else if(!is.character(data_TT[,4])){
-          tra_inf <- 1
-          tra_inf_word <- "The 4th column of the rect-discrete data should be a character vector." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The 4th column of the rect-discrete data should be a character vector." 
         }
       }else if(tratype == "rect-gradual"){
         if(ncol(data_TT) != 4){
-          tra_inf <- 1
-          tra_inf_word <- "The rect-gradual data should only contain 4 columns." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The rect-gradual data should only contain 4 columns." 
         }else if(!is.numeric(data_TT[,4])){
-          tra_inf <- 1
-          tra_inf_word <- "The 4th column of the rect-gradual data should be a numeric vector." 
+          tra_inf1 <- 1
+          tra_inf1_word <- "The 4th column of the rect-gradual data should be a numeric vector." 
         }
       }else if(tratype == "heatmap-discrete"){
         if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.character(x)}))){
-          tra_inf <- 1
-          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
+          tra_inf1 <- 1
+          tra_inf1_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
         }
       }else if(tratype == "heatmap-gradual"){
         if(!all(sapply(data_TT[,4:length(data_TT)], function(x){is.numeric(x)}))){
-          tra_inf <- 1
-          tra_inf_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
+          tra_inf1 <- 1
+          tra_inf1_word <- "All columns except for the 1-3 columns of the input data for heatmap-discrete should be characters."
         }
       }
-      if(tra_inf != 0){
+      if(tra_inf1 != 0){
         sendSweetAlert(
           session = session,
           title = "",
-          text = paste(tra_inf_word),
+          text = paste(tra_inf1_word),
           type = "error"
         )
       }
