@@ -15,7 +15,7 @@ server <- function(input, output,session) {
   tra_Margin <- NULL
   tra_cirpar_setcho <<- NULL
   hlt_data <<- NULL
-  tra_inf <- NULL
+  tra_inf <- 0
   colorTrack <<- c()
   colorcusTrack <<- c()
   tra_poi_poisiz <<- c()
@@ -3768,9 +3768,6 @@ server <- function(input, output,session) {
             } else if ("pch" %in% colnames(data_TT)){
               tra_inf[k] <- 1
               tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
-            } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
-              tra_inf[k] <- 1
-              tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
             } else if(!is.numeric(data_TT[,4])){
               tra_inf[k] <- 1
               tra_inf_word[k] <- "The 4th column of input data should be numeric."
@@ -3796,9 +3793,6 @@ server <- function(input, output,session) {
           } else if ("pch" %in% colnames(data_TT)){
             tra_inf[k] <- 1
             tra_inf_word[k] <- "Please select the 'point' plot type for the input data of this track." 
-          } else if (any(grepl("group",colnames(data_TT)[4:ncol(data_TT)]))){
-            tra_inf[k] <- 1
-            tra_inf_word[k] <- "A 'group' column was found in the input dataset. Please choose another plot type." 
           } else if ("color" %in% colnames(data_TT)){
             if(ncol(data_TT) != 5){
               tra_inf[k] <- 1
@@ -3874,14 +3868,6 @@ server <- function(input, output,session) {
         }
       }
     }
-    # if(chr_type == 1 && ncol(data.C) != 3){
-    #   sendSweetAlert(
-    #     session = session,
-    #     title = "",
-    #     text = "Format of the general chromosome data is incorrect.",
-    #     type = "error"
-    #   )
-    # }else
     if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
@@ -3889,16 +3875,14 @@ server <- function(input, output,session) {
         text = "Format of the cytoband chromosome data is incorrect.",
         type = "error"
       )
-    } else if(!is.null(tra_inf)){
-      if(sum(tra_inf) != 0){
-        tra_inf_word <- na.omit(tra_inf_word)
-        sendSweetAlert(
-          session = session,
-          title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
-          text = paste(tra_inf_word,collapse = ";"),
-          type = "error"
-        )
-      }
+    } else if(sum(tra_inf) != 0){
+      tra_inf_word <- na.omit(tra_inf_word)
+      sendSweetAlert(
+        session = session,
+        title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
+        text = paste(tra_inf_word,collapse = ";"),
+        type = "error"
+      )
     } else if(!is.null(data.L)){
       if(link_type == 1){
         letplotgo <<- 1
@@ -3957,14 +3941,6 @@ server <- function(input, output,session) {
   })
   observeEvent(input$chr_setting,{
     chr_type <- input$chr_type
-    # if(chr_type == 1 && ncol(data.C) != 3){
-    #   sendSweetAlert(
-    #     session = session,
-    #     title = "",
-    #     text = "Format of the general chromosome data is incorrect.",
-    #     type = "error"
-    #   )
-    # }else 
     if(chr_type == 2 && ncol(data.C) != 5){
       sendSweetAlert(
         session = session,
