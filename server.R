@@ -2867,7 +2867,7 @@ server <- function(input, output,session) {
                       }
                     }else{
                       datan_info[nn] <- 1
-                      datan_info_text[nn] <- "The column name for column 5 should be 'color'!"
+                      datan_info_text[nn] <- "The name of column 5 should be explicitly specified as 'color'!"
                     }
                     
                   }else if(ncol(data.nn) == 4){
@@ -3879,7 +3879,7 @@ server <- function(input, output,session) {
       tra_inf_word <- na.omit(tra_inf_word)
       sendSweetAlert(
         session = session,
-        title = paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
+        title = paste0("Error in track index: ",paste(which(tra_inf==1),collapse = ",")), #paste0("Error in index: ",paste(which(tra_inf==1),collapse = ",")),
         text = paste(tra_inf_word,collapse = ";"),
         type = "error"
       )
