@@ -94,7 +94,7 @@ circos.genomicInitialize.new = function(
       if(ncol(data.CN) == 4){
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
       }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "outside")
       }
     }
   }
@@ -272,7 +272,7 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
   #     if(ncol(data.CN) == 4){
   #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
   #     }else{
-  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "outside")
   #     }
   #   }
   # }
@@ -318,7 +318,7 @@ plotcircos <- function(x , colorChr , plotTypes , chr_height , dis_Chr , data.CN
       if(ncol(data.CN) == 4){
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
       }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "inside")
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex = (((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "inside")
       }
       
     }
@@ -343,14 +343,14 @@ plotcircos.notrack <- function(x , plotTypes , units , data.CN , labels_inf_chr 
       if(ncol(data.CN) == 4){
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
       }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "inside")
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "inside")
       }
     }
     # if(labels_inf_chr[[2]]=="outside"){
     #   if(ncol(data.CN) == 4){
     #     circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
     #   }else{
-    #     circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+    #     circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "outside")
     #   }
     # }
   }
@@ -375,7 +375,7 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
   #     if(ncol(data.CN) == 4){
   #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
   #     }else{
-  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+  #       circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "outside")
   #     }
   #   }
   # }
@@ -423,7 +423,7 @@ plotcircos.cyto <- function(x , plotTypes , chr_height , dis_Chr , units , data.
       if(ncol(data.CN) == 4){
         circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = labels_inf_chr[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
       }else{
-        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN$color , padding = 0 , track.margin = c(0,0), side = "inside")
+        circos.genomicLabels(data.CN, labels.column = 4, connection_height = labels_inf_chr[[3]]/4, labels_height = (labels_inf_chr[[3]]/4)*3 , cex =(((((as.numeric(labels_inf_chr[[3]]))*4)/5)/max(strwidth(data.CN[,4])))-0.15)*labels_inf_chr[[7]] , line_col = "#000000" , col = data.CN[,5] , padding = 0 , track.margin = c(0,0), side = "inside")
       }
     }
   }
@@ -994,7 +994,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             if(ncol(data.NN) == 4){
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = "#000000" , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "outside")
             }else{
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = "#000000" , col = data.NN$color , padding = 0 , track.margin = c(0,0), side = "outside")
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize , line_col = "#000000" , col = data.NN[,5] , padding = 0 , track.margin = c(0,0), side = "outside")
             }
           }
         }
@@ -1693,7 +1693,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             if(ncol(data.NN) == 4){
               circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = "#000000" , col = labels_inf[[4]] , padding = 0 , track.margin = c(0,0), side = "inside")
             }else{
-              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = "#000000" , col = data.NN$color , padding = 0 , track.margin = c(0,0), side = "inside")
+              circos.genomicLabels(data.NN, labels.column = 4, connection_height = lab_height/4, labels_height = (lab_height/4)*3 , cex =labelsize  , line_col = "#000000" , col = data.NN[,5] , padding = 0 , track.margin = c(0,0), side = "inside")
             }
           }
         }

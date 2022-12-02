@@ -16,6 +16,9 @@ server <- function(input, output,session) {
   tra_cirpar_setcho <<- NULL
   hlt_data <<- NULL
   tra_inf <- 0
+  datan_info <- 0
+  datat_info <- 0
+  datal_info <- 0
   colorTrack <<- c()
   colorcusTrack <<- c()
   tra_poi_poisiz <<- c()
@@ -2801,39 +2804,44 @@ server <- function(input, output,session) {
               type = "error"
             )
           }else{
-            datat_info <- NULL
-            datan_info <- NULL
-            datan_info_text <- NULL
+            datat_info <- rep(0,length(data.T))
+            datat_info_text <- rep(NA,length(data.T))
             if(length(data.T) != 0){
               for (tt in 1:length(data.T)) {
                 data.tt <- data.T[[tt]]
                 if(!(all(is.numeric(data.tt[,2]),is.numeric(data.tt[,3])))){
                   datat_info[tt] <- 1
+                  datat_info_text[tt] <- "the 2nd and the 3rd columns should be numeric vectors."
                 }else if(sum(is.na(data.C[,2:3])) != 0){
                   datat_info[tt] <- 1
+                  datat_info_text[tt] <- "NULL values found in the 2nd or the 3rd column!"
                 }else if(ncol(data.tt) <= 3){
                   datat_info[tt] <- 1
-                }else{
-                  datat_info[tt] <- 0
+                  datat_info_text[tt] <- "all Track data is greater than three columns"
                 }
               }
-            }else if(length(data.N) != 0){
-              
+            }
+            if(length(data.N) != 0){
+              datan_info <- rep(0,length(data.N))
+              datan_info_text <- rep(NA,length(data.N))
               for (nn in 1:length(data.N)) {
                 data.nn <- data.N[[nn]]
                 if(ncol(data.nn) == 4 | ncol(data.nn) == 5){
                   if(!(all(is.numeric(data.nn[,2]),is.numeric(data.nn[,3])))){
                     datan_info[nn] <- 1
-                    datan_info_text[nn] <- "The 2nd and the 3rd columns should be numeric vectors."
+                    datan_info_text[nn] <- "the 2nd and the 3rd columns should be numeric vectors."
                   }else if(sum(is.na(data.nn[,2:3])) != 0){
                     datan_info[nn] <- 1
                     datan_info_text[nn] <- "NULL values found in the 2nd or the 3rd column!"
+                  }else if(!is.character(data.nn[,4])){
+                    datan_info[nn] <- 1
+                    datan_info_text[nn] <- "the fourth column should be character vectors."
                   }else if(ncol(data.nn) == 5){
-                    if("color" %in% names(data.nn)){
-                      color_label <- data.nn$color
+                    if(is.character(data.nn[,5])){
+                      color_label <- data.nn[,5]
                       if(any(color_label == "" | is.na(color_label))){
                         datan_info[nn] <- 1
-                        datan_info_text[nn] <- "NULL values found in the 'color' column!"
+                        datan_info_text[nn] <- "NULL values found in the fifth column!"
                       }else{
                         if(length(grep("#",color_label))!=0){
                           color_label16 <- color_label[grep("#",color_label)]
@@ -2841,78 +2849,71 @@ server <- function(input, output,session) {
                           color_label9 <- color_label16[which(nchar(color_label16) == 9)]
                           if(!all(nchar(color_label16) == 7| nchar(color_label16) == 9)){
                             datan_info[nn] <- 1
-                            datan_info_text[nn] <- "Wrong RGB error!"
+                            datan_info_text[nn] <- "wrong RGB error!"
                           }else if(!any(grepl("^#([0-9a-fA-F]{6})$",color_label7)) & length(color_label7) != 0){
                             datan_info[nn] <- 1
-                            datan_info_text[nn] <- "Wrong RGB error!"
+                            datan_info_text[nn] <- "wrong RGB error!"
                           }else if(!any(grepl("^#([0-9a-fA-F]{8})$",color_label9)) & length(color_label9) != 0){
                             datan_info[nn] <- 1
-                            datan_info_text[nn] <- "Wrong RGB error!"
+                            datan_info_text[nn] <- "wrong RGB error!"
                           }else if(!all(color_label[-grep("#",color_label)] %in% colors())){
                             datan_info[nn] <- 1
-                            datan_info_text[nn] <- "Wrong color input!"
-                          }else{
-                            datan_info[nn] <- 0
-                            datan_info_text[nn] <- ""
+                            datan_info_text[nn] <- "wrong color input!"
                           }
                         }else{
                           if(!all(color_label %in% colors())){
                             datan_info[nn] <- 1
-                            datan_info_text[nn] <- "Wrong color input!"
-                          }else{
-                            datan_info[nn] <- 0
-                            datan_info_text[nn] <- ""
+                            datan_info_text[nn] <- "wrong color input!"
                           }
                         }
                       }
                     }else{
                       datan_info[nn] <- 1
-                      datan_info_text[nn] <- "The name of column 5 should be explicitly specified as 'color'!"
+                      datan_info_text[nn] <- "the fifth column of data should be characters!"
                     }
-                    
-                  }else if(ncol(data.nn) == 4){
-                    datan_info[nn] <- 0
-                    datan_info_text[nn] <- ""
                   }
                 }else{
                   datan_info[nn] <- 1
-                  datan_info_text <- "The input data should contain 4 or 5 columns."
+                  datan_info_text[nn] <- "the input data should contain 4 or 5 columns."
                 }
               }
-            }else if(!is.null(data.L)){
+            }
+            if(!is.null(data.L)){
               if(ncol(data.L) != 6 & ncol(data.L) != 7){
-                sendSweetAlert(
-                  session = session,
-                  title = "Wrong data format!",
-                  text = paste0("Links data should contain 6 or 7 columns."),
-                  type = "error"
-                )
+                datal_info <- "Links data should contain 6 or 7 columns."
               }else if(!all(is.numeric(data.L[,2]),is.numeric(data.L[,3]),is.numeric(data.L[,5]),is.numeric(data.L[,6]))){
-                
-                sendSweetAlert(
-                  session = session,
-                  title = "Wrong data format!",
-                  text = paste0("The 2nd, 3rd, 5th and 6th column of the links data should be numeric vectors."),
-                  type = "error"
-                )
+                datal_info <- "The 2nd, 3rd, 5th and 6th column of the links data should be numeric vectors."
               }
             }
             if(sum(datat_info)!=0){
+              datat_info_wrong <- which(datat_info == 1)
+              datat_info_text_print <- paste(paste0("Data ",datat_info_wrong), datat_info_text[datat_info_wrong], sep=": ")
+              datat_info_text_print <- paste0(datat_info_text_print, collapse = "<br/>")
+              datat_info_text_print <- paste0("<div style='white-space: pre-wrap;'>", datat_info_text_print, "</div>")
               sendSweetAlert(
                 session = session,
-                title = "Wrong data format!",
-                text = paste0("Wrong data format found in Track ",paste(which(datat_info==1),collapse = ",")),
+                title = "Track data format error!",
+                text = tags$div(HTML(datat_info_text_print)),
                 type = "error"
               )
-              dataview_export <<- NULL
             }else if(sum(datan_info)!=0){
+              datan_info_wrong <- which(datan_info == 1)
+              datan_info_text_print <- paste(paste0("Data ",datan_info_wrong), datan_info_text[datan_info_wrong], sep=": ")
+              datan_info_text_print <- paste0(datan_info_text_print, collapse = "<br/>")
+              datan_info_text_print <- paste0("<div style='white-space: pre-wrap;'>", datan_info_text_print, "</div>")
               sendSweetAlert(
                 session = session,
-                title = paste0("Wrong data format found in Label data ",paste(which(datan_info==1),collapse = ",")),
-                text = paste0(datan_info_text[datan_info_text != ""],collapse = ";"),
+                title = "Label data format error!",
+                text = tags$div(HTML(datan_info_text_print)),
                 type = "error"
               )
-              dataview_export <<- NULL
+            }else if(datal_info != 0){
+              sendSweetAlert(
+                session = session,
+                title = "Link data format error!",
+                text = datal_info,
+                type = "error"
+              )
             }else{
               sendSweetAlert(
                 session = session,
@@ -3721,20 +3722,6 @@ server <- function(input, output,session) {
     letplotgo <<- 0
     chr_type <- input$chr_type
     link_type <- input$colformatLinks
-    # if(!is.null(data.N)){
-    #   lab_inf <- NULL
-    #   lab_inf_word <- NULL
-    #   for (k in 1:length(data.N)) {
-    #     data_NN <- data.T[[k]]
-    #     
-    #     
-    #     
-    #     
-    #     
-    #     
-    #   }
-    # }
-    
     
     
     
@@ -3885,14 +3872,15 @@ server <- function(input, output,session) {
       )
     } else if(!is.null(data.L)){
       if(link_type == 1){
-        letplotgo <<- 1
         if(ncol(data.L) != 6 & ncol(data.L) != 7){
           sendSweetAlert(
             session = session,
             title = "",
-            text = "Data without a 'color' column should contain 6 columns.",
+            text = "Data without a 'color' column should contain at least 6 columns.",
             type = "error"
           )
+        }else{
+          letplotgo <<- 1
         }
       }else if(link_type == 2){
         if(ncol(data.L) != 7){
@@ -3958,7 +3946,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "Data without a 'color' column should contain 6 columns.",
+            text = "Data without a 'color' column should contain at least 6 columns.",
             type = "error"
           )
         }
@@ -4000,28 +3988,6 @@ server <- function(input, output,session) {
         }
       }
     }
-    # if(!is.null(data.L) && link_type == 1 && ncol(data.L) != 6){ # colformatLinks
-    #   sendSweetAlert(
-    #     session = session,
-    #     title = "",
-    #     text = "Data without a 'color' column should contain 6 columns.",
-    #     type = "error"
-    #   )
-    # }else if((!is.null(data.L) && link_type == 2 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 2 && !is.character(data.L[,7]))){
-    #   sendSweetAlert(
-    #     session = session,
-    #     title = "",
-    #     text = "The seventh column of Data with multi-groups should be character.",
-    #     type = "error"
-    #   )
-    # }else if((!is.null(data.L) && link_type == 3 && ncol(data.L) != 7)|(!is.null(data.L) && link_type == 3 && !is.numeric(data.L[,7]))){
-    #   sendSweetAlert(
-    #     session = session,
-    #     title = "",
-    #     text = "The seventh column of 'Data with gradual values' should be numeric.",
-    #     type = "error"
-    #   )
-    # }
   })
   whichchangechrset <<- NULL
   toListentra <- reactive({
