@@ -3876,7 +3876,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "Data without a 'color' column should contain at least 6 columns.",
+            text = "The input data to create links should contain 6 or 7 columns.",
             type = "error"
           )
         }else{
@@ -3887,7 +3887,7 @@ server <- function(input, output,session) {
           sendSweetAlert(
             session = session,
             title = "",
-            text = "The input data should contain 7 columns.",
+            text = "The input data to create colored links should contain 7 columns.",
             type = "error"
           )
         }else{
@@ -3895,7 +3895,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of Data with multi-groups should be characters.",
+              text = "The 7th column of links 'Data with multi-groups' should be characters.",
               type = "error"
             )
           }else{
@@ -3915,7 +3915,7 @@ server <- function(input, output,session) {
             sendSweetAlert(
               session = session,
               title = "",
-              text = "The 7th column of 'Data with gradual values' should be a numeric vector.",
+              text = "The 7th column of links 'Data with gradual values' should be a numeric vector.",
               type = "error"
             )
           }else{
