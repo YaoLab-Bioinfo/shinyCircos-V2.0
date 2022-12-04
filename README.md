@@ -7,7 +7,7 @@ Welcome to the telegram group https://t.me/+NadFeZazBBc2Y2U1.
 
 #	Use shinyCircos-V2.0 online
 
-shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a>, and <a href="https://yimingyu.shinyapps.io/shinycircos/" target="_blank">https://yimingyu.shinyapps.io/shinycircos/</a> for online use.  
+shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a>, and <a href="https://asiawang.shinyapps.io/shinyCircos/" target="_blank">https://asiawang.shinyapps.io/shinyCircos/</a> for online use.  
 
 #	<font color="red">Launch shinyCircos-V2.0 directly from R and GitHub</font>
 
