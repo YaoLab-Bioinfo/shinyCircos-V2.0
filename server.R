@@ -2632,8 +2632,9 @@ server <- function(input, output,session) {
   })
   
   observeEvent(input$dataup_go,{
+    dataview_export <<- NULL
     dataall <- c(chrdatas,tradatas,lindatas,labdatas)
-    datarepet <<- TRUE %in% duplicated(dataall)
+    datarepet <- TRUE %in% duplicated(dataall)
     if(datarepet == TRUE){
       sendSweetAlert(
         session = session,
@@ -2677,6 +2678,20 @@ server <- function(input, output,session) {
             session = session,
             title = "",
             text = "Please check the format of the Link data.",
+            type = "error"
+          )
+        }else if(length(lindatas) > 1){
+          sendSweetAlert(
+            session = session,
+            title = "",
+            text = "Only a single Links dataset is allowed.",
+            type = "error"
+          )
+        }else if(length(chrdatas) != 1){
+          sendSweetAlert(
+            session = session,
+            title = "",
+            text = "Only a single Chromosome dataset is allowed.",
             type = "error"
           )
         }else{
@@ -2927,6 +2942,7 @@ server <- function(input, output,session) {
         }
       }
     }
+    
     
     #chromosome view
     output$viewChr <- renderDT(
@@ -5925,6 +5941,16 @@ server <- function(input, output,session) {
         file.copy("www/shinyCircos-V2.0_User_Manual_English.pdf",file)
       }, contentType = 'application/pdf'
     )
+  })
+  observeEvent(input$dataup_go,{
+    output$plotbutton <- reactive({
+      if(!is.null(dataview_export)){
+        return("1")
+      }else{
+        return("0")
+      }
+    })
+    outputOptions(output, "plotbutton", suspendWhenHidden = FALSE)
   })
   
 }

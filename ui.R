@@ -21,22 +21,6 @@ sidebar <- bs4DashSidebar(
     bs4SidebarMenuItem("Help",tabName = "help", icon = icon("question",lib = "font-awesome")),
     bs4SidebarMenuItem("About",tabName = "about", icon = icon("info",lib = "font-awesome")),
     bs4SidebarMenuItem("Contact",tabName = "contact", icon = icon("compass"))
-    # bs4SidebarMenuItem(
-    #   text = "ShinyCircos-V1.0",
-    #   tabName = "11111",
-    #   
-    #   #href = "https://venyao.xyz/shinyCircos/", 
-    #   icon = icon("link",lib = "font-awesome"),
-    #   #newTab = TRUE,
-    #   bs4SidebarMenuSubItem(
-    #     text = "1111",
-    #     tabName = NULL,
-    #     href = "https://venyao.xyz/shinyCircos/", 
-    #     newTab = TRUE,
-    #     icon = shiny::icon("angles-right"),
-    #     selected = NULL
-    #   )
-    # )
   )
 )
 #******#main body
@@ -241,7 +225,7 @@ body <- bs4DashBody(
          )
        ),
        conditionalPanel(
-         condition = "input.datatype == 'a' && input.dataup_go",
+         condition = "output.plotbutton == '1'",
          bs4Card(
            collapsible = FALSE,
            title = HTML('<i class="fa-solid fa-circle"></i> Chromosome data (used to define the chromosomes of a Circos plot)'),
