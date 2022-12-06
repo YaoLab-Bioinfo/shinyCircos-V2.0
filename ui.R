@@ -225,7 +225,7 @@ body <- bs4DashBody(
          )
        ),
        conditionalPanel(
-         condition = "output.plotbutton == '1'",
+         condition = "output.plotbutton == '1' & input.datatype == 'a'",
          bs4Card(
            collapsible = FALSE,
            title = HTML('<i class="fa-solid fa-circle"></i> Chromosome data (used to define the chromosomes of a Circos plot)'),

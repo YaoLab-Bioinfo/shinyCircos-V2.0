@@ -671,7 +671,8 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
             names(data.TT)[4] <- "stack"
             names(data.TT_old) <- c("chr","start","end","stack")
             if(coltypeTrack==1){
-              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              selcols <- distinctColorPalette(999)
+              #selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
               tkcolor <- sample(selcols,length(unique(data.TT$stack)))
               tkcolor <- data.frame(group=unique(data.TT$stack),cols=tkcolor,stringsAsFactors=F)
               colname <- colnames(data.TT)
@@ -701,11 +702,6 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
               data.TT <- data.TT[,1:4]
             }
-            
-            
-            
-            
-            
           }else{
             if(coltypeTrack == 2){
               tkcolor <- tra_colcol[[i]]
@@ -731,8 +727,9 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               tkcolor <- unique(data.TTC$cols,fromLast = TRUE)
               data.TT <- data.TT[,1:4]
             }else if(coltypeTrack==1 && ("color" %in% colnames(data.TT))){
-              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              selcols <- distinctColorPalette(999)
               tkcolor <- sample(selcols,length(unique(data.TT$color)))
+              #tkcolor <- distinctColorPalette(length(unique(data.TT$color)))
               tkcolor <- data.frame(group=unique(data.TT$color),cols=tkcolor,stringsAsFactors=F)
               colname <- colnames(data.TT)
               data.TTC <- merge(data.TT,tkcolor,by.x="color",by.y="group",all.x=T)
@@ -741,7 +738,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
               tkcolor <- unique(data.TTC$cols)
               data.TT <- data.TT[,1:4]
             }else{
-              selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
+              selcols <- distinctColorPalette(999)
               tkcolor <- sample(selcols,ncol(data.TT_old)-3)
             }
           }
