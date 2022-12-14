@@ -8,7 +8,8 @@ https://t.me/+NadFeZazBBc2Y2U1
 
 #	Use shinyCircos-V2.0 online
 
-shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a> and <a href="https://asiawang.shinyapps.io/shinyCircos/" target="_blank">https://asiawang.shinyapps.io/shinyCircos/</a> for online use.  
+- https://venyao.xyz/shinyCircos/
+- https://asiawang.shinyapps.io/shinyCircos/
 
 #	Help manual and video tutorials
 
