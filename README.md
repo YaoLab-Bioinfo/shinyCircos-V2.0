@@ -1,5 +1,5 @@
 #	shinyCircos-V2.0
-shinyCircos-V2.0 is the updated version of shinyCircos.
+shinyCircos-V2.0 is the updated version of shinyCircos.  
 In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
 
 #	Welcome to join the telegram group
@@ -62,13 +62,13 @@ In shinyCircos-V2.0, we developed several advanced features, designed brand-new 
 
 User can choose to run shinyCircos-V2.0 installed locally for a more preferable experience.
 
-**Step 1: Install R and RStudio**
+- **Step 1: Install R and RStudio**
 
 Before running the app you will need to have R and RStudio installed (tested with R 3.3.3 and RStudio 1.0.143).  
 Please check CRAN (<a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>) for the installation of R.  
 Please check <a href="https://www.rstudio.com/" target="_blank">https://www.rstudio.com/</a> for the installation of RStudio.  
 
-**Step 2: Install the R Shiny package and other packages required by shinyCircos-V2.0**
+- **Step 2: Install the R Shiny package and other packages required by shinyCircos-V2.0**
 
 Start an R session using RStudio and run these lines:  
 ```
@@ -89,7 +89,7 @@ install.packages("BiocManager")
 BiocManager::install("ComplexHeatmap")
 ```
 
-**Step 3: Start the app**  
+- **Step 3: Start the app**  
 
 Start an R session using RStudio and run these lines:  
 ```
