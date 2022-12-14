@@ -1,15 +1,33 @@
-# shinyCircos-V2.0：an R/Shiny application for interactive creation of Circos plot
+#	shinyCircos-V2.0：an R/Shiny application for interactive creation of Circos plot
 ---
 shinyCircos-V2.0 is the updated version of shinyCircos.
 In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
 
-Welcome to the telegram group https://t.me/+NadFeZazBBc2Y2U1.
+#	Welcome to join the telegram group
+
+https://t.me/+NadFeZazBBc2Y2U1  
 
 #	Use shinyCircos-V2.0 online
 
 shinyCircos-V2.0 is deployed at <a href="https://venyao.xyz/shinyCircos/" target="_blank">https://venyao.xyz/shinyCircos/</a>, and <a href="https://asiawang.shinyapps.io/shinyCircos/" target="_blank">https://asiawang.shinyapps.io/shinyCircos/</a> for online use.  
 
-#	<font color="red">Launch shinyCircos-V2.0 directly from R and GitHub</font>
+#	Help manual and video tutorials
+
+- Help manual
+https://yaolab-bioinfo.gitbook.io/shinycircos/
+
+- Video tutorials
+1. Example Circos plot 1
+	+ https://youtu.be/H0mrhO2vAX8
+	+ https://www.163.com/v/video/VNNIPBAQI.html
+	+ https://venyao.xyz/example_circos_plot_1.mp4
+2. Example Circos plot 2
+	+ https://youtu.be/4Ot8C2XfVy0
+	+ https://www.163.com/v/video/VNNIRQH2K.html
+	+ https://venyao.xyz/example_circos_plot_2.mp4
+
+
+#	Launch shinyCircos-V2.0 directly from R and GitHub
 
 User can choose to run shinyCircos-V2.0 installed locally for a more preferable experience.
 
