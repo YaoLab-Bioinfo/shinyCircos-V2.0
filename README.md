@@ -2,17 +2,14 @@
 shinyCircos-V2.0 is the updated version of shinyCircos.  
 In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
 
-#	Welcome to join the telegram group
-
-- https://t.me/+NadFeZazBBc2Y2U1  
-
 #	Use shinyCircos-V2.0 online
-
 - https://venyao.xyz/shinyCircos/
 - https://asiawang.shinyapps.io/shinyCircos/
 
-#	Help manual and video tutorials
+#	Welcome to join the telegram group
+- https://t.me/+NadFeZazBBc2Y2U1  
 
+#	Help manual and video tutorials
 - Help manual
 	+ https://yaolab-bioinfo.gitbook.io/shinycircos/
 
