@@ -1,10 +1,10 @@
-#	shinyCircos-V2.0：an R/Shiny application for interactive creation of Circos plot
+#	shinyCircos-V2.0
 shinyCircos-V2.0 is the updated version of shinyCircos.
 In shinyCircos-V2.0, we developed several advanced features, designed brand-new user interface, and fixed bugs detected in shinyCircos.
 
 #	Welcome to join the telegram group
 
-https://t.me/+NadFeZazBBc2Y2U1  
+- https://t.me/+NadFeZazBBc2Y2U1  
 
 #	Use shinyCircos-V2.0 online
 
