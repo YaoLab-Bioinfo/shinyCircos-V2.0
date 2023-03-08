@@ -853,37 +853,29 @@ server <- function(input, output,session) {
             column(
               6,
               tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_sam_chrfilenm", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Filenames of the input datasets.",
-                  placement = "bottom"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Filenames of the input datasets.
+         </p></div></td>
+         </tr></table>')
               )
             ),
             column(
               6,
               tags$div(
-                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome data type</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_sam_chrtyp", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
+                HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome data type</font>
+         </div></td>
+         <td><div class="help-right-tip"><p>
+         Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
                      The first 3 columns of either type of data should be the chromosome ID,
-                     the start and end coordinates of different genomic regions. See example data for more details.",
-                  placement = "bottom"
-                )
+                     the start and end coordinates of different genomic regions. See example data for more details.
+         </p></div></td>
+         </tr></table>')
               )
             )
           ),
@@ -897,7 +889,8 @@ server <- function(input, output,session) {
                 ),
                 column(
                   2,
-                  bs4Dash::tooltip(
+                  div(
+                    class = "eye-button-class",
                     actionBttn(
                       inputId = "view_chr_data_sam",
                       label = NULL,
@@ -905,8 +898,9 @@ server <- function(input, output,session) {
                       color = "success",
                       icon = icon("eye")
                     ),
-                    title = "Click to view the dataset.",
-                    placement = "bottom"
+                    p(
+                      'Click to view the dataset.'
+                    )
                   )
                 )
               )
@@ -925,16 +919,18 @@ server <- function(input, output,session) {
                 ),
                 column(
                   1,
-                  bs4Dash::tooltip(
+                  div(
+                    class = "right-button-class",
                     actionBttn(
                       inputId = "sam_chr_setting",
                       label = NULL,
                       style = "unite",
                       color = "success",
-                      icon = icon("gear")
+                      icon = icon("gear",lib = "font-awesome")
                     ),
-                    title = "Set parameters for chromosome data. NOTE: Changes will not be applied for example datasets.",
-                    placement = "bottom"
+                    p(
+                      'Set parameters for chromosome data. NOTE: Changes will not be applied for example datasets.'
+                    )
                   )
                 )
               )
@@ -961,18 +957,14 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = "sam_trackChr",
                     label = tags$div(
-                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_sam_trachr", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Display or hide the chromosome band?",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Display or hide the chromosome band?
+         </p></div></td>
+         </tr></table>')
                     ),
                     choices = c("Yes" = "track", "No" = ""),
                     selected = sam_trackChr
@@ -982,18 +974,14 @@ server <- function(input, output,session) {
                     textInput(
                       inputId = "sam_colorChr",
                       label = tags$div(
-                        HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
-                        bs4Dash::tooltip(
-                          actionButton(
-                            inputId = "datvie_sam_chrcol", 
-                            label="" , 
-                            icon=icon("question"),
-                            status="info",
-                            size = "xs"
-                          ),
-                          title = "Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
-                          placement = "bottom"
-                        )
+                        HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, "grey" or "grey,red,green,blue". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                       ),
                       value = sam_colorChr
                     )
@@ -1003,18 +991,14 @@ server <- function(input, output,session) {
                     numericInput(
                       inputId = "sam_heightChr",
                       label = tags$div(
-                        HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
-                        bs4Dash::tooltip(
-                          actionButton(
-                            inputId = "datvie_sam_heichr1", 
-                            label="" , 
-                            icon=icon("question"),
-                            status="info",
-                            size = "xs"
-                          ),
-                          title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
-                          placement = "bottom"
-                        )
+                        HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the chromosome band, which should be greater than 0 and smaller than 0.9.
+         </p></div></td>
+         </tr></table>')
                       ),
                       value = sam_heightChr, 
                       min = 0.01, 
@@ -1028,18 +1012,14 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_heightChr",
                     label = tags$div(
-                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_sam_heichr2", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the chromosome band, which should be greater than 0 and smaller than 0.9.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = sam_heightChr, 
                     min = 0.01, 
@@ -1051,18 +1031,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_outAxis",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display the axis for genomic position?</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_sam_outaxis", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Display or hide the axis for genomic position?",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Display the axis for genomic position?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Display or hide the axis for genomic position?
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Yes" = "1", "No" = "2"),
                   selected = sam_outAxis
@@ -1072,18 +1048,14 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_outAxis_size",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the axis for genomic position</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_tip_sam_outaxissize", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Too large font size may cause problems.",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font size of the axis for genomic position</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Too large font size may cause problems.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = sam_outAxis_size,
                     min = 0.1,
@@ -1094,18 +1066,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = "sam_labelChr",
                   label = tags$div(
-                    HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_sam_labelchr", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Display or hide the chromosome IDs?",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Display or hide the chromosome IDs?
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Yes" = "1", "No" = "2"),
                   selected = sam_labelChr
@@ -1115,18 +1083,14 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = "sam_labelChr_size",
                     label = tags$div(
-                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Font size of the chromosome IDs</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_sam_labsize_tip", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Too large font size may cause problems.",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Font size of the chromosome IDs</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Too large font size may cause problems.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = sam_labelChr_size,
                     min = 0.1,
@@ -1136,18 +1100,14 @@ server <- function(input, output,session) {
                   sliderTextInput(
                     inputId = "sam_outergap",
                     label = tags$div(
-                      HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance between chromosome IDs and chromosome axis</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_tip90", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Distance between the chromosome IDs and the chromosome axis for genomic positions.",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance between chromosome IDs and chromosome axis</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Distance between the chromosome IDs and the chromosome axis for genomic positions.
+         </p></div></td>
+         </tr></table>')
                     ),
                     choices = 0:200,
                     grid = FALSE
@@ -1156,36 +1116,28 @@ server <- function(input, output,session) {
                 textInput(
                   inputId = "sam_gapChr",
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_tip_sam_gapchr", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the distance between the first and the second sector.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, "1" or "1,2,3,1". The first value corresponds to the distance between the first and the second sector.
+         </p></div></td>
+         </tr></table>')
                   ),
                   value = sam_gapChr
                 ),
                 numericInput(
                   inputId = "sam_distance_Chr",
                   label = tags$div(
-                    HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_tip_sam_dischr", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.
+         </p></div></td>
+         </tr></table>')
                   ),
                   value = sam_distance_Chr, 
                   min = 0, 
@@ -1205,52 +1157,40 @@ server <- function(input, output,session) {
               column(
                 6,
                 tags$div(
-                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = "datvie_tip_sam_chrnm", 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Filenames of the input datasets.",
-                    placement = "bottom"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Filenames of the input datasets.
+         </p></div></td>
+         </tr></table>')
                 )
               ),
               column(
                 3,
                 tags$div(
-                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = "datvie_tip_sam_plottype", 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "The type of plot to create using data of the current track.",
-                    placement = "bottom"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font>
+         </div></td>
+         <td><div class="help-right-tip"><p>
+         The type of plot to create using data of the current track.
+         </p></div></td>
+         </tr></table>')
                 )
               ),
               column(
                 3,
                 tags$div(
-                  HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = "datvie_tip_sam_traidx", 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "The index of the current track. Identical index is not allowed for different tracks.",
-                    placement = "bottom"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font>
+         </div></td>
+         <td><div class="help-right-tip"><p>
+         The index of the current track. Identical index is not allowed for different tracks.
+         </p></div></td>
+         </tr></table>')
                 )
               )
             ),
@@ -1265,7 +1205,8 @@ server <- function(input, output,session) {
                     ),
                     column(
                       2,
-                      bs4Dash::tooltip(
+                      div(
+                        class = "eye-button-class",
                         actionBttn(
                           inputId = paste0("view_sam_tra_data",x),
                           label = NULL,
@@ -1273,8 +1214,9 @@ server <- function(input, output,session) {
                           color = "success",
                           icon = icon("eye")
                         ),
-                        title = "Click to view the dataset.",
-                        placement = "bottom"
+                        p(
+                          'Click to view the dataset.'
+                        )
                       )
                     )
                   )
@@ -1302,7 +1244,8 @@ server <- function(input, output,session) {
                     ),
                     column(
                       2,
-                      bs4Dash::tooltip(
+                      div(
+                        class = "right-button-class",
                         actionBttn(
                           inputId = paste0("sam_tra_setting",x),
                           label = NULL,
@@ -1310,8 +1253,9 @@ server <- function(input, output,session) {
                           color = "success",
                           icon = icon("gear")
                         ),
-                        title = "Set parameters for this track. NOTE: Changes will not be applied for example datasets.",
-                        placement = "bottom"
+                        p(
+                          'Set parameters for this track. NOTE: Changes will not be applied for example datasets.'
+                        )
                       )
                     )
                   )
@@ -1345,19 +1289,14 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_bar_direction",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_sam_bar_direction",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which 
-                                contains the data values will be divided into two groups based on the boundary value.",
-                                placement = "bottom"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which contains the data values will be divided into two groups based on the boundary value.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Unidirectional" = "1", "Bidirectional" = "2"),
                             selected = sam_tra_bar_direction[x]
@@ -1400,25 +1339,21 @@ server <- function(input, output,session) {
                             pickerInput(
                               inputId = paste0("sam_tra_coltype",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                                bs4Dash::tooltip(
-                                  actionButton(
-                                    inputId = paste0("datvie_tip_bar_sam_trycoltp",x), 
-                                    label="" , 
-                                    icon=icon("question"),
-                                    status="info",
-                                    size = "xs"
-                                  ),
-                                  title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                         To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.
-                        To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                        colors separated by commas. For example, "red" or "red,orange,blue".
+                        To customize color for data with multiple groups, the column indicating different groups should be named as "color" or "stack".
                         Users should provide a character strings assigning colors to each group. 
-                        For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                        Color for data groups without assigned color would be set as 'grey'. 
-                        Hex color codes as '#FF0000' are also supported. See example data for more details.",
-                                  placement = "right"
-                                )
+                        For example, "a:red;b:green;c:blue", in which "a b c" represent different data groups. 
+                        Color for data groups without assigned color would be set as "grey". 
+                        Hex color codes as "#FF0000" are also supported. See example data for more details.
+         </p></div></td>
+         </tr></table>')
                               ),
                               
                               choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3"),
@@ -1440,25 +1375,21 @@ server <- function(input, output,session) {
                               pickerInput(
                                 inputId = paste0("sam_tra_coltype",x),
                                 label = tags$div(
-                                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                                  bs4Dash::tooltip(
-                                    actionButton(
-                                      inputId = paste0("datvie_tip_bar_sam_trycoltp2",x), 
-                                      label="" , 
-                                      icon=icon("question"),
-                                      status="info",
-                                      size = "xs"
-                                    ),
-                                    title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                         To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.if there is only one column of value, only one color needs to be specified.
-                        To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                        colors separated by commas. For example, "red" or "red,orange,blue".
+                        To customize color for data with multiple groups, the column indicating different groups should be named as "color" or "stack".
                         Users should provide a character strings assigning colors to each group. 
-                        For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                        Color for data groups without assigned color would be set as 'grey'. 
-                        Hex color codes as '#FF0000' are also supported. See example data for more details.",
-                                    placement = "right"
-                                  )
+                        For example, "a:red;b:green;c:blue", in which "a b c" represent different data groups. 
+                        Color for data groups without assigned color would be set as "grey". 
+                        Hex color codes as "#FF0000" are also supported. See example data for more details.
+         </p></div></td>
+         </tr></table>')
                                 ),
                                 choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3"),
                                 selected = sam_tra_coltype[x]
@@ -1484,18 +1415,14 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_line_fillarea",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_bar_sam_fillarea",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Fill the area below the lines.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Fill the area below the lines.
+         </p></div></td>
+         </tr></table>')
                           ),
                           choices = c("Yes" = "add", "No" = ""),
                           selected=sam_tra_line_fillarea[x]
@@ -1516,23 +1443,19 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_rect_rectcol",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_rect_sam_rectcol",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
-                    If 'Specific' was chosen, all data will be filled by a specified color. 
-                    If 'Custom' was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
-                    Users should provide values as 'a:red;b:green;c:blue', in which 'a b c' represent different
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    If "Specific" was chosen, all data will be filled by a specified color. 
+                    If "Custom" was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
+                    Users should provide values as "a:red;b:green;c:blue", in which "a b c" represent different
                     data category indicated by the 4th column of the uploaded data. 
-                    Color for data without customed color will be set to NULL. Hex color codes as '#FF0000' are also supported.",
-                                placement = "right"
-                              )
+                    Color for data without customed color will be set to NULL. Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Random" = "1", "Specific" = "2", "Custom" = "3"),
                             selected = sam_tra_rect_rectcol[x]
@@ -1559,18 +1482,19 @@ server <- function(input, output,session) {
                             pickerInput(
                               inputId = paste0("sam_tra_line_selrea",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color for the filled area </b></font>'),
-                                bs4Dash::tooltip(
-                                  actionButton(
-                                    inputId = paste0("datvie_tip_line_sam_selrea",x), 
-                                    label="" , 
-                                    icon=icon("question"),
-                                    status="info",
-                                    size = "xs"
-                                  ),
-                                  title = "Color used for the filled area, which can be identical with lines' color or specified by the users. If 'Custom' was chosen, all data will be filled by a color specified by the user.",
-                                  placement = "right"
-                                )
+                                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Color for the filled area </b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    If "Specific" was chosen, all data will be filled by a specified color. 
+                    If "Custom" was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
+                    Users should provide values as "a:red;b:green;c:blue", in which "a b c" represent different
+                    data category indicated by the 4th column of the uploaded data. 
+                    Color for data without customed color will be set to NULL. Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                               ),
                               choices =  c("Identical with lines" = "1", "Custom" = "2"),
                               selected=sam_tra_line_selrea[x]
@@ -1591,18 +1515,14 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_tra_transparency",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_tra_trans",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.
+         </p></div></td>
+         </tr></table>')
                           ),
                           value=sam_tra_transparency[x],
                           min=0,
@@ -1614,18 +1534,14 @@ server <- function(input, output,session) {
                         textInput(
                           paste0("sam_tra_poipch",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_poi_pch",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         </p></div></td>
+         </tr></table>')
                           ),
                           value= sam_tra_poipch[x]
                         )
@@ -1635,18 +1551,14 @@ server <- function(input, output,session) {
                           textInput(
                             inputId = paste0("sam_tra_poipch",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_sam_poi_pch",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
-                                placement = "right"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         </p></div></td>
+         </tr></table>')
                             ),
                             value= sam_tra_poipch[x]
                           ),
@@ -1678,18 +1590,10 @@ server <- function(input, output,session) {
                         textInput(
                           inputId = paste0("sam_tra_baseline",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_baseline",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
-                              placement = "right"
-                            )
+                            HTML("<table><tr>
+         <td><div class='help-tip-label'><font><h4><i class='fa-solid fa-play'></i><b> Y-axis coordinates of baselines</b></font></div></td>
+         <td><div class='help-tip'><p>Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.</p></div></td>
+         </tr></table>")
                           ),
                           value=sam_tra_baseline[x]
                         )
@@ -1698,18 +1602,14 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_tra_colorline",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_baselinecol",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "The color to be used for the baselines which can be NULL or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'. Hex color codes as '#FF0000' are also supported.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the baselines which can be NULL or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, "grey" or "red,green". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                           ),
                           value = sam_tra_colorline[x],
                           returnName = TRUE
@@ -1719,19 +1619,15 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_tra_bgcol",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_bgcol",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
-                  automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
+                  automatically to the number of sectors. For example, "grey95" or "grey95,grey,pink,yellow". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                           ),
                           value = sam_tra_bgcol[x],
                           returnName = TRUE
@@ -1742,18 +1638,14 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_heatmapcol",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_heat_sam_col",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Colors to be used for the heatmap, which can be assigned by the application or specified by the users.",
-                                placement = "right"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Colors to be used for the heatmap, which can be assigned by the application or specified by the users.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Typical" = "1", "Custom" = "2"),
                             selected = sam_tra_hmap_heatmapcol[x]
@@ -1802,18 +1694,14 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_heat_sam_posline",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
-                                placement = "right"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Yes" = "1", "No" = "2"),
                             selected = sam_tra_hmap_poslines[x]
@@ -1823,18 +1711,14 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>'),
-                                bs4Dash::tooltip(
-                                  actionButton(
-                                    inputId = paste0("datvie_tip_heat_sam_poslinehei",x), 
-                                    label="" , 
-                                    icon=icon("question"),
-                                    status="info",
-                                    size = "xs"
-                                  ),
-                                  title = "Height of the position lines.",
-                                  placement = "right"
-                                )
+                                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the position lines.
+         </p></div></td>
+         </tr></table>')
                               ),
                               value=sam_tra_hmap_poslinhei[x],
                               min=0,
@@ -1849,23 +1733,19 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_heatcol_dis",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_sam_heat_colorsel",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
-                    If 'Specific' was chosen, all data will be filled by a specified color. 
-                    If 'Custom' was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
-                    Users should provide values as 'a:red;b:green;c:blue', in which 'a b c' represent different
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    If "Specific" was chosen, all data will be filled by a specified color. 
+                    If "Custom" was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
+                    Users should provide values as "a:red;b:green;c:blue", in which "a b c" represent different
                     data category indicated by the 4th column of the uploaded data. 
-                    Color for data without customed color will be set to NULL. Hex color codes as '#FF0000' are also supported.",
-                                placement = "right"
-                              )
+                    Color for data without customed color will be set to NULL. Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                             ),
                             #label = "Data color",
                             choices = c("Random" = "1" , "Custom" = "2"),
@@ -1881,18 +1761,14 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_poslines",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_sam_heat_posline2",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
-                                placement = "right"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Yes" = "1", "No" = "2"),
                             selected = sam_tra_hmap_poslines[x]
@@ -1902,18 +1778,14 @@ server <- function(input, output,session) {
                             numericInput(
                               inputId = paste0("sam_tra_hmap_poslinhei",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>'),
-                                bs4Dash::tooltip(
-                                  actionButton(
-                                    inputId = paste0("datvie_tip_heat_sam_poslinehei2",x), 
-                                    label="" , 
-                                    icon=icon("question"),
-                                    status="info",
-                                    size = "xs"
-                                  ),
-                                  title = "Height of the position lines.",
-                                  placement = "right"
-                                )
+                                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Position lines height</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the position lines.
+         </p></div></td>
+         </tr></table>')
                               ),
                               value=sam_tra_hmap_poslinhei[x],
                               min=0,
@@ -1926,18 +1798,14 @@ server <- function(input, output,session) {
                       numericInput(
                         inputId = paste0("sam_heightTraus",x),
                         label = tags$div(
-                          HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height</b></font>'),
-                          bs4Dash::tooltip(
-                            actionButton(
-                              inputId = paste0("datvie_tip_sam_trahei",x), 
-                              label="" , 
-                              icon=icon("question"),
-                              status="info",
-                              size = "xs"
-                            ),
-                            title = "Height of the current track.",
-                            placement = "right"
-                          )
+                          HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Track height</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the current track.
+         </p></div></td>
+         </tr></table>')
                         ),
                         value = sam_heightTraus[x],
                         min=0.01,
@@ -1948,18 +1816,14 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_Tra_margin",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_tramar",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         This parameter can also be used to tune the distance between a track and a label data, or the distance between a track and a link data.
+         </p></div></td>
+         </tr></table>')
                           ),
                           
                           value=sam_Tra_margin[x],
@@ -1973,18 +1837,14 @@ server <- function(input, output,session) {
                           pickerInput(
                             inputId = paste0("sam_tra_hmap_cellbord",x),
                             label = tags$div(
-                              HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>'),
-                              bs4Dash::tooltip(
-                                actionButton(
-                                  inputId = paste0("datvie_tip_sam_heaat_cellbo",x), 
-                                  label="" , 
-                                  icon=icon("question"),
-                                  status="info",
-                                  size = "xs"
-                                ),
-                                title = "Add borders to the heatmap grids, which can be used to separate different cells from each other.",
-                                placement = "right"
-                              )
+                              HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add borders to the heatmap grids, which can be used to separate different cells from each other.
+         </p></div></td>
+         </tr></table>')
                             ),
                             choices = c("Yes" = "add", "No" = ""),
                             selected = sam_tra_hmap_cellbord[x]
@@ -1994,18 +1854,14 @@ server <- function(input, output,session) {
                             colourInput(
                               inputId = paste0("sam_tra_hmap_cellbord_col",x),
                               label = tags$div(
-                                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>'),
-                                bs4Dash::tooltip(
-                                  actionButton(
-                                    inputId = paste0("datvie_tip_sam_heaat_bocol",x), 
-                                    label="" , 
-                                    icon=icon("question"),
-                                    status="info",
-                                    size = "xs"
-                                  ),
-                                  title = "The color to be used for the borders of heatmap grids. For example, 'white' or 'red'. Hex color codes as '#FF0000' are also supported.",
-                                  placement = "right"
-                                )
+                                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the borders of heatmap grids. For example, "white" or "red". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                               ),
                               value = sam_tra_hmap_cellbord_col[x],
                               returnName = TRUE
@@ -2017,18 +1873,14 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_border",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_tra_bo",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Add borders to each sector.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add borders to each sector.
+         </p></div></td>
+         </tr></table>')
                           ),
                           choices = c("Yes" = "add", "No" = ""),
                           selected= sam_tra_border[x]
@@ -2039,18 +1891,14 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_tra_yaxis",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_tra_yax",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Add Y-axis for all the tracks if applicable.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add Y-axis for all the tracks if applicable.
+         </p></div></td>
+         </tr></table>')
                           ),
                           choices = c("Yes" = "1", "No" = "2"),
                           selected= sam_tra_yaxis[x]
@@ -2074,35 +1922,27 @@ server <- function(input, output,session) {
                 column(
                   6,
                   tags$div(
-                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_lab_tip1_sam", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Filenames of the input datasets.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Filenames of the input datasets.
+         </p></div></td>
+         </tr></table>')
                   )
                 ),
                 column(
                   6,
                   tags$div(
-                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_tip_sam_labidx", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The track index for the label data. Elements in the selected track will be labeled by the label data.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font>
+         </div></td>
+         <td><div class="help-right-tip"><p>
+         The track index for the label data. Elements in the selected track will be labeled by the label data.
+         </p></div></td>
+         </tr></table>')
                   )
                 )
               ),
@@ -2117,7 +1957,8 @@ server <- function(input, output,session) {
                       ),
                       column(
                         2,
-                        bs4Dash::tooltip(
+                        div(
+                          class = "eye-button-class",
                           actionBttn(
                             inputId = paste0("sam_view_lab_data",x),
                             label = NULL,
@@ -2125,8 +1966,9 @@ server <- function(input, output,session) {
                             color = "success",
                             icon = icon("eye")
                           ),
-                          title = paste0("Click to view the dataset."),
-                          placement = "bottom"
+                          p(
+                            'Click to view the dataset.'
+                          )
                         )
                       )
                     )
@@ -2146,7 +1988,8 @@ server <- function(input, output,session) {
                       
                       column(
                         1,
-                        bs4Dash::tooltip(
+                        div(
+                          class = "right-button-class",
                           actionBttn(
                             inputId = paste0("sam_lab_setting",x),
                             label = NULL,
@@ -2154,8 +1997,9 @@ server <- function(input, output,session) {
                             color = "success",
                             icon = icon("gear")
                           ),
-                          title = paste0("Set parameters for the label data. NOTE: Changes will not be applied for example datasets."),
-                          placement = "bottom"
+                          p(
+                            'Set parameters for the label data. NOTE: Changes will not be applied for example datasets.'
+                          )
                         )
                       )
                     )
@@ -2182,18 +2026,14 @@ server <- function(input, output,session) {
                         numericInput(
                           inputId = paste0("sam_lab_fontsize",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_lab_labhi",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "The height of the track occupied by the label.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The height of the track occupied by the label.
+         </p></div></td>
+         </tr></table>')
                           ),
                           value= sam_lab_fontsize[x], 
                           min=0.1, 
@@ -2203,18 +2043,14 @@ server <- function(input, output,session) {
                         sliderTextInput(
                           inputId = paste0("sam_lab_fontper",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size (%)</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("sam_datvie_tip_lab_adjustfontsize",x),
-                                label="" ,
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font size (%)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.
+         </p></div></td>
+         </tr></table>')
                           ),
                           choices = c(10:200),
                           selected = 100
@@ -2222,18 +2058,14 @@ server <- function(input, output,session) {
                         colourInput(
                           inputId = paste0("sam_lab_fontcol",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_lab_labcol",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "The color of the label text and the connection line.",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color of the label text and the connection line.
+         </p></div></td>
+         </tr></table>')
                           ),
                           returnName = TRUE,
                           value = sam_lab_fontcol[x]
@@ -2241,18 +2073,14 @@ server <- function(input, output,session) {
                         pickerInput(
                           inputId = paste0("sam_poslabels",x),
                           label = tags$div(
-                            HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
-                            bs4Dash::tooltip(
-                              actionButton(
-                                inputId = paste0("datvie_tip_sam_lab_labpos",x), 
-                                label="" , 
-                                icon=icon("question"),
-                                status="info",
-                                size = "xs"
-                              ),
-                              title = "Place the labels in the inner or the outer of the track?",
-                              placement = "right"
-                            )
+                            HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Place the labels in the inner or the outer of the track?
+         </p></div></td>
+         </tr></table>')
                           ),
                           choices = c("Inward", "Outward"),
                           selected = sam_poslabels[x]
@@ -2278,37 +2106,29 @@ server <- function(input, output,session) {
                 column(
                   6,
                   tags$div(
-                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_link_tip1_sam", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Filenames of the input datasets.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Filenames of the input datasets.
+         </p></div></td>
+         </tr></table>')
                   )
                 ),
                 column(
                   6,
                   tags$div(
-                    HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Linkdata format</font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_link_tip2_sam", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The format of links data specified by the user. For data with 6 columns, user should select 'Data without a color column'. 
-	For data with 7 columns, user should select 'Data with multi-groups' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
-	For data with 7 columns, user should select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Data format</font>
+         </div></td>
+         <td><div class="help-right-tip"><p style="top: -230px;">
+         The format of links data specified by the user. For data with 6 columns, user should select "Data without a color column". 
+	For data with 7 columns, user should select "Data with multi-groups" if the "color" column represents different categories indicated by a character string as "a, b, c". 
+	For data with 7 columns, user should select "Data with gradual values" if the "color" column represents gradual values indicated by numbers as "1, 2, 3".
+         </p></div></td>
+         </tr></table>')
                   )
                 )
               ),
@@ -2322,7 +2142,10 @@ server <- function(input, output,session) {
                     ),
                     column(
                       2,
-                      bs4Dash::tooltip(
+                      
+                      
+                      div(
+                        class = "eye-button-class",
                         actionBttn(
                           inputId = "sam_view_lin_data",
                           label = NULL,
@@ -2330,8 +2153,9 @@ server <- function(input, output,session) {
                           color = "success",
                           icon = icon("eye")
                         ),
-                        title = paste0("Click to view the dataset."),
-                        placement = "bottom"
+                        p(
+                          'Click to view the dataset.'
+                        )
                       )
                     )
                   )
@@ -2350,7 +2174,8 @@ server <- function(input, output,session) {
                     ),
                     column(
                       1,
-                      bs4Dash::tooltip(
+                      div(
+                        class = "right-button-class",
                         actionBttn(
                           inputId = "sam_linsetting",
                           label = NULL,
@@ -2358,8 +2183,9 @@ server <- function(input, output,session) {
                           color = "success",
                           icon = icon("gear")
                         ),
-                        title = paste0("Set parameters for Links data. NOTE: Changes will not be applied for example datasets."),
-                        placement = "bottom"
+                        p(
+                          'Set parameters for Links data. NOTE: Changes will not be applied for example datasets.'
+                        )
                       )
                     )
                   )
@@ -3024,143 +2850,130 @@ server <- function(input, output,session) {
     
     output$sortable_track <<- renderUI({
       if(tra_len != 0){
+        
         tagList(
-          fluidRow(
-            column(
-              6,
-              tags$div(
-                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_tra_tip1", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Name of the uploaded files.",
-                  placement = "bottom"
-                )
-              )
-            ),
-            column(
-              3,
-              tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_tra_tip2", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The type of plot to create using data of the current track.",
-                  placement = "bottom"
-                )
-              )
-            ),
-            column(
-              3,
-              tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_tra_tip3", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The index of the current track. Identical index is not allowed for different tracks.",
-                  placement = "bottom"
-                )
-              )
-            )
-          ),
-          lapply(1:tra_len,function(x){
+          bs4Card(
+            collapsible = FALSE,
+            title = HTML('<i class="fa-solid fa-circle"></i> Track data (to be displayed in different tracks of a Circos plot)'),
+            width = 12,
             fluidRow(
               column(
                 6,
-                fluidRow(
-                  column(
-                    10,
-                    h4(paste0(tradatas[x]))
-                  ),
-                  column(
-                    2,
-                    bs4Dash::tooltip(
-                      actionBttn(
-                        inputId = paste0("view_tra_data",x),
-                        label = NULL,
-                        style = "unite",
-                        color = "success",
-                        icon = icon("eye")
-                      ),
-                      title = "Click to view the dataset.",
-                      placement = "bottom"
-                    )
-                  )
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font></div></td>
+         <td><div class="help-tip"><p>Name of the uploaded files.</p></div></td>
+         </tr></table>')
                 )
               ),
               column(
                 3,
-                pickerInput(
-                  inputId = paste0("tratype",x),
-                  label = NULL, 
-                  choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line")
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Plot type</font></div></td>
+         <td><div class="help-right-tip"><p>The type of plot to create using data of the current track.</p></div></td>
+         </tr></table>')
                 )
               ),
               column(
                 3,
-                fluidRow(
-                  column(
-                    10,
-                    pickerInput(
-                      inputId = paste0("trapos",x),
-                      label = NULL,
-                      choices = 1:tra_len,
-                      selected = x
-                    )
-                  ),
-                  column(
-                    2,
-                    bs4Dash::tooltip(
-                      actionBttn(
-                        inputId = paste0("tra_setting",x),
-                        label = NULL,
-                        style = "unite",
-                        color = "success",
-                        icon = icon("gear")
-                      ),
-                      title = paste0("Set parameters for this track."),
-                      placement = "bottom"
-                    )
-                  )
-                )
-              ),
-              tags$head(tags$style(paste0("#jquidatvie_travie",x," .modal-dialog{ max-width:1200px}"))),
-              jqui_draggable(
-                bsModal(
-                  id = paste0("jquidatvie_travie",x),
-                  title = NULL,
-                  trigger = paste0("view_tra_data",x),
-                  size = "large",
-                  DTOutput(paste0("viewTra",x))
-                )
-              ),
-              tags$head(tags$style(paste0("#jquidatvie_trasetting",x," .modal-dialog{ width:1200px}"))),
-              jqui_draggable(
-                bsModal(
-                  id = paste0("jquidatvie_trasetting",x),
-                  title = NULL,
-                  trigger = paste0("tra_setting",x),
-                  size = "large",
-                  uiOutput(paste0("sortable_track_datvie",x))
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Track index</font></div></td>
+         <td><div class="help-right-tip"><p>The index of the current track. Identical index is not allowed for different tracks.</p></div></td>
+         </tr></table>')
                 )
               )
-            )
-          })
+            ),
+            lapply(1:tra_len,function(x){
+              fluidRow(
+                column(
+                  6,
+                  fluidRow(
+                    column(
+                      10,
+                      h4(paste0(tradatas[x]))
+                    ),
+                    column(
+                      2,
+                      div(
+                        class = "eye-button-class",
+                        actionBttn(
+                          inputId = paste0("view_tra_data",x),
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("eye")
+                        ),
+                        p(
+                          'Click to view the dataset.'
+                        )
+                      )
+                    )
+                  )
+                ),
+                column(
+                  3,
+                  pickerInput(
+                    inputId = paste0("tratype",x),
+                    label = NULL, 
+                    choices = c("point", "line", "bar", "rect-discrete", "rect-gradual" , "heatmap-discrete" , "heatmap-gradual", "ideogram","stack-point","stack-line")
+                  )
+                ),
+                column(
+                  3,
+                  fluidRow(
+                    column(
+                      10,
+                      pickerInput(
+                        inputId = paste0("trapos",x),
+                        label = NULL,
+                        choices = 1:tra_len,
+                        selected = x
+                      )
+                    ),
+                    column(
+                      2,
+                      div(
+                        class = "right-button-class",
+                        actionBttn(
+                          inputId = paste0("tra_setting",x),
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("gear")
+                        ),
+                        p(
+                          'Set parameters for this track.'
+                        )
+                      )
+                    )
+                  )
+                ),
+                tags$head(tags$style(paste0("#jquidatvie_travie",x," .modal-dialog{ max-width:1200px}"))),
+                jqui_draggable(
+                  bsModal(
+                    id = paste0("jquidatvie_travie",x),
+                    title = NULL,
+                    trigger = paste0("view_tra_data",x),
+                    size = "large",
+                    DTOutput(paste0("viewTra",x))
+                  )
+                ),
+                tags$head(tags$style(paste0("#jquidatvie_trasetting",x," .modal-dialog{ width:1200px}"))),
+                jqui_draggable(
+                  bsModal(
+                    id = paste0("jquidatvie_trasetting",x),
+                    title = NULL,
+                    trigger = paste0("tra_setting",x),
+                    size = "large",
+                    uiOutput(paste0("sortable_track_datvie",x))
+                  )
+                )
+              )
+            })
+          ),
+          
         )
       }
     })
@@ -3170,63 +2983,165 @@ server <- function(input, output,session) {
       tradatas <- input$tradata
       if(length(labdatas) != 0){
         tagList(
-          fluidRow(
-            column(
-              6,
-              tags$div(
-                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_lab_tip1", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Name of the uploaded file.",
-                  placement = "bottom"
+          bs4Card(
+            collapsible = FALSE,
+            title = HTML('<i class="fa-solid fa-circle"></i> Label data (used to label elements in a track)'),
+            width = 12,
+            fluidRow(
+              column(
+                6,
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font></div></td>
+         <td><div class="help-tip"><p>Name of the uploaded file.</p></div></td>
+         </tr></table>')
+                )
+              ),
+              column(
+                6,
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font></div></td>
+         <td><div class="help-right-tip"><p>The track index for the label data. Elements in the selected track will be labeled by the label data.</p></div></td>
+         </tr></table>')
                 )
               )
             ),
-            column(
-              6,
-              tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Label index</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_lab_tip2", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The track index for the label data. Elements in the selected track will be labeled by the label data.",
-                  placement = "bottom"
+            lapply(1:length(labdatas),function(x){
+              fluidRow(
+                column(
+                  6,
+                  fluidRow(
+                    column(
+                      10,
+                      h4(paste0(labdatas[x]))
+                    ),
+                    column(
+                      2,
+                      div(
+                        class = "eye-button-class",
+                        actionBttn(
+                          inputId = paste0("view_lab_data",x),
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("eye")
+                        ),
+                        p(
+                          'Click to view the dataset.'
+                        )
+                      )
+                    )
+                  )
+                ),
+                column(
+                  6,
+                  fluidRow(
+                    column(
+                      11,
+                      pickerInput(
+                        inputId = paste0("labpos",x),
+                        label = NULL,
+                        choices = 0:length(tradatas),
+                        selected = x
+                      )
+                    ),
+                    column(
+                      1,
+                      div(
+                        class = "right-button-class",
+                        actionBttn(
+                          inputId = paste0("lab_setting",x),
+                          label = NULL,
+                          style = "unite",
+                          color = "success",
+                          icon = icon("gear")
+                        ),
+                        p(
+                          'Set parameters for the label data.'
+                        )
+                      )
+                    )
+                  )
+                ),
+                tags$head(tags$style(paste0("#jquicirpar_labview",x," .modal-dialog{ max-width:1200px}"))),
+                jqui_draggable(
+                  bsModal(
+                    id = paste0("jquicirpar_labview",x),
+                    title = NULL,
+                    trigger = paste0("view_lab_data",x),
+                    size = "large",
+                    DTOutput(paste0("viewLab",x))
+                  )
+                ),
+                tags$head(tags$style(paste0("#jquidatvie_labsetting",x," .modal-dialog{ width:1200px}"))),
+                jqui_draggable(
+                  bsModal(
+                    id = paste0("jquidatvie_labsetting",x),
+                    title = NULL,
+                    trigger = paste0("lab_setting",x),
+                    size = "large",
+                    uiOutput(paste0("sortable_label_datvie",x))
+                  )
                 )
               )
-            )
-          ),
-          lapply(1:length(labdatas),function(x){
+            })
+          )
+          
+        )
+      }
+    })
+    output$sortable_link <<- renderUI({
+      if(!is.null(data.L)){
+        tagList(
+          bs4Card(
+            collapsible = FALSE,
+            title = HTML('<i class="fa-solid fa-circle"></i> Link data (used to create links in a Circos plot)'),
+            width = 12,
+            fluidRow(
+              column(
+                6,
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font></div></td>
+         <td><div class="help-tip"><p>Name of the uploaded files.</p></div></td>
+         </tr></table>')
+                )
+              ),
+              column(
+                6,
+                tags$div(
+                  HTML('<table><tr>
+         <td><div><font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Data format</font></div></td>
+         <td><div class="help-right-tip" style="top: -15px;"><p>The format of links data specified by the user. For data with 6 columns, please select "Data without a color column". 
+                  For data with 7 columns, please select "Data with multi-groups" if the "color" column represents different categories indicated by a character string as "a, b, c". 
+                  For data with 7 columns, please select "Data with gradual values" if the "color" column represents gradual values indicated by numbers as "1, 2, 3".</p></div></td>
+         </tr></table>')
+                )
+              )
+            ),
             fluidRow(
               column(
                 6,
                 fluidRow(
                   column(
                     10,
-                    h4(paste0(labdatas[x]))
+                    h4(paste0(lindatas))
                   ),
                   column(
                     2,
-                    bs4Dash::tooltip(
+                    div(
+                      class = "eye-button-class",
                       actionBttn(
-                        inputId = paste0("view_lab_data",x),
+                        inputId = "view_lin_data",
                         label = NULL,
                         style = "unite",
                         color = "success",
                         icon = icon("eye")
                       ),
-                      title = paste0("Click to view the dataset."),
-                      placement = "bottom"
+                      p(
+                        'Click to view the dataset.'
+                      )
                     )
                   )
                 )
@@ -3237,326 +3152,168 @@ server <- function(input, output,session) {
                   column(
                     11,
                     pickerInput(
-                      inputId = paste0("labpos",x),
+                      inputId = "colformatLinks",
                       label = NULL,
-                      choices = 0:length(tradatas),
-                      selected = x
+                      choices = c("Data without a 'color' column" = "1", "Data with multi-groups" = "2", "Data with gradual values" = "3"),
+                      selected="1"
                     )
                   ),
                   column(
                     1,
-                    bs4Dash::tooltip(
+                    div(
+                      class = "right-button-class",
                       actionBttn(
-                        inputId = paste0("lab_setting",x),
+                        inputId = "linsetting",
                         label = NULL,
                         style = "unite",
                         color = "success",
                         icon = icon("gear")
                       ),
-                      title = paste0("Set parameters for the label data."),
-                      placement = "bottom"
+                      p(
+                        'Set parameter for Links data.'
+                      )
                     )
                   )
                 )
               ),
-              tags$head(tags$style(paste0("#jquicirpar_labview",x," .modal-dialog{ max-width:1200px}"))),
+              tags$head(tags$style(paste0("#jquidatvie_linview .modal-dialog{ max-width:1200px}"))),
               jqui_draggable(
                 bsModal(
-                  id = paste0("jquicirpar_labview",x),
+                  id = "jquidatvie_linview",
                   title = NULL,
-                  trigger = paste0("view_lab_data",x),
+                  trigger = "view_lin_data",
                   size = "large",
-                  DTOutput(paste0("viewLab",x))
+                  DTOutput("viewlink")
                 )
               ),
-              tags$head(tags$style(paste0("#jquidatvie_labsetting",x," .modal-dialog{ width:1200px}"))),
+              tags$head(tags$style(paste0("#jquidatvie_linsetting .modal-dialog{ width:1200px}"))),
               jqui_draggable(
                 bsModal(
-                  id = paste0("jquidatvie_labsetting",x),
+                  id = "jquidatvie_linsetting",
                   title = NULL,
-                  trigger = paste0("lab_setting",x),
+                  trigger = "linsetting",
                   size = "large",
-                  uiOutput(paste0("sortable_label_datvie",x))
-                )
-              )
-            )
-          })
-        )
-      }
-    })
-    output$sortable_link <<- renderUI({
-      if(!is.null(data.L)){
-        tagList(
-          fluidRow(
-            column(
-              6,
-              tags$div(
-                HTML('<font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_link_tip1", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Name of the uploaded files.",
-                  placement = "bottom"
-                )
-              )
-            ),
-            column(
-              6,
-              tags$div(
-                HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Data format</font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = "datvie_link_tip2", 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The format of links data specified by the user. For data with 6 columns, please select 'Data without a color column'. 
-                  For data with 7 columns, please select 'Data with multi-groups' if the 'color' column represents different categories indicated by a character string as 'a, b, c'. 
-                  For data with 7 columns, please select 'Data with gradual values' if the 'color' column represents gradual values indicated by numbers as '1, 2, 3'.",
-                  placement = "bottom"
-                )
-              )
-            )
-          ),
-          fluidRow(
-            column(
-              6,
-              fluidRow(
-                column(
-                  10,
-                  h4(paste0(lindatas))
-                ),
-                column(
-                  2,
-                  bs4Dash::tooltip(
-                    actionBttn(
-                      inputId = "view_lin_data",
-                      label = NULL,
-                      style = "unite",
-                      color = "success",
-                      icon = icon("eye")
-                    ),
-                    title = paste0("Click to view the dataset."),
-                    placement = "bottom"
-                  )
-                )
-              )
-            ),
-            column(
-              6,
-              fluidRow(
-                column(
-                  11,
                   pickerInput(
-                    inputId = "colformatLinks",
-                    label = NULL,
-                    choices = c("Data without a 'color' column" = "1", "Data with multi-groups" = "2", "Data with gradual values" = "3"),
-                    selected="1"
-                  )
-                ),
-                column(
-                  1,
-                  bs4Dash::tooltip(
-                    actionBttn(
-                      inputId = "linsetting",
-                      label = NULL,
-                      style = "unite",
-                      color = "success",
-                      icon = icon("gear")
-                    ),
-                    title = paste0("Set parameter for Links data."),
-                    placement = "bottom"
-                  )
-                )
-              )
-            ),
-            tags$head(tags$style(paste0("#jquidatvie_linview .modal-dialog{ max-width:1200px}"))),
-            jqui_draggable(
-              bsModal(
-                id = "jquidatvie_linview",
-                title = NULL,
-                trigger = "view_lin_data",
-                size = "large",
-                DTOutput("viewlink")
-              )
-            ),
-            tags$head(tags$style(paste0("#jquidatvie_linsetting .modal-dialog{ width:1200px}"))),
-            jqui_draggable(
-              bsModal(
-                id = "jquidatvie_linsetting",
-                title = NULL,
-                trigger = "linsetting",
-                size = "large",
-                pickerInput(
-                  inputId = "midplot",
-                  label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Use the middle points to draw the links</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_link_tip0", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Only use the middle points of two genomic regions to draw the link. This is often used for extremely small genomic regions in large genomes.",
-                      placement = "bottom"
-                    )
-                  ),
-                  choices = c("Yes" = TRUE,"No" = FALSE),
-                  selected = FALSE
-                ),
-                conditionalPanel(
-                  condition = "input.colformatLinks=='1'",
-                  pickerInput(
-                    inputId = "colorLinks1",
+                    inputId = "midplot",
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_link_tip3", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as 'red' or 'green' is supported. For data with 7 columns, format of specified color as 'a:red;b:green;c:blue' is supported. 'a', 'b', 'c' represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as 'grey'.",
-                        placement = "bottom"
-                      )
+                      HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Use the middle points to draw the links</b></font></div></td>
+         <td><div class="help-tip"><p>Only use the middle points of two genomic regions to draw the link. This is often used for extremely small genomic regions in large genomes.</p></div></td>
+         </tr></table>')
                     ),
-                    c("Random" = "1", "Specific" = "2"),
-                    selected="1"
+                    choices = c("Yes" = TRUE,"No" = FALSE),
+                    selected = FALSE
                   ),
                   conditionalPanel(
-                    condition="input.colorLinks1==2",
-                    colourInput(
-                      inputId = "selcolorLinks1",
-                      label = NULL,
-                      value = "yellowgreen",
-                      returnName = TRUE
+                    condition = "input.colformatLinks=='1'",
+                    pickerInput(
+                      inputId = "colorLinks1",
+                      label = tags$div(
+                        HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font></div></td>
+         <td><div class="help-tip"><p>Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as "red" or "green" is supported. For data with 7 columns, format of specified color as "a:red;b:green;c:blue" is supported. "a", "b", "c" represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as "grey".</p></div></td>
+         </tr></table>')
+                      ),
+                      c("Random" = "1", "Specific" = "2"),
+                      selected="1"
+                    ),
+                    conditionalPanel(
+                      condition="input.colorLinks1==2",
+                      colourInput(
+                        inputId = "selcolorLinks1",
+                        label = NULL,
+                        value = "yellowgreen",
+                        returnName = TRUE
+                      )
+                    ),
+                    numericInput(
+                      inputId = "transparencyLinks",
+                      label = tags$div(
+                        HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font></div></td>
+         <td><div class="help-tip"><p>A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.</p></div></td>
+         </tr></table>')
+                      ),
+                      value=0.5,
+                      min=0,
+                      max=1,
+                      step=0.1
                     )
-                  ),
-                  numericInput(
-                    inputId = "transparencyLinks",
-                    label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_link_tip4", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
-                        placement = "bottom"
-                      )
-                    ),
-                    value=0.5,
-                    min=0,
-                    max=1,
-                    step=0.1
-                  )
-                ),
-                conditionalPanel(
-                  condition="input.colformatLinks=='2'",
-                  pickerInput(
-                    inputId = "colorLinks2",
-                    label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_link_tip3", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as 'red' or 'green' is supported. For data with 7 columns, format of specified color as 'a:red;b:green;c:blue' is supported. 'a', 'b', 'c' represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as 'grey'.",
-                        placement = "bottom"
-                      )
-                    ),
-                    c("Random" = "1", "Custom" = "2"),
-                    selected="1"
                   ),
                   conditionalPanel(
-                    condition="input.colorLinks2=='2'",
-                    textInput(
-                      inputId = "selcolorLinks2",
-                      label = NULL,
-                      value="a:red;b:#00FF00;c:yellowgreen"
-                    )
-                  ),
-                  numericInput(
-                    inputId = "transparencyLinks",
-                    label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = "datvie_link_tip4", 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
-                        placement = "bottom"
-                      )
-                    ),
-                    value=0.5,
-                    min=0,
-                    max=1,
-                    step=0.1
-                  )
-                ),
-                conditionalPanel(
-                  condition="input.colformatLinks==3",
-                  tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = "datvie_link_tip5", 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
+                    condition="input.colformatLinks=='2'",
+                    pickerInput(
+                      inputId = "colorLinks2",
+                      label = tags$div(
+                        HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font></div></td>
+         <td><div class="help-tip"><p>Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as "red" or "green" is supported. For data with 7 columns, format of specified color as "a:red;b:green;c:blue" is supported. "a", "b", "c" represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as "grey".</p></div></td>
+         </tr></table>')
                       ),
-                      title = "For data with a 'color' column, links are filled with colors specified by the user."
+                      c("Random" = "1", "Custom" = "2"),
+                      selected="1"
+                    ),
+                    conditionalPanel(
+                      condition="input.colorLinks2=='2'",
+                      textInput(
+                        inputId = "selcolorLinks2",
+                        label = NULL,
+                        value="a:red;b:#00FF00;c:yellowgreen"
+                      )
+                    ),
+                    numericInput(
+                      inputId = "transparencyLinks",
+                      label = tags$div(
+                        HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font></div></td>
+         <td><div class="help-tip"><p>A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.</p></div></td>
+         </tr></table>')
+                      ),
+                      value=0.5,
+                      min=0,
+                      max=1,
+                      step=0.1
                     )
                   ),
-                  fluidRow(
-                    column(
-                      width = 4,
-                      colourInput(
-                        inputId = "lowColinks",
-                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
-                        value = "#0016DB",
-                        returnName = TRUE
-                      )
+                  conditionalPanel(
+                    condition="input.colformatLinks==3",
+                    tags$div(
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         For data with a "color" column, links are filled with colors specified by the user.
+         </p></div></td>
+         </tr></table>')
                     ),
-                    column(
-                      4,
-                      colourInput(
-                        inputId = "midColinks",
-                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Middle Color</strong></font></p>'),
-                        value = "#FFFFFF",
-                        returnName = TRUE
-                      )
-                    ),
-                    column(
-                      4,
-                      colourInput(
-                        inputId = "highColinks",
-                        label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> High Color</strong></font></p>'),
-                        value = "#FFFF00",
-                        returnName = TRUE
+                    fluidRow(
+                      column(
+                        width = 4,
+                        colourInput(
+                          inputId = "lowColinks",
+                          label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
+                          value = "#0016DB",
+                          returnName = TRUE
+                        )
+                      ),
+                      column(
+                        4,
+                        colourInput(
+                          inputId = "midColinks",
+                          label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Middle Color</strong></font></p>'),
+                          value = "#FFFFFF",
+                          returnName = TRUE
+                        )
+                      ),
+                      column(
+                        4,
+                        colourInput(
+                          inputId = "highColinks",
+                          label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> High Color</strong></font></p>'),
+                          value = "#FFFF00",
+                          returnName = TRUE
+                        )
                       )
                     )
                   )
@@ -3569,29 +3326,6 @@ server <- function(input, output,session) {
     })
   })
   
-  # whichchangechrtyp <<- NULL
-  # toListentratyp <- reactive({
-  #   lapply(1:length(tradatas), function(x){
-  #     input[[paste0("tratype",x)]]
-  #   })
-  # })
-  # observeEvent(toListentratyp(),priority = 1,{
-  #   if(input$dataup_go > 0){
-  #     lapply(1:length(tradatas), function(x){
-  #       typlist[x] <<- input[[paste0("tratype",x)]]
-  #     })
-  #     x <- as.numeric(unlist(typlist) != unlist(typlist_old))
-  #     #x <- which((unlist(typlist)- unlist(typlist_old))==1)
-  #     whichchangechrtyp <<- which(x == 1)
-  #     typlist_old <<- typlist
-  #     print("start")
-  #     print(tra_yaxis)
-  # 
-  #     tra_yaxis[whichchangechrtyp] <<- "2"
-  #     print(tra_yaxis)
-  # 
-  #   }
-  # })
   
   
   observeEvent(input$dataup_go,{
@@ -4299,19 +4033,15 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_bar_direction",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_bar_direction",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which 
-                                contains the data values will be divided into two groups based on the boundary value.",
-                      placement = "bottom"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Bar direction</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Bars can be unidirectional or bidirectional. For bidirectional bars, the 4th column which 
+                                contains the data values will be divided into two groups based on the boundary value.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Unidirectional" = "1", "Bidirectional" = "2"),
                   selected = tra_bar_direction[x]
@@ -4355,25 +4085,21 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_coltype",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_bar_trycoltp",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                       To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                      colors separated by commas. For example, 'red' or 'red,orange,blue'.
-                      To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                      colors separated by commas. For example, "red" or "red,orange,blue".
+                      To customize color for data with multiple groups, the column indicating different groups should be named as "color" or "stack".
                       Users should provide a character strings assigning colors to each group. 
-                      For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                      Color for data groups without assigned color would be set as 'grey'. 
-                      Hex color codes as '#FF0000' are also supported. See example data for more details.",
-                      placement = "right"
-                    )
+                      For example, "a:red;b:green;c:blue", in which "a b c" represent different data groups. 
+                      Color for data groups without assigned color would be set as "grey". 
+                      Hex color codes as "#FF0000" are also supported. See example data for more details.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Random" = "1", "Specific color" = "2" , "Custom for data with multi-groups" = "3"),
                   selected = tra_coltype[x]
@@ -4399,25 +4125,21 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = paste0("tra_coltype",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_bar_trycoltp",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
                       To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                      colors separated by commas. For example, 'red' or 'red,orange,blue'.
-                      To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
+                      colors separated by commas. For example, "red" or "red,orange,blue".
+                      To customize color for data with multiple groups, the column indicating different groups should be named as "color" or "stack".
                       Users should provide a character strings assigning colors to each group. 
-                      For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                      Color for data groups without assigned color would be set as 'grey'. 
-                      Hex color codes as '#FF0000' are also supported. See example data for more details.",
-                        placement = "right"
-                      )
+                      For example, "a:red;b:green;c:blue", in which "a b c" represent different data groups. 
+                      Color for data groups without assigned color would be set as "grey". 
+                      Hex color codes as "#FF0000" are also supported. See example data for more details.
+         </p></div></td>
+         </tr></table>')
                     ),
                     choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3"),
                     selected = tra_coltype[x]
@@ -4438,25 +4160,21 @@ server <- function(input, output,session) {
                     pickerInput(
                       inputId = paste0("tra_coltype",x),
                       label = tags$div(
-                        HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                        bs4Dash::tooltip(
-                          actionButton(
-                            inputId = paste0("datvie_tip_bar_trycoltp2",x), 
-                            label="" , 
-                            icon=icon("question"),
-                            status="info",
-                            size = "xs"
-                          ),
-                          title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
-                        To customize color for data with multiple columns, users should provide a character string representing one or multiple 
-                        colors separated by commas. For example, 'red' or 'red,orange,blue'.if there is only one column of value, only one color needs to be specified.
-                        To customize color for data with multiple groups, the column indicating different groups should be named as 'color' or 'stack'.
-                        Users should provide a character strings assigning colors to each group. 
-                        For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. 
-                        Color for data groups without assigned color would be set as 'grey'. 
-                        Hex color codes as '#FF0000' are also supported. See example data for more details.",
-                          placement = "right"
-                        )
+                        HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users. 
+                      To customize color for data with multiple columns, users should provide a character string representing one or multiple 
+                      colors separated by commas. For example, "red" or "red,orange,blue".
+                      To customize color for data with multiple groups, the column indicating different groups should be named as "color" or "stack".
+                      Users should provide a character strings assigning colors to each group. 
+                      For example, "a:red;b:green;c:blue", in which "a b c" represent different data groups. 
+                      Color for data groups without assigned color would be set as "grey". 
+                      Hex color codes as "#FF0000" are also supported. See example data for more details.
+         </p></div></td>
+         </tr></table>')
                       ),
                       choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3"),
                       selected = tra_coltype[x]
@@ -4482,18 +4200,14 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_line_fillarea",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_bar_fillarea",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Fill the area below the lines.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Fill area?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Fill the area below the lines.
+         </p></div></td>
+         </tr></table>')
                 ),
                 choices = c("Yes" = "add", "No" = ""),
                 selected=tra_line_fillarea[x]
@@ -4504,18 +4218,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_rect_rectcol",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_rect_rectcol",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The color used to plot the data, you can use the preset color, or you can customize the color.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color used to plot the data, you can use the preset color, or you can customize the color.
+         </p></div></td>
+         </tr></table>')
                   ),
                   
                   choices = c("Presets" = "1", "Customize" = "2"),
@@ -4576,23 +4286,19 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_rect_rectcol",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_rect_rectcol",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "The color to be used to plot the data, which can be random assigned by the application or specified by the users.
-                    If 'Specific' was chosen, all data will be filled by a specified color. 
-                    If 'Custom' was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
-                    Users should provide values as 'a:red;b:green;c:blue', in which 'a b c' represent different
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used to plot the data, which can be random assigned by the application or specified by the users.
+                    If "Specific" was chosen, all data will be filled by a specified color. 
+                    If "Custom" was chosen, the 4th column of the uploaded data should be a categorical character vector with no more than 50 groups.
+                    Users should provide values as "a:red;b:green;c:blue", in which "a b c" represent different
                     data category indicated by the 4th column of the uploaded data. 
-                    Color for data without customed color will be set to NULL. Hex color codes as '#FF0000' are also supported.",
-                      placement = "right"
-                    )
+                    Color for data without customed color will be set to NULL. Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                   ),
                   
                   choices = c("Random" = "1", "Specific" = "2", "Custom" = "3"),
@@ -4620,18 +4326,14 @@ server <- function(input, output,session) {
                   pickerInput(
                     inputId = paste0("tra_line_selrea",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Area color</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_line_selrea",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Filled color to the area, which can be identical with lines color or specified by the users. If 'Specific' was chosen, all data will be filled by a specified color as 'orange'.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Area color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Filled color to the area, which can be identical with lines color or specified by the users. If "Specific" was chosen, all data will be filled by a specified color as "orange".
+         </p></div></td>
+         </tr></table>')
                     ),
                     choices =  c("Identical with lines" = "1", "Specific" = "2"),
                     selected=tra_line_selrea[x]
@@ -4652,19 +4354,14 @@ server <- function(input, output,session) {
               numericInput(
                 inputId = paste0("tra_transparency",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>'),
-                  
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_tra_trans",x),
-                      label="" ,
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Color transparency</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         A decimal number in [0, 1] to adjust the color transparency. The higher the value, the deeper the color.
+         </p></div></td>
+         </tr></table>')
                 ),
                 value=tra_transparency[x],
                 min=0,
@@ -4676,18 +4373,14 @@ server <- function(input, output,session) {
               textInput(
                 paste0("tra_poipch",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_poi_pch",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         </p></div></td>
+         </tr></table>')
                 ),
                 value= tra_poipch[x]
               )
@@ -4697,18 +4390,14 @@ server <- function(input, output,session) {
                 textInput(
                   paste0("tra_poipch",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_poi_pch",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         </p></div></td>
+         </tr></table>')
                   ),
                   value= tra_poipch[x]
                 ),
@@ -4742,18 +4431,14 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_colorline",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_baselinecol",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, "grey" or "red,green".Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = tra_colorline[x],
                     returnName = TRUE
@@ -4765,36 +4450,28 @@ server <- function(input, output,session) {
                   textInput(
                     inputId = paste0("tra_baseline",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_baseline",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, '0.5' or '0.25,0.5,0.75'.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Y-axis coordinates of baselines</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Decimal numbers in [0, 1] to adjust the Y-axis coordinates of baselines. Numeric vector of arbitrary length is also accepted. For example, "0.5" or "0.25,0.5,0.75".
+         </p></div></td>
+         </tr></table>')
                     ),
                     value=tra_baseline[x]
                   ),
                   colourInput(
                     inputId = paste0("tra_colorline",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_baselinecol",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, 'grey' or 'red,green'.Hex color codes as '#FF0000' are also supported.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Baselines color(s)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the baselines which can be null or a character vector of arbitrary length adjusted automatically to the number of baselines. For example, "grey" or "red,green".Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = tra_colorline[x],
                     returnName = TRUE
@@ -4806,19 +4483,15 @@ server <- function(input, output,session) {
               colourInput(
                 inputId = paste0("tra_bgcol",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_bgcol",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
-                  automatically to the number of sectors. For example, 'grey95' or 'grey95,grey,pink,yellow'. Hex color codes as '#FF0000' are also supported.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Background color(s)</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the background of the plot which can be null or a color vector of arbitrary length adjusted 
+                  automatically to the number of sectors. For example, "grey95" or "grey95,grey,pink,yellow". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                 ),
                 value = tra_bgcol[x],
                 returnName = TRUE
@@ -4829,18 +4502,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_heatmapcol",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_heat_col",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Colors to be used for the heatmap, which can be assigned by the application or specified by the users.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Colors</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Colors to be used for the heatmap, which can be assigned by the application or specified by the users.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Typical" = "1", "Custom" = "2"),
                   selected = tra_hmap_heatmapcol[x]
@@ -4889,18 +4558,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_heat_posline",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Yes" = "1", "No" = "2"),
                   selected = tra_hmap_poslines[x]
@@ -4910,18 +4575,14 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = paste0("tra_hmap_poslinhei",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_heat_poslinehei",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Height of the position lines.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the position lines.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value=tra_hmap_poslinhei[x],
                     min=0,
@@ -4938,8 +4599,6 @@ server <- function(input, output,session) {
                   label = tags$div(
                     HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>')
                   ),
-                  #label = HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>'),
-                  #label = "Data color",
                   choices = c("Random" = "1" , "Custom" = "2"),
                   selected = tra_heatcol_dis[x]
                 ),
@@ -4953,18 +4612,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_heat_posline2",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add position lines?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add genomic position lines between tracks, which can be used to identify the correspondance between heatmaps and genomic regions.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Yes" = "1", "No" = "2"),
                   selected = tra_hmap_poslines[x]
@@ -4974,18 +4629,14 @@ server <- function(input, output,session) {
                   numericInput(
                     inputId = paste0("tra_hmap_poslinhei",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_heat_poslinehei2",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "Height of the position lines.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Position lines height:</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the position lines.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value=tra_hmap_poslinhei[x],
                     min=0,
@@ -4998,18 +4649,14 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("heightTra",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Track height:</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_trahei",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Height of the track.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Track height:</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the track.
+         </p></div></td>
+         </tr></table>')
               ),
               value = heightTra[x],
               min=0.01,
@@ -5020,18 +4667,14 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("Tra_margin",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_tramar",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "This parameter can also be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Distance to the next section</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         This parameter can also be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.
+         </p></div></td>
+         </tr></table>')
               ),
               value=Tra_margin[x],
               min=0,
@@ -5044,18 +4687,14 @@ server <- function(input, output,session) {
                 pickerInput(
                   inputId = paste0("tra_hmap_cellbord",x),
                   label = tags$div(
-                    HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>'),
-                    bs4Dash::tooltip(
-                      actionButton(
-                        inputId = paste0("datvie_tip_heaat_cellbo",x), 
-                        label="" , 
-                        icon=icon("question"),
-                        status="info",
-                        size = "xs"
-                      ),
-                      title = "Add borders to the heatmap grids, which can be used to separate different cells from each other.",
-                      placement = "right"
-                    )
+                    HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add cell borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add borders to the heatmap grids, which can be used to separate different cells from each other.
+         </p></div></td>
+         </tr></table>')
                   ),
                   choices = c("Yes" = "add", "No" = ""),
                   selected = tra_hmap_cellbord[x]
@@ -5065,18 +4704,14 @@ server <- function(input, output,session) {
                   colourInput(
                     inputId = paste0("tra_hmap_cellbord_col",x),
                     label = tags$div(
-                      HTML('<font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>'),
-                      bs4Dash::tooltip(
-                        actionButton(
-                          inputId = paste0("datvie_tip_heaat_bocol",x), 
-                          label="" , 
-                          icon=icon("question"),
-                          status="info",
-                          size = "xs"
-                        ),
-                        title = "The color to be used for the borders of heatmap grids. For example, 'white' or 'red'. Hex color codes as '#FF0000' are also supported.",
-                        placement = "right"
-                      )
+                      HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Color of cell borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The color to be used for the borders of heatmap grids. For example, "white" or "red". Hex color codes as "#FF0000" are also supported.
+         </p></div></td>
+         </tr></table>')
                     ),
                     value = tra_hmap_cellbord_col[x],
                     returnName = TRUE
@@ -5088,18 +4723,14 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_border",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_tra_bo",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Add borders to each sector.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add sector borders?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add borders to each sector.
+         </p></div></td>
+         </tr></table>')
                 ),
                 choices = c("Yes" = "add", "No" = ""),
                 selected= tra_border[x]
@@ -5109,18 +4740,14 @@ server <- function(input, output,session) {
               pickerInput(
                 inputId = paste0("tra_yaxis",x),
                 label = tags$div(
-                  HTML('<font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_tra_yax",x), 
-                      label="" , 
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "Add Y-axis for all the tracks if applicable.",
-                    placement = "right"
-                  )
+                  HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Add Y-axis?</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Add Y-axis for all the tracks if applicable.
+         </p></div></td>
+         </tr></table>')
                 ),
                 choices = c("Yes" = "1", "No" = "2"),
                 selected= tra_yaxis[x]
@@ -5177,18 +4804,14 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("lab_fontsize",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_labhi",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Height of the track occupied by the label data.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the track occupied by the label data.
+         </p></div></td>
+         </tr></table>')
               ),
               value= lab_fontsize[x], 
               min=0.01, 
@@ -5198,18 +4821,14 @@ server <- function(input, output,session) {
             sliderTextInput(
               inputId = paste0("lab_fontper",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
-                  bs4Dash::tooltip(
-                    actionButton(
-                      inputId = paste0("datvie_tip_lab_adjustfontsize",x),
-                      label="" ,
-                      icon=icon("question"),
-                      status="info",
-                      size = "xs"
-                    ),
-                    title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
-                    placement = "right"
-                  )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.
+         </p></div></td>
+         </tr></table>')
               ),
               choices = c(10:200),
               selected = lab_fontper[x]
@@ -5217,18 +4836,14 @@ server <- function(input, output,session) {
             colourInput(
               inputId = paste0("lab_fontcol",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_labcol",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Color of the label text and the connection line.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font color</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Color of the label text and the connection line.
+         </p></div></td>
+         </tr></table>')
               ),
               value = lab_fontcol[x],
               returnName = TRUE
@@ -5236,18 +4851,14 @@ server <- function(input, output,session) {
             pickerInput(
               inputId = paste0("poslabels",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_labpos",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Place the labels in the inner or the outer of the specified track?",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Place the labels in the inner or the outer of the specified track?
+         </p></div></td>
+         </tr></table>')
               ),
               choices = c("Inward" = "inside", "Outward" = "outside"),
               selected = poslabels[x]
@@ -5259,18 +4870,14 @@ server <- function(input, output,session) {
             numericInput(
               inputId = paste0("lab_fontsize",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_labhi",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Height of the track occupied by the label.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label data hight</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Height of the track occupied by the label.
+         </p></div></td>
+         </tr></table>')
               ),
               value= lab_fontsize[x], 
               min=0.01, 
@@ -5280,18 +4887,14 @@ server <- function(input, output,session) {
             sliderTextInput(
               inputId = paste0("lab_fontper",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_adjustfontsize",x),
-                    label="" ,
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Font size</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         The font size is automatically adjusted to the height of the Label. Additionaly, you can zoom the font size using this slider.
+         </p></div></td>
+         </tr></table>')
               ),
               choices = c(10:200),
               selected = lab_fontper[x]
@@ -5302,18 +4905,14 @@ server <- function(input, output,session) {
             pickerInput(
               inputId = paste0("poslabels",x),
               label = tags$div(
-                HTML('<font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>'),
-                bs4Dash::tooltip(
-                  actionButton(
-                    inputId = paste0("datvie_tip_lab_labpos",x), 
-                    label="" , 
-                    icon=icon("question"),
-                    status="info",
-                    size = "xs"
-                  ),
-                  title = "Place the labels in the inner or the outer of the specified track?",
-                  placement = "right"
-                )
+                HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-play"></i><b> Label Position</b></font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Place the labels in the inner or the outer of the specified track?.
+         </p></div></td>
+         </tr></table>')
               ),
               choices = c("Inward" = "inside", "Outward" = "outside"),
               selected = poslabels[x]

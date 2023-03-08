@@ -8,7 +8,247 @@ sidebar <- bs4DashSidebar(
   collapsed = FALSE,
   skin = "light",
   tags$head(
-    tags$script('<script src="https://kit.fontawesome.com/29eb425cd7.js" crossorigin="anonymous"></script>')
+    tags$script('<script src="https://kit.fontawesome.com/29eb425cd7.js" crossorigin="anonymous"></script>'),
+    
+    
+    HTML('<script src="https://kit.fontawesome.com/29eb425cd7.js" crossorigin="anonymous"></script>'),
+    tags$style("
+                 input[type='file'] {width:5em;}
+                 .toggleButton {width:100%;}
+                 .clearButton {float:right; font-size:12px;}
+                 .fa-angle-down:before, .fa-angle-up:before {float:right;}
+                 .popover{text-align:left;width:500px;background-color:#000000;}
+                 .popover-title{color:#FFFFFF;font-size:16px;background-color:#000000;border-color:#000000;}
+                 .jhr{display: inline; vertical-align: top; padding-left: 10px;}
+                 #sidebarPanel_1 {width:25em;}
+                 #mainPanel_1 {left:28em; position:absolute; min-width:27em;}"
+    ),
+    tags$style(HTML(".shiny-output-error-validation {color: red;}")),
+    tags$style("
+         .right-button-class:hover p{
+          	display:block;
+          	transform-origin: 100% 0%;
+          	-webkit-animation: fadeIn 0.6s ease-in-out;
+          	animation: fadeIn 0.6s ease-in-out;
+          }
+          .right-button-class p{
+          	display: none;
+          	text-align: left;
+          	background-color: #1E2021;
+          	padding: 19px;
+          	width: 350px;
+          	position: absolute;
+          	border-radius: 3px;
+          	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+          	right: 45px;
+          	top: 40px;
+          	color: #FFF;
+          	font-size: 15px;
+          	line-height: 1.4;
+          	z-index:3;
+            word-wrap:break-word;
+          }
+          .right-button-class p:before{
+          	position: relative;
+          	content: '';
+          	border: 6px solid transparent;
+          	border-bottom-color: #1E2021;
+          }
+          
+          .right-button-class p:after{
+          	width:100%;
+          	height:40px;
+          	content:'';
+          	position: relative;
+          	top:0px;
+          	left:0;
+          }
+                 "),
+    tags$style("
+         .eye-button-class:hover p{
+          	display:block;
+          	transform-origin: 100% 0%;
+          	-webkit-animation: fadeIn 0.6s ease-in-out;
+          	animation: fadeIn 0.6s ease-in-out;
+          }
+          .eye-button-class p{
+          	display: none;
+          	text-align: left;
+          	background-color: #1E2021;
+          	padding: 19px;
+          	width: 250px;
+          	position: absolute;
+          	border-radius: 3px;
+          	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+          	right: -40px;
+          	top: 40px;
+          	color: #FFF;
+          	font-size: 15px;
+          	line-height: 1.4;
+          	z-index:3;
+            word-wrap:break-word;
+          }
+          .eye-button-class p:before{
+          	position: relative;
+          	content: '';
+          	border: 6px solid transparent;
+          	border-bottom-color: #1E2021;
+          }
+          
+          .eye-button-class p:after{
+          	width:100%;
+          	height:40px;
+          	content:'';
+          	position: relative;
+          	top:0px;
+          	left:0;
+          }
+                 "),
+    
+    tags$style("
+         .help-tip{
+           position: relative;
+           text-align: center;
+        	background-color: #17A2B8;          
+        	border-radius: 10%;
+        	left: 16px;              
+        	bottom: 0px;           
+        	width: 18px;            
+        	height: 25px;
+        	font-size: 15px;        
+        	line-height: 25px;     
+        	cursor: default;
+         }
+         .help-tip:before{
+        		content:'?';
+          	font-weight: bold;
+          	color:#FFFFFF;
+         }
+         .help-tip:hover p{
+          	display:block;
+          	transform-origin: 100% 0%;
+          	-webkit-animation: fadeIn 0.6s ease-in-out;
+          	animation: fadeIn 0.6s ease-in-out;
+          }
+          .help-tip p{
+          	display: none;
+          	text-align: left;           
+          	background-color: #1E2021;
+          	padding: 19px;              
+          	width: 350px;  
+          	position: absolute;
+          	border-radius: 3px;
+          	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+          	right: -340px;        
+          	top: 15px;                 
+          	color: #FFF;
+          	font-size: 15px;
+          	line-height: 1.4;
+          	z-index:3;
+          }
+          
+          .help-tip p:before{ 
+          	position: relative;
+          	content: '';
+          	border: 6px solid transparent;
+          	border-bottom-color: #1E2021;
+          }
+          
+          .help-tip p:after{ 
+          	width:100%;
+          	height:40px;
+          	content:'';
+          	position: relative;
+          	top:0px;
+          	left:0;
+          }
+        "),
+    tags$style("
+         .help-right-tip{
+           position: relative;
+           text-align: center;
+        	background-color: #17A2B8;          
+        	border-radius: 10%;
+        	left: 16px;              
+        	bottom: 0px;           
+        	width: 18px;            
+        	height: 25px;
+        	font-size: 15px;        
+        	line-height: 25px;     
+        	cursor: default;
+         }
+         .help-right-tip:before{
+        		content:'?';
+          	font-weight: bold;
+          	color:#FFFFFF;
+         }
+         .help-right-tip:hover p{
+          	display:block;
+          	transform-origin: 100% 0%;
+          	-webkit-animation: fadeIn 0.6s ease-in-out;
+          	animation: fadeIn 0.6s ease-in-out;
+          }
+          .help-right-tip p{	
+          	display: none;
+          	text-align: left;           
+          	background-color: #1E2021;
+          	padding: 19px;              
+          	width: 350px;  
+          	position: absolute;
+          	border-radius: 3px;
+          	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+          	right: 10px;        
+          	top: 15px;
+          	color: #FFF;
+          	font-size: 15px;
+          	line-height: 1.4;
+          	z-index:3;
+          }
+          
+          .help-right-tip p:before{ 
+          	position: relative;
+          	content: '';
+          	border: 6px solid transparent;
+          	border-bottom-color: #1E2021;
+          }
+          
+          .help-right-tip p:after{ 
+          	width:100%;
+          	height:40px;
+          	content:'';
+          	position: relative;
+          	top:0px;
+          	left:0;
+          }
+        "),
+    tags$style(
+      HTML(".checkbox {margin: 0}
+                 .checkbox p {margin: 0;}
+                 
+                 .shiny-input-container {margin-bottom: 0;}
+                 .navbar-default .navbar-brand {color: black; font-size:150%;}
+                 .navbar-default .navbar-nav > li > a {color:black; font-size:120%;}"
+      )
+    ),
+    tags$script(
+      HTML('Shiny.addCustomMessageHandler("jsCode",function(message) {eval(message.value);});')
+    )
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   ),
   bs4SidebarMenu(
     id = "sidebar",
@@ -35,50 +275,15 @@ body <- bs4DashBody(
      ),
      bs4TabItem(
        tabName = "dat-upl",
-       tags$head(
-         HTML('<script src="https://kit.fontawesome.com/29eb425cd7.js" crossorigin="anonymous"></script>'),
-         tags$style("
-                 input[type='file'] {width:5em;}
-                 .toggleButton {width:100%;}
-                 .clearButton {float:right; font-size:12px;}
-                 .fa-angle-down:before, .fa-angle-up:before {float:right;}
-                 .popover{text-align:left;width:500px;background-color:#000000;}
-                 .popover-title{color:#FFFFFF;font-size:16px;background-color:#000000;border-color:#000000;}
-                 .jhr{display: inline; vertical-align: top; padding-left: 10px;}
-                 #sidebarPanel_1 {width:25em;}
-                 #mainPanel_1 {left:28em; position:absolute; min-width:27em;}"
-         ),
-         tags$style(HTML(".shiny-output-error-validation {color: red;}")),
-         tags$style(
-           HTML(".checkbox {margin: 0}
-                 .checkbox p {margin: 0;}
-                 
-                 .shiny-input-container {margin-bottom: 0;}
-                 .navbar-default .navbar-brand {color: black; font-size:150%;}
-                 .navbar-default .navbar-nav > li > a {color:black; font-size:120%;}"
-           )
-         ),
-         tags$script(
-           HTML('Shiny.addCustomMessageHandler("jsCode",function(message) {eval(message.value);});')
-         )
-       ),
        br(),
        pickerInput(
          inputId = "datatype",
          label =  tags$div(
            style = "width:1200px",
-           HTML('<font><h4><i class="fa-solid fa-play"></i> Step 1. Upload data or load example data?</font>'),
-           bs4Dash::tooltip(
-             actionButton(
-               inputId = "datup_tip1", 
-               label="" , 
-               icon = icon("question"),
-               status="info",
-               size = "xs"
-             ),
-             title = "To 'upload data', you need to upload your own data from the local disk to the shinyCircos web server.",
-             placement = "bottom"
-           )
+           HTML("<table><tr>
+         <td><div><font><h4><i class='fa-solid fa-play'></i> Step 1. Upload data or load example data?</font></div></td>
+         <td><div class='help-tip'><p style='font-weight: lighter;'> To 'upload data', you need to upload your own data from the local disk to the shinyCircos web server.</p></div></td>
+         </tr></table>")
          ),
          choices = c("Upload data"="a", "Load example data"="b")
        ),
@@ -93,19 +298,10 @@ body <- bs4DashBody(
            inputId = "alldata",
            label = tags$div(
              style = "width:1200px",
-             HTML('<font><h4><i class="fa-solid fa-play"></i> Step 2. Upload one or multiple input datasets:</font>'),
-             bs4Dash::tooltip(
-               actionButton(
-                 inputId = "datup_tip2", 
-                 label="" , 
-                 icon=icon("question"),
-                 status="info",
-                 size = "xs"
-               ),
-               title = "You can upload multiple datasets at the same time. Remember to save the uploaded data timely.",
-               
-               placement = "top"
-             )
+             HTML("<table><tr>
+         <td><div><font><h4><i class='fa-solid fa-play'></i> Step 2. Upload one or multiple input datasets:</font></div></td>
+         <td><div class='help-tip'><p style='font-weight: lighter;'>You can upload multiple datasets at the same time. Remember to save the uploaded data timely.</p></div></td>
+         </tr></table>")
            ),
            multiple = TRUE
          ),
@@ -164,18 +360,10 @@ body <- bs4DashBody(
        conditionalPanel(
          condition = "input.datatype=='b'",
          tags$div(
-           HTML('<font><h4><i class="fa-solid fa-play"></i> Step 2. Choose an example dataset:</font>'),
-           bs4Dash::tooltip(
-             actionButton(
-               inputId = "datup_sam_tipplan", 
-               label="" , 
-               icon=icon("question"),
-               status="info",
-               size = "xs"
-             ),
-             title = "Different parameters were pre-setted for different example datasets, which can not be adjusted.",
-             placement = "bottom"
-           )
+           HTML("<table><tr>
+         <td><div><font><h4><i class='fa-solid fa-play'></i> Step 2. Choose an example dataset:</font></div></td>
+         <td><div class='help-tip'><p>Different parameters were pre-setted for different example datasets, which can not be adjusted.</p></div></td>
+         </tr></table>")
          ),
          pickerInput(
            inputId = "sam_dataplan",
@@ -236,37 +424,21 @@ body <- bs4DashBody(
                column(
                  6,
                  tags$div(
-                   HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> File name</font>'),
-                   bs4Dash::tooltip(
-                     actionButton(
-                       inputId = "datvie_tip1", 
-                       label="" , 
-                       icon=icon("question"),
-                       status="info",
-                       size = "xs"
-                     ),
-                     title = "Name of the uploaded file.",
-                     placement = "bottom"
-                   )
+                   HTML("<table><tr>
+         <td><div><font color='#2196F3'><h4><i class='fa-solid fa-play'></i> File name</font></div></td>
+         <td><div class='help-tip'><p>Name of the uploaded file.</p></div></td>
+         </tr></table>")
                  )
                ),
                column(
                  6,
                  tags$div(
-                   HTML(' <font color="#2196F3"><h4><i class="fa-solid fa-play"></i> Chromosome data type</font>'),
-                   bs4Dash::tooltip(
-                     actionButton(
-                       inputId = "datvie_tip2", 
-                       label="" , 
-                       icon=icon("question"),
-                       status="info",
-                       size = "xs"
-                     ),
-                     title = "Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
-                     The first 3 columns of either type of data should be the chromosome ID,
-                     the start and end coordinates of different genomic regions. See example data for more details.",
-                     placement = "bottom"
-                   )
+                   HTML("<table><tr>
+         <td><div><font color='#2196F3'><h4><i class='fa-solid fa-play'></i> Chromosome data type</font></div></td>
+         <td><div class='help-right-tip'><p>Chromosomes data can be either general data with 3 columns or cytoband data with 5 columns. 
+         The first 3 columns of either type of data should be the chromosome ID,
+         the start and end coordinates of different genomic regions. See example data for more details.</p></div></td>
+         </tr></table>")
                  )
                )
              ),
@@ -280,7 +452,8 @@ body <- bs4DashBody(
                    ),
                    column(
                      2,
-                     bs4Dash::tooltip(
+                     div(
+                       class = "eye-button-class",
                        actionBttn(
                          inputId = "view_chr_data",
                          label = NULL,
@@ -288,8 +461,9 @@ body <- bs4DashBody(
                          color = "success",
                          icon = icon("eye")
                        ),
-                       title = "Click to view the dataset.",
-                       placement = "bottom"
+                       p(
+                         'Click to view the dataset.'
+                       )
                      )
                    )
                  )
@@ -307,7 +481,8 @@ body <- bs4DashBody(
                    ),
                    column(
                      1,
-                     bs4Dash::tooltip(
+                     div(
+                       class = "right-button-class",
                        actionBttn(
                          inputId = "chr_setting",
                          label = NULL,
@@ -315,8 +490,9 @@ body <- bs4DashBody(
                          color = "success",
                          icon = icon("gear",lib = "font-awesome")
                        ),
-                       title = "Set parameters for chromosome data.",
-                       placement = "bottom"
+                       p(
+                         'Set parameters for chromosome data.'
+                       )
                      )
                    )
                  )
@@ -343,18 +519,10 @@ body <- bs4DashBody(
                      pickerInput(
                        inputId = "trackChr",
                        label = tags$div(
-                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome band?</b></font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "datvie_tip3", 
-                             label="" , 
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Display or hide the chromosome band?",
-                           placement = "bottom"
-                         )
+                         HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Display chromosome band?</b></font></div></td>
+         <td><div class='help-tip'><p>Display or hide the chromosome band?</p></div></td>
+         </tr></table>")
                        ),
                        choices = c("Yes" = "track", "No" = "")
                      ),
@@ -363,36 +531,20 @@ body <- bs4DashBody(
                        textInput(
                          inputId = "colorChr",
                          label = tags$div(
-                           HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Color(s) for chromosome band</b></font>'),
-                           bs4Dash::tooltip(
-                             actionButton(
-                               inputId = "datvie_tip4", 
-                               label="" , 
-                               icon=icon("question"),
-                               status="info",
-                               size = "xs"
-                             ),
-                             title = "Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.",
-                             placement = "bottom"
-                           )
+                           HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Color(s) for chromosome band</b></font></div></td>
+         <td><div class='help-tip'><p>Colors to be used for chromosome bands. Character vector of arbitrary length representing colors is accepted and adjusted automatically to the number of chromosomes. For example, 'grey' or 'grey,red,green,blue'. Hex color codes as '#FF0000' are also supported.</p></div></td>
+         </tr></table>")
                          ),
                          value="grey"
                        ),
                        numericInput(
                          inputId = "heightChr",
                          label = tags$div(
-                           HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
-                           bs4Dash::tooltip(
-                             actionButton(
-                               inputId = "datvie_tip5", 
-                               label="" , 
-                               icon=icon("question"),
-                               status="info",
-                               size = "xs"
-                             ),
-                             title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
-                             placement = "bottom"
-                           )
+                           HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Chromosome band height</b></font></div></td>
+         <td><div class='help-tip'><p>Height of the chromosome band, which should be greater than 0 and smaller than 0.9.</p></div></td>
+         </tr></table>")
                          ),
                          value=0.02, 
                          min=0.01, 
@@ -406,18 +558,10 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "heightChr_cyt",
                        label = tags$div(
-                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Chromosome band height</b></font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "datvie_tip6", 
-                             label="" , 
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Height of the chromosome band, which should be greater than 0 and smaller than 0.9.",
-                           placement = "bottom"
-                         )
+                         HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Chromosome band height</b></font></div></td>
+         <td><div class='help-tip'><p>Height of the chromosome band, which should be greater than 0 and smaller than 0.9.</p></div></td>
+         </tr></table>")
                        ),
                        value=0.05, 
                        min=0.01, 
@@ -428,18 +572,10 @@ body <- bs4DashBody(
                    pickerInput(
                      inputId = "outAxis",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Display the axis for genomic position?</b></font>'),
-                       bs4Dash::tooltip(
-                         actionButton(
-                           inputId = "datvie_tip7", 
-                           label="" , 
-                           icon=icon("question"),
-                           status="info",
-                           size = "xs"
-                         ),
-                         title = "Display or hide the axis for genomic position?",
-                         placement = "bottom"
-                       )
+                       HTML("<table><tr>
+         <td><div><font><h5><i class='fa-solid fa-play'></i><b> Display the axis for genomic position?</b></font></div></td>
+         <td><div class='help-tip'><p>Display or hide the axis for genomic position?</p></div></td>
+         </tr></table>")
                      ),
                      choices = c("Yes" = "1", "No" = "2"),
                      selected = "1"
@@ -449,18 +585,10 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "outAxis_size",
                        label = tags$div(
-                         HTML('<font><h5><i class="fa-solid fa-play"></i><b> Font size of the axis for genomic position</b></font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "datvie_tip11", 
-                             label="" , 
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Too large font size may cause problems.",
-                           placement = "bottom"
-                         )
+                         HTML("<table><tr>
+         <td><div><font><h5><i class='fa-solid fa-play'></i><b> Font size of the axis for genomic position</b></font></div></td>
+         <td><div class='help-tip'><p>Too large font size may cause problems.</p></div></td>
+         </tr></table>")
                        ),
                        value=0.7,
                        min=0.1,
@@ -471,18 +599,10 @@ body <- bs4DashBody(
                    pickerInput(
                      inputId = "labelChr",
                      label = tags$div(
-                       HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Display chromosome IDs?</b></font>'),
-                       bs4Dash::tooltip(
-                         actionButton(
-                           inputId = "datvie_tip8", 
-                           label="" , 
-                           icon=icon("question"),
-                           status="info",
-                           size = "xs"
-                         ),
-                         title = "Display or hide the chromosome IDs?",
-                         placement = "bottom"
-                       )
+                       HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Display chromosome IDs?</b></font></div></td>
+         <td><div class='help-tip'><p>Display or hide the chromosome IDs?</p></div></td>
+         </tr></table>")
                      ),
                      choices = c("Yes" = "1", "No" = "2")
                    ),
@@ -491,18 +611,10 @@ body <- bs4DashBody(
                      numericInput(
                        inputId = "labelChr_size",
                        label = tags$div(
-                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Font size of chromosome IDs</b></font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "datvie_tip9", 
-                             label="" , 
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Too large font size may cause problems.",
-                           placement = "bottom"
-                         )
+                         HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Font size of chromosome IDs</b></font></div></td>
+         <td><div class='help-tip'><p>Too large font size may cause problems.</p></div></td>
+         </tr></table>")
                        ),
                        value=1.2,
                        min=0.1,
@@ -512,18 +624,10 @@ body <- bs4DashBody(
                      sliderTextInput(
                        inputId = "outergap",
                        label = tags$div(
-                         HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance between chromosome IDs and chromosome axis</b></font>'),
-                         bs4Dash::tooltip(
-                           actionButton(
-                             inputId = "datvie_tip90", 
-                             label="" , 
-                             icon=icon("question"),
-                             status="info",
-                             size = "xs"
-                           ),
-                           title = "Distance between the chromosome IDs and the chromosome axis for genomic positions.",
-                           placement = "bottom"
-                         )
+                         HTML("<table><tr>
+         <td><div><font color='red'><h5><i class='fa-solid fa-play'></i><b> Distance between chromosome IDs and chromosome axis</b></font></div></td>
+         <td><div class='help-tip'><p>Distance between the chromosome IDs and the chromosome axis for genomic positions.</p></div></td>
+         </tr></table>")
                        ),
                        choices = 0:100,
                        grid = FALSE
@@ -532,36 +636,20 @@ body <- bs4DashBody(
                    textInput(
                      inputId = "gapChr",
                      label = tags$div(
-                       HTML('<font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font>'),
-                       bs4Dash::tooltip(
-                         actionButton(
-                           inputId = "datvie_tip12", 
-                           label="" , 
-                           icon=icon("question"),
-                           status="info",
-                           size = "xs"
-                         ),
-                         title = "Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, '1' or '1,2,3,1'. The first value corresponds to the distance between the first and the second sector.",
-                         placement = "bottom"
-                       )
+                       HTML('<table><tr>
+         <td><div><font><h5><i class="fa-solid fa-play"></i><b> Distances between adjacent sectors</b></font></div></td>
+         <td><div class="help-tip"><p>Distances between neighbouring sectors. Numeric vector of arbitrary length is accepted and adjusted automatically to the number of sectors. For example, "1" or "1,2,3,1". The first value corresponds to the distance between the first and the second sector.</p></div></td>
+         </tr></table>')
                      ),
                      value = "1"
                    ),
                    numericInput(
                      inputId = "distance_Chr",
                      label = tags$div(
-                       HTML('<font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font>'),
-                       bs4Dash::tooltip(
-                         actionButton(
-                           inputId = "datvie_tip13", 
-                           label="" , 
-                           icon=icon("question"),
-                           status="info",
-                           size = "xs"
-                         ),
-                         title = "This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.",
-                         placement = "bottom"
-                       )
+                       HTML('<table><tr>
+         <td><div><font color="red"><h5><i class="fa-solid fa-play"></i><b> Distance to the next section (track, label data, or link data)</b></font></div></td>
+         <td><div class="help-tip"><p>This parameter can be used to tune the distance between adjacent tracks, or the distance between a track and a label data, or the distance between a track and a link data.</p></div></td>
+         </tr></table>')
                      ),
                      value=0.01, 
                      min=0, 
@@ -573,24 +661,9 @@ body <- bs4DashBody(
              )
            )
          ),
-         bs4Card(
-           collapsible = FALSE,
-           title = HTML('<i class="fa-solid fa-circle"></i> Track data (to be displayed in different tracks of a Circos plot)'),
-           width = 12,
-           uiOutput("sortable_track")
-         ),
-         bs4Card(
-           collapsible = FALSE,
-           title = HTML('<i class="fa-solid fa-circle"></i> Label data (used to label elements in a track)'),
-           width = 12,
-           uiOutput("sortable_label")
-         ),
-         bs4Card(
-           collapsible = FALSE,
-           title = HTML('<i class="fa-solid fa-circle"></i> Link data (used to create links in a Circos plot)'),
-           width = 12,
-           uiOutput("sortable_link")
-         ),
+         uiOutput("sortable_track"),
+         uiOutput("sortable_label"),
+         uiOutput("sortable_link"),
          bs4Dash::tooltip(
            actionBttn(
              inputId = "dat_vie_ok",
@@ -636,18 +709,14 @@ body <- bs4DashBody(
                            pickerInput(
                              inputId = "addlegend",
                              label = tags$div(
-                               HTML('<font><h4><i class="fa-solid fa-play"></i> Add legend?</font>'),
-                               bs4Dash::tooltip(
-                                 actionButton(
-                                   inputId = "cirplo_leg_tip1",
-                                   label="" ,
-                                   icon=icon("question"),
-                                   status="info",
-                                   size = "xs"
-                                 ),
-                                 title = "Display or hide the figure legend?",
-                                 placement = "bottom"
-                               )
+                               HTML('<table><tr>
+         <td><div>
+         <font><h4><i class="fa-solid fa-play"></i> Add legend?</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Display or hide the figure legend?
+         </p></div></td>
+         </tr></table>')
                              ),
                              choices = c("Yes", "No"),
                              selected = "No"
@@ -660,18 +729,14 @@ body <- bs4DashBody(
                              pickerInput(
                                inputId = "legendpos",
                                label = tags$div(
-                                 HTML('<font><h4><i class="fa-solid fa-play"></i> Legend position</font>'),
-                                 bs4Dash::tooltip(
-                                   actionButton(
-                                     inputId = "cirplo_leg_tip2",
-                                     label="" ,
-                                     icon=icon("question"),
-                                     status="info",
-                                     size = "xs"
-                                   ),
-                                   title = "Place the legend at the right or the bottom of the plot?",
-                                   placement = "bottom"
-                                 )
+                                 HTML('<table><tr>
+         <td><div>
+         <font><h4><i class="fa-solid fa-play"></i> Legend position</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Place the legend at the right or the bottom of the plot?
+         </p></div></td>
+         </tr></table>')
                                ),
                                choices = c("Right","Bottom"),
                                selected = "Right"
@@ -696,18 +761,14 @@ body <- bs4DashBody(
                                 pickerInput(
                                   inputId = "trac_index",
                                   label = tags$div(
-                                    HTML('<font><h4><i class="fa-solid fa-play"></i> Add track index?</font>'),
-                                    bs4Dash::tooltip(
-                                      actionButton(
-                                        inputId = "cirplo_leg_tip3",
-                                        label="" ,
-                                        icon=icon("question"),
-                                        status="info",
-                                        size = "xs"
-                                      ),
-                                      title = "Display or hide the index of each track?",
-                                      placement = "bottom"
-                                    )
+                                    HTML('<table><tr>
+         <td><div>
+         <font><h4><i class="fa-solid fa-play"></i> Add track index?</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Display or hide the index of each track?
+         </p></div></td>
+         </tr></table>')
                                   ),
                                   choices = c("Yes", "No"),
                                   selected = "No"
@@ -729,18 +790,14 @@ body <- bs4DashBody(
                          column(
                            width = 6,
                            tags$div(
-                             HTML('<font><h5><i class="fa-solid fa-circle"></i> Paste input genomic regions below:</font>'),
-                             bs4Dash::tooltip(
-                               actionButton(
-                                 inputId = "cirplo_highlight",
-                                 label="" ,
-                                 icon=icon("question"),
-                                 status="info",
-                                 size = "xs"
-                               ),
-                               title = "Each row should contain 4 values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, 'chr1,1,10000,'#FF0000'.",
-                               placement = "bottom"
-                             )
+                             HTML('<table><tr>
+         <td><div>
+         <font><h5><i class="fa-solid fa-circle"></i> Paste input genomic regions below:</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Each row should contain 4 values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, "chr1,1,10000,#FF0000".
+         </p></div></td>
+         </tr></table>')
                            )
                          ),
                          column(
@@ -886,8 +943,8 @@ body <- bs4DashBody(
    )
 )
 
-
-#bottom bar
+# 
+# #bottom bar
 foot <- bs4DashFooter(
   includeHTML("www/ffooter.html")
 )
