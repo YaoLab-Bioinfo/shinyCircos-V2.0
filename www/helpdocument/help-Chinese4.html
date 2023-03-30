@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+    <body>
+        <div class="global-div">
+            <div class = "content-left">
+                <div id="divc4">
+                    <h3 class="head_zh"><i class="fa-solid fa-circle"></i> 利用shinyCircos-V2.0绘制Circos图的步骤</h3>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            要使用shinyCircos-V2.0制作 Circos 图，用户必须准备并上传定义特定基因组染色体信息的文件，以及要沿基因组展示的其他输入数据。在本节中，我们将演示使用示例数据集创建Circos图的所有基本步骤。
+                        </p>
+                    </blockquote>
+                    
+                    <div id="divc4.1">
+                        <h3 class="head_zh">1 利用shinyCircos-V2.0绘制Circos图的基本步骤</h3>
+                        
+                        <div id="divc4.1.1">
+                            <h3 class="head_zh">步骤1：准备并上传定义基因组长度的“Chromosome data”</h3>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    染色体数据对于shinyCircos-V2.0是必不可少的，因为它定义了Circos图的染色体。染色体数据的详细格式在<a href="#div2">输入数据格式</a>部分中有描述。
+                                </p>
+                                <p class="p_help_Chinese">
+                                    使用 shinyCircos-V2.0 的“Data Upload”菜单中上传数据的功能模块，将名为“chromosome_general.csv”的文件从本地磁盘上传到shinyCircos-V2.0，如下图所示。
+                                </p>
+                            </blockquote>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/uploaddata/1.jpg" width="60%">
+                                <p class="pic_text">
+                                    上传染色体数据
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.1.2">
+                            <h3 class="head_zh">步骤2：上传一个或多个输入数据集以展示在不同的Tracks中</h3>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    除了染色体数据，用户还可以上传一个或多个其它类型的输入数据，以展示在Circos图的不同Tracks中。制作不同类型图形的输入文件的详细格式在“<a href="#div2">2 输入数据格式</a>”部分有详细说明。
+                                    现在我们将两个名为“barplot.csv”和“line.csv”的文件从本地磁盘上传到 shinyCircos-V2.0中。两个数据集都需要分发到“Track data”框中。<span class="redlight" >记得及时保存上传的数据</span>。
+                                </p>
+                            </blockquote>
+                            
+                        </div>
+                        <div id="divc4.1.3">
+                            <h3 class="head_zh">步骤3：为每个输入数据集设置“Track index”和绘图类型</h3>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    默认情况下，输入数据集的Track index由其上传顺序决定。所有输入数据集的默认绘图类型都是“point”。在这里，我们需要将“barplot.csv”的绘图类型设置为“bar”，并将“line.csv”的绘图类型设置为“line”。
+                                </p>
+                            </blockquote>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/uploaddata/2.jpg" width="60%">
+                                <p class="pic_text">
+                                    在shinyCircos-V2.0的“Circos Parameters”页面设置Track index和plot type。
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.1.4">
+                            <h3 class="head_zh">步骤4：点击“Submit!”按钮绘制图形</h3>
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    当所有输入数据集成功上传到shinyCircos-V2.0，并设置了正确track index和绘图类型后，我们需要单击“Circos Parameters” 菜单底部的“Step 4. Submit the plot parameters to make the Circos plot!”按钮，开始绘制Circos图形。
+                                    <span style="color: red;">默认情况下，在绘制图形时，shinyCircos-V2.0将使用随机颜色或者预定义的颜色</span>。
+                                </p>
+                            </blockquote>
+                            
+        
+                        </div>
+                    </div>
+                    <div id="divc4.2">
+                        <h3 class="head_zh">4.2 通过替换一个或多个输入数据集来更新 Circos 图</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                Circos图的一个Track常由单个输入数据定义。典型的Circos图通常包含由多个输入数据定义的多个轨道。在绘制出一个Circos图的时候，用户可能想要替换这些输入文件中的一个或多个，从而更新Circos图的某些Track，而无需重新创建整个Circos图。
+                            </p>
+                            <p class="p_help_Chinese">
+                                例如，我们想通过将 Track2 的“line.csv”替换为新的输入文件“rect_discrete.csv”来创建包含离散矩形的Circos图。
+                            </p>
+                            <p class="p_help_Chinese">
+                                为此，我们可以跳转到“Data Upload”页面，将“rect_discrete.csv”上传并分发到“Track data”框中，然后把“line.csv”文件移动到“Garbage”框。之后，我们需要点击“Step 2.2. Save uploaded data”按钮保存上传的数据。同时，我们需要将新上传的数据的绘图类型从“line”更改为“rect_discrete”。
+                            </p>
+                            <p class="p_help_Chinese">
+                                最后，我们需要点击“Circos Parameters”页面底部的“Step 4. Submit the plot parameters to make the Circos plot!” 按钮以更新Circos图。
+                            </p>
+                        </blockquote>
+                        
+                    </div>
+                    <div id="divc4.3">
+                        <h3 class="head_zh">3 以PDF或SVG格式下载创建的Circos图形</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                生成Circos图形后，用户可以使用“Circos Plot”页面上方的“Download PDF-file”和“Download SVG-file”模块下载PDF或SVG格式的Circos图(如下图)。默认情况下，下载的两个文件的名字分别为“shinyCircos.pdf”和“shinyCircos.svg”。
+                                下载的PDF文件“shinyCircos.pdf”可以在Adobe Acrobat中打开，下载的SVG文件“shinyCircos.svg”可以在Google Chrome浏览器中打开。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/download/1.jpg" width="60%">
+                            <p class="pic_text">
+                                下载绘制的Circos图形的功能模块
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc4.4">
+                        <h3 class="head_zh">4 利用shinyCircos-V2.0绘制复杂Circos图的基本步骤</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                使用shinyCircos-V2.0可以创建<span class="redlight">10种不同类型的图形，包括point, line, bar, stack-line,stack-point,rect-gradual, rect-discrete, heatmap-gradual, heatmap-discrete和ideogram</span>。要创建一个Circos图，至少需要一个输入数据文件，即定义基因组长度的基因组数据文件。
+                            </p>
+                            <p class="p_help_Chinese">
+                                在这一节中，我们将展示绘制复杂Circos图的基本步骤（如下图）。
+                            </p>
+                        </blockquote>
+                        
+        
+                        <div id="divc4.4.1">
+                            <h3 class="head_zh">步骤1：上传所有输入数据并将每个数据分发到适当的数据类型选择框中</h3>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/1.jpg" width="60%">
+                                <p class="pic_text">
+                                    上传所有输入数据并将每个输入数据分发到适当的数据类型选择框中
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.4.2">
+                            <h3 class="head_zh">步骤2：为每个输入数据设置绘图类型和Track index</h3>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/2.jpg" width="60%">
+                                <p class="pic_text">
+                                    为每个输入数据设置绘图类型和Track index
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.4.3">
+                            <h3 class="head_zh">步骤3：设置所有Track的绘图参数</h3>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/3.jpg" width="60%">
+                                <p class="pic_text">
+                                    为绘制柱状图设置参数
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.4.4">
+                            <h3 class="head_zh">步骤4：设置高级参数</h3>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/4.jpg" width="60%">
+                                <p class="pic_text">
+                                    “Circos Plot”页面的“Advanced options”按钮
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/5.jpg" width="60%">
+                                <p class="pic_text">
+                                    shinyCircos-V2.0 中设计的高级绘图参数
+                                </p>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/6.jpg" width="60%">
+                                <p class="pic_text">
+                                    包含Track索引和图例的Circos图
+                                </p>
+                            </p>
+                        </div>
+                        <div id="divc4.4.5">
+                            <h3 class="head_zh">步骤5：高亮一个或多个基因组区域</h3>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/7.jpg" width="60%">
+                                <p class="pic_text">
+                                    shinyCircos-V2.0中用于高亮一个或多个基因组区域的功能模块
+                                </p>
+                            </p>
+                            
+                            <blockquote class="block_global">
+                                <p class="p_help_Chinese">
+                                    一定要点击“SAVE”按钮输入需要高亮的基因组区域并检测输入数据格式是否有问题。对于所设置的所有高级参数，需要点击“Update”按钮，使所有设置的高级选项生效。
+                                </p>
+                            </blockquote>
+                                
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/plot_complex/8.jpg" width="60%">
+                                <p class="pic_text">
+                                    高亮了一个用户输入的基因组区域的circos图
+                                </p>
+                            </p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class = "content-right">
+                <h2 class="head_zh">目录</h2>
+                <p style="line-height: 23px;">
+                    <a href="#divc4"><span class="content"> 4 利用shinyCircos-V2.0绘制Circos图</span></a>
+                    <br>
+                    &emsp;<a href="#divc4.1"><span class="content"> 4.1 利用shinyCircos-V2.0绘制Circos图的基本步骤</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.1.1"><span class="content"> 步骤1：准备并上传定义基因组长度的"chromosome data"</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.1.2"><span class="content"> 步骤2：上传一个或多个输入数据集以展示在不同的Tracks中</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.1.3"><span class="content"> 步骤3：为每个输入数据集设置“Track index”和绘图类型</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.1.4"><span class="content"> 步骤4：点击“Submit!”按钮绘制图形</span></a>
+                    <br>
+                    &emsp;<a href="#divc4.2"><span class="content"> 4.2 通过替换一个或多个输入数据集来更新 Circos 图</span></a>
+                    <br>
+                    &emsp;<a href="#divc4.3"><span class="content"> 4.3 以PDF或SVG格式下载创建的Circos图形</span></a>
+                    <br>
+                    &emsp;<a href="#divc4.4"><span class="content"> 4.4 利用shinyCircos-V2.0绘制复杂Circos图的基本步骤</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.4.1"><span class="content"> 步骤1：上传所有输入数据并将每个数据分发到适当的数据类型选择框中</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.4.2"><span class="content"> 步骤2：为每个输入数据设置绘图类型和Track index</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.4.3"><span class="content"> 步骤3：设置所有Track的绘图参数</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.4.4"><span class="content"> 步骤4：设置高级参数</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#divc4.4.5"><span class="content"> 步骤5：高亮一个或多个基因组区域</span></a>
+                </p>
+            </div>
+        </div>
+
+    </body>
+</html>

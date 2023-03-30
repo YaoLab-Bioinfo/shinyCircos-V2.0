@@ -1,5 +1,4 @@
 server <- function(input, output,session) {
-  
   data.C <- NULL
   data.T <- NULL
   data.L <- NULL
@@ -8,7 +7,13 @@ server <- function(input, output,session) {
   tradatas <- NULL
   lindatas <- NULL
   labdatas <- NULL
-  alldatapath <- NULL
+  prefilename <- list.files("./www/reference_genome/")
+  alldatapath <<- data.frame(
+    name=prefilename,
+    size=rep(111,length(prefilename)),
+    type=rep("text/csv",length(prefilename)),
+    datapath=paste0("./www/reference_genome/",prefilename)
+  )
   sam_chotra <<- 0
   trafil <- NULL
   tradat_cir <- NULL
@@ -24,8 +29,6 @@ server <- function(input, output,session) {
   tra_poi_poisiz <<- c()
   hltregion.List <<- list() 
   tra_type <<- list()
-  hltTrack.List <<- list()
-  hltdata.List <<- list()
   trasetout <<- list()
   dataview_export <<- NULL
   setlist <<- list()
@@ -244,6 +247,216 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 1</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "barplot.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "chromosome_ideogram.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap-gradual.csv",
+              DT::datatable(
+                data.T3,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[3])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[3]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line.csv",
+              DT::datatable(
+                data.T4,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[4])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[4]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point.csv",
+              DT::datatable(
+                data.T5,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[5])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[5]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "rect_discrete.csv",
+              DT::datatable(
+                data.T6,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[6])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[6]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "gene_label.csv",
+              DT::datatable(
+                data.N1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.N[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.N[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "gene_label1.csv",
+              DT::datatable(
+                data.N2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.N[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.N[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "links.csv",
+              DT::datatable(
+                sam_data.L,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.L)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.L))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
+      
     }else if(sam_dataplan == 2){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("line.csv","point.csv","rect_discrete.csv")
@@ -305,6 +518,95 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 2</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line.csv",
+              DT::datatable(
+                data.T4,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[4])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[4]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point.csv",
+              DT::datatable(
+                data.T5,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[5])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[5]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "rect_discrete.csv",
+              DT::datatable(
+                data.T6,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[6])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[6]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 3){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("barplot.csv","barplot_bidirectional.csv","barplot_color.csv")
@@ -366,6 +668,95 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Right"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 3</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_cytoband.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "barplot.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "barplot_bidirectional.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "barplot_color.csv",
+              DT::datatable(
+                data.T3,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[3])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[3]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 4){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual")
@@ -426,6 +817,75 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Right"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(850,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 4</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap_discrete.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap_gradual.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 5){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- c("line","line_color","line_multicolumn","stack_line")
@@ -488,6 +948,115 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 5</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_cytoband.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line_color.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line_multicolumn.csv",
+              DT::datatable(
+                data.T3,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[3])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[3]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "stack_line.csv",
+              DT::datatable(
+                data.T4,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[4])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[4]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 6){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("point.csv","point_cex.csv","point_color.csv","point_color_cex.csv","point_color_pch.csv","point_color_pch_cex.csv","point_multicolumn.csv","point_pch.csv","point_pch_cex.csv","stack_point.csv")
@@ -571,6 +1140,255 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 6</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_cex.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_color.csv",
+              DT::datatable(
+                data.T3,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[3])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[3]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_color_cex.csv",
+              DT::datatable(
+                data.T4,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[4])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[4]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_color_pch.csv",
+              DT::datatable(
+                data.T5,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[5])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[5]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_color_pch_cex.csv",
+              DT::datatable(
+                data.T6,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[6])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[6]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_multicolumn.csv",
+              DT::datatable(
+                data.T7,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[7])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[7]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_pch.csv",
+              DT::datatable(
+                data.T8,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[8])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[8]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "point_pch_cex.csv",
+              DT::datatable(
+                data.T9,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[9])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[9]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "stack_point.csv",
+              DT::datatable(
+                data.T10,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[10])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[10]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "links_discrete_color.csv",
+              DT::datatable(
+                sam_data.L,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.L)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.L))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     } else if (sam_dataplan == 7) {
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("line_color.csv","chromosome_ideogram.csv")
@@ -642,6 +1460,95 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 7</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "line_color.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "chromosome_ideogram.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "links_discrete_color.csv",
+              DT::datatable(
+                sam_data.L,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.L)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.L))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 8){
       name_data.C <<- c("chromosome_cytoband.csv")
       name_data.T <<- NULL
@@ -673,6 +1580,55 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 8</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_cytoband.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "links_gradual_color.csv",
+              DT::datatable(
+                sam_data.L,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.L)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.L))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }else if(sam_dataplan == 9){
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_discrete","heatmap_gradual","rect_discrete","rect_gradual")
@@ -714,6 +1670,115 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(650,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 9</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap_discrete.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap_gradual.csv",
+              DT::datatable(
+                data.T2,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[2])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[2]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "rect_discrete.csv",
+              DT::datatable(
+                data.T3,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[3])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[3]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "rect_gradual.csv",
+              DT::datatable(
+                data.T4,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[4])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[4]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     } else {
       name_data.C <<- c("chromosome_general.csv")
       name_data.T <<- c("heatmap_gradual")
@@ -749,19 +1814,74 @@ server <- function(input, output,session) {
       sam_legendpos <<- "Bottom"  
       sam_source_data <<- "b"
       sam_plotsize <<- c(750,750)
+      ### uitableoutput
+      output$viewallsamdata <- renderUI({
+        tagList(
+          HTML('<font><i class="fa-solid fa-circle"></i> Overview of all datasets included in example dataset 10</font>'),
+          bs4Dash::tabsetPanel(
+            type = "pills",
+            tabPanel(
+              title = "chromosome_general.csv",
+              DT::datatable(
+                sam_data.C,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.C))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            ),
+            tabPanel(
+              title = "heatmap_gradual.csv",
+              DT::datatable(
+                data.T1,
+                selection = "single",
+                extensions = "Buttons",
+                rownames = FALSE,
+                options = list(
+                  pageLength = 6,
+                  dom = 'Bfrtip',
+                  buttons = list(
+                    'pageLength',
+                    'copy',
+                    list(extend = 'csv',filename = gsub(".csv","",name_data.T[1])),
+                    list(extend = 'excel',filename = gsub(".csv","",name_data.T[1]))
+                  ),
+                  scrollX = TRUE
+                )
+              )
+            )
+          )
+        )
+      })
     }
+    name_allsamdata <- c(name_data.C,name_data.T,name_data.N,name_data.L)
+   
+    allsamdata <- c(list(sam_data.C),sam_data.T,sam_data.N,list(sam_data.L))
+    allsamdata <- allsamdata[!sapply(allsamdata,is.null)]
+
     
     output$viewchr_sam <- renderDT(
       DT::datatable(
         sam_data.C,
+        selection = "single",
         extensions = "Buttons",
+        rownames = FALSE,
         options = list(
           dom = 'Bfrtip',
           buttons = list(
             'pageLength',
-            'copy',
-            list(extend = 'csv',filename = paste0("chrdata")),
-            list(extend = 'excel',filename = paste0("chrdata"))
+            list(extend = 'csv',filename = gsub(".csv","",name_data.C)),
+            list(extend = 'excel',filename = gsub(".csv","",name_data.C))
           ),
           scrollX = TRUE
         )
@@ -774,14 +1894,15 @@ server <- function(input, output,session) {
         output[[paste0("viewTra_sam",x)]] <<- renderDT(
           DT::datatable(
             sam_data.T[[x]],
+            selection = "single",
             extensions = "Buttons",
+            rownames = FALSE,
             options = list(
               dom = 'Bfrtip',
               buttons = list(
                 'pageLength',
-                'copy',
-                list(extend = 'csv',filename = paste0("tradata",x)),
-                list(extend = 'excel',filename = paste0("tradata",x))
+                list(extend = 'csv',filename = gsub(".csv","",name_data.T[x])),
+                list(extend = 'excel',filename = gsub(".csv","",name_data.T[x]))
               ),
               scrollX = TRUE
             )
@@ -798,14 +1919,15 @@ server <- function(input, output,session) {
         output[[paste0("viewLab_sam",x)]] <<- renderDT(
           DT::datatable(
             sam_data.N[[x]],
+            selection = "single",
             extensions = "Buttons",
+            rownames = FALSE,
             options = list(
               dom = 'Bfrtip',
               buttons = list(
                 'pageLength',
-                'copy',
-                list(extend = 'csv',filename = paste0("labdata",x)),
-                list(extend = 'excel',filename = paste0("labdata",x))
+                list(extend = 'csv',filename = gsub(".csv","",name_data.N[x])),
+                list(extend = 'excel',filename = gsub(".csv","",name_data.N[x]))
               ),
               scrollX = TRUE
             )
@@ -818,20 +1940,22 @@ server <- function(input, output,session) {
     output$viewlink_sam <- renderDT(
       DT::datatable(
         sam_data.L,
+        selection = "single",
         extensions = "Buttons",
+        rownames = FALSE,
         options = list(
           dom = 'Bfrtip',
           buttons = list(
             'pageLength',
-            'copy',
-            list(extend = 'csv',filename = paste0("lindata")),
-            list(extend = 'excel',filename = paste0("lindata"))
+            list(extend = 'csv',filename = gsub(".csv","",name_data.L)),
+            list(extend = 'excel',filename = gsub(".csv","",name_data.L))
           ),
           scrollX = TRUE
         )
       ),
       server = FALSE
     )
+    
   })
   observeEvent(input$dataup_example_go,{
     sendSweetAlert(
@@ -1556,7 +2680,7 @@ server <- function(input, output,session) {
          <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
          </div></td>
          <td><div class="help-tip"><p>
-         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories(Only valid at stack-point). Type ?pch in R console for more details.
          </p></div></td>
          </tr></table>')
                             ),
@@ -2276,7 +3400,6 @@ server <- function(input, output,session) {
                       fluidRow(
                         column(
                           width = 4,
-                          
                           colourInput(
                             "sam_lowColinks",
                             label = HTML('<p><font size="3"><i class="fa-solid fa-circle"></i><strong> Low Color</strong></font></p>'),
@@ -2333,14 +3456,34 @@ server <- function(input, output,session) {
             trackChr = sam_trackChr ,tratype = sam_tratype,source_data = sam_source_data,chr_height = sam_heightChr, heightTra = sam_heightTraus , datatypeChr = sam_datatypeChr, tra_poi_poisiz = sam_tra_poi_poisiz , heatmapcols = sam_heatmapcols , tra_bgcol = sam_tra_bgcol , gap.width = sam_gapChr ,
             tra_hmap_poslines = sam_tra_hmap_poslines , tra_hmap_poslinhei = sam_tra_hmap_poslinhei , tra_hmap_cellbord = sam_tra_hmap_cellbord , tra_hmap_cellbord_col = sam_tra_hmap_cellbord_col , tra_hmap_heatmapcol = sam_tra_hmap_heatmapcol , plotsize = sam_plotsize ,
             tra_rect_rectcol = sam_tra_rect_rectcol , tra_trct_colrect = sam_tra_trct_colrect , tra_rect_rectcoldis = sam_tra_rect_rectcoldis , tra_rect_rectcoldiscus = sam_tra_rect_rectcoldiscus , tra_transparency = sam_tra_transparency , tra_coltype = sam_tra_coltype , tra_colcol = sam_tra_colcol , tra_heatcol_dis = sam_tra_heatcol_dis , tra_heat_heatcoldiscus = sam_tra_heat_heatcoldiscus,
-            tra_colorcus = sam_tra_colorcus , tra_line_fillarea = sam_tra_line_fillarea , tra_poipch = sam_tra_poipch , tra_colorline = sam_tra_colorline , tra_baseline = sam_tra_baseline , outAxis = sam_outAxis , fontSize = fontSize , outAxis_size = sam_outAxis_size , labelChr_size = sam_labelChr_size , tra_bar_direction = sam_tra_bar_direction ,
-            tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks , outergap = sam_outergap ,
-            selcolorLinks = sam_selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos , trac_index = sam_trac_index)
+            tra_colorcus = sam_tra_colorcus , tra_line_fillarea = sam_tra_line_fillarea , tra_poipch = sam_tra_poipch , tra_colorline = sam_tra_colorline , tra_baseline = sam_tra_baseline , outAxis = sam_outAxis , outAxis_size = sam_outAxis_size , labelChr_size = sam_labelChr_size , tra_bar_direction = sam_tra_bar_direction ,
+            tra_bar_Boundary = sam_tra_bar_Boundary , tra_bar_coldir1 = sam_tra_bar_coldir1 , tra_bar_coldir2 = sam_tra_bar_coldir2 , tra_line_selrea = sam_tra_line_selrea , tra_bar_borderarea = sam_tra_bar_borderarea , colformatLinks = sam_colformatLinks , colorLinks = sam_colorLinks , outergap = sam_outergap ,
+            selcolorLinks = sam_selcolorLinks , gracolinks =  sam_gracolinks , transparencyLinks = sam_transparencyLinks , legendpos = sam_legendpos , addlegend = sam_addlegend , hlt_data = sam_hlt_data , midplot = sam_midplot , trapos = sam_pospos , trac_index = sam_trac_index)
     
     
     
   })
   ## *** Upload Data ***
+  observeEvent(input$usrprechr,{
+    filename <<- NULL
+    chrdatas <<- NULL
+    tradatas <<- NULL
+    lindatas <<- NULL
+    labdatas <<- NULL
+    garbage <<- NULL
+    dataview_export <<- NULL
+  })
+  # observeEvent(input$usrprechrsel,{
+  #   filename <<- NULL
+  #   chrdatas <<- NULL
+  #   tradatas <<- NULL
+  #   lindatas <<- NULL
+  #   labdatas <<- NULL
+  #   garbage <<- NULL
+  #   dataview_export <<- NULL
+  # })
+  
+  
   observeEvent(input$alldata, {
     ### alert box
     if(is.null(input$alldata)){
@@ -2360,77 +3503,133 @@ server <- function(input, output,session) {
     }
     ###
     file <- input$alldata
-    filename <- file$name
+    filename <<- file$name
     if(!is.null(file)){
       output$dataclassify <<- renderUI({
-        tagList(
-          tags$div(
-            HTML('<font><h4><i class="fa-solid fa-play"></i> Step 2.1. Please distribute the uploaded datasets to appropriate data groups:</font>'),
-            bs4Dash::tooltip(
-              actionButton(
-                inputId = "datup_tip3", 
-                label="" , 
-                icon=icon("question"),
-                status="info",
-                size = "xs"
+        # filename <<- NULL
+        # chrdatas <<- NULL
+        # tradatas <<- NULL
+        # lindatas <<- NULL
+        # labdatas <<- NULL
+        # garbage <<- NULL
+        req(input$usrprechrsel)
+        if(input$usrprechr == FALSE){
+          tagList(
+            br(),
+            br(),
+            tags$div(
+              HTML('<table><tr>
+         <td><div>
+         <font><h4><i class="fa-solid fa-play"></i> Step 3.1. Please distribute the uploaded datasets to appropriate data groups:</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Please drag the uploaded datasets from the "Candidate area" to the box of "Chromosome data" or "Track data" or "Label data" or "Links data", and then move to Step 2.2.
+         </p></div></td>
+         </tr></table>')
+            ),
+            bucket_list(
+              header = NULL,
+              group_name = "bucket_list_group",
+              orientation = "horizontal",
+              add_rank_list(
+                text = "Candidate area",
+                labels = filename,
+                input_id = "rank_list_1"
               ),
-              title = "Please drag the uploaded datasets from the 'Candidate area' to the box of 'Chromosome data' or 'Track data' or 'Label data' or 'Links data', and then move to Step 2.2.",
-              placement = "bottom"
-            )
-          ),
-          bucket_list(
-            header = NULL,
-            group_name = "bucket_list_group",
-            orientation = "horizontal",
-            add_rank_list(
-              text = "Candidate area",
-              labels = filename,
-              input_id = "rank_list_1"
-            ),
-            add_rank_list(
-              text = "* Chromosome data",
-              labels = chrdatas,
-              input_id = "chrdata"
-            ),
-            add_rank_list(
-              text = "Track data",
-              labels = tradatas,
-              input_id = "tradata"
-            ),
-            add_rank_list(
-              text = "Label data",
-              labels = labdatas,
-              input_id = "labdata"
-            ),
-            add_rank_list(
-              text = "Links data",
-              labels = lindatas,
-              input_id = "lindata"
-            ),
-            add_rank_list(
-              text = "Garbage",
-              labels = NULL,
-              input_id = "garbage"
+              add_rank_list(
+                text = "* Chromosome data",
+                labels = chrdatas,
+                input_id = "chrdata"
+              ),
+              add_rank_list(
+                text = "Track data",
+                labels = tradatas,
+                input_id = "tradata"
+              ),
+              add_rank_list(
+                text = "Label data",
+                labels = labdatas,
+                input_id = "labdata"
+              ),
+              add_rank_list(
+                text = "Links data",
+                labels = lindatas,
+                input_id = "lindata"
+              ),
+              add_rank_list(
+                text = "Garbage",
+                labels = NULL,
+                input_id = "garbage"
+              )
             )
           )
-        )
+        }else{
+          tagList(
+            br(),
+            br(),
+            tags$div(
+              HTML('<table><tr>
+         <td><div>
+         <font><h4><i class="fa-solid fa-play"></i> Step 2.1. Please distribute the uploaded datasets to appropriate data groups:</font>
+         </div></td>
+         <td><div class="help-tip"><p>
+         Please drag the uploaded datasets from the "Candidate area" to the box of "Track data" or "Label data" or "Links data", and then move to Step 2.2.
+         </p></div></td>
+         </tr></table>')
+            ),
+            bucket_list(
+              header = NULL,
+              group_name = "bucket_list_group",
+              orientation = "horizontal",
+              add_rank_list(
+                text = "Candidate area",
+                labels = filename,
+                input_id = "rank_list_1"
+              ),
+              add_rank_list(
+                text = "Track data",
+                labels = tradatas,
+                input_id = "tradata"
+              ),
+              add_rank_list(
+                text = "Label data",
+                labels = labdatas,
+                input_id = "labdata"
+              ),
+              add_rank_list(
+                text = "Links data",
+                labels = lindatas,
+                input_id = "lindata"
+              ),
+              add_rank_list(
+                text = "Garbage",
+                labels = NULL,
+                input_id = "garbage"
+              )
+            )
+          )
+        }
       })
     }
   })
   
   observeEvent(input$save1,{
     filename <<-NULL
-    chrdatas <<- input$chrdata
-    tradatas <<- input$tradata
-    lindatas <<- input$lindata
-    labdatas <<- input$labdata
-    garbage <<- input$garbage
+    if(input$usrprechr == FALSE){
+      chrdatas1 <<- input$chrdata
+    }else{
+      chrdatas1 <<- paste0(input$usrprechrsel,".csv")
+    }
+    tradatas1 <<- input$tradata
+    lindatas1 <<- input$lindata
+    labdatas1 <<- input$labdata
+    garbage1 <<- input$garbage
     alldatapath <<- unique(rbind(input$alldata,alldatapath))
     alldatapath <<- alldatapath[!duplicated(alldatapath$name),]
     
     
     
-    lonalldat <<- c(length(chrdatas),length(tradatas),length(lindatas),length(labdatas))
+    lonalldat <<- c(length(chrdatas1),length(tradatas1),length(lindatas1),length(labdatas1))
     ### alert box
     if(lonalldat[1] > 1){
       sendSweetAlert(
@@ -2458,6 +3657,10 @@ server <- function(input, output,session) {
   })
   
   observeEvent(input$dataup_go,{
+    chrdatas <<- chrdatas1
+    tradatas <<- tradatas1
+    lindatas <<- lindatas1
+    labdatas <<- labdatas1
     dataview_export <<- NULL
     dataall <- c(chrdatas,tradatas,lindatas,labdatas)
     datarepet <- TRUE %in% duplicated(dataall)
@@ -2477,8 +3680,8 @@ server <- function(input, output,session) {
           type = "error"
         )
       }else{
-        chrfil <- alldatapath[which(alldatapath[1] == chrdatas[1]),4]
-        if(!grepl("text",alldatapath[which(alldatapath[1] == chrdatas[1]),3])){
+        chrfil <<- alldatapath[which(alldatapath[1] == chrdatas[1]),4]
+        if(input$usrprechr == FALSE&!grepl("text",alldatapath[which(alldatapath[1] == chrdatas[1]),3])){
           sendSweetAlert(
             session = session,
             title = "",
@@ -2528,7 +3731,7 @@ server <- function(input, output,session) {
             trafil <- lapply(1:tra_a, function(x) {
               alldatapath[which(alldatapath[1] == tradatas[x]), 4]
             })
-            trafil <- unlist(trafil)
+            trafil <<- unlist(trafil)
             data.T <<- lapply(1:tra_a, function(x) {
               tra_b <- trafil[[x]]
               data.frame(fread(tra_b), stringsAsFactors = F)
@@ -2541,7 +3744,7 @@ server <- function(input, output,session) {
           linfil <- lapply(1:lin_a,function(x){
             alldatapath[which(alldatapath[1] == lindatas[x]),4]
           })
-          linfil <- unlist(linfil)
+          linfil <<- unlist(linfil)
           if(lin_a >= 1) {
             lin_b <- linfil[[1]]
             data.L <<- data.frame(fread(lin_b), stringsAsFactors = F)
@@ -2553,7 +3756,7 @@ server <- function(input, output,session) {
           labfil <- lapply(1:lab_a, function(x) {
             alldatapath[which(alldatapath[1] == labdatas[x]), 4]
           })
-          labfil <- unlist(labfil)
+          labfil <<- unlist(labfil)
           if (lab_a >= 1) {
             data.N <<- lapply(1:lab_a, function(x) {
               lab_b <- labfil[[x]]
@@ -2591,9 +3794,10 @@ server <- function(input, output,session) {
           
           primessage <- sapply(alldatalist, function(x){
             
-            if (!all(is.character(x[, 1]))) {
-              return("The first column should be characters.")
-            } else if (!all(is.numeric(x[, 3]), is.numeric(x[, 2]))) {
+            # if (!all(is.character(x[, 1]))) {
+            #   return("The first column should be characters.")
+            # } else 
+            if (!all(is.numeric(x[, 3]), is.numeric(x[, 2]))) {
               return("The 2nd and 3rd columns of the data should be numeric.")
             } else if (!all(x[, 2] > 0)) {
               return("Values of the 'start' column should be larger than 0.")
@@ -2774,16 +3978,23 @@ server <- function(input, output,session) {
     output$viewChr <- renderDT(
       DT::datatable(
         data.C,
+        selection = "single",
         extensions = "Buttons",
+        rownames = FALSE,
         options = list(
           dom = 'Bfrtip',
           buttons = list(
-            'pageLength'
+            'pageLength',
+            list(extend = 'csv',filename = gsub(".csv","",chrdatas)),
+            list(extend = 'excel',filename = gsub(".csv","",chrdatas))
           ),
           scrollX = TRUE
         )
-      )
+      ),
+      server = FALSE
     )
+    
+
     #tracks view
     tra_len <- length(tradatas)
     if(tra_len >= 1){
@@ -2791,15 +4002,20 @@ server <- function(input, output,session) {
         output[[paste0("viewTra",x)]] <<- renderDT(
           DT::datatable(
             data.T[[x]],
+            selection = "single",
             extensions = "Buttons",
+            rownames = FALSE,
             options = list(
               dom = 'Bfrtip',
               buttons = list(
-                'pageLength'
+                'pageLength',
+                list(extend = 'csv',filename = gsub(".csv","",tradatas[x])),
+                list(extend = 'excel',filename = gsub(".csv","",tradatas[x]))
               ),
               scrollX = TRUE
             )
-          )
+          ),
+          server = FALSE
         )
       })
     }else if(tra_len < 1){
@@ -2814,15 +4030,20 @@ server <- function(input, output,session) {
         output[[paste0("viewLab",x)]] <<- renderDT(
           DT::datatable(
             data.N[[x]],
+            selection = "single",
             extensions = "Buttons",
+            rownames = FALSE,
             options = list(
               dom = 'Bfrtip',
               buttons = list(
-                'pageLength'
+                'pageLength',
+                list(extend = 'csv',filename = gsub(".csv","",labdatas[x])),
+                list(extend = 'excel',filename = gsub(".csv","",labdatas[x]))
               ),
               scrollX = TRUE
             )
-          )
+          ),
+          server = FALSE
         )
       })
     }
@@ -2832,15 +4053,20 @@ server <- function(input, output,session) {
     output$viewlink <- renderDT(
       DT::datatable(
         data.L,
+        selection = "single",
         extensions = "Buttons",
+        rownames = FALSE,
         options = list(
           dom = 'Bfrtip',
           buttons = list(
-            'pageLength'
+            'pageLength',
+            list(extend = 'csv',filename = gsub(".csv","",lindatas)),
+            list(extend = 'excel',filename = gsub(".csv","",lindatas))
           ),
           scrollX = TRUE
         )
-      )
+      ),
+      server = FALSE
     )
     output$sortable_chr <<- renderUI({
       if(!is.null(chrdatas)){
@@ -2850,7 +4076,6 @@ server <- function(input, output,session) {
     
     output$sortable_track <<- renderUI({
       if(tra_len != 0){
-        
         tagList(
           bs4Card(
             collapsible = FALSE,
@@ -2972,16 +4197,16 @@ server <- function(input, output,session) {
                 )
               )
             })
-          ),
+          )
           
         )
       }
     })
     ###
     output$sortable_label <<- renderUI({
-      labdatas <- input$labdata
-      tradatas <- input$tradata
-      if(length(labdatas) != 0){
+      #labdatas <- input$labdata
+      #tradatas <- input$tradata
+      if(lab_len != 0){
         tagList(
           bs4Card(
             collapsible = FALSE,
@@ -4378,7 +5603,7 @@ server <- function(input, output,session) {
          <font><h5><i class="fa-solid fa-play"></i><b> Point shape</b></font>
          </div></td>
          <td><div class="help-tip"><p>
-         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories. Type ?pch in R console for more details.
+         Symbols used for different points. Applicable value can be an integer in [0-25] or an integer vector of arbitrary length adjusted automatically to the number of data categories(Only valid at stack-point). Type ?pch in R console for more details.
          </p></div></td>
          </tr></table>')
                 ),
@@ -4996,7 +6221,9 @@ server <- function(input, output,session) {
               lab_fontper[x] <<- input[[paste0("lab_fontper",x)]]
             }
           })
-          labels_inf <- as.data.frame(cbind(unlist(lab_pos),unlist(poslabels),unlist(lab_fontsize),unlist(lab_fontcol),c(1:length(data.N)),unlist(lab_adjustfontsize),unlist(lab_fontper)))
+          labels_inf <<- as.data.frame(cbind(unlist(lab_pos),unlist(poslabels),unlist(lab_fontsize),unlist(lab_fontcol),c(1:length(data.N)),unlist(lab_adjustfontsize),unlist(lab_fontper)))
+        }else{
+          labels_inf <<- NULL
         }
         tra_num <- length(tradatas)
         tra_pos <<- lapply(1:tra_num, function(x){
@@ -5126,19 +6353,19 @@ server <- function(input, output,session) {
             tra_yaxis[pospos[x]] <<- input[[paste0("tra_yaxis",x)]]
           }
         })
-        Tra_margin[(length(Tra_margin)+1)] <- 0
+        Tra_margin[(length(Tra_margin)+1)] <<- 0
         
         #}
         
-        dis_Chr <- input$distance_Chr
+        dis_Chr <<- input$distance_Chr
         if(input$chr_type=="1"){
-          chr_height <- input$heightChr
+          chr_height <<- input$heightChr
         }else{
-          chr_height <- input$heightChr_cyt
+          chr_height <<- input$heightChr_cyt
         }
-        source_data <- input$datatype
-        datatypeChr <- input$chr_type
-        trac_index <- input$trac_index
+        source_data <<- input$datatype
+        datatypeChr <<- input$chr_type
+        trac_index <<- input$trac_index
         heatmapcols <<- lapply(1:length_T, function(x){
           c(tra_hmap_lowColor[[x]],tra_hmap_midColor[[x]],tra_hmap_highColor[[x]])
         })
@@ -5153,45 +6380,49 @@ server <- function(input, output,session) {
             colorLinks <<- input$colorLinks2
           }
           transparencyLinks <<- input$transparencyLinks
+        }else{
+          colformatLinks <<- NULL
+          colorLinks <<- NULL
+          selcolorLinks <<- NULL
+          transparencyLinks <<- NULL
         }
         
-        transparencyhltLinks <<- input$transparencyhltLinks
         gracolinks <<- c(input$lowColinks,input$midColinks,input$highColinks)
         outAxis_size <<- input$outAxis_size
         labelChr_size <<- input$labelChr_size
         outAxis <<- input$outAxis
         gap.width <<- gsub("\\s","",strsplit(input$gapChr,",")[[1]])
         colorChr <<- gsub("\\s","",strsplit(input$colorChr,",")[[1]])
-        addlegend <- input$addlegend
+        addlegend <<- input$addlegend
         
         cexlabel <<- input$cexlabel
-        legendpos <- input$legendpos
-        midplot <- input$midplot
-        plotsize <- input$plotmultiples
+        legendpos <<- input$legendpos
+        midplot <<- input$midplot
+        plotsize <<- input$plotmultiples
         if(input$addlegend == "Yes"){
           
           if(input$legendpos == "Right"){
-            sizeplot <- c(850,750)
+            sizeplot <<- c(850,750)
           }else{
-            sizeplot <- c(650,750)
+            sizeplot <<- c(650,750)
           }
         }else{
-          sizeplot <- c(750,750)
+          sizeplot <<- c(750,750)
         }
-        sizeplot <- sizeplot*plotsize*0.01
+        sizeplot <<- sizeplot*plotsize*0.01
         
         
       
         if(!is.null(data.T)){
-          rect_gra_3Col <- matrix(nrow = length(tra_type),ncol = 3)
-          tratypeunlist <- unlist(tra_type)
-          tra_rect_rectcolunlist <- unlist(tra_rect_rectcol)
+          rect_gra_3Col <<- matrix(nrow = length(tra_type),ncol = 3)
+          tratypeunlist <<- unlist(tra_type)
+          tra_rect_rectcolunlist <<- unlist(tra_rect_rectcol)
           for (l in 1:length(tra_type)) {
             if(!(tratypeunlist[l] == "point"|tratypeunlist[l] == "line"|tratypeunlist[l] == "bar")){
               tra_yaxis[l] <<-  "2"
             }
             if(tratypeunlist[l] == "rect-gradual" & tra_rect_rectcolunlist[l] == "2"){
-              rect_gra_3Col[l,] <- c(rect_gra_lowCol[[l]],rect_gra_midCol[[l]],rect_gra_highCol[[l]])
+              rect_gra_3Col[l,] <<- c(rect_gra_lowCol[[l]],rect_gra_midCol[[l]],rect_gra_highCol[[l]])
             }
             
             
@@ -5201,32 +6432,34 @@ server <- function(input, output,session) {
           }
           for(k in which(tratypeunlist=="bar" | tratypeunlist=="stack-point" | tratypeunlist=="stack-line")){
             if(tra_coltype[[k]] == "2"){
-              tra_colcol[[k]] = tra_colcol_spec[[k]]
+              tra_colcol[[k]] <<- tra_colcol_spec[[k]]
             }
           }
+        }else{
+          rect_gra_3Col <<- NULL
         }
-        
-        
+        if("add" %in% data.C[,1]){
+          data.C <<- data.C[-which(data.C[,1] == "add"),]
+        }
+        data.C[,3] <<- as.numeric(data.C[,3])
         if(1 %in% unlist(tra_yaxis) | trac_index == "Yes"){
           if(ncol(data.C) == 3){
-            data.CC <- rbind(data.C,c("add",1,round(0.025*sum(data.C[,3]))))
+            data.C <<- rbind(data.C,c("add",1,round(0.025*sum(data.C[,3]))))
           }else{
             kk <- tapply(data.C[,3],data.C[,1],max)
-            data.CC <- rbind(data.C,c("add",1,round(0.025*sum(kk)),"1","1"))
+            data.C <<- rbind(data.C,c("add",1,round(0.025*sum(kk)),"1","1"))
           }
-        }else{
-          data.CC <- data.C
         }
         
-        outergap <- input$outergap
+        outergap <<- input$outergap
         
-        plotfig(input = input, output = output,session=session,data.C = data.CC , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
+        plotfig(input = input, output = output,session=session,data.C = data.C , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
                 trackChr = trackChr ,tratype = tra_type,source_data = source_data,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , gap.width = gap.width ,
                 tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot , rect_gra_3Col = rect_gra_3Col,
                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
-                tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , fontSize = fontSize , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
-                tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , hltTrack.List = hltTrack.List , hltdata.List = hltdata.List , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
-                selcolorLinks = selcolorLinks , transparencyhltLinks = transparencyhltLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index , outergap = outergap
+                tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
+                tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
+                selcolorLinks = selcolorLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index , outergap = outergap
         )
       }
     })
@@ -5301,8 +6534,46 @@ server <- function(input, output,session) {
         selected = "cir-par"
       )
     }
-    
   })
+  
+  
+  ## *** language selection ***
+  observeEvent(input$helplan,{
+    if(input$helplan == 1){
+      updateRadioButtons(
+        session = session, 
+        inputId = "helpsection",
+        choices = c(
+          "Introduction" = 1,
+          "Input data format" = 2, 
+          "Use shinyCircos online or on local computer" = 3,
+          "Steps to create a Circos diagram with shinyCircos-V2.0" = 4,
+          "Plot options to decorate a Circos plot" = 5,
+          "Advanced features" = 6,
+          "Video tutorials" = 7
+        ),
+        selected = input$helpsection
+      )
+    }else{
+      updateRadioButtons(
+        session = session, 
+        inputId = "helpsection",
+        choices = c(
+          "简介" = 1,
+          "输入数据格式" = 2, 
+          "在线或在本地计算机上使用shinyCircos" = 3,
+          "利用shinyCircos-V2.0绘制Circos图的步骤" = 4,
+          "修饰Circos图的绘图选项" = 5,
+          "高级功能" = 6,
+          "视频教程" = 7
+        ),
+        selected = input$helpsection
+      )
+    }
+  })
+  
+  
+  
   observeEvent(input$go_cirplot,{
     if(!is.null(input$other_plot_data)){
       data_cirplot <- read.csv(file = input$other_plot_data$datapath,header = T)
@@ -5374,18 +6645,24 @@ server <- function(input, output,session) {
     })
     outputOptions(output, "other_plot_data1", suspendWhenHidden = FALSE)
     output$alldata1 <- reactive({
-      return(!is.null(input$alldata))
+      if(input$usrprechr == FALSE){
+        return(!is.null(input$alldata))
+      }else{
+        return(TRUE)
+      }
     })
     outputOptions(output, "alldata1", suspendWhenHidden = FALSE)
+    
+    
+  })
+  observeEvent(input$dataup_go,priority = -2,{
     output$chrdata1 <- reactive({
       if(input$dataup_go){
-        return(!is.null(input$chrdata))
+        return(!is.null(chrdatas))
       }
     })
     outputOptions(output, "chrdata1", suspendWhenHidden = FALSE)
-    
   })
-  
   observeEvent(input$clearhlData,{
     hlt_data <<- NULL
     updateTextInput(
@@ -5523,25 +6800,61 @@ server <- function(input, output,session) {
         dev.off()
       }, contentType = 'image/svg')
   })
-  ## *** Download Chinese help file ***
+  ## *** Download all data ***
   observe({
-    output$Chinesehelpmanual <- downloadHandler(
-      filename <- function(){paste('shinyCircos_User_Manual_Chinese.pdf')},
+    output$all_sample_data.zip <- downloadHandler(
+      filename <- function(){ paste('all_sample_data.zip') },
       content <- function(file){
-        file.copy("www/shinyCircos-V2.0_User_Manual_Chinese.pdf",file)
-      }, contentType = 'application/pdf'
-    )
+        file.copy("./www/otherdata/all_sample_data.zip",file)
+      }, contentType = NULL)
   })
-  ## *** Download English help file ***
+  ## *** Download all reference genomedata ***
   observe({
-    output$Englishhelpmanual <- downloadHandler(
-      filename <- function(){paste('shinyCircos_User_Manual_English.pdf')},
+    output$all_referencegenome_data.zip <- downloadHandler(
+      filename <- function(){ paste('all_referencegenome_data.zip') },
       content <- function(file){
-        file.copy("www/shinyCircos-V2.0_User_Manual_English.pdf",file)
-      }, contentType = 'application/pdf'
-    )
+        file.copy("./www/otherdata/reference_genome.zip",file)
+      }, contentType = NULL)
   })
-  observeEvent(input$dataup_go,{
+  ## *** Download source code ***
+  observe({
+    output$sourcecode.zip <- downloadHandler(
+      filename <- function(){ paste('sourcecode.zip') },
+      content <- function(file){
+        file.copy("./www/otherdata/sourcecode.zip",file)
+      }, contentType = NULL)
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  ## *** Download R scripts ***
+  observe({
+    output$script.R <- downloadHandler(
+      filename <- function(){ paste('script.zip') },
+      content <- function(file){
+        writecmd(data.C = data.C , colorChr = colorChr , dis_Chr = dis_Chr , data.T = data.T , data.L = data.L, data.N = data.N , tra_Margin = Tra_margin , labels_inf = labels_inf , labelChr = labelChr , tra_hmap_typcolhmap = tra_hmap_typcolhmap , tra_border = tra_border ,tra_yaxis = tra_yaxis,
+                 trackChr = trackChr ,tratype = tra_type,source_data = source_data,chr_height = chr_height,datatypeChr = datatypeChr , heightTra = heightTra , tra_poi_poisiz = tra_poi_poisiz , heatmapcols = heatmapcols , tra_bgcol = tra_bgcol , gap.width = gap.width ,
+                 tra_hmap_poslines = tra_hmap_poslines , tra_hmap_poslinhei = tra_hmap_poslinhei , tra_hmap_cellbord = tra_hmap_cellbord , tra_hmap_cellbord_col = tra_hmap_cellbord_col , tra_hmap_heatmapcol = tra_hmap_heatmapcol , plotsize = sizeplot , rect_gra_3Col = rect_gra_3Col,
+                 tra_rect_rectcol = tra_rect_rectcol , tra_trct_colrect = tra_trct_colrect , tra_rect_rectcoldis = tra_rect_rectcoldis , tra_rect_rectcoldiscus = tra_rect_rectcoldiscus , tra_transparency = tra_transparency , tra_coltype = tra_coltype , tra_colcol = tra_colcol , tra_heatcol_dis = tra_heatcol_dis , tra_heat_heatcoldiscus = tra_heat_heatcoldiscus,
+                 tra_colorcus = tra_colorcus , tra_line_fillarea = tra_line_fillarea , tra_poipch = tra_poipch , tra_colorline = tra_colorline , tra_baseline = tra_baseline , outAxis = outAxis , outAxis_size = outAxis_size , labelChr_size = labelChr_size , tra_bar_direction = tra_bar_direction ,
+                 tra_bar_Boundary = tra_bar_Boundary , tra_bar_coldir1 = tra_bar_coldir1 , tra_bar_coldir2 = tra_bar_coldir2 , tra_line_selrea = tra_line_selrea , tra_bar_borderarea = tra_bar_borderarea , colformatLinks = colformatLinks , colorLinks = colorLinks ,
+                 selcolorLinks = selcolorLinks , gracolinks =  gracolinks , transparencyLinks = transparencyLinks , legendpos = legendpos , addlegend = addlegend , hlt_data = hlt_data , midplot = midplot , trapos = pospos , trac_index = trac_index , outergap = outergap ,
+                 chrfil = chrfil,  trafil = trafil ,  labfil = labfil , linfil = linfil
+        )
+        file.copy("./script.zip",file)
+        unlink(x = "script",force = TRUE,recursive = TRUE)
+        file.remove("script.zip")
+      }, contentType = NULL)
+  })
+  
+  
+  observeEvent(input$dataup_go,priority = -1,{
+  #observe({
     output$plotbutton <- reactive({
       if(!is.null(dataview_export)){
         return("1")

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+    <body>
+        <div class="global-div">
+            <div class = "content-left">
+                <div id="divc5">
+                    <h3 class="head_zh"><i class="fa-solid fa-circle"></i> 修饰Circos图的绘图选项</h3>
+                    <blockquote class="block_global">
+                        <p class="p_help_Chinese">
+                            “Circos Parameters”页面的每行数据的右侧有一个小齿轮按钮，用户点击后将会弹出一个参数设置的弹出框，可以对很多选项进行个性化设置，比如Track的高度、Track之间的距离、各部分的颜色等等。本节将展示其中一些选项的设置。
+                        </p>
+                    </blockquote>
+                    
+                    <div id="divc5.1">
+                        <h3 class="head_zh">1 Track高度</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                默认Track高度为 0.1。调高这个数字可以增加Track的高度。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/track_height/1.jpg" width="60%">
+                            <p class="pic_text">
+                                调整“Track”高度的功能模块
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc5.2">
+                        <h3 class="head_zh">2 纵坐标轴</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0现在支持给指定的Track添加Y轴，以显示对应Track所有数据的取值范围。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/yaxis/1.jpg" width="60%">
+                            <p class="pic_text">
+                                用来添加y坐标轴的功能模块
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/yaxis/2.png" width="60%">
+                            <p class="pic_text">
+                                包含y坐标轴的Circos图
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc5.3">
+                        <h3 class="head_zh">3 不同“Track”之间的间距</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                该参数用于调整相邻Track之间的距离，也可用于调整Track与label data之间的距离，或者Track与links之间的距离。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/gap_track/1.jpg" width="60%">
+                            <p class="pic_text">
+                                不同“Track”之间间距的功能模块
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/gap_track/2.png" width="60%">
+                            <p class="pic_text">
+                                不同track之间间距较大的一个Circos图
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc5.4">
+                        <h3 class="head_zh">4 “Sector”的边框</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                shinyCircos-V2.0 还支持为一个或多个“Track”中的sector添加边框。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/cell_border/1.jpg" width="60%">
+                            <p class="pic_text">
+                                用来添加“Sector”边框的功能模块
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/cell_border/2.png" width="60%">
+                            <p class="pic_text">
+                                “Sector”带有边框的Circos图
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc5.5">
+                        <h3 class="head_zh">5 “Track”的背景颜色</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                在shinyCircos-V2.0中，用户可以调整不同“Track”的背景颜色，用来区分不同的“Track”。用户可以在弹出窗口中通过“Background color(s)”选项选择或输入适当的颜色来调整“Track”的颜色。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/tra_bgcol/1.jpg" width="60%">
+                            <p class="pic_text">
+                                更改“Track”背景颜色的功能模块
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/tra_bgcol/2.png" width="60%">
+                            <p class="pic_text">
+                                一个Circos图，不同的“Track”对应不同的背景颜色
+                            </p>
+                        </p>
+                    </div>
+                    <div id="divc5.6">
+                        <h3 class="head_zh">6 不同“Sector”之间的间距</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_Chinese">
+                                此参数用于调整相邻“Sector”之间的间距大小。用户可以输入任意长度的数值向量，输入的向量会被调整为和“Sector”的数目一致。例如，“1”或“1,2,3,1”。第一个数字对应第一个和第二和Sector之间的间距。
+                            </p>
+                        </blockquote>
+                        
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/sec_gap/1.jpg" width="60%">
+                            <p class="pic_text">
+                                用来设置不同“Sector”之间间距的功能模块
+                            </p>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/sec_gap/2.png" width="60%">
+                            <p class="pic_text">
+                                相邻“Sector”之间间距更大的一个Circos图
+                            </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class = "content-right">
+                <h2 class="head_zh">目录</h2>
+                <p style="line-height: 23px;">
+                    <a href="#divc5"><span class="content"> 修饰Circos图的绘图选项</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.1"><span class="content"> 1 "Track"高度</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.2"><span class="content"> 2 纵坐标轴</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.3"><span class="content"> 3 不同“Track”之间的间距</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.4"><span class="content"> 4 “Sector”的边框</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.5"><span class="content"> 5 “Track”的背景颜色</span></a>
+                    <br>
+                    &emsp;<a href="#divc5.6"><span class="content"> 6 不同“Sector”之间的间距</span></a>
+                </p>
+            </div>
+        </div>
+
+    </body>
+</html>

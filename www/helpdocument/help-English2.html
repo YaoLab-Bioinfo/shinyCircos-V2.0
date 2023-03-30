@@ -1,0 +1,2312 @@
+<!doctype html>
+<html>
+    <body>
+        <div class="global-div">
+            <div class = "content-left">
+                <div id="div2">
+                    <h2 class="head"><i class="fa-solid fa-circle"></i> Input data format</h2>
+                    <blockquote class="block_global">
+                        <p class="p_help_English">
+                            To use shinyCircos-V2.0, input datasets must be prepared in correct format.
+                        </p>
+                        <p class="p_help_English">
+                            We recommend uploading the input file in ".csv" format, as ".csv" files are explicit and commonly used in data storage and analysis. Please note that <span class="redlight_en">proper names and orders of columns are critical for the input data</span>.
+                        </p>
+                    </blockquote>
+                    
+                    <div id="div2.1">
+                        <h3 class="head">1 Chromosome data (used to define the chromosomes of a Circos plot)</h3>
+        
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                A chromosome data is indispensable for shinyCircos-V2.0, as it defines the chromosomes of a Circos plot. Two types of Chromosome data are accepted by shinyCircos-V2.0, <span class="redlight_en">the General chromosome data</span>, and <span class="redlight_en">the Cytoband chromosome data</span>.
+                            </p>
+                        </blockquote>
+                        <div id="div2.1.1">
+                            <h4 class="head">1.1 General chromosome data with three columns</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Chromosomes data can be a general chromosome data with <span class="redlight_en">three columns in fixed order</span>: the chromosome ID, the start and end coordinates of different genomic regions. <span class="redlight_en">Column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1</td>
+                                        <td>249250621</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>1</td>
+                                        <td>243199373</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1</td>
+                                        <td>198022430</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>1</td>
+                                        <td>191154276</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>1</td>
+                                        <td>180915260</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr6</td>
+                                        <td>1</td>
+                                        <td>171115067</td>
+                                    </tr>
+                                    
+                                </table>
+                            </div>
+                            
+                            <p class="table_text">
+                                An example general chromosome data.
+                                <a href="./example_data/chromosome/chromosome_general.csv" download="chromosome_general.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The default color of the chromosome bands of a Circos plot created with a general chromosome data is gray.
+                                </p>
+                            </blockquote>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/chrosome/gen.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos plot created with a general chromosome data.
+                                </p>
+                            </p>
+                        </div>
+                            
+                            
+                            
+                            <div id="div2.1.2">
+                                <h4 class="head">1.2 Cytoband chromosome data with five columns</h4>
+                                <blockquote class="block_global">
+                                    <p class="p_help_English">
+                                        Cytoband data contains <span class="redlight_en">five columns in fixed order</span>: the chromosome ID, the start and end coordinates of different genomic regions, the name of cytogenetic band, and Giemsa stain results. <span class="redlight_en">Column names are dispensable, and can be any valid names accepted by R</span>.
+                                    </p>
+                                </blockquote>
+                                
+                                <div class="div-tabledata">
+                                    <table class="table-style">
+                                        <tr>
+                                            <th>chr</th>
+                                            <th>start</th>
+                                            <th>end</th>
+                                            <th>value1</th>
+                                            <th>value2</th>
+                                        </tr>
+                                        <tr>
+                                            <td>chr1</td>
+                                            <td>1</td>
+                                            <td>2300000</td>
+                                            <td>p36.33</td>
+                                            <td>geng</td>
+                                        </tr>
+                                        <tr>
+                                            <td>chr1</td>
+                                            <td>2300000</td>
+                                            <td>5400000</td>
+                                            <td>p36.32</td>
+                                            <td>gpos25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>chr2</td>
+                                            <td>1</td>
+                                            <td>4400000</td>
+                                            <td>p25.3</td>
+                                            <td>geng</td>
+                                        </tr>
+                                        <tr>
+                                            <td>chr2</td>
+                                            <td>4400000</td>
+                                            <td>7100000</td>
+                                            <td>p25.2</td>
+                                            <td>gpos50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>chr3</td>
+                                            <td>1</td>
+                                            <td>2800000</td>
+                                            <td>p26.3</td>
+                                            <td>gpos50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>chr3</td>
+                                            <td>2800000</td>
+                                            <td>4000000</td>
+                                            <td>p26.2</td>
+                                            <td>geng</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <p class="table_text">
+                                    An example cytoband chromosome data.
+                                    <a href="./example_data/chromosome/chromosome_cytoband.csv" download="chromosome_cytoband.csv"><img src="download.png" height="2%" width="2%" /></a>
+                                </p>
+                                <blockquote class="block_global">
+                                    <p class="p_help_English">
+                                        A Circos plot with Ideogram chromosome will be created when cytoband chromosome data is used.
+                                    </p>
+                                </blockquote>
+                                
+                                <p style="text-align: center;">
+                                    <img src="./helpfigures/chrosome/cyt.png" width="60%">
+                                    <p class="pic_text">
+                                        A Circos plot created with a cytoband chromosome data.
+                                    </p>
+                                </p>
+                            </div>
+                            
+                    </div>
+                    <div id="div2.2">
+                        <h3 class="head">2 Track data (to be displayed in different tracks of a Circos plot)</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                One or multiple input datasets can be uploaded and displayed in different Tracks of a Circos diagram. Different types of plot can be created using the input datasets. <span class="redlight_en">Order of the first three columns of the input data for any type of plot are fixed, namely the chromosome, the start and end coordinates of genomic regions.</span>
+                            </p>
+                        </blockquote>
+                        
+                        <div id="div2.2.1">
+                            <h4 class="head">2.1 Track data to plot bars</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to make bar plot in a Circos diagram should contain <span class="redlight_en">at least four columns in fixed order</span>: the chromosome, the start and end coordinates of genomic regions, and a fourth column with data values. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                                <p class="p_help_English">
+                                    Two types of bar plots can be created, the unidirectional and bidirectional bar plots.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>10382554</td>
+                                        <td>26901963</td>
+                                        <td>0.374</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>26901963</td>
+                                        <td>30511288</td>
+                                        <td>0.084</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>2129395</td>
+                                        <td>9774923</td>
+                                        <td>0.237</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>14718126</td>
+                                        <td>15320740</td>
+                                        <td>0.529</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>472933</td>
+                                        <td>7160480</td>
+                                        <td>0.477</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>10972902</td>
+                                        <td>11789212</td>
+                                        <td>0.636</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to make unidirectional bars.
+                                <a href="./example_data/track/barplot.csv" download="barplot.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    For <span class="redlight_en">unidirectional bar plot</span>, the minimum value of the fourth column will be used as the starting point of all bars, as shown in the following image. By default, <span class="redlight_en">the color of all bars are randomly assigned by shinyCircos</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/unidirectionbar.png" width="60%">
+                                <p class="pic_text">
+                                    A circos plot with unidirectional bars.
+                                </p>
+                            </p>
+                            
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    For <span class="redlight_en">unidirectional bar plot</span>, <span class="redlight_en">an additional 'color' column can be added</span> in the input data to make colored bars in shinyCircos-V2.0. <span class="redlight_en">Name of the 'color' column must be explicitly specified as 'color'</span>.
+                                </p>
+                                <p class="p_help_English">
+                                    <span class="redlight_en">To customize color for data with multiple groups</span>, the column indicating different groups should be named as 'color'. Users should provide a character strings assigning colors to each group. For example, 'a:red;b:green;c:blue', in which 'a b c' represent different data groups. Color for data groups without assigned color would be set as 'grey'. 
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>2321390</td>
+                                        <td>22775301</td>
+                                        <td>-0.525358698</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>43812694</td>
+                                        <td>44287183</td>
+                                        <td>0.101162224</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>10094726</td>
+                                        <td>13041378</td>
+                                        <td>-0.117686062</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>17700130</td>
+                                        <td>17853399</td>
+                                        <td>0.229028492</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>58783476</td>
+                                        <td>66246991</td>
+                                        <td>-0.866641798</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>77375595</td>
+                                        <td>79033629</td>
+                                        <td>-0.313168927</td>
+                                        <td>b</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to make colored bars.
+                                <a href="./example_data/track/barplot_color.csv" download="barplot_color.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/barcolor.png" width="60%">
+                                <p class="pic_text">
+                                    A circos plot with colored bars.
+                                </p>
+                            </p>
+                        </div>
+                            
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    For <span class="redlight_en">bidirectional bars</span>, the 4th column which contains the data values will be divided into two groups based on the boundary value. The default boundary value is set as zero, which can be modified by the user.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>5622039</td>
+                                        <td>9110831</td>
+                                        <td>0.095</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>5622039</td>
+                                        <td>9110831</td>
+                                        <td>-0.405</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>13669568</td>
+                                        <td>16275459</td>
+                                        <td>0.936</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>13669568</td>
+                                        <td>16275459</td>
+                                        <td>-0.436</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>4777699</td>
+                                        <td>8367346</td>
+                                        <td>0.174</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>4777699</td>
+                                        <td>8367346</td>
+                                        <td>-0.326</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to make bidirectional bars.
+                                <a href="./example_data/track/barplot_bidirectional.csv" download="barplot_bidirectional.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/bar/bidbar.png" width="60%">
+                                <p class="pic_text">
+                                    A circos plot with bidirectional bars.
+                                </p>
+                            </p>
+                            
+                        <div id="div2.2.2">
+                            <h4 class="head">2.2 Track data to plot lines</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to make line chart should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are dispensable, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all lines are randomly assigned by shinyCircos</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>788538</td>
+                                        <td>5571920</td>
+                                        <td>0.309</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>6704086</td>
+                                        <td>10962288</td>
+                                        <td>-0.075</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>5331353</td>
+                                        <td>17190915</td>
+                                        <td>0.129</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>27214061</td>
+                                        <td>37578483</td>
+                                        <td>-0.796</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1424915</td>
+                                        <td>5127305</td>
+                                        <td>-0.413</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>10792280</td>
+                                        <td>11980906</td>
+                                        <td>-0.096</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to plot lines.
+                                <a href="./example_data/track/line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_picture.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of line plot.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    An additional 'color' column can be added in the input dataset to assign colors to lines of different groups on the same track. <span class="redlight_en">Name of the 'color' column must be explicitly specified as 'color'</span>.
+                                </p>
+                            </blockquote>
+            
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>2306857</td>
+                                        <td>8605927</td>
+                                        <td>-0.207</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>20851761</td>
+                                        <td>21889246</td>
+                                        <td>0.121</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>97627526</td>
+                                        <td>102877458</td>
+                                        <td>0.259</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>106904642</td>
+                                        <td>109386825</td>
+                                        <td>-0.65</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr14</td>
+                                        <td>84253948</td>
+                                        <td>92430157</td>
+                                        <td>0.396</td>
+                                        <td>c</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr14</td>
+                                        <td>97757077</td>
+                                        <td>100917700</td>
+                                        <td>-0.366</td>
+                                        <td>c</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An input dataset with a color column to create line plot.
+                                <a href="./example_data/track/line_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/line_color_pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of line chart with different colors for different data groups.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Multiple lines can be drawn on the same track by adding multiple columns of data values in the input dataset. For this type of input data, <span class="redlight_en">all column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+            
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                        <th>value2</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>294540</td>
+                                        <td>4666160</td>
+                                        <td>-0.66</td>
+                                        <td>-0.596</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>17589118</td>
+                                        <td>18065224</td>
+                                        <td>-0.138</td>
+                                        <td>-0.747</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>6872874</td>
+                                        <td>16224260</td>
+                                        <td>-0.77</td>
+                                        <td>-0.403</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>24936258</td>
+                                        <td>28070400</td>
+                                        <td>0.716</td>
+                                        <td>0.22</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>503979</td>
+                                        <td>24719267</td>
+                                        <td>0.217</td>
+                                        <td>-0.459</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>24979219</td>
+                                        <td>43289811</td>
+                                        <td>0.226</td>
+                                        <td>-0.185</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Example input dataset with multiple columns of data values.
+                                <a href="./example_data/track/line_multicolumn.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/line/lin_mut_pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of line chart with multiple lines.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.3">
+                            <h4 class="head">2.3 Track data to plot points</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The format of input dataset to plot points is similar to the input data to make line charts.
+                                </p>
+                            </blockquote>
+                           
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to plot points should contain <span class="redlight_en">at least four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be positive or negative numeric real numers</span>. <span class="redlight_en">Names of the first four columns are dispensable, and can be any valid names accepted by R</span>. By default, <span class="redlight_en">the color of all points are randomly assigned by shinyCircos</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1769292</td>
+                                        <td>1796134</td>
+                                        <td>0.339</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>4881594</td>
+                                        <td>5495466</td>
+                                        <td>1.005</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>5800619</td>
+                                        <td>8815540</td>
+                                        <td>0.088</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>10440452</td>
+                                        <td>10893876</td>
+                                        <td>-0.891</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>41265</td>
+                                        <td>7536287</td>
+                                        <td>-0.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>9209200</td>
+                                        <td>12874260</td>
+                                        <td>-0.032</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to plot points.
+                                <a href="./example_data/track/point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of points plot.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    An additional 'cex' column can be added in the input data to control the size of the points. The 'cex' column should be positive numeric numbers. <span class="redlight_en"> Name of the 'cex' column must be explicitly specified as 'cex'</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>cex</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1326341</td>
+                                        <td>1845331</td>
+                                        <td>-0.374</td>
+                                        <td>0.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>9901462</td>
+                                        <td>15656953</td>
+                                        <td>-0.321</td>
+                                        <td>0.3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>17619104</td>
+                                        <td>25624262</td>
+                                        <td>-0.194</td>
+                                        <td>0.6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>26946941</td>
+                                        <td>27889388</td>
+                                        <td>0.27</td>
+                                        <td>0.6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1720430</td>
+                                        <td>4389146</td>
+                                        <td>-0.319</td>
+                                        <td>0.6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>6104592</td>
+                                        <td>7216808</td>
+                                        <td>0.315</td>
+                                        <td>0.6</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'cex' column.
+                                <a href="./example_data/track/point_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_cex-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point sizes.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Similarly, an additional 'color' column can be added in the input data to assign colors to points of different groups on the same track. <span class="redlight_en"> Name of the 'color' column must be explicitly specified as 'color'</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>6098636</td>
+                                        <td>13915642</td>
+                                        <td>0.372</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>42002814</td>
+                                        <td>45209039</td>
+                                        <td>-0.253</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>8290596</td>
+                                        <td>22658143</td>
+                                        <td>-0.598</td>
+                                        <td>c</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>24382136</td>
+                                        <td>34055254</td>
+                                        <td>0.279</td>
+                                        <td>c</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chrY</td>
+                                        <td>30359053</td>
+                                        <td>32853733</td>
+                                        <td>-0.286</td>
+                                        <td>d</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chrY</td>
+                                        <td>34769699</td>
+                                        <td>39644200</td>
+                                        <td>0.343</td>
+                                        <td>d</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'color' column.
+                                <a href="./example_data/track/point_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point colors.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Moreover, an additional 'pch' column can be added in the input data to control the shapes of points for different groups on the same track. <span class="redlight_en"> Name of the 'pch' column must be explicitly specified as 'pch'</span>.
+                                </p>
+                            </blockquote>
+            
+                            
+        
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/pch.png" width="40%">
+                                <p style="font-size: 20px;text-align: center;margin-top: -10px;margin-bottom: 25px;color: #0000ff;">
+                                    Different point shapes defined by the pch parameter in R.
+                                </p>
+                                <p style="font-size: 20px;text-align: center;margin-top: -25px;margin-bottom: 25px;">
+                                    (Image Source: <a href="http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html">http://coleoguy.blogspot.com/2016/06/symbols-and-colors-in-r-pch-argument.html</a>)
+                                </p>
+                            </p>
+        
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>pch</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>8605110</td>
+                                        <td>17214753</td>
+                                        <td>0.208</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>121395059</td>
+                                        <td>124720880</td>
+                                        <td>0.269</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>126119336</td>
+                                        <td>134480084</td>
+                                        <td>0.947</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr7</td>
+                                        <td>59003737</td>
+                                        <td>65956990</td>
+                                        <td>-0.403</td>
+                                        <td>13</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr11</td>
+                                        <td>128515663</td>
+                                        <td>132431158</td>
+                                        <td>0.146</td>
+                                        <td>16</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr12</td>
+                                        <td>7434839</td>
+                                        <td>18272884</td>
+                                        <td>0.766</td>
+                                        <td>16</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'pch' column.
+                                <a href="./example_data/track/point_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point shapes.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The 'cex', 'color' and 'pch' columns can appear in a single input dataset, at the same time.
+                                </p>
+                            </blockquote>
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>pch</th>
+                                        <th>cex</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>4049230</td>
+                                        <td>11358879</td>
+                                        <td>-0.59</td>
+                                        <td>10</td>
+                                        <td>0.4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>18671867</td>
+                                        <td>29619034</td>
+                                        <td>0.442</td>
+                                        <td>10</td>
+                                        <td>0.7</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>72761399</td>
+                                        <td>91691619</td>
+                                        <td>0.134</td>
+                                        <td>17</td>
+                                        <td>0.4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>101737149</td>
+                                        <td>102799485</td>
+                                        <td>-0.025</td>
+                                        <td>17</td>
+                                        <td>0.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr7</td>
+                                        <td>4065399</td>
+                                        <td>7750398</td>
+                                        <td>-0.327</td>
+                                        <td>17</td>
+                                        <td>0.6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr7</td>
+                                        <td>9065662</td>
+                                        <td>15775923</td>
+                                        <td>0.174</td>
+                                        <td>17</td>
+                                        <td>0.2</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <p class="table_text">
+                                Input data to plot points with a 'pch' column and a 'cex' column.
+                                <a href="./example_data/track/point_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_pch_cex-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point shapes and point sizes.
+                                </p>
+                            </p>
+        
+        
+        
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                        <th>cex</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>8900700</td>
+                                        <td>9211013</td>
+                                        <td>-0.6</td>
+                                        <td>a</td>
+                                        <td>0.3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>38733680</td>
+                                        <td>54945292</td>
+                                        <td>0.233</td>
+                                        <td>a</td>
+                                        <td>1.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>25650709</td>
+                                        <td>32392960</td>
+                                        <td>0.409</td>
+                                        <td>b</td>
+                                        <td>0.3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>33011156</td>
+                                        <td>54462250</td>
+                                        <td>-0.245</td>
+                                        <td>b</td>
+                                        <td>1.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr7</td>
+                                        <td>86777790</td>
+                                        <td>89385025</td>
+                                        <td>0.006</td>
+                                        <td>b</td>
+                                        <td>0.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr7</td>
+                                        <td>103848396</td>
+                                        <td>107618696</td>
+                                        <td>-1.093</td>
+                                        <td>b</td>
+                                        <td>1</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'color' column and a 'cex' column.
+                                <a href="./example_data/track/point_color_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_cex-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point colors and point sizes.
+                                </p>
+                            </p>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                        <th>pch</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>3768320</td>
+                                        <td>4851773</td>
+                                        <td>-0.416</td>
+                                        <td>a</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>5712552</td>
+                                        <td>10112216</td>
+                                        <td>-0.41</td>
+                                        <td>a</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr10</td>
+                                        <td>5831619</td>
+                                        <td>10981299</td>
+                                        <td>0.299</td>
+                                        <td>b</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr10</td>
+                                        <td>13728053</td>
+                                        <td>15927681</td>
+                                        <td>0.025</td>
+                                        <td>b</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr22</td>
+                                        <td>22254151</td>
+                                        <td>36401489</td>
+                                        <td>0.182</td>
+                                        <td>c</td>
+                                        <td>17</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr22</td>
+                                        <td>40556634</td>
+                                        <td>47770670</td>
+                                        <td>-0.011</td>
+                                        <td>c</td>
+                                        <td>17</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'color' column and a 'pch' column.
+                                <a href="./example_data/track/point_color_pch.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point colors and point shapes.
+                                </p>
+                            </p>
+            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                        <th>color</th>
+                                        <th>pch</th>
+                                        <th>cex</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>14053524</td>
+                                        <td>24878326</td>
+                                        <td>-0.498</td>
+                                        <td>a</td>
+                                        <td>1</td>
+                                        <td>0.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>29640089</td>
+                                        <td>49313488</td>
+                                        <td>-0.565</td>
+                                        <td>a</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>8408012</td>
+                                        <td>12767180</td>
+                                        <td>-0.108</td>
+                                        <td>b</td>
+                                        <td>4</td>
+                                        <td>0.4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>22963697</td>
+                                        <td>41682972</td>
+                                        <td>-0.45</td>
+                                        <td>b</td>
+                                        <td>4</td>
+                                        <td>0.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>51441395</td>
+                                        <td>53095312</td>
+                                        <td>0.527</td>
+                                        <td>c</td>
+                                        <td>6</td>
+                                        <td>1.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>65510881</td>
+                                        <td>69698456</td>
+                                        <td>0.127</td>
+                                        <td>c</td>
+                                        <td>6</td>
+                                        <td>1.1</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Input data to plot points with a 'color' column, a 'pch' column and a 'cex' column.
+                                <a href="./example_data/track/point_color_pch_cex.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_col_pch_cex-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with varying point colors, varying point shapes, and varying point sizes.
+                                </p>
+                            </p>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Similarly, we can also plot multiple groups of point charts by adding multiple columns of data values in the input data. For this type of input data, <span class="redlight_en">all column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                            
+        
+        
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                        <th>value2</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>7224218</td>
+                                        <td>16393864</td>
+                                        <td>-0.196</td>
+                                        <td>-0.955</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>21093451</td>
+                                        <td>25392112</td>
+                                        <td>0.128</td>
+                                        <td>0.275</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>14909280</td>
+                                        <td>22502495</td>
+                                        <td>0.421</td>
+                                        <td>-0.185</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>24704666</td>
+                                        <td>26117987</td>
+                                        <td>-0.102</td>
+                                        <td>0.637</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>35556750</td>
+                                        <td>37025119</td>
+                                        <td>0.063</td>
+                                        <td>0.848</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr4</td>
+                                        <td>39947625</td>
+                                        <td>63436481</td>
+                                        <td>0.28</td>
+                                        <td>-0.262</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                Example input dataset with multiple columns of data values.
+                                <a href="./example_data/track/point_multicolumn.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/point/poi_mul-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A single track of point chart with multiple groups of points.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.4">
+                            <h4 class="head">2.4 Track data to create ideogram</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    An ideogram is a graphical representation of chromosomes.
+                                    In shinyCircos-V2.0, we can draw ideogram on any Track. The format of input data to create ideogram is the same as that of the <a href="#div2.1.2"> Cytoband chromosome data with five columns</a>.
+                                </p>
+                            </blockquote>
+                            
+        
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                        <th>value2</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1</td>
+                                        <td>2300000</td>
+                                        <td>p36.33</td>
+                                        <td>gneg</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>2300000</td>
+                                        <td>5400000</td>
+                                        <td>p36.32</td>
+                                        <td>gpos25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>1</td>
+                                        <td>4400000</td>
+                                        <td>p25.3</td>
+                                        <td>gneg</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr2</td>
+                                        <td>4400000</td>
+                                        <td>7100000</td>
+                                        <td>p25.2</td>
+                                        <td>gpos50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>1</td>
+                                        <td>2800000</td>
+                                        <td>p26.3</td>
+                                        <td>gpos50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>2800000</td>
+                                        <td>4000000</td>
+                                        <td>p26.2</td>
+                                        <td>gneg</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create ideogram.
+                                <a href="./example_data/track/chromosome_ideogram.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/ideogram/ideogram-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of ideogram.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.5">
+                            <h4 class="head">2.5 Track data to plot discrete rectangles</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to plot discrete rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">The fourth column must be a chracter vector</span>. <span class="redlight_en">All column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                           
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>group</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1465</td>
+                                        <td>5857186</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>6005405</td>
+                                        <td>7051583</td>
+                                        <td>c</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>13</td>
+                                        <td>3831804</td>
+                                        <td>d</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>3989861</td>
+                                        <td>11612588</td>
+                                        <td>g</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>56</td>
+                                        <td>2698252</td>
+                                        <td>h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>2719598</td>
+                                        <td>9370038</td>
+                                        <td>c</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create discrete rectangles.
+                                <a href="./example_data/track/rect_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/dis-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of discrete rectangles.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.6">
+                            <h4 class="head">2.6 Track data to plot gradual rectangles</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to plot gradual rectangles should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. The fourth column is the data values of all genomic regions. Please note that <span class="redlight_en">the fourth column must be real numbers</span>. <span class="redlight_en">All column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>1</td>
+                                        <td>6657591</td>
+                                        <td>0.034</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>9792529</td>
+                                        <td>20706145</td>
+                                        <td>-0.527</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>651</td>
+                                        <td>27839332</td>
+                                        <td>-0.532</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>28591880</td>
+                                        <td>29683518</td>
+                                        <td>-0.156</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>407</td>
+                                        <td>16490429</td>
+                                        <td>0.281</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>17056645</td>
+                                        <td>32303717</td>
+                                        <td>0.485</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create gradual rectangles.
+                                <a href="./example_data/track/rect_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/rect/gra-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of gradual rectangles.
+                                </p>
+                            </p>
+                        </div>
+                        
+            
+                        <div id="div2.2.7">
+                            <h4 class="head">2.7 Track data to plot discrete heatmaps</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to plot discrete heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a chracter vector</span>. <span class="redlight_en">All column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div style="overflow-x: auto;">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>group1</th>
+                                        <th>group2</th>
+                                        <th>group3</th>
+                                        <th>group4</th>
+                                        <th>group5</th>
+                                        <th>group6</th>
+                                        <th>group7</th>
+                                        <th>group8</th>
+                                        <th>group9</th>
+                                        <th>group10</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>20621957</td>
+                                        <td>21209624</td>
+                                        <td>d</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>e</td>
+                                        <td>e</td>
+                                        <td>c</td>
+                                        <td>d</td>
+                                        <td>g</td>
+                                        <td>g</td>
+                                        <td>d</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>42967726</td>
+                                        <td>53028972</td>
+                                        <td>f</td>
+                                        <td>b</td>
+                                        <td>h</td>
+                                        <td>b</td>
+                                        <td>g</td>
+                                        <td>c</td>
+                                        <td>b</td>
+                                        <td>h</td>
+                                        <td>h</td>
+                                        <td>d</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>17138030</td>
+                                        <td>40796035</td>
+                                        <td>f</td>
+                                        <td>h</td>
+                                        <td>c</td>
+                                        <td>f</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>g</td>
+                                        <td>h</td>
+                                        <td>h</td>
+                                        <td>h</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>57219142</td>
+                                        <td>60650338</td>
+                                        <td>g</td>
+                                        <td>b</td>
+                                        <td>g</td>
+                                        <td>f</td>
+                                        <td>b</td>
+                                        <td>g</td>
+                                        <td>f</td>
+                                        <td>f</td>
+                                        <td>b</td>
+                                        <td>e</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>8910650</td>
+                                        <td>10080670</td>
+                                        <td>f</td>
+                                        <td>c</td>
+                                        <td>e</td>
+                                        <td>c</td>
+                                        <td>b</td>
+                                        <td>e</td>
+                                        <td>h</td>
+                                        <td>b</td>
+                                        <td>a</td>
+                                        <td>g</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>13535538</td>
+                                        <td>32715550</td>
+                                        <td>h</td>
+                                        <td>h</td>
+                                        <td>h</td>
+                                        <td>e</td>
+                                        <td>d</td>
+                                        <td>c</td>
+                                        <td>e</td>
+                                        <td>b</td>
+                                        <td>h</td>
+                                        <td>c</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create discrete heatmaps.
+                                <a href="./example_data/track/heatmap_discrete.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/dis_pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of discrete heatmap.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.8">
+                            <h4 class="head">2.8 Track data to plot gradual heatmaps</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    The input data to plot gradual heatmaps should contain ≥4 columns. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">Each of the rest columns should be a numeric vector</span>. <span class="redlight_en">All column names are dispensable, and can be any valid names accepted by R</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div style="overflow-x: auto;">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>value1</th>
+                                        <th>value2</th>
+                                        <th>value3</th>
+                                        <th>value4</th>
+                                        <th>value5</th>
+                                        <th>value6</th>
+                                        <th>value7</th>
+                                        <th>value8</th>
+                                        <th>value9</th>
+                                        <th>value10</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>20621957</td>
+                                        <td>21209624</td>
+                                        <td>-0.672</td>
+                                        <td>-0.271</td>
+                                        <td>-0.001</td>
+                                        <td>0.486</td>
+                                        <td>-0.986</td>
+                                        <td>-0.37</td>
+                                        <td>0.48</td>
+                                        <td>0.38</td>
+                                        <td>0.158</td>
+                                        <td>0.108</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>42967726</td>
+                                        <td>53028972</td>
+                                        <td>-0.147</td>
+                                        <td>0.387</td>
+                                        <td>1.332</td>
+                                        <td>0.182</td>
+                                        <td>0.16</td>
+                                        <td>-0.132</td>
+                                        <td>0.234</td>
+                                        <td>-0.089</td>
+                                        <td>-0.918</td>
+                                        <td>0.397</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>17138030</td>
+                                        <td>40796035</td>
+                                        <td>0.046</td>
+                                        <td>0.028</td>
+                                        <td>-0.691</td>
+                                        <td>-0.341</td>
+                                        <td>1.011</td>
+                                        <td>-0.242</td>
+                                        <td>-0.027</td>
+                                        <td>-0.273</td>
+                                        <td>0.276</td>
+                                        <td>-1.028</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr3</td>
+                                        <td>57219142</td>
+                                        <td>60650338</td>
+                                        <td>-0.514</td>
+                                        <td>0.429</td>
+                                        <td>0.29</td>
+                                        <td>-0.356</td>
+                                        <td>-0.025</td>
+                                        <td>0.537</td>
+                                        <td>-0.368</td>
+                                        <td>0.486</td>
+                                        <td>0.392</td>
+                                        <td>-0.085</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>8910650</td>
+                                        <td>10080670</td>
+                                        <td>0.175</td>
+                                        <td>-0.855</td>
+                                        <td>0.934</td>
+                                        <td>-0.914</td>
+                                        <td>0.879</td>
+                                        <td>-0.181</td>
+                                        <td>-0.512</td>
+                                        <td>-0.074</td>
+                                        <td>0.302</td>
+                                        <td>0.04</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>13535538</td>
+                                        <td>32715550</td>
+                                        <td>0.088</td>
+                                        <td>0.005</td>
+                                        <td>1.005</td>
+                                        <td>-0.076</td>
+                                        <td>-0.007</td>
+                                        <td>0.371</td>
+                                        <td>0.494</td>
+                                        <td>-0.236</td>
+                                        <td>0.219</td>
+                                        <td>-0.422</td>
+                                    </tr>
+                                </table>
+        
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create gradual heatmaps.
+                                <a href="./example_data/track/heatmap_gradual.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/heatmap/gra_pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of gradual heatmap.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.9">
+                            <h4 class="head">2.9 Track data to plot stack-point</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Using shinyCircos-V2.0, we can also create stack point chart. The input data should <span class="redlight_en">contain only four columns in fixed order</span>. The 1st column defines the chromosome of multiple genomic regions. The 2nd and 3rd columns define the start and end coordinates of these genomic regions. <span class="redlight_en">The fourth column represents the group of different data values</span>. And data values of the same group will be plotted on the same line. <span class="redlight_en">Column names are dispensable, which can also be any valid names accepted by R.</span>.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>stack</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>11589909</td>
+                                        <td>40133642</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>52614734</td>
+                                        <td>59580026</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>28358375</td>
+                                        <td>28943627</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>87453098</td>
+                                        <td>89776607</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>6608219</td>
+                                        <td>8525932</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>39324082</td>
+                                        <td>40131031</td>
+                                        <td>b</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create stack points.
+                                <a href="./example_data/track/stack_point.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/poi-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of stack points.
+                                </p>
+                            </p>
+                        </div>
+            
+            
+                        <div id="div2.2.10">
+                            <h4 class="head">2.10 Track data to plot stack-line</h4>
+                            <blockquote class="block_global">
+                                <p class="p_help_English">
+                                    Similarly, we can also create stack line chart using shinyCircos-V2.0. The input data format is the same as the input data for stack-point.
+                                </p>
+                            </blockquote>
+                            
+                            <div class="div-tabledata">
+                                <table class="table-style">
+                                    <tr>
+                                        <th>chr</th>
+                                        <th>start</th>
+                                        <th>end</th>
+                                        <th>stack</th>
+                                    </tr>
+                                    <tr>
+                                        <td>chr1</td>
+                                        <td>20646359</td>
+                                        <td>46383846</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>2723623</td>
+                                        <td>5392944</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>4943376</td>
+                                        <td>8560799</td>
+                                        <td>a</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr5</td>
+                                        <td>89644</td>
+                                        <td>46679748</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr9</td>
+                                        <td>29528190</td>
+                                        <td>72792793</td>
+                                        <td>b</td>
+                                    </tr>
+                                    <tr>
+                                        <td>chr13</td>
+                                        <td>22993703</td>
+                                        <td>23901290</td>
+                                        <td>b</td>
+                                    </tr>
+                                </table>
+        
+        
+                            </div>
+                            <p class="table_text">
+                                An example dataset to create stack lines.
+                                <a href="./example_data/track/stack_line.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                            </p>
+                            <p style="text-align: center;">
+                                <img src="./helpfigures/stack/line-pic.png" width="60%">
+                                <p class="pic_text">
+                                    A Circos diagram with a single track of stack lines.
+                                </p>
+                            </p>
+                        </div>
+            
+                    </div>
+            
+            
+            
+                    <div id="div2.3">
+                        <h3 class="head">3 Label data (used to label elements in a track)</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                Label data is used to annotate the elements in a specified track with text labels. The input data should <span class="redlight_en">contain four or five columns</span>, as shown in the table below.
+                            </p>
+        
+                            <p class="p_help_English">
+                                The four-column label data is used to draw labels with a uniform color. <span class="redlight_en">By default, the color for label text is assigned as "black", which can be specified by the user with a widget implemented in shinyCircos.</span> Column names for four-column label data is dispensable, and can be any valid names accepted by R.
+                            </p>
+                        </blockquote>
+                        
+                        <div class="div-tabledata">
+        
+                            <table class="table-style">
+                                <tr>
+                                    <th>chr</th>
+                                    <th>start</th>
+                                    <th>end</th>
+                                    <th>label</th>
+                                </tr>
+                                <tr>
+                                    <td>chr1</td>
+                                    <td>3698046</td>
+                                    <td>3736201</td>
+                                    <td>TP73</td>
+                                </tr>
+                                <tr>
+                                    <td>chr1</td>
+                                    <td>156114670</td>
+                                    <td>156140089</td>
+                                    <td>LMNA</td>
+                                </tr>
+                                <tr>
+                                    <td>chr5</td>
+                                    <td>42423775</td>
+                                    <td>42721878</td>
+                                    <td>GHR</td>
+                                </tr>
+                                <tr>
+                                    <td>chr5</td>
+                                    <td>150113839</td>
+                                    <td>150155859</td>
+                                    <td>PDGFRB</td>
+                                </tr>
+                                <tr>
+                                    <td>chr9</td>
+                                    <td>116153792</td>
+                                    <td>116402321</td>
+                                    <td>PAPPA</td>
+                                </tr>
+                                <tr>
+                                    <td>chr9</td>
+                                    <td>21967752</td>
+                                    <td>21975133</td>
+                                    <td>CDKN2A</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p class="table_text">
+                            An example four-column label data.
+                            <a href="./example_data/label/gene_label.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label-pic.png" width="60%">
+                            <p class="pic_text">
+                                An example Circos diagrams with text labels.
+                            </p>
+                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                The five-column label data is used to draw labels with varying colors specified by the user. <span class="redlight_en">Column names are dispensable. Names of all five columns can be any valid names accepted by R. Each value in the 5th column should be a valid color name</span>.
+                            </p>
+                        </blockquote>
+        
+                        
+                        <div class="div-tabledata">
+                            <table class="table-style">
+                                <tr>
+                                    <th>chr</th>
+                                    <th>start</th>
+                                    <th>end</th>
+                                    <th>label</th>
+                                    <th>color</th>
+                                </tr>
+                                <tr>
+                                    <td>chr1</td>
+                                    <td>3698046</td>
+                                    <td>3736201</td>
+                                    <td>TP73</td>
+                                    <td>red</td>
+                                </tr>
+                                <tr>
+                                    <td>chr1</td>
+                                    <td>156114670</td>
+                                    <td>156140089</td>
+                                    <td>LMNA</td>
+                                    <td>#FF000080</td>
+                                </tr>
+                                <tr>
+                                    <td>chr5</td>
+                                    <td>42423775</td>
+                                    <td>42721878</td>
+                                    <td>GHR</td>
+                                    <td>blue</td>
+                                </tr>
+                                <tr>
+                                    <td>chr5</td>
+                                    <td>150113839</td>
+                                    <td>150155859</td>
+                                    <td>PDGFRB</td>
+                                    <td>blue</td>
+                                </tr>
+                                <tr>
+                                    <td>chr9</td>
+                                    <td>116153792</td>
+                                    <td>116402321</td>
+                                    <td>PAPPA</td>
+                                    <td>blue</td>
+                                </tr>
+                                <tr>
+                                    <td>chr9</td>
+                                    <td>21967752</td>
+                                    <td>21975133</td>
+                                    <td>CDKN2A</td>
+                                    <td>green</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p class="table_text">
+                            An example label data with a 'color' column.
+                            <a href="./example_data/label/gene_label_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/label/label-color-pic.png" width="60%">
+                            <p class="pic_text">
+                                An example Circos diagrams with label text in different colors.
+                            </p>
+                        </p>
+                    </div>
+                    <div id="div2.4">
+                        <h3 class="head">4 Links data</h3>
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                The links data should contain <span class="redlight_en">six or seven columns</span>. The first three columns define the chromosome, the start and end coordinates of multiple genomic regions. The 4-6th columns of the input dataset define the chromosome, the start and end coordinates of another set of genomic regions. <span class="redlight_en">Links will be created between all pairs of genomic regions in the same line of the input dataset</span>. By default, <span class="redlight_en">the color of all links are randomly assigned by shinyCircos</span>.
+                            </p>
+                        </blockquote>
+                        
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                For six-columns links input data, <span class="redlight_en">column names is dispensable, and can be any valid names accepted by R</span>.
+                            </p>
+                            <p class="p_help_English">
+                                For seven-columns links input data, <span class="redlight_en">column names is indispensable</span>. Names of the first six columns can be any valid names accepted by R. <span class="redlight_en">Name of the 7th column must be explicitly specified as 'color'</span>.
+                            </p>
+                        </blockquote>
+                        
+                        <div class="div-tabledata">
+        
+                            <table class="table-style">
+                                <tr>
+                                    <th>chr1</th>
+                                    <th>start1</th>
+                                    <th>end1</th>
+                                    <th>chr2</th>
+                                    <th>start2</th>
+                                    <th>end2</th>
+                                </tr>
+                                <tr>
+                                    <td>chr20</td>
+                                    <td>37720821</td>
+                                    <td>47419255</td>
+                                    <td>chr5</td>
+                                    <td>162124929</td>
+                                    <td>168434522</td>
+                                </tr>
+                                <tr>
+                                    <td>chr8</td>
+                                    <td>76179361</td>
+                                    <td>83302661</td>
+                                    <td>chr1</td>
+                                    <td>162049212</td>
+                                    <td>213797379</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>38375277</td>
+                                    <td>49805216</td>
+                                    <td>chr11</td>
+                                    <td>19060895</td>
+                                    <td>36294068</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>120255288</td>
+                                    <td>134792772</td>
+                                    <td>chr13</td>
+                                    <td>62362083</td>
+                                    <td>71502856</td>
+                                </tr>
+                                <tr>
+                                    <td>chr4</td>
+                                    <td>95199225</td>
+                                    <td>102508113</td>
+                                    <td>chr13</td>
+                                    <td>16327889</td>
+                                    <td>24910342</td>
+                                </tr>
+                                <tr>
+                                    <td>chr15</td>
+                                    <td>83769167</td>
+                                    <td>83992136</td>
+                                    <td>chr10</td>
+                                    <td>83790329</td>
+                                    <td>119443216</td>
+                                </tr>
+                            </table>
+        
+        
+        
+        
+        
+        
+                        </div>
+                        <p class="table_text">
+                            An example links input data.
+                            <a href="./example_data/links/links.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link-pic.png" width="60%">
+                            <p class="pic_text">
+                                An example Circos diagrams with links.
+                            </p>
+                        </p>
+                        <blockquote class="block_global">
+                            <p class="p_help_English">
+                                For seven-columns links input data, the 7th 'color' column can be a character vector or a numeric vector.
+                            </p>
+                        </blockquote>
+                        
+                        <div class="div-tabledata">
+                            <table class="table-style">
+                                <tr>
+                                    <th>chr1</th>
+                                    <th>start1</th>
+                                    <th>end1</th>
+                                    <th>chr2</th>
+                                    <th>start2</th>
+                                    <th>end2</th>
+                                    <th>color</th>
+                                </tr>
+                                <tr>
+                                    <td>chr20</td>
+                                    <td>37720821</td>
+                                    <td>47419255</td>
+                                    <td>chr5</td>
+                                    <td>162124929</td>
+                                    <td>168434522</td>
+                                    <td>c</td>
+                                </tr>
+                                <tr>
+                                    <td>chr8</td>
+                                    <td>76179361</td>
+                                    <td>83302661</td>
+                                    <td>chr1</td>
+                                    <td>162049212</td>
+                                    <td>213797379</td>
+                                    <td>c</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>38375277</td>
+                                    <td>49805216</td>
+                                    <td>chr11</td>
+                                    <td>19060895</td>
+                                    <td>36294068</td>
+                                    <td>b</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>120255288</td>
+                                    <td>134792772</td>
+                                    <td>chr13</td>
+                                    <td>62362083</td>
+                                    <td>71502856</td>
+                                    <td>a</td>
+                                </tr>
+                                <tr>
+                                    <td>chr4</td>
+                                    <td>95199225</td>
+                                    <td>102508113</td>
+                                    <td>chr13</td>
+                                    <td>16327889</td>
+                                    <td>24910342</td>
+                                    <td>a</td>
+                                </tr>
+                                <tr>
+                                    <td>chr15</td>
+                                    <td>83769167</td>
+                                    <td>83992136</td>
+                                    <td>chr10</td>
+                                    <td>83790329</td>
+                                    <td>119443216</td>
+                                    <td>b</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p class="table_text">
+                            An example links dataset with a color column of characters.
+                            <a href="./example_data/links/links_discrete_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_dis-pic.png" width="60%">
+                            <p class="pic_text">
+                                An example Circos diagrams with links colored by different groups.
+                            </p>
+                        </p>
+        
+                        <div class="div-tabledata">
+                            <table class="table-style">
+                                <tr>
+                                    <th>chr1</th>
+                                    <th>start1</th>
+                                    <th>end1</th>
+                                    <th>chr2</th>
+                                    <th>start2</th>
+                                    <th>end2</th>
+                                    <th>color</th>
+                                </tr>
+                                <tr>
+                                    <td>chr20</td>
+                                    <td>37720821</td>
+                                    <td>47419255</td>
+                                    <td>chr5</td>
+                                    <td>162124929</td>
+                                    <td>168434522</td>
+                                    <td>217</td>
+                                </tr>
+                                <tr>
+                                    <td>chr8</td>
+                                    <td>76179361</td>
+                                    <td>83302661</td>
+                                    <td>chr1</td>
+                                    <td>162049212</td>
+                                    <td>213797379</td>
+                                    <td>7</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>38375277</td>
+                                    <td>49805216</td>
+                                    <td>chr11</td>
+                                    <td>19060895</td>
+                                    <td>36294068</td>
+                                    <td>206</td>
+                                </tr>
+                                <tr>
+                                    <td>chr2</td>
+                                    <td>120255288</td>
+                                    <td>134792772</td>
+                                    <td>chr13</td>
+                                    <td>62362083</td>
+                                    <td>71502856</td>
+                                    <td>27</td>
+                                </tr>
+                                <tr>
+                                    <td>chr4</td>
+                                    <td>95199225</td>
+                                    <td>102508113</td>
+                                    <td>chr13</td>
+                                    <td>16327889</td>
+                                    <td>24910342</td>
+                                    <td>189</td>
+                                </tr>
+                                <tr>
+                                    <td>chr15</td>
+                                    <td>83769167</td>
+                                    <td>83992136</td>
+                                    <td>chr10</td>
+                                    <td>83790329</td>
+                                    <td>119443216</td>
+                                    <td>161</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p class="table_text">
+                            An example links dataset with a color column of numeric numbers.
+                            <a href="./example_data/links/links_gradual_color.csv" download="line.csv"><img src="download.png" height="2%" width="2%" /></a>
+                        </p>
+                        <p style="text-align: center;">
+                            <img src="./helpfigures/link/link_gra-pic.png" width="60%">
+                            <p class="pic_text">
+                                An example Circos diagrams with links of gradual colors.
+                            </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class = "content-right">
+                <h2 class="head">Contents</h2>
+                <p style="line-height: 23px;">
+                    <a href="#div2"><span class="content"> Input data format</span></a>
+                    <br>
+                    &emsp;<a href="#div2.1"><span class="content"> 1 Chromosome data (used to define the chromosomes of a Circos plot)</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.1.1"><span class="content"> 1.1 General data with three columns</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.1.2"><span class="content"> 1.2 Cytoband data with five columns</span></a>
+                    <br>
+                    &emsp;<a href="#div2.2"><span class="content"> 2 Track data (to be displayed in different tracks of a Circos plot)</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.1"><span class="content"> 2.1 Track data to plot bars</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.2"><span class="content"> 2.2 Track data to plot lines</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.3"><span class="content"> 2.3 Track data to plot points</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.4"><span class="content"> 2.4 Track data to create ideogram</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.5"><span class="content"> 2.5 Track data to plot discrete rectangles</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.6"><span class="content"> 2.6 Track data to plot gradual rectangles</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.7"><span class="content"> 2.7 Track data to plot discrete heatmaps</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.8"><span class="content"> 2.8 Track data to plot gradual heatmaps</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.9"><span class="content"> 2.9 Track data to plot stack-point</span></a>
+                    <br>
+                    &emsp;&emsp;<a href="#div2.2.10"><span class="content"> 2.10 Track data to plot stack-line</span></a>
+                    <br>
+                    &emsp;<a href="#div2.3"><span class="content"> 3 Label data (used to label elements in a track)</span></a>
+                    <br>
+                    &emsp;<a href="#div2.4"><span class="content"> 4 Links data</span></a>
+                </p>
+            </div>
+        </div>
+
+    </body>
+</html>

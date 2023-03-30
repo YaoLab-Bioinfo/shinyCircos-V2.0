@@ -5,40 +5,17 @@
         width: 100%;
         text-align: center;
     }
-    .concon{
-        position: absolute;
-        width: 80%;
-        bottom: 6%;
-        text-align: center;
-    }
     .row{
         display: flex;
         justify-content: space-around;
     }
-    .biaoti{
-        font-family:Arial, Helvetica, sans-serif;
-        font-size:13pt;
-        color: black;
-        font-weight:bold;
-        text-align: left;
-        margin-top: 2px;
+    .about-global-div {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
     }
-    .duanluo{
-        margin-top: 5px;
-        margin-bottom: 8px;
-        font-size: 11pt;
-        text-align: left;
-        font-family:Arial, Helvetica, sans-serif;
-    }
-    .logo{
-        float: left;
-        margin-top: 0px;
-    }
-    .col-sm-3{
-        width: 400px;
-    }
-    .toptext{
-        font-size:25pt;
+    
+    .listyle{
         margin-top: 0px;
         margin-bottom: 0px;
     }
@@ -52,82 +29,111 @@
         margin-bottom: 0px;
         font-size: 18px;
     }
-    .listyle{
+    .col-sm-3{
+        width: 300px;
+    }
+    .logo{
+        float: left;
         margin-top: 0px;
-        margin-bottom: 0px;
+    }
+    .duanluo{
+        margin-top: 5px;
+        margin-bottom: 8px;
+        font-size: 11pt;
+        text-align: left;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+    .biaoti{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:13pt;
+        color: black;
+        font-weight:bold;
+        text-align: left;
+        margin-top: 2px;
+    }
+    html,body{
+        height: 100%;
+    }
+    .concon{
+        height: 20%;
+        width: 85%;
     }
 </style>
-
-
 <body>
     <script src="https://kit.fontawesome.com/29eb425cd7.js" crossorigin="anonymous"></script>
-    
-    <p class="listyle">
-        <ul class="listyle">
-            <li style="list-style-type: disc" class="point">Software references</li>
-            <p class="between">1. R Development Core Team. <i><a href="http://www.r-project.org/" target="_blank">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2016) <br>
-                2. RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/" target="_blank">shiny</a>: Web Application Framework for R.</i> R package version 1.0.0 (2016) <br>
-                3. Gu, Z. <i><a href="http://cran.r-project.org/web/packages/circlize/index.html" target="_blank">circlize</a>: Circular Visualization.</i> R package version 0.4.15 (2017) <br>
-                4. Neuwirth, E. <i><a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html" target="_blank">RColorBrewer</a>: ColorBrewer palettes.</i> R package version 1.1-2 (2014) <br>
-                5. Lawrence, M. <i><a href="http://bioconductor.org/packages/GenomicRanges/" target="_blank">GenomicRanges</a>: Representation and manipulation of genomic intervals and variables defined along a genome.</i> R package version 1.48.0 (2016) <br>
-                6. Dowle, M. <i><a href="http://cran.r-project.org/web/packages/data.table/index.html" target="_blank">data.table</a>: Extension of Data.frame.</i> R package version 1.14.2 (2021) <br>
-                7. Victor Perrier. <i><a href="https://dreamrs.github.io/shinyWidgets/index.html" target="_blank">shinyWidgets</a>: Extend widgets available in shiny.</i> R package version 0.6.4 (2022) <br>
-                8. Eric Bailey. <i><a href="https://ebailey78.github.io/shinyBS/" target="_blank">shinyBS</a>: Add additional functionality and interactivity to your Shiny applications.</i> R package version 0.61 (2015) <br>
-                9. RStudio and Inc. <i><a href="https://rstudio.github.io/DT/" target="_blank">DT</a>: An R interface to the DataTables library.</i> R package version 0.22 (2015) <br>
-                10. Andrie de Vries. <i><a href="https://rstudio.github.io/sortable/" target="_blank">sortable</a>: Enables drag-and-drop behaviour in Shiny apps.</i> R package version 0.4.5 (2021) <br>
-                11. Yang Tang. <i><a href="https://cran.r-project.org/web/packages/shinyjqui/index.html" target="_blank">shinyjqui</a>: easily add interactions and animation effects to a shiny app.</i> R package version 0.4.1 (2022) <br>
-                12. Dean Attali. <i><a href="https://cran.r-project.org/web/packages/colourpicker/index.html" target="_blank">colourpicker</a>: A colour picker that can be used as an input in Shiny apps</i> R package version 1.1.1 (2021) <br>
-                13. Paul Murrell. <i><a href="https://cran.r-project.org/web/packages/gridBase/index.html" target="_blank">gridBase</a>: Integration of base and grid graphics.</i> R package version 0.4-7 (2014) <br>
-                14. Gu, Z. <i><a href="https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html" target="_blank">ComplexHeatmap</a>:  efficient to visualize associations between different sources of data sets and reveal potential patterns.</i> R package version 2.10.0 (2015) <br>
-            </p>
-            <li style="list-style-type: disc;" class="point">Further references</li>
-            <p class="between">
-                This application was created by <a href="https://www.researchgate.net/profile/Wen_Yao" target="_blank">Wen Yao</a>
-                and <a href="https://github.com/mrwangyz" target="_blank">Yazhou Wang</a>.
-                Please send bugs and feature requests to Wen Yao (<a href="mailto:yaowen@henau.edu.cn">yaowen at henau.edu.cn</a>) or Yazhou Wang (<a href="mailto:gentelmanwang@gmail.com">gentelmanwang at gmail.com</a>). This application uses the 
-                <a href="http://www.rstudio.com/shiny/" target="_blank">shiny package from RStudio</a>.
-            </p>
+    <div class="about-global-div">
+        <div id="myDIV">
+            <ul class="listyle">
+                <li style="list-style-type: disc" class="point">Software references</li>
+                <p class="between">1. R Development Core Team. <i><a href="http://www.r-project.org/" target="_blank">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2016) <br>
+                    2. RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/" target="_blank">shiny</a>: Web Application Framework for R.</i> R package version 1.0.0 (2016) <br>
+                    3. Gu, Z. <i><a href="http://cran.r-project.org/web/packages/circlize/index.html" target="_blank">circlize</a>: Circular Visualization.</i> R package version 0.4.15 (2017) <br>
+                    4. Neuwirth, E. <i><a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html" target="_blank">RColorBrewer</a>: ColorBrewer palettes.</i> R package version 1.1-2 (2014) <br>
+                    5. Dowle, M. <i><a href="http://cran.r-project.org/web/packages/data.table/index.html" target="_blank">data.table</a>: Extension of Data.frame.</i> R package version 1.14.2 (2021) <br>
+                    6. Victor Perrier. <i><a href="https://dreamrs.github.io/shinyWidgets/index.html" target="_blank">shinyWidgets</a>: Extend widgets available in shiny.</i> R package version 0.6.4 (2022) <br>
+                    7. Eric Bailey. <i><a href="https://ebailey78.github.io/shinyBS/" target="_blank">shinyBS</a>: Add additional functionality and interactivity to your Shiny applications.</i> R package version 0.61 (2015) <br>
+                    8. RStudio and Inc. <i><a href="https://rstudio.github.io/DT/" target="_blank">DT</a>: An R interface to the DataTables library.</i> R package version 0.22 (2015) <br>
+                    9. Andrie de Vries. <i><a href="https://rstudio.github.io/sortable/" target="_blank">sortable</a>: Enables drag-and-drop behaviour in Shiny apps.</i> R package version 0.4.5 (2021) <br>
+                    10. Yang Tang. <i><a href="https://cran.r-project.org/web/packages/shinyjqui/index.html" target="_blank">shinyjqui</a>: easily add interactions and animation effects to a shiny app.</i> R package version 0.4.1 (2022) <br>
+                    11. Dean Attali. <i><a href="https://cran.r-project.org/web/packages/colourpicker/index.html" target="_blank">colourpicker</a>: A colour picker that can be used as an input in Shiny apps</i> R package version 1.1.1 (2021) <br>
+                    12. Gu, Z. <i><a href="https://bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html" target="_blank">ComplexHeatmap</a>:  efficient to visualize associations between different sources of data sets and reveal potential patterns.</i> R package version 2.14.0 (2020) <br>
+                    13. Ron Ammar. <i><a href="https://cran.r-project.org/web/packages/randomcoloR/index.html" target="_blank">randomcoloR</a>:  Simple methods to generate attractive random colors. </i> R package version 1.1.0.1 (2019) <br>
+                    14. Dean Attali. <i><a href="https://cran.microsoft.com/snapshot/2022-02-07/web/packages/shinycssloaders/index.html" target="_blank">shinycssloaders</a>:  Add Loading Animations to a 'shiny' Output While It's Recalculating. </i> R package version 1.0.0 (2020) <br>
+                    15. David Granjon. <i><a href="https://cran.r-project.org/web/packages/shinyBS/index.html" target="_blank">bs4Dash</a>:  Make 'Bootstrap 4' Shiny dashboards. </i> R package version 2.2.1 (2022) <br>
+                    16. Paul Murrell. <i><a href="https://cran.r-project.org/web/packages/gridBase/index.html" target="_blank">gridBase</a>:  Integration of base and grid graphics. </i> R package version 0.4-7 (2014) <br>
+                </p>
+                <li style="list-style-type: disc;" class="point">Further references</li>
+                <p class="between">
+                    This application was created by <a href="https://www.researchgate.net/profile/Wen_Yao" target="_blank">Wen Yao</a>
+                    and <a href="https://github.com/mrwangyz" target="_blank">Yazhou Wang</a>.
+                    Please send bugs and feature requests to Wen Yao (<a href="mailto:yaowen@henau.edu.cn">yaowen at henau.edu.cn</a>) or Yazhou Wang (<a href="mailto:gentelmanwang@gmail.com">gentelmanwang at gmail.com</a>). This application uses the 
+                    <a href="http://www.rstudio.com/shiny/" target="_blank">shiny package from RStudio</a>.
+                </p>
+                
+                 <li style="list-style-type: disc;" class="point">Citation</li>
+                 <p class="between"><a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al. shinyCircos: an R/Shiny application for interactive creation of Circos plot. Bioinformatics. 2018</a></p>
+            </ul>
             
-             <li style="list-style-type: disc;" class="point">Citation</li>
-             <p class="between"><a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al. shinyCircos: an R/Shiny application for interactive creation of Circos plot. Bioinformatics. 2018</a></p>
-        </ul>
-    </p>
-    <div class="concon">
-        <div class="con">
-            <hr>
-            <div class="row">
-                <div class="col-sm-3">
-                        <p class="biaoti">Henan Agricultural University</p>
-                        <br>
-                        <p class="logo"><a href='http://www.henau.edu.cn/' target='_blank'><img src='HENAU_logo.png' width="130px"></a></p>
-                </div>
-                <div class="col-sm-3" style="float: left">
-                    <p class="biaoti">Wen Yao's lab</p>
-                    <p class="duanluo"><a href="https://venyao.xyz/" target="_blank">Web site</a></p>
-                    <p class="duanluo"><a href="https://github.com/venyao" target="_blank">GitHub</a></p>
-                    <p class="duanluo"><a href="https://scholar.google.com/citations?user=n6WrEUQAAAAJ&hl" target="_blank">Google Scholar</a></p>
-                    <p class="duanluo"><a href="https://www.researchgate.net/profile/Wen_Yao" target="_blank">ResearchGate</a></p>
-                    <p class="duanluo"><a href="https://orcid.org/0000-0002-0643-506X" target="_blank">ORCID</a></p>
-                    <br>
-                </div>
-                        
-                <div class="col-sm-3">
-                    <p class="biaoti">Citation</p>
-                    <p class="duanluo"><a href="" target="_blank">Wang et al. 2022</a></p>
-					<p class="duanluo"><a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al. 2018</a></p>
-                    
-                    <p class="biaoti">Use shinyCircos-V1</p>
-                    <p class="duanluo"><a href="https://venyao.xyz/shinyCircos-V1/">shinyCircos-V1</a></p>
-                    
-                </div>        
-                
-                <div class="col-sm-3">
-                    <div style="display:inline-block;width:400px;">
-                        <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=5ug5q3j3yp6&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;sx=0" async="async"></script>
+        </div>
+        
+        <div class="concon" id="downid">
+            <div class="con">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                            <p class="biaoti">Henan Agricultural University</p>
+                            <br>
+                            <p class="logo"><a href='http://www.henau.edu.cn/' target='_blank'><img src='HENAU_logo.png' width="130px"></a></p>
                     </div>
+                    <div class="col-sm-3" style="float: left">
+                        <p class="biaoti">Wen Yao's lab</p>
+                        <p class="duanluo"><a href="https://venyao.xyz/" target="_blank">Web site</a></p>
+                        <p class="duanluo"><a href="https://github.com/venyao" target="_blank">GitHub</a></p>
+                        <p class="duanluo"><a href="https://scholar.google.com/citations?user=n6WrEUQAAAAJ&hl" target="_blank">Google Scholar</a></p>
+                        <p class="duanluo"><a href="https://www.researchgate.net/profile/Wen_Yao" target="_blank">ResearchGate</a></p>
+                        <p class="duanluo"><a href="https://orcid.org/0000-0002-0643-506X" target="_blank">ORCID</a></p>
+                        <br>
+                    </div>
+                            
+                    <div class="col-sm-3">
+                        <p class="biaoti">Citation</p>
+                        <p class="duanluo"><a href="" target="_blank">Wang et al. 2022</a></p>
+                        <p class="duanluo"><a href="https://doi.org/10.1093/bioinformatics/btx763" target="_blank">Yu et al. 2018</a></p>
+                        
+                        <p class="biaoti">Use shinyCircos-V1</p>
+                        <p class="duanluo"><a href="https://venyao.xyz/shinyCircos-V1/">shinyCircos-V1</a></p>
+                        
+                    </div>        
+                    
+                    <div class="col-sm-3">
+                        <div style="display:inline-block;width:400px;">
+                            <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=5ug5q3j3yp6&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;sx=0" async="async"></script>
+                        </div>
+                    </div>
+                    
                 </div>
-                
             </div>
         </div>
     </div>
+    
 </body>

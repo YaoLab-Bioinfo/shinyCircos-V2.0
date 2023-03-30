@@ -234,21 +234,6 @@ sidebar <- bs4DashSidebar(
       HTML('Shiny.addCustomMessageHandler("jsCode",function(message) {eval(message.value);});')
     )
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   ),
   bs4SidebarMenu(
     id = "sidebar",
@@ -273,6 +258,7 @@ body <- bs4DashBody(
        br(),
        shiny::includeHTML("www/main.html")
      ),
+     
      bs4TabItem(
        tabName = "dat-upl",
        br(),
@@ -288,12 +274,49 @@ body <- bs4DashBody(
          choices = c("Upload data"="a", "Load example data"="b")
        ),
        br(),
+       
        #
        ###upload data
        #
        
        conditionalPanel(
          condition = "input.datatype=='a'",
+         shinyWidgets::switchInput(
+           onLabel = "Yes",
+           offLabel = "No",
+           inputId = "usrprechr",
+           label = HTML('<h4 style="display: inline;color:red;">Use a predefined reference genome?</h4>'),
+           width = "auto",
+           labelWidth = "400px",
+           handleWidth = "50px"
+         ),
+         conditionalPanel(
+           condition = "input.usrprechr",
+           pickerInput(
+             inputId = "usrprechrsel",
+             choices = c(
+               "Arabidopsis (Col-PEK)" = "Arabidopsis(Col-PEK)",
+               "Arabidopsis (TAIR10)" = "Arabidopsis(TAIR10)",
+               "Cotton (Gossypium arboreum HAU_v2)" = "Gossypium-arboreum_HAU_v2",
+               "Cotton (Gossypium barbadense HEAU_v1)" = "Gossypium-barbadense_HEAU_v1",
+               "Cotton (Gossypium herbaceum USDA_v1)" = "Gossypium-herbaceum_USDA_v1",
+               "Cotton (Gossypium hirsutum HAU1.1)" = "Gossypium-hirsutum_HAU1.1",
+               "Human (Human(GRCh38/hg38))" = "Human(Human(GRCh38_hg38))",
+               "Human (T2T-CHM13v2.0/hs1)" = "Human(T2TCHM13v2.0_hs1)",
+               "Maize (B73V5)" = "Maize(B73V5)",
+               "Mouse (GRCm39/mm39)" = "Mouse(GRCm39_mm39)",
+               "Rat (mRatBN7.2/rn7)" = "Rat(mRatBN7.2_rn7)",
+               "Rice (Nipponbare IRGSP-1.0)" = "Rice(NipponbareIRGSP-1.0)",
+               "Soybean (Williams 82-Wm82.a4.v1)" = "Soybean(Williams82-Wm82.a4.v1)",
+               "Soybean (Zhonghuang13)" = "Soybean(Zhonghuang13)",
+               "Wheat (Chinese Spring IWGSC RefSeqv2.1)" = "Wheat (ChineseSpringIWGSCRefSeqv2.1)",
+               "Worm (WBcel235/ce11)" = "Worm(WBcel235_ce11)",
+               "Yeast (SacCer_Apr2011/sacCer3)" = "Yeast(SacCer_Apr2011_sacCer3)",
+               "Zebrafish (GRCz11/danRer11)" = "Zebrafish(GRCz11_danRer11)"
+             )
+           )
+         ),
+         br(),
          fileInput(
            inputId = "alldata",
            label = tags$div(
@@ -305,8 +328,7 @@ body <- bs4DashBody(
            ),
            multiple = TRUE
          ),
-         br(),
-         br(),
+        
          conditionalPanel(
            condition = "output.alldata1",
            uiOutput("dataclassify"),
@@ -392,6 +414,12 @@ body <- bs4DashBody(
            ),
            title = "Click this button to submit the chosen example datasets and go to the 'Circos Parameters' page to view the example data and the pre-set parameters.",
            placement = "bottom"
+         ),
+         conditionalPanel(
+           condition = "sam_dataplan",
+           hr(),
+           
+           uiOutput("viewallsamdata")
          )
        )
      ),
@@ -680,15 +708,15 @@ body <- bs4DashBody(
      bs4TabItem(
        tabName = "cir-par",
        conditionalPanel(
-         condition = "input.datatype == 'a'",
-         conditionalPanel(
-           condition = "input.dat_vie_ok",
-           fluidRow(
-             column(
-               width = 6,
-               fluidRow(
-                 column(
-                   width = 4,
+         condition = "input.dat_vie_ok | input.sam_dat_vie_ok",
+         fluidRow(
+           column(
+             width = 10,
+             fluidRow(
+               column(
+                 width = 2,
+                 conditionalPanel(
+                   condition = "input.datatype=='a'",
                    actionBttn(
                      inputId = "cirpar_advancesetting",
                      label = "Advanced options",
@@ -857,45 +885,83 @@ body <- bs4DashBody(
                          title = "Update the Circos plot using the current parameter values.",
                          placement = "bottom"
                        )
-                       
                      )
                    )
                  ),
-                 column(
-                   width = 8,
-                   conditionalPanel(
-                     condition = "output.circosfigure",
-                     fluidRow(
-                       column(
-                         width = 6,
+                 conditionalPanel(
+                   condition = "input.datatype=='b'",
+                   bs4Dash::tooltip(
+                     actionBttn(
+                       inputId = "cirplot_unuse1",
+                       label = "Advanced options",
+                       style = "unite",
+                       color = "danger",
+                       icon = icon("gears",lib = "font-awesome")
+                     ),
+                     title = "Not available for example datasets.",
+                     placement = "bottom"
+                   )
+                 )
+               ),
+               column(
+                 width = 9,
+                 conditionalPanel(
+                   condition = "output.circosfigure",
+                   fluidRow(
+                     column(
+                       width = 3,
+                       downloadBttn(
+                         outputId = "shinyCircos.pdf", 
+                         label = "Download PDF-file",
+                         style = "unite",
+                         color = "success"
+                       )
+                     ),
+                     column(
+                       width = 3,
+                       downloadBttn(
+                         outputId = "shinyCircos.svg",
+                         label = "Download SVG-file",
+                         style = "unite",
+                         color = "success"
+                       )
+                     ),
+                     column(
+                       width = 6,
+                       conditionalPanel(
+                         condition = "input.datatype=='a'",
                          downloadBttn(
-                           outputId = "shinyCircos.pdf", 
-                           label = "Download PDF-file",
+                           outputId = "script.R",
+                           label = "Download the R scripts to reproduce the Circos plot",
                            style = "unite",
                            color = "success"
                          )
                        ),
-                       column(
-                         width = 6,
-                         downloadBttn(
-                           outputId = "shinyCircos.svg",
-                           label = "Download SVG-file",
-                           style = "unite",
-                           color = "success"
+                       conditionalPanel(
+                         condition = "input.datatype=='b'",
+                         bs4Dash::tooltip(
+                           actionBttn(
+                             inputId = "cirplot_unuse2",
+                             label = "Download the R scripts to reproduce the Circos plot",
+                             style = "unite",
+                             color = "danger",
+                             icon = icon("download",lib = "font-awesome")
+                           ),
+                           title = "Not available for example datasets.",
+                           placement = "bottom"
                          )
                        )
                      )
                    )
                  )
                )
-             ),
-             column(
-               width = 6,
              )
+           ),
+           column(
+             width = 2
            )
          )
        ),
-       
        conditionalPanel(
          condition = "input.dat_vie_ok >= 1 | input.sam_dat_vie_ok >= 1",
          uiOutput("sortable_plot")
@@ -907,29 +973,119 @@ body <- bs4DashBody(
      ),
      bs4TabItem(
        tabName = "help",
-       HTML('<font><h3><i class="fa-solid fa-play"></i> Language</font>'),
        fluidRow(
          column(
+           width = 8,
+           conditionalPanel(
+             condition = "input.helplan == 1",
+             HTML('<font style="font-size: 25px;font-family: Arial, Helvetica, sans-serif;font-weight: bolder;"><h2><i class="fa-solid fa-play"></i> Section</font>'), 
+           ),
+           conditionalPanel(
+             condition = "input.helplan == 2",
+             HTML('<font style="font-size: 25px;font-family: Arial, Helvetica, sans-serif;font-weight: bolder;"><h2><i class="fa-solid fa-play"></i> 章节</font>'), 
+           ),
+           
+           tags$style(
+             type='text/css',
+             "#helpsection div .radio {font-size: 20px;font-weight:100;margin-bottom: -10px;margin-top: 0px; }"
+           ),
+           radioButtons(
+             inputId = "helpsection",
+             label = NULL,
+             choices = c(
+               "Introduction" = 1,
+               "Input data format" = 2, 
+               "Use shinyCircos online or on local computer" = 3,
+               "Steps to create a Circos diagram with shinyCircos-V2.0" = 4,
+               "Plot options to decorate a Circos plot" = 5,
+               "Advanced features" = 6,
+               "Video tutorials" = 7
+             ),
+             selected = 1,
+             width = "100%"
+           )
+         ),
+         column(
            width = 4,
+           conditionalPanel(
+             condition = "input.helplan == 1",
+             HTML('<font style="font-size: 25px;font-family: Arial, Helvetica, sans-serif;font-weight: bolder;"><h2><i class="fa-solid fa-play"></i> Language</font>')
+           ),
+           conditionalPanel(
+             condition = "input.helplan == 2",
+             HTML('<font style="font-size: 25px;font-family: Arial, Helvetica, sans-serif;font-weight: bolder;"><h2><i class="fa-solid fa-play"></i> 语言</font>')
+           ),
            pickerInput(
              inputId = "helplan",
              label = NULL,
              choices = c("English" = 1, "简体中文" = 2),
              selected = 1
            )
-         ),
-         column(
-           width = 8,
          )
        ),
        hr(),
        conditionalPanel(
          condition = "input.helplan == '1'",
-         shiny::includeHTML("www/help-English.html")
+         conditionalPanel(
+           condition = "input.helpsection == 1",
+           shiny::includeHTML("www/helpdocument/help-English1.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 2",
+           shiny::includeHTML("www/helpdocument/help-English2.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 3",
+           shiny::includeHTML("www/helpdocument/help-English3.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 4",
+           shiny::includeHTML("www/helpdocument/help-English4.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 5",
+           shiny::includeHTML("www/helpdocument/help-English5.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 6",
+           shiny::includeHTML("www/helpdocument/help-English6.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 7",
+           shiny::includeHTML("www/helpdocument/help-English0.html")
+         )
        ),
        conditionalPanel(
          condition = "input.helplan == '2'",
-         shiny::includeHTML("www/help-Chinese.html")
+         conditionalPanel(
+           condition = "input.helpsection == 1",
+           shiny::includeHTML("www/helpdocument/help-Chinese1.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 2",
+           shiny::includeHTML("www/helpdocument/help-Chinese2.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 3",
+           shiny::includeHTML("www/helpdocument/help-Chinese3.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 4",
+           shiny::includeHTML("www/helpdocument/help-Chinese4.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 5",
+           shiny::includeHTML("www/helpdocument/help-Chinese5.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 6",
+           shiny::includeHTML("www/helpdocument/help-Chinese6.html")
+         ),
+         conditionalPanel(
+           condition = "input.helpsection == 7",
+           shiny::includeHTML("www/helpdocument/help-Chinese0.html")
+         ),
+         
        )
      ),
      bs4TabItem(
