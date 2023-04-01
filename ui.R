@@ -301,9 +301,11 @@ body <- bs4DashBody(
                "Cotton (Gossypium barbadense HEAU_v1)" = "Gossypium-barbadense_HEAU_v1",
                "Cotton (Gossypium herbaceum USDA_v1)" = "Gossypium-herbaceum_USDA_v1",
                "Cotton (Gossypium hirsutum HAU1.1)" = "Gossypium-hirsutum_HAU1.1",
-               "Human (Human(GRCh38/hg38))" = "Human(Human(GRCh38_hg38))",
+               "Human (GRCh37/hg19)" = "Human(GRCh37_hg19)",
+               "Human (GRCh38/hg38)" = "Human(GRCh38_hg38)",
                "Human (T2T-CHM13v2.0/hs1)" = "Human(T2TCHM13v2.0_hs1)",
                "Maize (B73V5)" = "Maize(B73V5)",
+               "Mouse (GRCm38/mm10)" = "Mouse(GRCm38_mm10)",
                "Mouse (GRCm39/mm39)" = "Mouse(GRCm39_mm39)",
                "Rat (mRatBN7.2/rn7)" = "Rat(mRatBN7.2_rn7)",
                "Rice (Nipponbare IRGSP-1.0)" = "Rice(NipponbareIRGSP-1.0)",
@@ -711,15 +713,16 @@ body <- bs4DashBody(
          condition = "input.dat_vie_ok | input.sam_dat_vie_ok",
          fluidRow(
            column(
-             width = 10,
+             width = 7,
              fluidRow(
                column(
-                 width = 2,
+                 width = 4,
                  conditionalPanel(
                    condition = "input.datatype=='a'",
                    actionBttn(
                      inputId = "cirpar_advancesetting",
                      label = "Advanced options",
+                     size = "sm",
                      style = "unite",
                      color = "success",
                      icon = icon("gears",lib = "font-awesome")
@@ -895,6 +898,7 @@ body <- bs4DashBody(
                        inputId = "cirplot_unuse1",
                        label = "Advanced options",
                        style = "unite",
+                       size = "sm",
                        color = "danger",
                        icon = icon("gears",lib = "font-awesome")
                      ),
@@ -904,63 +908,318 @@ body <- bs4DashBody(
                  )
                ),
                column(
-                 width = 9,
+                 width = 4,
                  conditionalPanel(
                    condition = "output.circosfigure",
-                   fluidRow(
-                     column(
-                       width = 3,
-                       downloadBttn(
-                         outputId = "shinyCircos.pdf", 
-                         label = "Download PDF-file",
-                         style = "unite",
-                         color = "success"
-                       )
-                     ),
-                     column(
-                       width = 3,
-                       downloadBttn(
-                         outputId = "shinyCircos.svg",
-                         label = "Download SVG-file",
-                         style = "unite",
-                         color = "success"
-                       )
-                     ),
-                     column(
-                       width = 6,
-                       conditionalPanel(
-                         condition = "input.datatype=='a'",
-                         downloadBttn(
-                           outputId = "script.R",
-                           label = "Download the R scripts to reproduce the Circos plot",
-                           style = "unite",
-                           color = "success"
-                         )
-                       ),
-                       conditionalPanel(
-                         condition = "input.datatype=='b'",
-                         bs4Dash::tooltip(
-                           actionBttn(
-                             inputId = "cirplot_unuse2",
-                             label = "Download the R scripts to reproduce the Circos plot",
-                             style = "unite",
-                             color = "danger",
-                             icon = icon("download",lib = "font-awesome")
-                           ),
-                           title = "Not available for example datasets.",
-                           placement = "bottom"
-                         )
-                       )
-                     )
+                   downloadBttn(
+                     outputId = "shinyCircos.pdf", 
+                     label = "Download PDF-file",
+                     size = "sm",
+                     style = "unite",
+                     color = "success"
+                   )
+                 )
+               ),
+               column(
+                 width = 4,
+                 conditionalPanel(
+                   condition = "output.circosfigure",
+                   downloadBttn(
+                     outputId = "shinyCircos.svg",
+                     label = "Download SVG-file",
+                     size = "sm",
+                     style = "unite",
+                     color = "success"
                    )
                  )
                )
              )
            ),
            column(
-             width = 2
+             width = 5,
+             conditionalPanel(
+               condition = "output.circosfigure",
+               conditionalPanel(
+                 condition = "input.datatype=='a'",
+                 downloadBttn(
+                   outputId = "script.R",
+                   label = "Download the R scripts to reproduce the Circos plot",
+                   style = "unite",
+                   size = "sm",
+                   color = "success"
+                 )
+               ),
+               conditionalPanel(
+                 condition = "input.datatype=='b'",
+                 bs4Dash::tooltip(
+                   actionBttn(
+                     inputId = "cirplot_unuse2",
+                     label = "Download the R scripts to reproduce the Circos plot",
+                     style = "unite",
+                     size = "sm",
+                     color = "danger",
+                     icon = icon("download",lib = "font-awesome")
+                   ),
+                   title = "Not available for example datasets.",
+                   placement = "bottom"
+                 )
+               )
+             )
            )
-         )
+         ),
+         
+         # fluidRow(
+         #   column(
+         #     width = 10,
+         #     fluidRow(
+         #       column(
+         #         width = 2,
+         #         conditionalPanel(
+         #           condition = "input.datatype=='a'",
+         #           actionBttn(
+         #             inputId = "cirpar_advancesetting",
+         #             label = "Advanced options",
+         #             style = "unite",
+         #             color = "success",
+         #             icon = icon("gears",lib = "font-awesome")
+         #           ),
+         #           tags$head(tags$style("#jquicirpar_advancesetting .modal-dialog{ max-width:800px}")),
+         #           jqui_draggable(
+         #             bsModal(
+         #               id = "jquicirpar_advancesetting",
+         #               title = NULL,
+         #               trigger = "cirpar_advancesetting",
+         #               size = "large",
+         #               fluidRow(
+         #                 column(
+         #                   width = 6,
+         #                   pickerInput(
+         #                     inputId = "addlegend",
+         #                     label = tags$div(
+         #                       HTML('<table><tr>
+         # <td><div>
+         # <font><h4><i class="fa-solid fa-play"></i> Add legend?</font>
+         # </div></td>
+         # <td><div class="help-tip"><p>
+         # Display or hide the figure legend?
+         # </p></div></td>
+         # </tr></table>')
+         #                     ),
+         #                     choices = c("Yes", "No"),
+         #                     selected = "No"
+         #                   )
+         #                 ),
+         #                 column(
+         #                   width = 6,
+         #                   conditionalPanel(
+         #                     condition = "input.addlegend == 'Yes'",
+         #                     pickerInput(
+         #                       inputId = "legendpos",
+         #                       label = tags$div(
+         #                         HTML('<table><tr>
+         # <td><div>
+         # <font><h4><i class="fa-solid fa-play"></i> Legend position</font>
+         # </div></td>
+         # <td><div class="help-tip"><p>
+         # Place the legend at the right or the bottom of the plot?
+         # </p></div></td>
+         # </tr></table>')
+         #                       ),
+         #                       choices = c("Right","Bottom"),
+         #                       selected = "Right"
+         #                     )
+         #                   )
+         #                 )
+         #               ),
+         #               hr(),
+         #               
+         #               fluidRow(
+         #                 column(width=6,
+         #                        sliderTextInput(
+         #                          inputId = "plotmultiples",
+         #                          label = tags$div(
+         #                            HTML('<font><h4><i class="fa-solid fa-play"></i> Zoom the plot (%)</font>')
+         #                          ),
+         #                          choices = c(50:300),
+         #                          selected = 100
+         #                        )
+         #                 ),
+         #                 column(width=6,
+         #                        pickerInput(
+         #                          inputId = "trac_index",
+         #                          label = tags$div(
+         #                            HTML('<table><tr>
+         # <td><div>
+         # <font><h4><i class="fa-solid fa-play"></i> Add track index?</font>
+         # </div></td>
+         # <td><div class="help-tip"><p>
+         # Display or hide the index of each track?
+         # </p></div></td>
+         # </tr></table>')
+         #                          ),
+         #                          choices = c("Yes", "No"),
+         #                          selected = "No"
+         #                        )
+         #                 )
+         #               ),
+         #               
+         #               hr(),
+         #               
+         #               fluidRow(
+         #                 column(width=12,
+         #                        tags$div(
+         #                          HTML('<font><h4><i class="fa-solid fa-play"></i> Highlight user-specified genomic regions</font>')
+         #                        )
+         #                 )
+         #               ),
+         #               
+         #               fluidRow(
+         #                 column(
+         #                   width = 6,
+         #                   tags$div(
+         #                     HTML('<table><tr>
+         # <td><div>
+         # <font><h5><i class="fa-solid fa-circle"></i> Paste input genomic regions below:</font>
+         # </div></td>
+         # <td><div class="help-tip"><p>
+         # Each row should contain 4 values separated by commas indicating the chr, start genomic position, the end genomic position, and the color. For example, "chr1,1,10000,#FF0000".
+         # </p></div></td>
+         # </tr></table>')
+         #                   )
+         #                 ),
+         #                 column(
+         #                   width = 6,
+         #                   tags$div(
+         #                     style = "with:1200px;",
+         #                     HTML('<font><h5><i class="fa-solid fa-circle"></i> Color transparency (%)</font>'),
+         #                     br()
+         #                   )
+         #                 )
+         #               ),
+         #               fluidRow(
+         #                 column(
+         #                   width = 6,
+         #                   tags$textarea(
+         #                     id = "hltData",
+         #                     rows = 4,
+         #                     cols = 40,
+         #                     ""
+         #                   )
+         #                 ),
+         #                 column(
+         #                   width = 6,
+         #                   sliderTextInput(
+         #                     inputId = "hltrans",
+         #                     label = NULL,
+         #                     choices = c(1:100),
+         #                     selected = 25
+         #                   )
+         #                 )
+         #               ),
+         #               
+         #               
+         #               actionBttn(
+         #                 inputId = "savehlData",
+         #                 label = "SAVE",
+         #                 style = "unite",
+         #                 color = "success",
+         #                 size = "sm"
+         #               ),
+         #               actionBttn(
+         #                 inputId = "clearhlData",
+         #                 label = "CLEAN",
+         #                 style = "unite",
+         #                 color = "danger",
+         #                 size = "sm"
+         #               ),
+         #               hr(),
+         #               
+         #               bs4Dash::tooltip(
+         #                 actionBttn(
+         #                   inputId = "updateplot",
+         #                   label = "Update!",
+         #                   style = "unite",
+         #                   color = "success"
+         #                 ),
+         #                 title = "Update the Circos plot using the current parameter values.",
+         #                 placement = "bottom"
+         #               )
+         #             )
+         #           )
+         #         ),
+         #         conditionalPanel(
+         #           condition = "input.datatype=='b'",
+         #           bs4Dash::tooltip(
+         #             actionBttn(
+         #               inputId = "cirplot_unuse1",
+         #               label = "Advanced options",
+         #               style = "unite",
+         #               color = "danger",
+         #               icon = icon("gears",lib = "font-awesome")
+         #             ),
+         #             title = "Not available for example datasets.",
+         #             placement = "bottom"
+         #           )
+         #         )
+         #       ),
+         #       column(
+         #         width = 9,
+         #         conditionalPanel(
+         #           condition = "output.circosfigure",
+         #           fluidRow(
+         #             column(
+         #               width = 3,
+         #               downloadBttn(
+         #                 outputId = "shinyCircos.pdf", 
+         #                 label = "Download PDF-file",
+         #                 style = "unite",
+         #                 color = "success"
+         #               )
+         #             ),
+         #             column(
+         #               width = 3,
+         #               downloadBttn(
+         #                 outputId = "shinyCircos.svg",
+         #                 label = "Download SVG-file",
+         #                 style = "unite",
+         #                 color = "success"
+         #               )
+         #             ),
+         #             column(
+         #               width = 6,
+         #               conditionalPanel(
+         #                 condition = "input.datatype=='a'",
+         #                 downloadBttn(
+         #                   outputId = "script.R",
+         #                   label = "Download the R scripts to reproduce the Circos plot",
+         #                   style = "unite",
+         #                   color = "success"
+         #                 )
+         #               ),
+         #               conditionalPanel(
+         #                 condition = "input.datatype=='b'",
+         #                 bs4Dash::tooltip(
+         #                   actionBttn(
+         #                     inputId = "cirplot_unuse2",
+         #                     label = "Download the R scripts to reproduce the Circos plot",
+         #                     style = "unite",
+         #                     color = "danger",
+         #                     icon = icon("download",lib = "font-awesome")
+         #                   ),
+         #                   title = "Not available for example datasets.",
+         #                   placement = "bottom"
+         #                 )
+         #               )
+         #             )
+         #           )
+         #         )
+         #       )
+         #     )
+         #   ),
+         #   column(
+         #     width = 2
+         #   )
+         # )
        ),
        conditionalPanel(
          condition = "input.dat_vie_ok >= 1 | input.sam_dat_vie_ok >= 1",

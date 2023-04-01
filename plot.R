@@ -606,7 +606,7 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
           if(tktype == "stack-point" | tktype == "stack-line"){
             names(data.TT)[4] <- "stack"
             names(data.TT_old) <- c("chr","start","end","stack")
-            if(coltypeTrack==1){
+            if(coltypeTrack==1){  # color type(1,2,3)
               selcols <- distinctColorPalette(999)
               #selcols <- c("blue", "red", "green", "cyan", "purple", "pink", "orange", "yellow", "navy", "seagreen", "maroon", "burlywood3", "magenta2")
               tkcolor <- sample(selcols,length(unique(data.TT$stack)))
@@ -1371,6 +1371,8 @@ plotfig <- function(input , output , session , data.C , data.T , dis_Chr , data.
                 circos.genomicRect(region, value, col=adjustcolor(value[[1]],alpha.f = tktransparency), border = NA, ...)
               })
             }else{
+              
+              # print(data.TT)
               circos.genomicTrackPlotRegion(data.TT, ylim=c(0,1),track.height = tkheight, track.margin = c(tkmargin,0), bg.col = tkbgcol, bg.border = tkborder, panel.fun = function(region,value,...){
                 circos.genomicRect(region, value, col=adjustcolor(value[[1]],alpha.f = tktransparency), border = NA, ...)
               })

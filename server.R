@@ -7,6 +7,10 @@ server <- function(input, output,session) {
   tradatas <- NULL
   lindatas <- NULL
   labdatas <- NULL
+  chrdatas1 <- NULL
+  tradatas1 <- NULL
+  lindatas1 <- NULL
+  labdatas1 <- NULL
   prefilename <- list.files("./www/reference_genome/")
   alldatapath <<- data.frame(
     name=prefilename,
@@ -50,7 +54,8 @@ server <- function(input, output,session) {
   tra_line_fillarea  <<- list() 
   tra_rect_rectcol  <<- list() 
   tra_rect_rectcoldis  <<- list() 
-  tra_rect_rectcoldiscus  <<- list() 
+  tra_rect_rectcoldiscus  <<- list()
+  tra_rect_rectcolorpalettes <<- list()
   tra_trct_colrect  <<- list()
   rect_gra_lowCol  <<- list()
   rect_gra_midCol  <<- list()
@@ -71,6 +76,7 @@ server <- function(input, output,session) {
   tra_hmap_poslines  <<- list() 
   tra_hmap_poslinhei  <<- list()
   tra_heatcol_dis <<- list()
+  tra_heat_heatcoldiscus <<- list()
   tra_heat_heatcoldiscus <<- list()
   heightTra  <<- list() 
   Tra_margin  <<- list() 
@@ -3463,6 +3469,8 @@ server <- function(input, output,session) {
     
     
   })
+  
+  
   ## *** Upload Data ***
   observeEvent(input$usrprechr,{
     filename <<- NULL
@@ -3472,6 +3480,16 @@ server <- function(input, output,session) {
     labdatas <<- NULL
     garbage <<- NULL
     dataview_export <<- NULL
+    chrdatas1 <<- NULL
+    tradatas1 <<- NULL
+    lindatas1 <<- NULL
+    labdatas1 <<- NULL
+    # if(input$usrprechr == FALSE){
+    #   chrdatas1 <<- NULL
+    #   tradatas1 <<- NULL
+    #   lindatas1 <<- NULL
+    #   labdatas1 <<- NULL
+    # }
   })
   # observeEvent(input$usrprechrsel,{
   #   filename <<- NULL
@@ -3538,22 +3556,22 @@ server <- function(input, output,session) {
               ),
               add_rank_list(
                 text = "* Chromosome data",
-                labels = chrdatas,
+                labels = chrdatas1,
                 input_id = "chrdata"
               ),
               add_rank_list(
                 text = "Track data",
-                labels = tradatas,
+                labels = tradatas1,
                 input_id = "tradata"
               ),
               add_rank_list(
                 text = "Label data",
-                labels = labdatas,
+                labels = labdatas1,
                 input_id = "labdata"
               ),
               add_rank_list(
                 text = "Links data",
-                labels = lindatas,
+                labels = lindatas1,
                 input_id = "lindata"
               ),
               add_rank_list(
@@ -3588,17 +3606,17 @@ server <- function(input, output,session) {
               ),
               add_rank_list(
                 text = "Track data",
-                labels = tradatas,
+                labels = tradatas1,
                 input_id = "tradata"
               ),
               add_rank_list(
                 text = "Label data",
-                labels = labdatas,
+                labels = labdatas1,
                 input_id = "labdata"
               ),
               add_rank_list(
                 text = "Links data",
-                labels = lindatas,
+                labels = lindatas1,
                 input_id = "lindata"
               ),
               add_rank_list(
@@ -3657,10 +3675,12 @@ server <- function(input, output,session) {
   })
   
   observeEvent(input$dataup_go,{
+    
     chrdatas <<- chrdatas1
     tradatas <<- tradatas1
     lindatas <<- lindatas1
     labdatas <<- labdatas1
+    
     dataview_export <<- NULL
     dataall <- c(chrdatas,tradatas,lindatas,labdatas)
     datarepet <- TRUE %in% duplicated(dataall)
@@ -3680,6 +3700,7 @@ server <- function(input, output,session) {
           type = "error"
         )
       }else{
+        
         chrfil <<- alldatapath[which(alldatapath[1] == chrdatas[1]),4]
         if(input$usrprechr == FALSE&!grepl("text",alldatapath[which(alldatapath[1] == chrdatas[1]),3])){
           sendSweetAlert(
@@ -3765,8 +3786,11 @@ server <- function(input, output,session) {
           } else{
             data.N <<- NULL
           }
+          
           #
           unichr <- unique(data.C[,1])
+          
+          
           if(tra_a >= 1) {
             unitra <- unique(unlist(lapply(1:length(data.T), function(x) {
               data.T[[x]][, 1]
@@ -3774,6 +3798,7 @@ server <- function(input, output,session) {
           } else{
             unitra <- NULL
           }
+          
           if (lab_a >= 1) {
             unilab <- unique(unlist(lapply(1:length(data.N), function(x) {
               data.N[[x]][, 1]
@@ -3807,6 +3832,7 @@ server <- function(input, output,session) {
               return("success")
             }
           })
+          
           if(!all(primessage == "success")){
             wrongdata <- dataall[primessage != "success"]
             wrongtext <- primessage[primessage != "success"]
@@ -4475,7 +4501,7 @@ server <- function(input, output,session) {
          <td><div class="help-tip"><p>Links are filled with colors random assigned by the system or colors specified by the user. For data with 6 columns, format of specified color as "red" or "green" is supported. For data with 7 columns, format of specified color as "a:red;b:green;c:blue" is supported. "a", "b", "c" represents different categories indicated by the 7th column. Color for data groups without assigned color would be set as "grey".</p></div></td>
          </tr></table>')
                       ),
-                      c("Random" = "1", "Custom" = "2"),
+                      c("Random" = "1", "Custom" = "2" , "Customize by palette" = "3"),
                       selected="1"
                     ),
                     conditionalPanel(
@@ -4486,6 +4512,55 @@ server <- function(input, output,session) {
                         value="a:red;b:#00FF00;c:yellowgreen"
                       )
                     ),
+                    conditionalPanel(
+                      condition="input.colorLinks2=='3'",
+                      pickerInput(
+                        inputId = "selcolorLinks3",
+                        label = NULL,
+                        choices = list(
+                          "function name/color palettes/maximum number" = c(
+                            "grDevices::rainbow/rainbow/infinite",
+                            "RColorBrewer::brewer.pal/BrBG/11",
+                            "RColorBrewer::brewer.pal/PiYG/11",
+                            "RColorBrewer::brewer.pal/PRGn/11",
+                            "RColorBrewer::brewer.pal/PuOr/11",
+                            "RColorBrewer::brewer.pal/RdBu/11",
+                            "RColorBrewer::brewer.pal/RdGy/11",
+                            "RColorBrewer::brewer.pal/RdYlBu/11",
+                            "RColorBrewer::brewer.pal/RdYlGn/11",
+                            "RColorBrewer::brewer.pal/Spectral/11",
+                            "RColorBrewer::brewer.pal/Accent/8",
+                            "RColorBrewer::brewer.pal/Dark2/8",
+                            "RColorBrewer::brewer.pal/Paired/12",
+                            "RColorBrewer::brewer.pal/Pastel1/9",
+                            "RColorBrewer::brewer.pal/Pastel2/8",
+                            "RColorBrewer::brewer.pal/Set1/9",
+                            "RColorBrewer::brewer.pal/Set2/8",
+                            "RColorBrewer::brewer.pal/Set3/12",
+                            "RColorBrewer::brewer.pal/Blues/9",
+                            "RColorBrewer::brewer.pal/BuGn/9",
+                            "RColorBrewer::brewer.pal/BuPu/9",
+                            "RColorBrewer::brewer.pal/GnBu/9",
+                            "RColorBrewer::brewer.pal/Greens/9",
+                            "RColorBrewer::brewer.pal/Greys/9",
+                            "RColorBrewer::brewer.pal/Oranges/9", 
+                            "RColorBrewer::brewer.pal/OrRd/9",
+                            "RColorBrewer::brewer.pal/PuBu/9",
+                            "RColorBrewer::brewer.pal/PuBuGn/9",
+                            "RColorBrewer::brewer.pal/PuRd/9",
+                            "RColorBrewer::brewer.pal/Purples/9",
+                            "RColorBrewer::brewer.pal/RdPu/9",
+                            "RColorBrewer::brewer.pal/Reds/9",
+                            "RColorBrewer::brewer.pal/YlGn/9",
+                            "RColorBrewer::brewer.pal/YlGnBu/9",
+                            "RColorBrewer::brewer.pal/YlOrBr/9",
+                            "RColorBrewer::brewer.pal/YlOrRd/9"
+                          )
+                        )
+                      )
+                      
+                    ),
+                    
                     numericInput(
                       inputId = "transparencyLinks",
                       label = tags$div(
@@ -4580,6 +4655,10 @@ server <- function(input, output,session) {
     tra_colorcus <<- lapply(1:length(tradatas), function(x){
       return("a:red;b:blue;c:cyan")
     })
+    tra_colorpalettes <<- lapply(1:length(tradatas), function(x){
+      return("grDevices::rainbow/rainbow/infinite")
+    })
+    
     tra_line_fillarea <<- lapply(1:length(tradatas), function(x){
       return("")
     })
@@ -4592,6 +4671,12 @@ server <- function(input, output,session) {
     tra_rect_rectcoldiscus <<- lapply(1:length(tradatas), function(x){
       return("a:red;b:blue;c:cyan")
     })
+    
+    
+    tra_rect_rectcolorpalettes <<- lapply(1:length(tradatas), function(x){
+      return("grDevices::rainbow/rainbow/infinite")
+    })
+    
     tra_trct_colrect <<- lapply(1:length(tradatas), function(x){
       return("blue")
     })
@@ -4656,6 +4741,9 @@ server <- function(input, output,session) {
     })
     tra_heat_heatcoldiscus <<- lapply(1:length(tradatas), function(x){
       return("a:red;b:blue;c:cyan")
+    })
+    tra_heat_heatcolorpalettes <<- lapply(1:length(tradatas), function(x){
+      return("grDevices::rainbow/rainbow/infinite")
     })
     heightTra <<- lapply(1:length(tradatas), function(x){
       return(0.1)
@@ -5005,6 +5093,12 @@ server <- function(input, output,session) {
       if(!is.null(input[[paste0("tra_colorcus",x)]])){
         tra_colorcus[x] <<- input[[paste0("tra_colorcus",x)]]
       }
+      
+      if(!is.null(input[[paste0("tra_colorpalettes",x)]])){
+        tra_colorpalettes[x] <<- input[[paste0("tra_colorpalettes",x)]]
+      }
+      
+      
       if(!is.null(input[[paste0("tra_line_fillarea",x)]])){
         tra_line_fillarea[x] <<- input[[paste0("tra_line_fillarea",x)]]
       }
@@ -5016,6 +5110,10 @@ server <- function(input, output,session) {
       }
       if(!is.null(input[[paste0("tra_rect_rectcoldiscus",x)]])){
         tra_rect_rectcoldiscus[x] <<- input[[paste0("tra_rect_rectcoldiscus",x)]]
+      }
+      
+      if(!is.null(input[[paste0("tra_rect_rectcolorpalettes",x)]])){
+        tra_rect_rectcolorpalettes[x] <<- input[[paste0("tra_rect_rectcolorpalettes",x)]]
       }
       if(!is.null(input[[paste0("tra_trct_colrect",x)]])){
         tra_trct_colrect[x] <<- input[[paste0("tra_trct_colrect",x)]]
@@ -5080,6 +5178,10 @@ server <- function(input, output,session) {
       }
       if(!is.null(input[[paste0("tra_heat_heatcoldiscus",x)]])){
         tra_heat_heatcoldiscus[x] <<- input[[paste0("tra_heat_heatcoldiscus",x)]]
+      }
+      
+      if(!is.null(input[[paste0("tra_heat_heatcolorpalettes",x)]])){
+        tra_heat_heatcolorpalettes[x] <<- input[[paste0("tra_heat_heatcolorpalettes",x)]]
       }
       if(!is.null(input[[paste0("heightTra",x)]])){
         heightTra[x] <<- input[[paste0("heightTra",x)]]
@@ -5326,7 +5428,7 @@ server <- function(input, output,session) {
          </p></div></td>
          </tr></table>')
                   ),
-                  choices = c("Random" = "1", "Specific color" = "2" , "Custom for data with multi-groups" = "3"),
+                  choices = c("Random" = "1", "Specific color" = "2" , "Custom for data with multi-groups" = "3","Custom for data with multi-groups by color palettes" = "4"),
                   selected = tra_coltype[x]
                 ),
                 conditionalPanel(
@@ -5341,7 +5443,57 @@ server <- function(input, output,session) {
                 conditionalPanel(
                   condition = paste0("input.tra_coltype",x," == '3'"),
                   textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_coltype",x," == '4'"),
+                  pickerInput(
+                    inputId = paste0("tra_colorpalettes",x),
+                    label = NULL,
+                    choices = list(
+                      "function name/color palettes/maximum number" = c(
+                        "grDevices::rainbow/rainbow/infinite",
+                        "RColorBrewer::brewer.pal/BrBG/11",
+                        "RColorBrewer::brewer.pal/PiYG/11",
+                        "RColorBrewer::brewer.pal/PRGn/11",
+                        "RColorBrewer::brewer.pal/PuOr/11",
+                        "RColorBrewer::brewer.pal/RdBu/11",
+                        "RColorBrewer::brewer.pal/RdGy/11",
+                        "RColorBrewer::brewer.pal/RdYlBu/11",
+                        "RColorBrewer::brewer.pal/RdYlGn/11",
+                        "RColorBrewer::brewer.pal/Spectral/11",
+                        "RColorBrewer::brewer.pal/Accent/8",
+                        "RColorBrewer::brewer.pal/Dark2/8",
+                        "RColorBrewer::brewer.pal/Paired/12",
+                        "RColorBrewer::brewer.pal/Pastel1/9",
+                        "RColorBrewer::brewer.pal/Pastel2/8",
+                        "RColorBrewer::brewer.pal/Set1/9",
+                        "RColorBrewer::brewer.pal/Set2/8",
+                        "RColorBrewer::brewer.pal/Set3/12",
+                        "RColorBrewer::brewer.pal/Blues/9",
+                        "RColorBrewer::brewer.pal/BuGn/9",
+                        "RColorBrewer::brewer.pal/BuPu/9",
+                        "RColorBrewer::brewer.pal/GnBu/9",
+                        "RColorBrewer::brewer.pal/Greens/9",
+                        "RColorBrewer::brewer.pal/Greys/9",
+                        "RColorBrewer::brewer.pal/Oranges/9", 
+                        "RColorBrewer::brewer.pal/OrRd/9",
+                        "RColorBrewer::brewer.pal/PuBu/9",
+                        "RColorBrewer::brewer.pal/PuBuGn/9",
+                        "RColorBrewer::brewer.pal/PuRd/9",
+                        "RColorBrewer::brewer.pal/Purples/9",
+                        "RColorBrewer::brewer.pal/RdPu/9",
+                        "RColorBrewer::brewer.pal/Reds/9",
+                        "RColorBrewer::brewer.pal/YlGn/9",
+                        "RColorBrewer::brewer.pal/YlGnBu/9",
+                        "RColorBrewer::brewer.pal/YlOrBr/9",
+                        "RColorBrewer::brewer.pal/YlOrRd/9"
+                      )
+                    ),
+                    selected =  tra_colorpalettes[x]
+                    
+                  )
                 )
+                
               )
             },
             if(tra_type[[x]] != "rect-discrete" & tra_type[[x]] != "rect-gradual" & tra_type[[x]] != "heatmap-discrete" & tra_type[[x]] != "heatmap-gradual" & tra_type[[x]] != "ideogram"& tra_type[[x]] != "stack-line"& tra_type[[x]] != "stack-point"){
@@ -5366,7 +5518,7 @@ server <- function(input, output,session) {
          </p></div></td>
          </tr></table>')
                     ),
-                    choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3"),
+                    choices = c("Random" = "1", "Custom for data with multi-columns" = "2", "Custom for data with multi-groups" = "3","Custom for data with multi-groups by color palettes" = "4"),
                     selected = tra_coltype[x]
                   ),
                   conditionalPanel(
@@ -5376,7 +5528,57 @@ server <- function(input, output,session) {
                   conditionalPanel(
                     condition = paste0("input.tra_coltype",x," == '3'"),
                     textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
+                  ),
+                  conditionalPanel(
+                    condition = paste0("input.tra_coltype",x," == '4'"),
+                    pickerInput(
+                      inputId = paste0("tra_colorpalettes",x),
+                      label = NULL,
+                      choices = list(
+                        "function name/color palettes/maximum number" = c(
+                          "grDevices::rainbow/rainbow/infinite",
+                          "RColorBrewer::brewer.pal/BrBG/11",
+                          "RColorBrewer::brewer.pal/PiYG/11",
+                          "RColorBrewer::brewer.pal/PRGn/11",
+                          "RColorBrewer::brewer.pal/PuOr/11",
+                          "RColorBrewer::brewer.pal/RdBu/11",
+                          "RColorBrewer::brewer.pal/RdGy/11",
+                          "RColorBrewer::brewer.pal/RdYlBu/11",
+                          "RColorBrewer::brewer.pal/RdYlGn/11",
+                          "RColorBrewer::brewer.pal/Spectral/11",
+                          "RColorBrewer::brewer.pal/Accent/8",
+                          "RColorBrewer::brewer.pal/Dark2/8",
+                          "RColorBrewer::brewer.pal/Paired/12",
+                          "RColorBrewer::brewer.pal/Pastel1/9",
+                          "RColorBrewer::brewer.pal/Pastel2/8",
+                          "RColorBrewer::brewer.pal/Set1/9",
+                          "RColorBrewer::brewer.pal/Set2/8",
+                          "RColorBrewer::brewer.pal/Set3/12",
+                          "RColorBrewer::brewer.pal/Blues/9",
+                          "RColorBrewer::brewer.pal/BuGn/9",
+                          "RColorBrewer::brewer.pal/BuPu/9",
+                          "RColorBrewer::brewer.pal/GnBu/9",
+                          "RColorBrewer::brewer.pal/Greens/9",
+                          "RColorBrewer::brewer.pal/Greys/9",
+                          "RColorBrewer::brewer.pal/Oranges/9", 
+                          "RColorBrewer::brewer.pal/OrRd/9",
+                          "RColorBrewer::brewer.pal/PuBu/9",
+                          "RColorBrewer::brewer.pal/PuBuGn/9",
+                          "RColorBrewer::brewer.pal/PuRd/9",
+                          "RColorBrewer::brewer.pal/Purples/9",
+                          "RColorBrewer::brewer.pal/RdPu/9",
+                          "RColorBrewer::brewer.pal/Reds/9",
+                          "RColorBrewer::brewer.pal/YlGn/9",
+                          "RColorBrewer::brewer.pal/YlGnBu/9",
+                          "RColorBrewer::brewer.pal/YlOrBr/9",
+                          "RColorBrewer::brewer.pal/YlOrRd/9"
+                        )
+                      ),
+                      selected =  tra_colorpalettes[x]
+                      
+                    )
                   )
+                  
                 )
               }else{
                 tagList(
@@ -5401,7 +5603,7 @@ server <- function(input, output,session) {
          </p></div></td>
          </tr></table>')
                       ),
-                      choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3"),
+                      choices = c("Random" = "1", "Specific color" = "2","Custom for data with multi-groups" = "3","Custom for data with multi-groups by color palettes" = "4"),
                       selected = tra_coltype[x]
                     ),
                     conditionalPanel(
@@ -5416,6 +5618,55 @@ server <- function(input, output,session) {
                     conditionalPanel(
                       condition = paste0("input.tra_coltype",x," == '3'"),
                       textInput(paste0("tra_colorcus",x), NULL, value=tra_colorcus[x])
+                    ),
+                    conditionalPanel(
+                      condition = paste0("input.tra_coltype",x," == '4'"),
+                      pickerInput(
+                        inputId = paste0("tra_colorpalettes",x),
+                        label = NULL,
+                        choices = list(
+                          "function name/color palettes/maximum number" = c(
+                            "grDevices::rainbow/rainbow/infinite",
+                            "RColorBrewer::brewer.pal/BrBG/11",
+                            "RColorBrewer::brewer.pal/PiYG/11",
+                            "RColorBrewer::brewer.pal/PRGn/11",
+                            "RColorBrewer::brewer.pal/PuOr/11",
+                            "RColorBrewer::brewer.pal/RdBu/11",
+                            "RColorBrewer::brewer.pal/RdGy/11",
+                            "RColorBrewer::brewer.pal/RdYlBu/11",
+                            "RColorBrewer::brewer.pal/RdYlGn/11",
+                            "RColorBrewer::brewer.pal/Spectral/11",
+                            "RColorBrewer::brewer.pal/Accent/8",
+                            "RColorBrewer::brewer.pal/Dark2/8",
+                            "RColorBrewer::brewer.pal/Paired/12",
+                            "RColorBrewer::brewer.pal/Pastel1/9",
+                            "RColorBrewer::brewer.pal/Pastel2/8",
+                            "RColorBrewer::brewer.pal/Set1/9",
+                            "RColorBrewer::brewer.pal/Set2/8",
+                            "RColorBrewer::brewer.pal/Set3/12",
+                            "RColorBrewer::brewer.pal/Blues/9",
+                            "RColorBrewer::brewer.pal/BuGn/9",
+                            "RColorBrewer::brewer.pal/BuPu/9",
+                            "RColorBrewer::brewer.pal/GnBu/9",
+                            "RColorBrewer::brewer.pal/Greens/9",
+                            "RColorBrewer::brewer.pal/Greys/9",
+                            "RColorBrewer::brewer.pal/Oranges/9", 
+                            "RColorBrewer::brewer.pal/OrRd/9",
+                            "RColorBrewer::brewer.pal/PuBu/9",
+                            "RColorBrewer::brewer.pal/PuBuGn/9",
+                            "RColorBrewer::brewer.pal/PuRd/9",
+                            "RColorBrewer::brewer.pal/Purples/9",
+                            "RColorBrewer::brewer.pal/RdPu/9",
+                            "RColorBrewer::brewer.pal/Reds/9",
+                            "RColorBrewer::brewer.pal/YlGn/9",
+                            "RColorBrewer::brewer.pal/YlGnBu/9",
+                            "RColorBrewer::brewer.pal/YlOrBr/9",
+                            "RColorBrewer::brewer.pal/YlOrRd/9"
+                          )
+                        ),
+                        selected =  tra_colorpalettes[x]
+                        
+                      )
                     )
                   )
                 )
@@ -5499,11 +5750,7 @@ server <- function(input, output,session) {
                       )
                     )
                   )
-                  
-                  
-                  
                 )
-                
               )
             },
             if(tra_type[[x]] == "rect-discrete"){
@@ -5526,7 +5773,7 @@ server <- function(input, output,session) {
          </tr></table>')
                   ),
                   
-                  choices = c("Random" = "1", "Specific" = "2", "Custom" = "3"),
+                  choices = c("Random" = "1", "Specific" = "2", "Custom" = "3", "Customize by palette" = "4"),
                   selected = tra_rect_rectcol[x]
                 ),
                 conditionalPanel(
@@ -5541,6 +5788,59 @@ server <- function(input, output,session) {
                 conditionalPanel(
                   condition = paste0("input.tra_rect_rectcol",x,"== '3'"),
                   textInput(paste0("tra_rect_rectcoldiscus",x), NULL, value=tra_rect_rectcoldiscus[x])
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_rect_rectcol",x,"== '4'"),
+                  pickerInput(
+                    inputId = paste0("tra_rect_rectcolorpalettes",x),
+                    label = NULL,
+                    choices = list(
+                      "function name/color palettes/maximum number" = c(
+                        "grDevices::rainbow/rainbow/infinite",
+                        "RColorBrewer::brewer.pal/BrBG/11",
+                        "RColorBrewer::brewer.pal/PiYG/11",
+                        "RColorBrewer::brewer.pal/PRGn/11",
+                        "RColorBrewer::brewer.pal/PuOr/11",
+                        "RColorBrewer::brewer.pal/RdBu/11",
+                        "RColorBrewer::brewer.pal/RdGy/11",
+                        "RColorBrewer::brewer.pal/RdYlBu/11",
+                        "RColorBrewer::brewer.pal/RdYlGn/11",
+                        "RColorBrewer::brewer.pal/Spectral/11",
+                        "RColorBrewer::brewer.pal/Accent/8",
+                        "RColorBrewer::brewer.pal/Dark2/8",
+                        "RColorBrewer::brewer.pal/Paired/12",
+                        "RColorBrewer::brewer.pal/Pastel1/9",
+                        "RColorBrewer::brewer.pal/Pastel2/8",
+                        "RColorBrewer::brewer.pal/Set1/9",
+                        "RColorBrewer::brewer.pal/Set2/8",
+                        "RColorBrewer::brewer.pal/Set3/12",
+                        "RColorBrewer::brewer.pal/Blues/9",
+                        "RColorBrewer::brewer.pal/BuGn/9",
+                        "RColorBrewer::brewer.pal/BuPu/9",
+                        "RColorBrewer::brewer.pal/GnBu/9",
+                        "RColorBrewer::brewer.pal/Greens/9",
+                        "RColorBrewer::brewer.pal/Greys/9",
+                        "RColorBrewer::brewer.pal/Oranges/9", 
+                        "RColorBrewer::brewer.pal/OrRd/9",
+                        "RColorBrewer::brewer.pal/PuBu/9",
+                        "RColorBrewer::brewer.pal/PuBuGn/9",
+                        "RColorBrewer::brewer.pal/PuRd/9",
+                        "RColorBrewer::brewer.pal/Purples/9",
+                        "RColorBrewer::brewer.pal/RdPu/9",
+                        "RColorBrewer::brewer.pal/Reds/9",
+                        "RColorBrewer::brewer.pal/YlGn/9",
+                        "RColorBrewer::brewer.pal/YlGnBu/9",
+                        "RColorBrewer::brewer.pal/YlOrBr/9",
+                        "RColorBrewer::brewer.pal/YlOrRd/9"
+                      )
+                    ),
+                    selected =  tra_rect_rectcolorpalettes[x]
+                    
+                  )
+                  
+                  
+                  
+                  
                 )
               )
             },
@@ -5824,7 +6124,7 @@ server <- function(input, output,session) {
                   label = tags$div(
                     HTML('<font><h5><i class="fa-solid fa-play"></i><b> Data color</b></font>')
                   ),
-                  choices = c("Random" = "1" , "Custom" = "2"),
+                  choices = c("Random" = "1" , "Custom" = "2" , "Customize via palette" = "3"),
                   selected = tra_heatcol_dis[x]
                 ),
                 conditionalPanel(
@@ -5833,6 +6133,54 @@ server <- function(input, output,session) {
                     inputId =  paste0("tra_heat_heatcoldiscus",x), 
                     label =  NULL,
                     value = tra_heat_heatcoldiscus[x])
+                ),
+                conditionalPanel(
+                  condition = paste0("input.tra_heatcol_dis",x,"== '3'"),
+                  pickerInput(
+                    inputId = paste0("tra_heat_heatcolorpalettes",x),
+                    label = NULL,
+                    choices = list(
+                      "function name/color palettes/maximum number" = c(
+                        "grDevices::rainbow/rainbow/infinite",
+                        "RColorBrewer::brewer.pal/BrBG/11",
+                        "RColorBrewer::brewer.pal/PiYG/11",
+                        "RColorBrewer::brewer.pal/PRGn/11",
+                        "RColorBrewer::brewer.pal/PuOr/11",
+                        "RColorBrewer::brewer.pal/RdBu/11",
+                        "RColorBrewer::brewer.pal/RdGy/11",
+                        "RColorBrewer::brewer.pal/RdYlBu/11",
+                        "RColorBrewer::brewer.pal/RdYlGn/11",
+                        "RColorBrewer::brewer.pal/Spectral/11",
+                        "RColorBrewer::brewer.pal/Accent/8",
+                        "RColorBrewer::brewer.pal/Dark2/8",
+                        "RColorBrewer::brewer.pal/Paired/12",
+                        "RColorBrewer::brewer.pal/Pastel1/9",
+                        "RColorBrewer::brewer.pal/Pastel2/8",
+                        "RColorBrewer::brewer.pal/Set1/9",
+                        "RColorBrewer::brewer.pal/Set2/8",
+                        "RColorBrewer::brewer.pal/Set3/12",
+                        "RColorBrewer::brewer.pal/Blues/9",
+                        "RColorBrewer::brewer.pal/BuGn/9",
+                        "RColorBrewer::brewer.pal/BuPu/9",
+                        "RColorBrewer::brewer.pal/GnBu/9",
+                        "RColorBrewer::brewer.pal/Greens/9",
+                        "RColorBrewer::brewer.pal/Greys/9",
+                        "RColorBrewer::brewer.pal/Oranges/9", 
+                        "RColorBrewer::brewer.pal/OrRd/9",
+                        "RColorBrewer::brewer.pal/PuBu/9",
+                        "RColorBrewer::brewer.pal/PuBuGn/9",
+                        "RColorBrewer::brewer.pal/PuRd/9",
+                        "RColorBrewer::brewer.pal/Purples/9",
+                        "RColorBrewer::brewer.pal/RdPu/9",
+                        "RColorBrewer::brewer.pal/Reds/9",
+                        "RColorBrewer::brewer.pal/YlGn/9",
+                        "RColorBrewer::brewer.pal/YlGnBu/9",
+                        "RColorBrewer::brewer.pal/YlOrBr/9",
+                        "RColorBrewer::brewer.pal/YlOrRd/9"
+                      )
+                    ),
+                    selected =  tra_heat_heatcolorpalettes[x]
+                  )
                 ),
                 pickerInput(
                   inputId = paste0("tra_hmap_poslines",x),
@@ -6241,118 +6589,147 @@ server <- function(input, output,session) {
             tratype_cache[[ordertrapos[[x]]]]#order(pospos)
           })
         }
-        
-        lapply(1:length(tradatas), function(x){
+        if(length(tradatas) > 0){
+          lapply(1:length(tradatas), function(x){
+            
+            if(!is.null(input[[paste0("tra_bar_direction",x)]])){
+              tra_bar_direction[pospos[x]] <<- input[[paste0("tra_bar_direction",x)]]
+            }
+            if(!is.null(input[[paste0("tra_bar_Boundary",x)]])){
+              tra_bar_Boundary[pospos[x]] <<- input[[paste0("tra_bar_Boundary",x)]]
+            }
+            if(!is.null(input[[paste0("tra_bar_coldir1",x)]])){
+              tra_bar_coldir1[pospos[x]] <<- input[[paste0("tra_bar_coldir1",x)]]
+            }
+            if(!is.null(input[[paste0("tra_bar_coldir2",x)]])){
+              tra_bar_coldir2[pospos[x]] <<- input[[paste0("tra_bar_coldir2",x)]]
+            }
+            if(!is.null(input[[paste0("tra_coltype",x)]])){
+              tra_coltype[pospos[x]] <<- input[[paste0("tra_coltype",x)]]
+            }
+            if(!is.null(input[[paste0("tra_colcol",x)]])){
+              tra_colcol[pospos[x]] <<- input[[paste0("tra_colcol",x)]]
+            }
+            if(!is.null(input[[paste0("tra_colcol_spec",x)]])){
+              tra_colcol_spec[pospos[x]] <<- input[[paste0("tra_colcol_spec",x)]]
+            }
+            if(!is.null(input[[paste0("tra_colorcus",x)]])){
+              tra_colorcus[pospos[x]] <<- input[[paste0("tra_colorcus",x)]]
+            }
+            if(!is.null(input[[paste0("tra_colorpalettes",x)]])){
+              tra_colorpalettes[pospos[x]] <<- input[[paste0("tra_colorpalettes",x)]]
+            }
+            if(tra_coltype[pospos[x]] == "4"){
+              tra_colorcus[pospos[x]] <<- getmulcolor(colorgroup = data.T[[order(pospos)[x]]],colortype = unlist(tra_colorpalettes[pospos[x]]), plotType = unlist(tra_type[x]))
+              tra_coltype[pospos[x]] <<- "3"
+            }
+            if(!is.null(input[[paste0("tra_line_fillarea",x)]])){
+              tra_line_fillarea[pospos[x]] <<- input[[paste0("tra_line_fillarea",x)]]
+            }
+            if(!is.null(input[[paste0("tra_rect_rectcol",x)]])){
+              tra_rect_rectcol[pospos[x]] <<- input[[paste0("tra_rect_rectcol",x)]]
+            }
+            if(!is.null(input[[paste0("tra_rect_rectcoldis",x)]])){
+              tra_rect_rectcoldis[pospos[x]] <<- input[[paste0("tra_rect_rectcoldis",x)]]
+            }
+            if(!is.null(input[[paste0("tra_rect_rectcoldiscus",x)]])){
+              tra_rect_rectcoldiscus[pospos[x]] <<- input[[paste0("tra_rect_rectcoldiscus",x)]]
+            }#tra_rect_rectcolorpalettes
+            if(!is.null(input[[paste0("tra_rect_rectcolorpalettes",x)]])){
+              tra_rect_rectcolorpalettes[pospos[x]] <<- input[[paste0("tra_rect_rectcolorpalettes",x)]]
+            }
+            if(tra_rect_rectcol[pospos[x]] == "4"){
+              tra_rect_rectcoldiscus[pospos[x]] <<- getmulcolor(colorgroup = data.T[[order(pospos)[x]]],colortype = unlist(tra_rect_rectcolorpalettes[pospos[x]]), plotType = unlist(tra_type[x]))
+              tra_rect_rectcol[pospos[x]] <<- "3"
+            }
+            
+            
+            if(!is.null(input[[paste0("tra_trct_colrect",x)]])){
+              tra_trct_colrect[pospos[x]] <<- input[[paste0("tra_trct_colrect",x)]]
+            }
+            if(!is.null(input[[paste0("tra_line_selrea",x)]])){
+              tra_line_selrea[pospos[x]] <<- input[[paste0("tra_line_selrea",x)]]
+            }
+            if(!is.null(input[[paste0("tra_bar_borderarea",x)]])){
+              tra_bar_borderarea[pospos[x]] <<- input[[paste0("tra_bar_borderarea",x)]]
+            }
+            if(!is.null(input[[paste0("tra_transparency",x)]])){
+              tra_transparency[pospos[x]] <<- input[[paste0("tra_transparency",x)]]
+            }
+            if(!is.null(input[[paste0("tra_poipch",x)]])){
+              tra_poipch[pospos[x]] <<- input[[paste0("tra_poipch",x)]]
+            }
+            if(!is.null(input[[paste0("tra_poi_poisiz",x)]])){
+              tra_poi_poisiz[pospos[x]] <<- input[[paste0("tra_poi_poisiz",x)]]
+            }
+            if(!is.null(input[[paste0("tra_baseline",x)]])){
+              tra_baseline[pospos[x]] <<- input[[paste0("tra_baseline",x)]]
+            }
+            if(!is.null(input[[paste0("tra_colorline",x)]])){
+              tra_colorline[pospos[x]] <<- input[[paste0("tra_colorline",x)]]
+            }
+            if(!is.null(input[[paste0("tra_bgcol",x)]])){
+              tra_bgcol[pospos[x]] <<- input[[paste0("tra_bgcol",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_heatmapcol",x)]])){
+              tra_hmap_heatmapcol[pospos[x]] <<- input[[paste0("tra_hmap_heatmapcol",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_typcolhmap",x)]])){
+              tra_hmap_typcolhmap[pospos[x]] <<- input[[paste0("tra_hmap_typcolhmap",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_lowColor",x)]])){
+              tra_hmap_lowColor[pospos[x]] <<- input[[paste0("tra_hmap_lowColor",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_midColor",x)]])){
+              tra_hmap_midColor[pospos[x]] <<- input[[paste0("tra_hmap_midColor",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_highColor",x)]])){
+              tra_hmap_highColor[pospos[x]] <<-input[[paste0("tra_hmap_highColor",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_poslines",x)]])){
+              tra_hmap_poslines[pospos[x]] <<- input[[paste0("tra_hmap_poslines",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_poslinhei",x)]])){
+              tra_hmap_poslinhei[pospos[x]] <<- input[[paste0("tra_hmap_poslinhei",x)]]
+            }
+            if(!is.null(input[[paste0("tra_heatcol_dis",x)]])){
+              tra_heatcol_dis[pospos[x]] <<- input[[paste0("tra_heatcol_dis",x)]]
+            }
+            if(!is.null(input[[paste0("tra_heat_heatcoldiscus",x)]])){
+              tra_heat_heatcoldiscus[pospos[x]] <<- input[[paste0("tra_heat_heatcoldiscus",x)]]
+            }
+            if(!is.null(input[[paste0("tra_heat_heatcolorpalettes",x)]])){
+              tra_heat_heatcolorpalettes[pospos[x]] <<- input[[paste0("tra_heat_heatcolorpalettes",x)]]
+            }
+            
+            if(tra_heatcol_dis[pospos[x]] == "3"){
+              tra_heat_heatcoldiscus[pospos[x]] <<- getmulcolor(colorgroup = data.T[[order(pospos)[x]]],colortype = unlist(tra_heat_heatcolorpalettes[pospos[x]]), plotType = unlist(tra_type[x]))
+              tra_heatcol_dis[pospos[x]] <<- "2"
+            }
+            
+            
+            #tra_heat_heatcolorpalettes
+            if(!is.null(input[[paste0("heightTra",x)]])){
+              heightTra[pospos[x]] <<- input[[paste0("heightTra",x)]]
+            }
+            if(!is.null(input[[paste0("Tra_margin",x)]])){
+              Tra_margin[pospos[x]] <<- input[[paste0("Tra_margin",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_cellbord",x)]])){
+              tra_hmap_cellbord[pospos[x]] <<- input[[paste0("tra_hmap_cellbord",x)]]
+            }
+            if(!is.null(input[[paste0("tra_hmap_cellbord_col",x)]])){
+              tra_hmap_cellbord_col[pospos[x]] <<- input[[paste0("tra_hmap_cellbord_col",x)]]
+            }
+            if(!is.null(input[[paste0("tra_border",x)]])){
+              tra_border[pospos[x]] <<- input[[paste0("tra_border",x)]]
+            }
+            if(!is.null(input[[paste0("tra_yaxis",x)]])){
+              tra_yaxis[pospos[x]] <<- input[[paste0("tra_yaxis",x)]]
+            }
+          })
           
-          if(!is.null(input[[paste0("tra_bar_direction",x)]])){
-            tra_bar_direction[pospos[x]] <<- input[[paste0("tra_bar_direction",x)]]
-          }
-          if(!is.null(input[[paste0("tra_bar_Boundary",x)]])){
-            tra_bar_Boundary[pospos[x]] <<- input[[paste0("tra_bar_Boundary",x)]]
-          }
-          if(!is.null(input[[paste0("tra_bar_coldir1",x)]])){
-            tra_bar_coldir1[pospos[x]] <<- input[[paste0("tra_bar_coldir1",x)]]
-          }
-          if(!is.null(input[[paste0("tra_bar_coldir2",x)]])){
-            tra_bar_coldir2[pospos[x]] <<- input[[paste0("tra_bar_coldir2",x)]]
-          }
-          if(!is.null(input[[paste0("tra_coltype",x)]])){
-            tra_coltype[pospos[x]] <<- input[[paste0("tra_coltype",x)]]
-          }
-          if(!is.null(input[[paste0("tra_colcol",x)]])){
-            tra_colcol[pospos[x]] <<- input[[paste0("tra_colcol",x)]]
-          }
-          if(!is.null(input[[paste0("tra_colcol_spec",x)]])){
-            tra_colcol_spec[pospos[x]] <<- input[[paste0("tra_colcol_spec",x)]]
-          }
-          if(!is.null(input[[paste0("tra_colorcus",x)]])){
-            tra_colorcus[pospos[x]] <<- input[[paste0("tra_colorcus",x)]]
-          }
-          if(!is.null(input[[paste0("tra_line_fillarea",x)]])){
-            tra_line_fillarea[pospos[x]] <<- input[[paste0("tra_line_fillarea",x)]]
-          }
-          if(!is.null(input[[paste0("tra_rect_rectcol",x)]])){
-            tra_rect_rectcol[pospos[x]] <<- input[[paste0("tra_rect_rectcol",x)]]
-          }
-          if(!is.null(input[[paste0("tra_rect_rectcoldis",x)]])){
-            tra_rect_rectcoldis[pospos[x]] <<- input[[paste0("tra_rect_rectcoldis",x)]]
-          }
-          if(!is.null(input[[paste0("tra_rect_rectcoldiscus",x)]])){
-            tra_rect_rectcoldiscus[pospos[x]] <<- input[[paste0("tra_rect_rectcoldiscus",x)]]
-          }
-          if(!is.null(input[[paste0("tra_trct_colrect",x)]])){
-            tra_trct_colrect[pospos[x]] <<- input[[paste0("tra_trct_colrect",x)]]
-          }
-          if(!is.null(input[[paste0("tra_line_selrea",x)]])){
-            tra_line_selrea[pospos[x]] <<- input[[paste0("tra_line_selrea",x)]]
-          }
-          if(!is.null(input[[paste0("tra_bar_borderarea",x)]])){
-            tra_bar_borderarea[pospos[x]] <<- input[[paste0("tra_bar_borderarea",x)]]
-          }
-          if(!is.null(input[[paste0("tra_transparency",x)]])){
-            tra_transparency[pospos[x]] <<- input[[paste0("tra_transparency",x)]]
-          }
-          if(!is.null(input[[paste0("tra_poipch",x)]])){
-            tra_poipch[pospos[x]] <<- input[[paste0("tra_poipch",x)]]
-          }
-          if(!is.null(input[[paste0("tra_poi_poisiz",x)]])){
-            tra_poi_poisiz[pospos[x]] <<- input[[paste0("tra_poi_poisiz",x)]]
-          }
-          if(!is.null(input[[paste0("tra_baseline",x)]])){
-            tra_baseline[pospos[x]] <<- input[[paste0("tra_baseline",x)]]
-          }
-          if(!is.null(input[[paste0("tra_colorline",x)]])){
-            tra_colorline[pospos[x]] <<- input[[paste0("tra_colorline",x)]]
-          }
-          if(!is.null(input[[paste0("tra_bgcol",x)]])){
-            tra_bgcol[pospos[x]] <<- input[[paste0("tra_bgcol",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_heatmapcol",x)]])){
-            tra_hmap_heatmapcol[pospos[x]] <<- input[[paste0("tra_hmap_heatmapcol",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_typcolhmap",x)]])){
-            tra_hmap_typcolhmap[pospos[x]] <<- input[[paste0("tra_hmap_typcolhmap",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_lowColor",x)]])){
-            tra_hmap_lowColor[pospos[x]] <<- input[[paste0("tra_hmap_lowColor",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_midColor",x)]])){
-            tra_hmap_midColor[pospos[x]] <<- input[[paste0("tra_hmap_midColor",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_highColor",x)]])){
-            tra_hmap_highColor[pospos[x]] <<-input[[paste0("tra_hmap_highColor",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_poslines",x)]])){
-            tra_hmap_poslines[pospos[x]] <<- input[[paste0("tra_hmap_poslines",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_poslinhei",x)]])){
-            tra_hmap_poslinhei[pospos[x]] <<- input[[paste0("tra_hmap_poslinhei",x)]]
-          }
-          if(!is.null(input[[paste0("tra_heatcol_dis",x)]])){
-            tra_heatcol_dis[pospos[x]] <<- input[[paste0("tra_heatcol_dis",x)]]
-          }
-          if(!is.null(input[[paste0("tra_heat_heatcoldiscus",x)]])){
-            tra_heat_heatcoldiscus[pospos[x]] <<- input[[paste0("tra_heat_heatcoldiscus",x)]]
-          }
-          if(!is.null(input[[paste0("heightTra",x)]])){
-            heightTra[pospos[x]] <<- input[[paste0("heightTra",x)]]
-          }
-          if(!is.null(input[[paste0("Tra_margin",x)]])){
-            Tra_margin[pospos[x]] <<- input[[paste0("Tra_margin",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_cellbord",x)]])){
-            tra_hmap_cellbord[pospos[x]] <<- input[[paste0("tra_hmap_cellbord",x)]]
-          }
-          if(!is.null(input[[paste0("tra_hmap_cellbord_col",x)]])){
-            tra_hmap_cellbord_col[pospos[x]] <<- input[[paste0("tra_hmap_cellbord_col",x)]]
-          }
-          if(!is.null(input[[paste0("tra_border",x)]])){
-            tra_border[pospos[x]] <<- input[[paste0("tra_border",x)]]
-          }
-          if(!is.null(input[[paste0("tra_yaxis",x)]])){
-            tra_yaxis[pospos[x]] <<- input[[paste0("tra_yaxis",x)]]
-          }
-        })
+        }
         Tra_margin[(length(Tra_margin)+1)] <<- 0
         
         #}
@@ -6375,9 +6752,18 @@ server <- function(input, output,session) {
           if(colformatLinks == 1){
             selcolorLinks <<- input$selcolorLinks1
             colorLinks <<- input$colorLinks1
-          }else{
+          }else if(colformatLinks == 3){
             selcolorLinks <<- input$selcolorLinks2
             colorLinks <<- input$colorLinks2
+          }else{
+            colorLinks <<- input$colorLinks2
+            if(colorLinks == "3"){
+              selcolorLinks <<- getmulcolor(colorgroup = data.L,colortype = input$selcolorLinks3)
+              colorLinks <<-"2"
+            }else{
+              selcolorLinks <<- input$selcolorLinks2
+              colorLinks <<- input$colorLinks2
+            }
           }
           transparencyLinks <<- input$transparencyLinks
         }else{
@@ -6825,13 +7211,6 @@ server <- function(input, output,session) {
       }, contentType = NULL)
   })
   
-  
-  
-  
-  
-  
-  
-  
   ## *** Download R scripts ***
   observe({
     output$script.R <- downloadHandler(
@@ -6864,5 +7243,9 @@ server <- function(input, output,session) {
     })
     outputOptions(output, "plotbutton", suspendWhenHidden = FALSE)
   })
+  
+  
+  
+  
   
 }
