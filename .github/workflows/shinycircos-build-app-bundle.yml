@@ -1,0 +1,248 @@
+# shinyCircos-V2.0 app-layer bundle builder for the ShinyApps store (Route A).
+# Place at  fentouxungui/shinyCircos-V2.0/.github/workflows/shinycircos-build-app-bundle.yml
+#            on the DEFAULT branch = main.  No shell rebuild is required.
+#
+# Produces, per platform:  shinycircos-<store-version>-<platform>.zip
+#   bundle/  +- manifest.json  +- app/**  +- rlib/<Pkg>/
+#            (prebuilt CRAN/Bioconductor binaries, pinned to R 4.6.1)
+#
+# Contract check (same onboarding as iSEE / UCSCXenaShiny / spatialLIBD / beeRapp / CSBB-Shiny):
+#   * shinyCircos-V2.0 is a CLASSIC multi-file Shiny app (NOT an R package):
+#       Global.R (libraries + options; source("plot.R") -> source("server.R"), source("writeCmd.R"))
+#       ui.R     -> defines `ui`   (bs4Dash page)
+#       server.R -> defines `server`
+#     It has no app.R, so the build ADDS a single entry app.R that sources the
+#     classic files and RETURNS the shiny.appobj. The entry never calls runApp().
+#     The shell launches it with shiny::runApp("app"), i.e. exactly what
+#     shiny::runGitHub("shinyCircos-V2.0", "YaoLab-Bioinfo") does upstream.
+#   * Static assets live under www/ (data, example_data, figures, figuresmall,
+#     helpdocument, helpfigures, reference_genome); relative paths are preserved.
+#
+# Notes / gotchas handled here:
+#   * No DESCRIPTION / no `R CMD build`: this is not a package. The dependency
+#     seed is the top-level library() set in Global.R.
+#   * Mostly CRAN (shiny, circlize, bs4Dash, DT, RColorBrewer, shinyWidgets,
+#     data.table, shinyBS, sortable, shinyjqui, shinycssloaders, colourpicker,
+#     gridBase, randomcoloR, gtools) plus Bioconductor ComplexHeatmap; all
+#     resolved via BiocManager::repositories(). Installed in two passes: prebuilt
+#     binaries first, then a source fallback for packages with no binary for the
+#     pinned R release (runner toolchains handle the compile).
+#   * `useSweetAlert()` is exported by shinyWidgets (in the seed) -- no extra dep.
+#   * base-priority packages are excluded from the closure; recommended ones
+#     (Matrix, MASS, survival, ...) are kept so the bundle is self-contained.
+#   * RUNTIME WRITES: the "Download R scripts" feature (writeCmd.R) creates a
+#     ./script folder next to the app and setwd()s into it. The installed app dir
+#     is user-writable, so this works, but it is disclosed in the manifest notes.
+#   * RUNTIME NETWORK: core plotting is offline. The UI pulls Font Awesome from
+#     a CDN (kit.fontawesome.com) and the Help/Gallery tabs embed remote links;
+#     those are cosmetic and degrade gracefully without network.
+
+name: Build app bundle
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to attach bundles to"
+        required: false
+        type: string
+        default: "v0.1.0"
+
+permissions:
+  contents: write
+
+env:
+  APP_ID: shinycircos
+  APP_NAME: shinyCircos-V2.0
+  APP_AUTHOR: "Wen Yao, Yazhou Wang"
+  APP_DESC: "Interactive creation of Circos plots from genomic data - chromosome ideograms, tracks (bar/line/point/heatmap/rect), links and labels, all point-and-click"
+  APP_HOMEPAGE: "https://github.com/fentouxungui/shinyCircos-V2.0"
+  APP_LICENSE: "GPL-3.0"
+  R_VERSION: "4.6.1"
+
+jobs:
+  bundle:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: windows-latest, platform: "win-x64" }
+          - { os: macos-14,       platform: "mac-arm64" }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ env.R_VERSION }}
+          use-public-rspm: true
+
+      - name: Install build helpers
+        shell: bash
+        run: Rscript -e 'install.packages(c("jsonlite","zip","digest","BiocManager"), repos="https://cloud.r-project.org")'
+
+      - name: Resolve store version
+        shell: bash
+        run: |
+          V="${{ github.event.release.tag_name }}${{ inputs.tag }}"
+          V="${V#v}"
+          if [ -z "$V" ]; then V="0.1.0"; fi
+          echo "VERSION=$V" >> "$GITHUB_ENV"
+
+      - name: Assemble bundle (app/ + rlib/ + manifest.json)
+        shell: Rscript {0}
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bundle <- file.path(getwd(), "bundle")
+          unlink(bundle, recursive = TRUE); dir.create(bundle, recursive = TRUE)
+          appdir <- file.path(bundle, "app"); dir.create(appdir, recursive = TRUE)
+          lib <- file.path(bundle, "rlib"); dir.create(lib, recursive = TRUE)
+
+          # --- 1. copy the app sources verbatim ------------------------------
+          src <- getwd()
+          for (f in c("Global.R", "ui.R", "server.R", "plot.R", "writeCmd.R",
+                      "www", "README.md", "LICENSE")) {
+            from <- file.path(src, f)
+            if (file.exists(from)) file.copy(from, appdir, recursive = TRUE)
+          }
+          if (!file.exists(file.path(appdir, "Global.R"))) stop("Global.R missing after copy")
+          if (!file.exists(file.path(appdir, "ui.R"))) stop("ui.R missing after copy")
+          if (!file.exists(file.path(appdir, "server.R"))) stop("server.R missing after copy")
+          if (!file.exists(file.path(appdir, "www", "helpfigures", "CircosPlot.jpg"))) stop("www/ missing after copy")
+
+          # --- 2. generate the app.R entry -----------------------------------
+          # Classic ui.R/server.R app: source the sources (Global.R also pulls in
+          # plot.R -> server.R and writeCmd.R), then RETURN the app object.
+          if (file.exists(file.path(appdir, "app.R"))) stop("unexpected app.R already in sources")
+          writeLines(c(
+            '# Auto-generated ShinyApps bundle entry for shinyCircos-V2.0.',
+            '# Classic ui.R/server.R app: source the sources, then return the app object.',
+            'options(shiny.launch.browser = FALSE, shiny.deprecation.messages = FALSE)',
+            'source("Global.R")   # libraries + options; sources plot.R -> server.R, writeCmd.R',
+            'source("ui.R")       # defines `ui`',
+            'shiny::shinyApp(ui = ui, server = server)'
+          ), file.path(appdir, "app.R"))
+          if (any(grepl("runApp(", readLines(file.path(appdir, "app.R"), warn = FALSE), fixed = TRUE)))
+            stop("entry app.R must not call runApp()")
+          srcs <- setdiff(list.files(appdir, pattern = "[.]R$"), "app.R")
+          hit <- vapply(srcs, function(f) any(grepl("runApp(", readLines(file.path(appdir, f), warn = FALSE), fixed = TRUE)), logical(1))
+          if (any(hit)) cat("WARNING: runApp() found in source file(s):", paste(srcs[hit], collapse = ", "), "\n")
+
+          # --- 3. install the dependency closure into bundle/rlib -----------
+          repos <- BiocManager::repositories()
+          options(repos = repos)
+
+          # Top-level library()/require() set from Global.R.
+          seed <- c("shiny", "circlize", "bs4Dash", "DT", "RColorBrewer", "shinyWidgets",
+                    "data.table", "shinyBS", "sortable", "shinyjqui", "shinycssloaders",
+                    "colourpicker", "gridBase", "ComplexHeatmap", "randomcoloR", "gtools")
+
+          db <- available.packages(repos = repos)
+          cat("available packages:", nrow(db), "\n")
+          closure <- unique(c(seed,
+                     unlist(tools::package_dependencies(seed, db = db, recursive = TRUE))))
+          base_pkgs <- rownames(installed.packages(priority = "base"))
+          closure <- setdiff(closure, base_pkgs)
+          closure <- closure[closure %in% rownames(db)]
+          cat("closure packages to install:", length(closure), "\n")
+          install_into <- function(pkgs, type) {
+            if (!length(pkgs)) return(invisible())
+            install.packages(pkgs, lib = lib, repos = repos, type = type,
+                             dependencies = FALSE, Ncpus = 2)
+          }
+          lib_pkgs <- function() basename(list.dirs(lib, recursive = FALSE))
+
+          # Pass 1: prebuilt binaries (CRAN/Posit + Bioconductor where available).
+          install_into(closure, "binary")
+          pkgs_present <- lib_pkgs()
+
+          # Pass 2: source fallback. Bioconductor packages (e.g. ComplexHeatmap)
+          # can be missing as binaries for a brand-new R release; the runners ship
+          # compilers, so a source install of the remaining packages succeeds.
+          no_binary <- setdiff(closure, pkgs_present)
+          if (length(no_binary)) {
+            cat("no binary available, installing from source:", length(no_binary), "\n")
+            install_into(no_binary, "source")
+            pkgs_present <- lib_pkgs()
+          }
+
+          required <- setdiff(seed, base_pkgs)
+          missing <- setdiff(required, pkgs_present)
+          if (length(missing)) stop("packages missing from rlib: ", paste(missing, collapse = ", "))
+          still_dep <- setdiff(closure, pkgs_present)
+          if (length(still_dep)) cat("WARNING: closure packages still missing:", paste(still_dep, collapse = ", "), "\n")
+          cat("rlib packages:", length(pkgs_present), "\n")
+
+          # --- 4. write manifest.json ---------------------------------------
+          pkgs <- as.data.frame(installed.packages(lib.loc = lib))
+          man <- list(
+            schema = 1L,
+            id = Sys.getenv("APP_ID"), name = Sys.getenv("APP_NAME"), version = Sys.getenv("VERSION"),
+            author = Sys.getenv("APP_AUTHOR"), description = Sys.getenv("APP_DESC"),
+            homepage = Sys.getenv("APP_HOMEPAGE"), license = Sys.getenv("APP_LICENSE"),
+            runtime = "r-shiny", entry = "app/app.R",
+            platform = "${{ matrix.platform }}",
+            r_version = Sys.getenv("R_VERSION"), min_shell_version = "0.1.0",
+            notes = paste(
+              "Classic multi-file Shiny app (Global.R/ui.R/server.R), wrapped by a",
+              "generated app.R entry that sources the classic files and returns the",
+              "shinyApp object. Full CRAN/Bioconductor closure (ComplexHeatmap)",
+              "prebuilt in rlib. The 'Download R scripts' feature writes a ./script",
+              "folder next to the app at run time. Core plotting is offline; the UI",
+              "uses Font Awesome via CDN (cosmetic)."),
+            packages = lapply(seq_len(nrow(pkgs)), function(i) list(
+              name = pkgs$Package[i], version = pkgs$Version[i],
+              path = file.path("rlib", pkgs$Package[i]), source = "cran"))
+          )
+          jsonlite::write_json(man, file.path(bundle, "manifest.json"), pretty = TRUE, auto_unbox = TRUE)
+
+      - name: Zip + sha256
+        shell: Rscript {0}
+        run: |
+          out <- sprintf("%s-%s-%s.zip", Sys.getenv("APP_ID"), Sys.getenv("VERSION"), "${{ matrix.platform }}")
+          bundle <- file.path(getwd(), "bundle")
+          old <- setwd(bundle); on.exit(setwd(old))
+          zip::zipr(out, files = list.files(".", all.files = TRUE, no.. = TRUE))
+          entries <- utils::unzip(out, list = TRUE)$Name
+          if (!any(grepl("^rlib/", entries))) stop("zip is missing rlib/ -- aborting")
+          if (!any(grepl("^app/app[.]R$", entries))) stop("zip is missing app/app.R -- aborting")
+          if (!any(grepl("^app/ui[.]R$", entries))) stop("zip is missing app/ui.R -- aborting")
+          if (!any(grepl("^app/www/", entries))) stop("zip is missing app/www/ -- aborting")
+          setwd(old)
+          file.rename(file.path(bundle, out), out)
+          sha <- digest::digest(out, algo = "sha256", file = TRUE)
+          sz <- file.size(out)
+          cat("bundle zip size (bytes):", sz, "\n")
+          if (sz > 2 * 1024^3) {
+            warning("bundle exceeds the 2 GiB GitHub Release asset limit.")
+          }
+          writeLines(sprintf('{"platform":"%s","file":"%s","sha256":"%s","size":%d}',
+                     "${{ matrix.platform }}", out, sha, sz),
+                     sprintf("meta-%s.json", "${{ matrix.platform }}"))
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bundle-${{ matrix.platform }}
+          path: |
+            *.zip
+            meta-*.json
+
+  release:
+    needs: bundle
+    if: github.event_name == 'release' || startsWith(github.ref, 'refs/tags/v') || inputs.tag != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          files: artifacts/*.zip
